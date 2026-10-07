@@ -1,0 +1,89 @@
+<p-dialog [modal]="true" [visible]="visible" (visibleChange)="!$event && onHide()" [style]="{width:'640px'}"
+    [breakpoints]="{'680px':'95vw'}" [header]="mode === 'MY' ? 'Add Previous Vaccination' : 'Add Vaccination Record for an Employee'">
+    <div class="vacc-form form-lg">
+        <p class="hint mb-2">
+            @if(mode === 'MY'){ A vaccination you took before or outside the hospital. Attach the certificate or card — Quality / HR will approve it. }
+            @else { For onboarding or past records. Saved as approved; the dose is marked completed. }
+        </p>
+        <div class="row g-2">
+            @if(mode === 'HR'){
+            <div class="col-12">
+                <div class="flex flex-col">
+                    <label for="hist_employee">Employee</label>
+                    <div class="req">
+                        <p-select id="hist_employee" [(ngModel)]="form.employee_id" name="hist_employee" [options]="employeeList"
+                            [filter]="true" placeholder="Select employee" class="form-control" appendTo="body" />
+                    </div>
+                    @if(err.employee_id){ <small class="error">{{ err.employee_id }}</small> }
+                </div>
+            </div>
+            }
+            <div class="col-md-8 col-12">
+                <div class="flex flex-col">
+                    <label for="hist_vaccine">Vaccine</label>
+                    <div class="req">
+                        <p-select id="hist_vaccine" [(ngModel)]="form.vaccine_id" name="hist_vaccine" [options]="vaccineList"
+                            [filter]="true" placeholder="Select vaccine" class="form-control" appendTo="body"
+                            (onChange)="form.dose_no = 1" />
+                    </div>
+                    @if(err.vaccine_id){ <small class="error">{{ err.vaccine_id }}</small> }
+                </div>
+            </div>
+            <div class="col-md-4 col-12">
+                <div class="flex flex-col">
+                    <label for="hist_dose">Dose</label>
+                    <div class="req">
+                        <p-select id="hist_dose" [(ngModel)]="form.dose_no" name="hist_dose" [options]="doseOptions"
+                            class="form-control" appendTo="body" />
+                    </div>
+                    @if(err.dose_no){ <small class="error">{{ err.dose_no }}</small> }
+                </div>
+            </div>
+            <div class="col-md-4 col-12">
+                <div class="flex flex-col">
+                    <label for="hist_date">Vaccination date</label>
+                    <div class="req">
+                        <input type="date" id="hist_date" class="form-control" [(ngModel)]="form.vaccination_date"
+                            name="hist_date" [max]="today">
+                    </div>
+                    @if(err.vaccination_date){ <small class="error">{{ err.vaccination_date }}</small> }
+                </div>
+            </div>
+            <div class="col-md-4 col-12">
+                <div class="flex flex-col">
+                    <label for="hist_brand">Brand</label>
+                    <input pInputText id="hist_brand" class="form-control" maxlength="150" [(ngModel)]="form.brand_name" name="hist_brand">
+                </div>
+            </div>
+            <div class="col-md-4 col-12">
+                <div class="flex flex-col">
+                    <label for="hist_batch">Batch No.</label>
+                    <input pInputText id="hist_batch" class="form-control" maxlength="100" [(ngModel)]="form.batch_no" name="hist_batch">
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="flex flex-col">
+                    <label for="hist_issuer">Issued by (hospital / clinic)</label>
+                    <input pInputText id="hist_issuer" class="form-control" maxlength="200" [(ngModel)]="form.issuer" name="hist_issuer">
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="flex flex-col">
+                    <label>Proof (PDF / JPG / PNG, up to 5 MB){{ mode === 'MY' ? '' : ' — optional' }}</label>
+                    <div class="d-flex align-items-center gap-2">
+                        <label class="btn btn-sm btn-light mb-0" for="hist_file"><i class="pi pi-paperclip"></i> Choose file</label>
+                        <input type="file" id="hist_file" class="d-none" accept=".pdf,.jpg,.jpeg,.png" (change)="onFile($event)">
+                        @if(file){
+                        <small class="hint">{{ file.name }} <a href="javascript:;" (click)="file = null"><i class="pi pi-times small"></i></a></small>
+                        }
+                    </div>
+                    @if(err.file){ <small class="error">{{ err.file }}</small> }
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-template #footer>
+        <button type="button" class="btn btn-dark" (click)="onHide()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="onSave()">{{ mode === 'MY' ? 'Send for approval' : 'Save' }}</button>
+    </ng-template>
+</p-dialog>

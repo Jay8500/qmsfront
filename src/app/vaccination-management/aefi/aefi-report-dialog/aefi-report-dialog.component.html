@@ -1,0 +1,113 @@
+<p-dialog [modal]="true" [visible]="visible" (visibleChange)="!$event && onHide()" [style]="{width:'720px'}"
+    [breakpoints]="{'760px':'95vw'}" [header]="header">
+    <div class="vacc-form form-lg">
+        <p class="mb-2 fw-semibold">{{ employeeLabel }}</p>
+        <div class="row g-2">
+            @if(doseList.length){
+            <div class="col-md-6 col-12">
+                <div class="flex flex-col">
+                    <label for="aefi_dose">Dose</label>
+                    <div class="req">
+                        <p-select id="aefi_dose" [(ngModel)]="form.vaccination_administration_id" name="aefi_dose"
+                            [options]="doseList" class="form-control" appendTo="body" />
+                    </div>
+                    @if(err.dose){ <small class="error">{{ err.dose }}</small> }
+                </div>
+            </div>
+            }
+            <div class="col-md-6 col-12">
+                <div class="flex flex-col">
+                    <label for="aefi_event_time">Event time</label>
+                    <div class="req">
+                        <input type="datetime-local" id="aefi_event_time" class="form-control" [(ngModel)]="form.event_time"
+                            name="aefi_event_time" [max]="nowLocalMax">
+                    </div>
+                    @if(err.event_time){ <small class="error">{{ err.event_time }}</small> }
+                </div>
+            </div>
+            <div class="col-md-6 col-12">
+                <div class="flex flex-col">
+                    <label for="aefi_severity">Severity</label>
+                    <div class="req">
+                        <p-select id="aefi_severity" [(ngModel)]="form.severity_id" name="aefi_severity"
+                            [options]="severityList" placeholder="Select" class="form-control" appendTo="body" />
+                    </div>
+                    @if(err.severity_id){ <small class="error">{{ err.severity_id }}</small> }
+                    @if(isSevere()){ <small class="text-danger">The Quality Team will be notified.</small> }
+                </div>
+            </div>
+            <div class="col-md-6 col-12">
+                <div class="flex flex-col">
+                    <label for="aefi_symptoms">Symptoms</label>
+                    <p-multiselect id="aefi_symptoms" [(ngModel)]="form.symptom_ids" name="aefi_symptoms"
+                        [options]="symptomList" placeholder="Select" display="chip" class="form-control" appendTo="body" />
+                </div>
+            </div>
+            @if(hasOtherSymptom()){
+            <div class="col-md-6 col-12">
+                <div class="flex flex-col">
+                    <label for="aefi_other_symptom">Other symptom</label>
+                    <input pInputText id="aefi_other_symptom" class="form-control" maxlength="200"
+                        [(ngModel)]="form.other_symptom" name="aefi_other_symptom">
+                    @if(err.other_symptom){ <small class="error">{{ err.other_symptom }}</small> }
+                </div>
+            </div>
+            }
+            <div class="col-md-6 col-12">
+                <div class="flex flex-col">
+                    <label for="aefi_outcome">Outcome</label>
+                    <p-select id="aefi_outcome" [(ngModel)]="form.outcome_id" name="aefi_outcome" [showClear]="true"
+                        [options]="outcomeList" placeholder="Select" class="form-control" appendTo="body" />
+                </div>
+            </div>
+            <div class="col-md-8 col-12">
+                <div class="flex flex-col">
+                    <label for="aefi_action">Immediate action</label>
+                    <textarea pTextarea id="aefi_action" rows="2" maxlength="500" class="form-control"
+                        [(ngModel)]="form.immediate_action" name="aefi_action"></textarea>
+                    @if(err.immediate_action){ <small class="error">{{ err.immediate_action }}</small> }
+                </div>
+            </div>
+            <div class="col-md-4 col-12">
+                <div class="flex flex-col">
+                    <label for="aefi_action_time">Action time</label>
+                    <input type="datetime-local" id="aefi_action_time" class="form-control" [(ngModel)]="form.action_time"
+                        name="aefi_action_time">
+                    @if(err.action_time){ <small class="error">{{ err.action_time }}</small> }
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="flex flex-col">
+                    <label for="aefi_notes">Notes</label>
+                    <textarea pTextarea id="aefi_notes" rows="2" maxlength="1000" class="form-control"
+                        [(ngModel)]="form.notes" name="aefi_notes"></textarea>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="flex flex-col">
+                    <label>Attachments (PDF / JPG / PNG, up to 5 MB each)</label>
+                    <div class="d-flex flex-wrap align-items-center gap-2">
+                        <label class="btn btn-sm btn-light mb-0" for="aefi_files"><i class="pi pi-paperclip"></i> Add files</label>
+                        <input type="file" id="aefi_files" class="d-none" multiple accept=".pdf,.jpg,.jpeg,.png" (change)="onFiles($event)">
+                        @for(ef of existingFiles; track ef.file_id){
+                        @if(ef.fileOrImageUrl){
+                        <a [href]="ef.fileOrImageUrl" target="_blank" class="small"><i class="pi pi-file"></i> {{ ef.file_name }}</a>
+                        } @else {
+                        <small class="hint"><i class="pi pi-file"></i> {{ ef.file_name }}</small>
+                        }
+                        }
+                        @for(file of files; track file.name; let i = $index){
+                        <small class="hint">{{ file.name }}
+                            <a href="javascript:;" (click)="removeFile(i)"><i class="pi pi-times small"></i></a></small>
+                        }
+                    </div>
+                    @if(err.files){ <small class="error">{{ err.files }}</small> }
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-template #footer>
+        <button type="button" class="btn btn-dark" (click)="onHide()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="onSave()">Save</button>
+    </ng-template>
+</p-dialog>

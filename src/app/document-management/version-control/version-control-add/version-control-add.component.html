@@ -1,0 +1,312 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="row">
+      <div class="col-md-12 col-12">
+        <div class="card-style2">
+          <div class="card-header backoption">
+            <div class="row">
+              <div class="col-md-6 col-12">
+                <div class="heading-left">
+                  <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                    <i class="iconify pi pi-arrow-left"></i>
+                  </a>
+                  <h3> {{_hqms.getPageModeContext(pageMode, 'Version Control') }}</h3>
+                </div>
+              </div>
+              <div class="col-md-6 col-12">
+                <div class="form-right">
+                  @if(pageMode=='NEW'){
+                  <button class="btn btn-dark" (click)="onClearClick()">Clear</button>
+                  }
+                  <button class="btn btn-light" [disabled]="pageMode=='VIEW'" (click)="onSubmitClick(false)"
+                    pTooltip="Save as draft (status Created)" tooltipPosition="bottom">Save Draft</button>
+                  <button class="btn btn-primary" [disabled]="pageMode=='VIEW'" (click)="onSubmitClick(true)"
+                    pTooltip="Save and send to the Level 1 approver (Quality Team)" tooltipPosition="bottom">
+                    Save &amp; Submit for Approval</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <!-- Entry type / bulk upload -->
+            <div class="vc-toolbar">
+              <div class="vc-toolbar-item">
+                <label>Data Entry</label>
+                <div class="radio-group">
+                  @for (asLst of dataEntryTypeList; track asLst.value) {
+                  <div class="form-check form-check-inline">
+                    <p-radioButton [name]="'dataEntry'" [value]="asLst.value" [(ngModel)]="selectUpload"
+                      [inputId]="'de_'+asLst.value" (onClick)="onDataEntryRadio(asLst)"
+                      [disabled]="pageMode!='NEW'" />
+                    <label [for]="'de_'+asLst.value">{{ asLst.label }}</label>
+                  </div>
+                  }
+                </div>
+              </div>
+              @if(selectedOptionEntry == 'MULTIPLE' && pageMode == 'NEW'){
+              <div class="vc-toolbar-item">
+                <label>
+                  Bulk Upload (Excel)
+                  <a class="ms-2 link-blue" style="cursor:pointer"
+                    (click)="_hqms.onDownloadClick('sample_templates/version_control_bulk.xlsx')">
+                    <i class="pi pi-download"></i> Template</a>
+                </label>
+                <div class="d-flex align-items-center gap-2">
+                  <p-fileUpload mode="basic" #preAssess (onSelect)="onBulkUploadClick(preAssess, $event)"
+                    [multiple]="false" [maxFileSize]="2097152" [auto]="true" accept=".xlsx" chooseIcon="pi pi-upload"
+                    chooseLabel="Upload .xlsx" invalidFileSizeMessageSummary="File too large"
+                    invalidFileSizeMessageDetail="Maximum upload size is 2MB">
+                  </p-fileUpload>
+                  @for(b of createVersionControl().bulk_upload; track $index){
+                  <span class="vc-chip">{{ b.file_name }}
+                    <a href="javascript:;" (click)="onBulkUploadRemoveClick()"><i class="pi pi-times-circle"></i></a>
+                  </span>
+                  }
+                </div>
+                <small class="text-muted">Columns: Document No (optional), Document Name, Document Type,
+                  Department, Purpose, Description, Approval Level (L1 / L1_L2)</small>
+              </div>
+              <div class="vc-toolbar-item ms-auto align-self-end">
+                <button class="btn btn-success" (click)="addDocument()">
+                  <i class="pi pi-plus-circle me-1"></i> Add Document</button>
+              </div>
+              }
+            </div>
+
+            <!-- One card per document: details, files and access control together -->
+            @for (vcs of createVersionControl().versions_control; track $index; let parentIn = $index) {
+            @if(vcs.is_active){
+            <div class="vc-card" [class.vc-locked]="isLocked(vcs)">
+              <div class="vc-card-head" (click)="vcs.is_expanded = !vcs.is_expanded">
+                <span class="vc-no">{{ parentIn + 1 }}</span>
+                <div class="vc-title">
+                  <strong>{{ vcs.document_name || 'New document' }}</strong>
+                  <small class="text-muted ms-2">{{ vcs.document_no || 'Document ID: auto' }}
+                    @if(vcs.document_type_id){ · {{ labelOf(documentTypeList, vcs.document_type_id) }} }</small>
+                </div>
+                @if(vcs.status){
+                <span class="vc-badge" [attr.data-status]="vcs.status">{{ vcs.status }}</span>
+                }
+                @if(vcs.current_version_no){
+                <span class="vc-badge vc-badge-ver">v{{ vcs.current_version_no }}</span>
+                }
+                <span class="vc-access-sum d-none d-md-inline"><i class="pi pi-lock me-1"></i>{{ accessSummary(vcs) }}</span>
+                <i class="pi" [class.pi-chevron-up]="vcs.is_expanded" [class.pi-chevron-down]="!vcs.is_expanded"></i>
+                @if(selectedOptionEntry == 'MULTIPLE' && !isLocked(vcs)){
+                <a href="javascript:;" class="ms-2" (click)="$event.stopPropagation(); trashDocument(vcs, parentIn)"
+                  pTooltip="Remove document"><i class="pi pi-trash" style="color:red"></i></a>
+                }
+              </div>
+
+              @if(vcs.is_expanded){
+              <div class="vc-card-body">
+                @if(vcs.can_edit === false){
+                <div class="vc-note vc-note-warn">
+                  <i class="pi pi-hourglass me-1"></i> Waiting for Level {{ vcs.pending_level }} approval
+                  ({{ vcs.pending_with }}) - it cannot be edited until it is approved or rejected.
+                </div>
+                }
+                @if(vcs.status == 'Rejected' && vcs.rejected_reason){
+                <div class="vc-note vc-note-danger">
+                  <i class="pi pi-times-circle me-1"></i> Rejected: {{ vcs.rejected_reason }}. Correct it and submit again.
+                </div>
+                }
+
+                <div class="row g-3">
+                  <!-- Document details -->
+                  <div class="col-xl-8 col-12">
+                    <div class="vc-section-title">Document Details</div>
+                    <div class="row g-2">
+                      <div class="col-md-4 col-12">
+                        <label>Document ID</label>
+                        <input pInputText [(ngModel)]="vcs.document_no" name="document_no_{{parentIn}}"
+                          [disabled]="isLocked(vcs)" placeholder="Auto: QMS/Dept/Year/No" maxlength="64"
+                          class="form-control" autocomplete="off">
+                      </div>
+                      <div class="col-md-4 col-12">
+                        <label>Document Name <span class="text-danger">*</span></label>
+                        <input pInputText [(ngModel)]="vcs.document_name" name="document_name_{{parentIn}}"
+                          [disabled]="isLocked(vcs)" placeholder="e.g. Hand Hygiene SOP" maxlength="200"
+                          class="form-control" autocomplete="off">
+                      </div>
+                      <div class="col-md-4 col-12">
+                        <label>Document Type <span class="text-danger">*</span></label>
+                        <p-select [(ngModel)]="vcs.document_type_id" name="document_type_id_{{parentIn}}"
+                          [options]="documentTypeList" [filter]="true" [showClear]="true" placeholder="Select type"
+                          [disabled]="isLocked(vcs)" styleClass="w-full" appendTo="body" />
+                      </div>
+                      <div class="col-md-4 col-12">
+                        <label>Department <span class="text-danger">*</span></label>
+                        <p-select [(ngModel)]="vcs.department_id" name="department_id_{{parentIn}}"
+                          [options]="departmentList" [filter]="true" [showClear]="true" placeholder="Owning department"
+                          [disabled]="isLocked(vcs)" styleClass="w-full" appendTo="body" />
+                      </div>
+                      <div class="col-md-4 col-12">
+                        <label>Responsible Person <span class="text-danger">*</span></label>
+                        <p-select [(ngModel)]="vcs.responsible_person_id" name="responsible_person_id_{{parentIn}}"
+                          [options]="employeeNameList" [filter]="true" [showClear]="true" placeholder="Document owner"
+                          [disabled]="isLocked(vcs)" styleClass="w-full" appendTo="body" />
+                      </div>
+                      <div class="col-md-4 col-12">
+                        <label>Next Review Date</label>
+                        <p-datepicker [(ngModel)]="vcs.review_date" name="review_date_{{parentIn}}"
+                          dateFormat="dd-mm-yy" [showIcon]="true" [disabled]="isLocked(vcs)" appendTo="body"
+                          placeholder="dd-mm-yyyy" styleClass="w-full" />
+                      </div>
+                      <div class="col-md-4 col-12">
+                        <label>Approval Level <span class="text-danger">*</span></label>
+                        <p-select [(ngModel)]="vcs.approval_level_type" name="approval_level_type_{{parentIn}}"
+                          [options]="approvalLevelList" placeholder="Select" [disabled]="isLocked(vcs)"
+                          styleClass="w-full" appendTo="body" />
+                      </div>
+                      <div class="col-md-4 col-12">
+                        <label>Change Type @if(hasApprovedVersion(vcs)){<span class="text-danger">*</span>}</label>
+                        <p-select [(ngModel)]="vcs.change_type" name="change_type_{{parentIn}}"
+                          [options]="changeTypeList" [showClear]="true"
+                          [placeholder]="hasApprovedVersion(vcs) ? 'Minor / Major' : 'First version = v1.0'"
+                          [disabled]="isLocked(vcs)" styleClass="w-full" appendTo="body" />
+                      </div>
+                      <div class="col-md-4 col-12">
+                        <label>Purpose <small class="text-muted">({{ len(vcs.purpose) }}/{{ rules.purposeMax }})</small></label>
+                        <input pInputText [(ngModel)]="vcs.purpose" name="purpose_{{parentIn}}"
+                          [maxlength]="rules.purposeMax" [disabled]="isLocked(vcs)" placeholder="Short purpose"
+                          class="form-control" autocomplete="off">
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <label>Description <span class="text-danger">*</span>
+                          <small [class.text-danger]="len(vcs.description) < rules.descMin"
+                            [class.text-success]="len(vcs.description) >= rules.descMin">
+                            ({{ len(vcs.description) }} / min {{ rules.descMin }})</small></label>
+                        <textarea pTextarea [(ngModel)]="vcs.description" name="description_{{parentIn}}" rows="4"
+                          [disabled]="isLocked(vcs)" class="form-control w-full"
+                          placeholder="What the document covers, who it applies to ..."></textarea>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <label>Change Summary <span class="text-danger">*</span>
+                          <small [class.text-danger]="len(vcs.change_summary) < rules.summaryMin || len(vcs.change_summary) > rules.summaryMax"
+                            [class.text-success]="len(vcs.change_summary) >= rules.summaryMin && len(vcs.change_summary) <= rules.summaryMax">
+                            ({{ len(vcs.change_summary) }} / {{ rules.summaryMin }}-{{ rules.summaryMax }})</small></label>
+                        <textarea pTextarea [(ngModel)]="vcs.change_summary" name="change_summary_{{parentIn}}" rows="4"
+                          [maxlength]="rules.summaryMax" [disabled]="isLocked(vcs)" class="form-control w-full"
+                          placeholder="What changed in this version and why"></textarea>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Files -->
+                  <div class="col-xl-4 col-12">
+                    <div class="vc-section-title">Files <small class="text-muted">PDF / Word / Excel, max 5 MB</small></div>
+                    @if(!isLocked(vcs)){
+                    <p-fileUpload mode="basic" #docVCS (onSelect)="onDocFileSelect(docVCS, $event, vcs)"
+                      [multiple]="false" [maxFileSize]="5242880" [auto]="true" chooseIcon="pi pi-upload"
+                      chooseLabel="Upload file" accept=".pdf,.doc,.docx,.xls,.xlsx"
+                      invalidFileSizeMessageSummary="File too large" invalidFileSizeMessageDetail="Maximum upload size is 5MB">
+                    </p-fileUpload>
+                    }
+                    <ul class="vc-files">
+                      @for(mDoc of vcs.document_files; track $index){
+                      @if(mDoc.is_active){
+                      <li>
+                        <i class="pi pi-file me-1"></i>
+                        <span class="vc-file-name">{{ mDoc.file_name }}</span>
+                        @if(mDoc.file_id == null){ <span class="vc-badge vc-badge-new">new</span> }
+                        @else if(mDoc.version_no){ <small class="text-muted ms-1">{{ mDoc.version_no }}</small> }
+                        @if(!isLocked(vcs)){
+                        <a href="javascript:;" class="ms-auto" (click)="onDocFileRemove(mDoc)"><i class="pi pi-times-circle"></i></a>
+                        }
+                      </li>
+                      }
+                      } @empty {
+                      <li class="text-muted">No files yet</li>
+                      }
+                    </ul>
+                    @if(vcs.current_version_no){
+                    <small class="text-muted d-block">Approved version: v{{ vcs.current_version_no }}. New files become
+                      the next version when approved.</small>
+                    }
+                  </div>
+
+                  <!-- Access control for THIS document -->
+                  <div class="col-12">
+                    <div class="vc-section-title d-flex align-items-center">
+                      <span>Access Control <small class="text-muted">- who can see this document in the Document Library</small></span>
+                      @if(!isLocked(vcs)){
+                      <a href="javascript:;" class="ms-auto link-blue" (click)="addAccessRow(vcs)">
+                        <i class="pi pi-plus-circle me-1"></i>Add access</a>
+                      }
+                    </div>
+                    @if(activeAccess(vcs).length == 0){
+                    <div class="vc-note">
+                      No restriction - every logged-in user can view the approved document. Downloads stay limited to
+                      Admin, Quality, Compliance, Auditor and Management unless you add a row with Download on.
+                    </div>
+                    } @else {
+                    <div class="table-responsive">
+                      <table class="table table-sm vc-access-table mb-0">
+                        <thead>
+                          <tr>
+                            <th style="width:4%">#</th>
+                            <th style="width:26%">Department</th>
+                            <th style="width:24%">Role</th>
+                            <th style="width:26%">Employee</th>
+                            <th style="width:8%" class="text-center">View</th>
+                            <th style="width:8%" class="text-center">Download</th>
+                            <th style="width:4%"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @for(accCntrl of activeAccess(vcs); track $index; let accIn = $index){
+                          <tr>
+                            <td>{{ accIn + 1 }}</td>
+                            <td>
+                              <p-select [(ngModel)]="accCntrl.department_id" name="acc_dept_{{parentIn}}_{{accIn}}"
+                                [options]="departmentList" [filter]="true" [showClear]="true" placeholder="Any"
+                                [disabled]="isLocked(vcs)" styleClass="w-full" appendTo="body" />
+                            </td>
+                            <td>
+                              <p-select [(ngModel)]="accCntrl.role_id" name="acc_role_{{parentIn}}_{{accIn}}"
+                                [options]="roleList" [filter]="true" [showClear]="true" placeholder="Any"
+                                [disabled]="isLocked(vcs)" styleClass="w-full" appendTo="body" />
+                            </td>
+                            <td>
+                              <p-select [(ngModel)]="accCntrl.employee_id" name="acc_emp_{{parentIn}}_{{accIn}}"
+                                [options]="employeeNameList" [filter]="true" [showClear]="true" placeholder="Any"
+                                [disabled]="isLocked(vcs)" styleClass="w-full" appendTo="body" />
+                            </td>
+                            <td class="text-center">
+                              <p-toggleswitch [(ngModel)]="accCntrl.can_view" name="acc_view_{{parentIn}}_{{accIn}}"
+                                [disabled]="isLocked(vcs)" />
+                            </td>
+                            <td class="text-center">
+                              <p-toggleswitch [(ngModel)]="accCntrl.can_download" name="acc_dl_{{parentIn}}_{{accIn}}"
+                                [disabled]="isLocked(vcs)" />
+                            </td>
+                            <td>
+                              @if(!isLocked(vcs)){
+                              <a href="javascript:;" (click)="removeAccessRow(vcs, accCntrl)"><i class="pi pi-trash" style="color:red"></i></a>
+                              }
+                            </td>
+                          </tr>
+                          }
+                        </tbody>
+                      </table>
+                    </div>
+                    <small class="text-muted">A row matches when the user is that employee, has that role, or belongs
+                      to that department. Admin, Quality, Compliance, Auditor and Management always see every document.</small>
+                    }
+                  </div>
+                </div>
+              </div>
+              }
+            </div>
+            }
+            } @empty {
+            <div class="vc-note">Choose the data entry type to start.</div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

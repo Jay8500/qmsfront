@@ -1,0 +1,44 @@
+<s-ngimageviewer #ngImageViewer *ngIf="docType=='jpg'||docType=='png'" [src]="imageSrc" [showDownload]="showDownload"
+    [downloadFileName]="downloadFileName"></s-ngimageviewer>
+<ngx-extended-pdf-viewer *ngIf="docType=='pdf'" [src]="safePDFUrl" [showDownloadButton]="showDownload"
+    [filenameForDownload]="downloadFileName" [showPrintButton]="showPdfPrint" [height]="'auto'" [textLayer]="true"
+    [showBorders]="true" [showBookModeButton]="false" [showToolbar]="true" [showSidebarButton]="true"
+    [showFindButton]="true" [showPagingButtons]="true" [showDrawEditor]="false" [showTextEditor]="false"
+    [showZoomButtons]="true" [showPresentationModeButton]="true" [showOpenFileButton]="false"
+    [showSecondaryToolbarButton]="true" [showRotateButton]="true" [showHandToolButton]="true" [zoom]="zoom"
+    [showScrollingButton]="true" [showSpreadButton]="true" [showPropertiesButton]="true" [showStampEditor]="false">
+</ngx-extended-pdf-viewer>
+<!--
+<video #videoPlayer controls="controls" preload="metadata" controlsList="nodownload" class="videoClass"
+    *ngIf="docType=='video'">
+    <source>
+</video>
+
+<audio #audioPlayer controls="controls" preload="metadata" controlsList="nodownload" class="audioClass"
+    *ngIf="docType=='audio'">
+    <source />
+</audio> -->
+
+<ngx-doc-viewer [url]="imageSrc" [viewer]="viewer" style="width:100%;height:83vh;" disableContent="popout"
+    *ngIf="docType=='office' && officePreview==true"></ngx-doc-viewer>
+
+<div class="text-center text-orange-600 font-medium text-lg" *ngIf="docType=='office' && officePreview==false"><br>
+    This document can't be previewed</div>
+
+<style>
+    :host ::ng-deep ngx-extended-pdf-viewer #toolbarViewer {
+        min-height: 32px;
+        background: var(--primary-100);
+    }
+
+    .videoClass {
+        background-color: var(--surface-200);
+        border: 1px solid var(--surface-400);
+        width: 100%;
+        height: calc(100% - 230px);
+    }
+
+    .audioClass {
+        width: 100%;
+    }
+</style>

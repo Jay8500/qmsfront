@@ -1,0 +1,453 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="card-style2">
+            <!-- Header: title + save -->
+            <div class="card-header backoption">
+                <div class="row align-items-center">
+                    <div class="col-md-6 col-12">
+                        <div class="heading-left">
+                            <h3>Vaccine Administration</h3>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <div class="form-right">
+                            @if(canSave()){
+                            @if(changedRows().length > 0){
+                            <span class="hint me-2">{{ changedRows().length }} unsaved change(s)</span>
+                            }
+                            <button type="button" class="btn btn-dark" (click)="onClearClick()"
+                                [disabled]="selectedVaccine()==null">Clear</button>
+                            <button type="submit" class="btn btn-primary"
+                                [disabled]="selectedVaccine()==null || changedRows().length == 0"
+                                (click)="onSubmitClick()">Save ({{ changedRows().length }})</button>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body vacc-form">
+                <!-- Top card: vaccine + vaccination details (applied to everyone marked Completed, SRS 2.3) -->
+                <div class="formbox-left form-lg compact mb-3">
+                    <div class="row g-2 align-items-start">
+                        <div class="col-xl-4 col-lg-12 col-12">
+                            <div class="flex flex-col mb-0">
+                                <label for="selectedVaccine">Vaccine</label>
+                                <div class="req">
+                                    <p-select id="selectedVaccine" [ngModel]="selectedVaccine()"
+                                        (ngModelChange)="selectedVaccine.set($event)" name="selectedVaccine"
+                                        (onChange)="onVaccineChange()" (onClear)="onVaccineChange()"
+                                        [options]="scheduledVaccineList" [filter]="true" [showClear]="true"
+                                        placeholder="Select a scheduled vaccine" class="form-control" appendTo="body" />
+                                </div>
+                                @if(errMsg['selectedVaccine']){
+                                <small class="error">{{ errMsg['selectedVaccine'] }}</small>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-3 col-md-6 col-12">
+                            <div class="flex flex-col mb-0">
+                                <label for="administered_at">Vaccination Date</label>
+                                <div class="req">
+                                    <input type="date" id="administered_at" class="form-control"
+                                        [(ngModel)]="adminInfo.administered_at" name="administered_at" [max]="today"
+                                        (change)="onGetErrMsg('administered_at')" [disabled]="!canSave() || selectedVaccine()==null">
+                                </div>
+                                @if(errMsg['administered_at']){
+                                <small class="error">{{ errMsg['administered_at'] }}</small>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-3 col-md-6 col-12">
+                            <div class="flex flex-col mb-0">
+                                <label for="administered_by">Vaccinated By</label>
+                                <div class="req">
+                                    <p-select id="administered_by" [(ngModel)]="adminInfo.administered_by"
+                                        name="administered_by" [options]="employeeList" [filter]="true" [showClear]="true"
+                                        placeholder="Nurse / staff" (onChange)="onGetErrMsg('administered_by')"
+                                        class="form-control" appendTo="body" [disabled]="!canSave() || selectedVaccine()==null" />
+                                </div>
+                                @if(errMsg['administered_by']){
+                                <small class="error">{{ errMsg['administered_by'] }}</small>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-3 col-md-6 col-12">
+                            <div class="flex flex-col mb-0">
+                                <label for="brand_name">Vaccine Brand</label>
+                                <div class="req">
+                                    <input pInputText id="brand_name" class="form-control"
+                                        [(ngModel)]="adminInfo.brand_name" name="brand_name" placeholder="e.g. Serum Institute"
+                                        autocomplete="off" (blur)="onGetErrMsg('brand_name')" [disabled]="!canSave() || selectedVaccine()==null">
+                                </div>
+                                @if(errMsg['brand_name']){
+                                <small class="error">{{ errMsg['brand_name'] }}</small>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-3 col-md-6 col-12">
+                            <div class="flex flex-col mb-0">
+                                <label for="admin_batch_no">Batch Details</label>
+                                <div class="req">
+                                    <input pInputText id="admin_batch_no" class="form-control"
+                                        [(ngModel)]="adminInfo.batch_no" name="admin_batch_no" placeholder="e.g. BN8678"
+                                        autocomplete="off" (blur)="onGetErrMsg('batch_no')" [disabled]="!canSave() || selectedVaccine()==null">
+                                </div>
+                                @if(errMsg['batch_no']){
+                                <small class="error">{{ errMsg['batch_no'] }}</small>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    @if(selectedVaccine() != null){
+                    <!-- A vaccine can have several schedules (Templates → Schedules) and doses -->
+                    <div class="row g-2 align-items-start mt-1">
+                        <div class="col-xl-4 col-lg-6 col-12">
+                            <div class="flex flex-col mb-0">
+                                <label for="selectedCampaign">Schedule</label>
+                                <p-select id="selectedCampaign" [(ngModel)]="selectedCampaignId" name="selectedCampaign"
+                                    [options]="scheduleOptions" (onChange)="onScheduleChange()"
+                                    placeholder="Select schedule" class="form-control" appendTo="body" />
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-3 col-md-6 col-12">
+                            <div class="flex flex-col mb-0">
+                                <label for="selectedDose">Dose</label>
+                                <p-select id="selectedDose" [(ngModel)]="selectedDetId" name="selectedDose"
+                                    [options]="doseOptions" (onChange)="onDoseChange()"
+                                    placeholder="Select dose" class="form-control" appendTo="body" />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Execution & consent (SRS 2.x9) — applied to everyone marked Completed -->
+                    <div class="row g-2 align-items-start mt-1">
+                        <div class="col-xl-2 col-lg-3 col-md-6 col-12">
+                            <div class="flex flex-col mb-0">
+                                <label for="admin_mode_id">Mode</label>
+                                <p-select id="admin_mode_id" [(ngModel)]="adminInfo.admin_mode_id" name="admin_mode_id"
+                                    [options]="adminModeList" placeholder="Select" class="form-control" appendTo="body"
+                                    [disabled]="!canSave()" />
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-3 col-md-6 col-12">
+                            <div class="flex flex-col mb-0">
+                                <label for="site_provider">Site / Provider</label>
+                                <input pInputText id="site_provider" class="form-control" maxlength="200"
+                                    [(ngModel)]="adminInfo.site_provider" name="site_provider" placeholder="e.g. Staff clinic"
+                                    autocomplete="off" [disabled]="!canSave()">
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-3 col-md-6 col-12">
+                            <div class="flex flex-col mb-0">
+                                <label for="observer_id">Observer</label>
+                                <p-select id="observer_id" [(ngModel)]="adminInfo.observer_id" name="observer_id"
+                                    [options]="employeeList" [filter]="true" [showClear]="true" placeholder="Staff"
+                                    class="form-control" appendTo="body" [disabled]="!canSave()" />
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-3 col-md-6 col-6">
+                            <div class="flex flex-col mb-0">
+                                <label for="observation_start">Observation From</label>
+                                <input type="time" id="observation_start" class="form-control"
+                                    [(ngModel)]="adminInfo.observation_start" name="observation_start" [disabled]="!canSave()">
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-3 col-md-6 col-6">
+                            <div class="flex flex-col mb-0">
+                                <label for="observation_end">Observation To</label>
+                                <input type="time" id="observation_end" class="form-control"
+                                    [(ngModel)]="adminInfo.observation_end" name="observation_end" [disabled]="!canSave()">
+                                @if(errMsg['observation_end']){
+                                <small class="error">{{ errMsg['observation_end'] }}</small>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-3 col-md-6 col-12">
+                            <div class="flex flex-col mb-0">
+                                <label>Consent</label>
+                                <div class="d-flex align-items-center gap-2 flex-wrap">
+                                    <p-checkbox [binary]="true" [(ngModel)]="adminInfo.consent_taken" name="consent_taken"
+                                        inputId="consent_taken" [disabled]="!canSave()" />
+                                    <label for="consent_taken" class="mb-0">Taken</label>
+                                    @if(canSave()){
+                                    <label class="btn btn-sm btn-light mb-0" for="consent_file" title="Consent form (PDF / JPG / PNG, up to 5 MB)">
+                                        <i class="pi pi-paperclip"></i></label>
+                                    <input type="file" id="consent_file" class="d-none" accept=".pdf,.jpg,.jpeg,.png"
+                                        (change)="onConsentFile($event)">
+                                    }
+                                </div>
+                                @if(consentFile){
+                                <small class="hint text-truncate">{{ consentFile.name }}
+                                    <a href="javascript:;" (click)="consentFile = null"><i class="pi pi-times small"></i></a></small>
+                                }
+                                @if(errMsg['consent_taken']){
+                                <small class="error">{{ errMsg['consent_taken'] }}</small>
+                                }
+                                @if(errMsg['consent_file']){
+                                <small class="error">{{ errMsg['consent_file'] }}</small>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    }
+                    <div class="d-flex flex-wrap align-items-center gap-2 mt-2">
+                        @if(selectedVaccine() != null){
+                        <span class="fact-chip"><span>Venue</span>{{ selectedDc.venue_name || '-' }}</span>
+                        <span class="fact-chip"><span>Dates</span>{{ (selectedDc.schedule_start_dt | date:'dd-MMM') || '-' }} – {{ (selectedDc.schedule_end_dt | appDate:'date') || '-' }}</span>
+                        <span class="fact-chip"><span>Capacity</span>{{ selectedDc.capacity ?? '-' }}</span>
+                        <span class="fact-chip"><span>Route</span>{{ selectedDc.route_name || '-' }}</span>
+                        <span class="fact-chip"><span>Volume</span>{{ selectedDc.dosage_value || '-' }} {{ selectedDc.dosage_unit }}</span>
+                        <span class="fact-chip"><span>Age Group</span>{{ selectedDc.age_group || '-' }}</span>
+                        <span class="hint ms-auto">Date, Vaccinated By, Brand, Batch, execution and consent apply to everyone marked Completed.
+                            @if(needsAdminInfo()){ <b class="text-danger">Required now.</b> }</span>
+                        } @else {
+                        <span class="hint">Select a scheduled vaccine to load its staff.</span>
+                        }
+                    </div>
+                </div>
+
+                <!-- MAIN: staff list -->
+                <div class="formbox-left form-lg">
+                            <!-- Tabs with counts + search -->
+                            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                                <div class="status-tabs">
+                                    @for(tab of STATUS_TABS; track tab){
+                                    <button type="button" class="btn btn-sm"
+                                        [ngClass]="sctOpt === tab ? 'btn-primary' : 'btn-light'"
+                                        [disabled]="selectedVaccine()==null" (click)="onTabChange(tab)">
+                                        {{ tab }} <span class="tab-count">{{ statusCount(tab) }}</span>
+                                    </button>
+                                    }
+                                </div>
+                                <input pInputText class="form-control search-box" placeholder="Search name or code"
+                                    [(ngModel)]="searchText" name="searchText" [disabled]="selectedVaccine()==null" />
+                            </div>
+
+                            <!-- Bulk actions for selected rows -->
+                            @if(selectedIds.size > 0){
+                            <div class="bulk-bar mb-2">
+                                <span><b>{{ selectedIds.size }}</b> selected</span>
+                                <button type="button" class="btn btn-sm btn-success" (click)="bulkSet('Completed')">
+                                    <i class="pi pi-check"></i> Mark Completed</button>
+                                <button type="button" class="btn btn-sm btn-danger" (click)="bulkSet('Missed')">
+                                    <i class="pi pi-times"></i> Mark Missed</button>
+                                <button type="button" class="btn btn-sm btn-warning" (click)="bulkSet('Exempt')">
+                                    <i class="pi pi-shield"></i> Mark Exempt</button>
+                                <button type="button" class="btn btn-sm btn-light" (click)="selectedIds.clear()">Clear
+                                    selection</button>
+                            </div>
+                            }
+
+                            <div class="table-responsive">
+                                <table class="table mb-0 staff-table">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 40px;">
+                                                @if(canSave()){
+                                                <p-checkbox [binary]="true" [ngModel]="allVisibleSelected()"
+                                                    (onChange)="toggleAllVisible($event.checked)" name="selectAll"
+                                                    [disabled]="visibleRows().length == 0" />
+                                                }
+                                            </th>
+                                            <th scope="col" sortable="full_name" (sort)="onSort($event)">
+                                                Employee <i class="iconify pi pi-sort"></i>
+                                            </th>
+                                            <th>Scope</th>
+                                            <th>Status</th>
+                                            <th class="text-end" style="width: 420px;">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for (dcInfo of visibleRows(); track dcInfo.vaccination_administration_id) {
+                                        <tr [class.row-changed]="dcInfo.new_status !== dcInfo.status">
+                                            <td>
+                                                @if(isSelectable(dcInfo)){
+                                                <p-checkbox [binary]="true" [ngModel]="isSelected(dcInfo)"
+                                                    (onChange)="toggleRow(dcInfo, $event.checked)"
+                                                    [name]="'sel_' + dcInfo.vaccination_administration_id" />
+                                                }
+                                            </td>
+                                            <td>
+                                                <div class="fw-semibold">{{ dcInfo.full_name }}</div>
+                                                <small class="hint">{{ dcInfo.employee_code }}</small>
+                                            </td>
+                                            <td>
+                                                @if(dcInfo.mandatory_flag){
+                                                <p-tag value="Mandatory" severity="warn" />
+                                                }
+                                                @if(dcInfo.allow_decision){
+                                                <p-tag value="May decline" severity="info" styleClass="ms-1" />
+                                                }
+                                            </td>
+                                            <td>
+                                                @if(dcInfo.new_status !== dcInfo.status){
+                                                <span class="text-muted text-decoration-line-through me-1">{{ dcInfo.status }}</span>
+                                                <i class="pi pi-arrow-right small"></i>
+                                                }
+                                                <span class="fw-semibold" [ngClass]="{
+                                                    'text-success': dcInfo.new_status === 'Completed',
+                                                    'text-danger': dcInfo.new_status === 'Missed',
+                                                    'text-primary': dcInfo.new_status === 'Pending',
+                                                    'text-warning': dcInfo.new_status === 'Exempt',
+                                                    'text-secondary': dcInfo.new_status === 'Declined'
+                                                  }">{{ dcInfo.new_status }}</span>
+                                                @if(dcInfo.new_status === 'Missed' && dcInfo.missed_reason_id){
+                                                <a href="javascript:;" class="d-block small"
+                                                    (click)="openMissedDialog([dcInfo])">
+                                                    <i class="pi pi-info-circle"></i> {{ missedReasonLabel(dcInfo) }}
+                                                </a>
+                                                }
+                                                @if((dcInfo.new_status === 'Exempt' || dcInfo.new_status === 'Declined') && dcInfo.decision_reason_id){
+                                                <a href="javascript:;" class="d-block small"
+                                                    (click)="openDecisionDialog([dcInfo], dcInfo.new_status)">
+                                                    <i class="pi pi-info-circle"></i> {{ decisionReasonLabel(dcInfo) }}
+                                                </a>
+                                                }
+                                                @for(df of (dcInfo.new_status === dcInfo.status ? (dcInfo.decision_files || []) : []); track df.file_id){
+                                                @if(df.fileOrImageUrl){
+                                                <a [href]="df.fileOrImageUrl" target="_blank" class="d-block small">
+                                                    <i class="pi pi-paperclip"></i> {{ df.file_name }}</a>
+                                                }
+                                                }
+                                            </td>
+                                            <td class="text-end">
+                                                @if(!isRowLocked(dcInfo)){
+                                                <div class="row-actions">
+                                                    <button type="button" class="btn btn-sm"
+                                                        [ngClass]="dcInfo.new_status === 'Completed' ? 'btn-success' : 'btn-outline-success'"
+                                                        (click)="setRowStatus(dcInfo, 'Completed')" title="Mark Completed">
+                                                        <i class="pi pi-check"></i> Completed</button>
+                                                    <button type="button" class="btn btn-sm"
+                                                        [ngClass]="dcInfo.new_status === 'Missed' ? 'btn-danger' : 'btn-outline-danger'"
+                                                        (click)="setRowStatus(dcInfo, 'Missed')" title="Mark Missed">
+                                                        <i class="pi pi-times"></i> Missed</button>
+                                                    <button type="button" class="btn btn-sm"
+                                                        [ngClass]="dcInfo.new_status === 'Exempt' ? 'btn-warning' : 'btn-outline-warning'"
+                                                        (click)="setRowStatus(dcInfo, 'Exempt')" title="Exempt (medical / other)">
+                                                        <i class="pi pi-shield"></i> Exempt</button>
+                                                    @if(canDecline(dcInfo)){
+                                                    <button type="button" class="btn btn-sm"
+                                                        [ngClass]="dcInfo.new_status === 'Declined' ? 'btn-secondary' : 'btn-outline-secondary'"
+                                                        (click)="setRowStatus(dcInfo, 'Declined')" title="Employee declined">
+                                                        <i class="pi pi-ban"></i> Declined</button>
+                                                    }
+                                                    @if(dcInfo.new_status !== dcInfo.status){
+                                                    <button type="button" class="btn btn-sm btn-light"
+                                                        (click)="undoRow(dcInfo)" title="Undo">
+                                                        <i class="pi pi-undo"></i></button>
+                                                    }
+                                                </div>
+                                                } @else {
+                                                <span class="hint"><i class="pi pi-lock"></i> Done</span>
+                                                @if(dcInfo.status === 'Completed' && aefiAccess().access_add){
+                                                <button type="button" class="btn btn-sm btn-outline-danger ms-2" title="Report an adverse event (AEFI)"
+                                                    (click)="onReportAefi(dcInfo)"><i class="pi pi-exclamation-triangle"></i> AEFI</button>
+                                                }
+                                                }
+                                            </td>
+                                        </tr>
+                                        } @empty {
+                                        <tr>
+                                            <td colspan="5" class="text-center hint py-4">
+                                                {{ selectedVaccine()==null ? 'Select a vaccine to load its staff.' :
+                                                (searchText ? 'No staff match the search.' : 'No staff in this list.') }}
+                                            </td>
+                                        </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Missed Reason (SRS 2.x3) — one or many employees -->
+<p-dialog [modal]="true" [(visible)]="showMissedDialog" [style]="{width:'480px'}" [breakpoints]="{'560px':'95vw'}"
+    header="Missed Reason" (onHide)="onMissedHide()">
+    <div class="vacc-form">
+        <p class="mb-2 fw-semibold">
+            {{ missedRows.length == 1 ? missedRows[0]?.full_name : missedRows.length + ' employees' }}
+        </p>
+        <div class="flex flex-col">
+            <label for="missed_reason_id">Reason</label>
+            <div class="req">
+            <p-select id="missed_reason_id" [(ngModel)]="missedInfo.missed_reason_id" name="missed_reason_id"
+                [options]="missedReasonList" [showClear]="true" placeholder="Select reason" class="form-control"
+                appendTo="body" />
+            </div>
+            @if(missedErr['missed_reason_id']){
+            <small class="error">{{ missedErr['missed_reason_id'] }}</small>
+            }
+        </div>
+        <div class="flex flex-col">
+            <label for="missed_notes">Notes {{ isOtherReason() ? '(required)' : '(optional)' }}</label>
+            <textarea pTextarea id="missed_notes" rows="3" maxlength="180" class="form-control"
+                [(ngModel)]="missedInfo.missed_notes" name="missed_notes"></textarea>
+            @if(missedErr['missed_notes']){
+            <small class="error">{{ missedErr['missed_notes'] }}</small>
+            }
+        </div>
+        <div class="flex flex-col">
+            <label for="reschedule_campaign_id">Re-schedule to (optional)</label>
+            <p-select id="reschedule_campaign_id" [(ngModel)]="missedInfo.reschedule_campaign_id"
+                name="reschedule_campaign_id" [options]="rescheduleList" [showClear]="true"
+                [placeholder]="rescheduleList.length ? 'Select another schedule' : 'No other active schedule'"
+                [disabled]="rescheduleList.length == 0" class="form-control" appendTo="body" />
+        </div>
+    </div>
+    <ng-template #footer>
+        <button type="button" class="btn btn-dark" (click)="showMissedDialog = false">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="onMissedSave()">Save</button>
+    </ng-template>
+</p-dialog>
+
+<!-- Exempt / Declined (SRS 2.x1) — one or many employees -->
+<p-dialog [modal]="true" [(visible)]="showDecisionDialog" [style]="{width:'480px'}" [breakpoints]="{'560px':'95vw'}"
+    [header]="decisionStatus === 'Exempt' ? 'Exempt — Reason' : 'Declined — Reason'" (onHide)="onDecisionHide()">
+    <div class="vacc-form">
+        <p class="mb-2 fw-semibold">
+            {{ decisionRows.length == 1 ? decisionRows[0]?.full_name : decisionRows.length + ' employees' }}
+        </p>
+        <div class="flex flex-col">
+            <label for="decision_reason_id">Reason</label>
+            <div class="req">
+            <p-select id="decision_reason_id" [(ngModel)]="decisionInfo.decision_reason_id" name="decision_reason_id"
+                [options]="decisionReasonList" [showClear]="true" placeholder="Select reason" class="form-control"
+                appendTo="body" />
+            </div>
+            @if(decisionErr['decision_reason_id']){
+            <small class="error">{{ decisionErr['decision_reason_id'] }}</small>
+            }
+        </div>
+        <div class="flex flex-col">
+            <label for="decision_notes">Notes {{ isOtherDecisionReason() ? '(required)' : '(optional)' }}</label>
+            <textarea pTextarea id="decision_notes" rows="3" maxlength="500" class="form-control"
+                [(ngModel)]="decisionInfo.decision_notes" name="decision_notes"></textarea>
+            @if(decisionErr['decision_notes']){
+            <small class="error">{{ decisionErr['decision_notes'] }}</small>
+            }
+        </div>
+        <div class="flex flex-col">
+            <label>Attachment (optional — PDF / JPG / PNG, up to 5 MB)</label>
+            <div class="d-flex align-items-center gap-2">
+                <label class="btn btn-sm btn-light mb-0" for="decision_file"><i class="pi pi-paperclip"></i> Choose file</label>
+                <input type="file" id="decision_file" class="d-none" accept=".pdf,.jpg,.jpeg,.png" (change)="onDecisionFile($event)">
+                @if(decisionInfo.file){
+                <small class="hint text-truncate">{{ decisionInfo.file.name }}
+                    <a href="javascript:;" (click)="decisionInfo.file = null"><i class="pi pi-times small"></i></a></small>
+                }
+            </div>
+            @if(decisionErr['file']){
+            <small class="error">{{ decisionErr['file'] }}</small>
+            }
+        </div>
+    </div>
+    <ng-template #footer>
+        <button type="button" class="btn btn-dark" (click)="showDecisionDialog = false">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="onDecisionSave()">Save</button>
+    </ng-template>
+</p-dialog>
+
+<app-aefi-report-dialog #aefiDialog [(visible)]="showAefiDialog" />

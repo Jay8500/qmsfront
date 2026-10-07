@@ -1,0 +1,60 @@
+
+@use '../../variables';
+
+.main-heading-link {
+    display: block !important;
+    p {
+        font-size: 14px;
+        color: variables.$textGray;
+        margin: 5px 0 0; 
+    }
+}
+
+.support-row {
+    .support-box {
+        padding: 30px;
+        border-radius: 30px;
+        background: variables.$barbgBlue;
+        min-height: 360px;
+        .support-image {
+            margin-bottom: 20px;
+            height: 250px;
+            text-align: center;
+        }
+        .support-content {
+            display: flex;
+            align-items: center;
+            .icon {
+                width: 50px;
+                .iconify {
+                    font-size: 40px;
+                    color: variables.$textBlack;
+                }
+            }
+            .right-content {
+                margin-left: 20px;
+                p {
+                    font-size: 14px;
+                    line-height: 21px;
+                    font-weight: 500;
+                    color: variables.$textBlackPrimary;
+                    margin: 0 0 5px;
+                }
+                .email {
+                    color: variables.$textBlue;
+                    font-weight: 400 !important;
+                    span {
+                        color: variables.$textBlack !important;
+                    }
+                }
+            }
+        }
+        &.box3 {
+            .support-image {
+                img {
+                    width: 80%;
+                }
+            }
+        }
+    }
+}

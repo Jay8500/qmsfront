@@ -1,0 +1,239 @@
+@use '../../../variables';
+
+.sidemenu-cover {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99;
+  width: 270px;
+  background: variables.$barbgBlue;
+  padding: 15px;
+
+  .menu-icon {
+    display: none;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    line-height: 35px;
+    text-align: center;
+    background: variables.$textWhite;
+    color: variables.$textBlackPrimary;
+    border-radius: 50%;
+    margin-right: 10px;
+
+    &:hover,
+    &:focus {
+      color: variables.$primaryColor;
+    }
+  }
+
+  .logo {
+    margin-bottom: 25px;
+
+    img {
+      width: 125px;
+    }
+  }
+}
+
+.accordion {
+  height: calc(100vh - 100px);
+  overflow-y: auto;
+
+  .accordion-item {
+    border: none;
+    background: none;
+    margin-bottom: 10px;
+
+    &.active {
+      background: variables.$textWhite;
+      border-radius: 8px;
+
+      .accordion-header .arrow {
+        transform: rotate(90deg);
+      }
+    }
+
+    .accordion-header {
+      padding:5px 10px;
+      margin-right: 5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      font-size: 13px;
+      color: variables.$textBlackPrimary;
+      position: relative;
+      border-radius: 4px;
+      transition: background 0.3s ease, color 0.3s ease;
+
+      .iconify {
+        font-size: 22px;
+        color: variables.$textBlackPrimary;
+        margin-right: 8px;
+        width: 25px;
+      }
+
+      span,
+      .arrow {
+        transition: transform 0.3s ease;
+      }
+
+      .arrow {
+        position: absolute;
+        top: 5px;
+        right: 10px;
+      }
+
+      &:hover {
+        background: variables.$primaryColor;
+        color: variables.$textWhite;
+
+        .iconify {
+          color: variables.$textWhite;
+        }
+      }
+    }
+
+    .submenu {
+      list-style: none;
+      margin: 0;
+      padding: 0 15px 10px 15px;
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.4s ease;
+      display: none;
+      li {
+        a {
+          padding: 2px 10px !important;
+        }
+      }
+
+      &.submenu-open {
+        max-height: 500px; /* adjust based on your submenu size */
+        .submenu {
+          display: block !important;
+        }
+      }
+
+      li {
+        font-size: 13px;
+        padding: 5px 0;
+
+        a {
+          color: variables.$textBlackPrimary;
+          text-decoration: none;
+          border-radius: 4px;
+          display: block;
+          padding: 10px 15px;
+          transition: background 0.3s ease, color 0.3s ease;
+
+          &:hover,
+          &:focus {
+            background: variables.$primaryColor;
+            color: variables.$textWhite;
+          }
+        }
+      }
+    }
+    &.active {
+      .submenu {
+        display:  block !important;
+      }
+    }
+  }
+
+}
+
+// Scrollbar
+.sidemenu-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #b3b3b4 #f1f1f1;
+}
+
+/* Webkit Browsers */
+.sidemenu-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sidemenu-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.sidemenu-scroll::-webkit-scrollbar-thumb {
+  background: #b3b3b4;
+  border-radius: 10px;
+}
+
+.sidemenu-scroll::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.confirmation-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.confirmation-dialog {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  h3 {
+    margin-top: 0;
+    color: #333;
+  }
+
+  .dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+
+    .btn {
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      border: none;
+      transition: background-color 0.3s ease;
+
+      &-secondary {
+        background-color: #f0f0f0;
+        color: #333;
+
+        &:hover {
+          background-color: #e0e0e0;
+        }
+      }
+
+      &-primary {
+        background-color: #2196F3;
+        color: white;
+
+        &:hover {
+          background-color: #0b7dda;
+        }
+      }
+    }
+  }
+}
+
+.sidemenu-cover.open {
+  left: -100%;
+  margin-left: -100%;
+}
+
+.sidemenu-backdrop.open {
+  left: -100%;
+}

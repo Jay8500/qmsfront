@@ -1,0 +1,414 @@
+<section class="wrapper-body">
+  <div class="container-fluid">
+    <section class="status-card">
+      <div class="main-heading-link">
+        <h3 class="main-heading">License Tracker</h3>
+        <div class="btn-group-row">
+          <div class="dropdown dropdown-style1 filterDropdown">
+            <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="iconify icon-calc pi pi-calendar"></i>
+              {{ selectedRange }}
+              <i class="iconify pi pi-angle-down"></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 7 days')">Last 7 days</a></li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 30 days')">Last 30 days</a></li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last Month')">Last Month</a></li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 6 Months')">Last 6 Months</a>
+              </li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last Year')">Last Year</a></li>
+            </ul>
+          </div>
+          <a href="javascript:;" class="btn btn-success" appAccess="access_add" (click)="onPageRoute('NEW',null)">
+            <span class="iconfiy"> <i class=" pi pi-plus-circle" style="margin-right: 2px;"></i></span>
+            New License Entry
+          </a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg3">
+            <div class="card-grid-header">
+              <h5>Total <br /> License</h5>
+              <h3>{{  stats().total_license }}</h3>
+              <div class="icon">
+                <!-- <span class="iconify" data-icon="clarity:license-line"></span> -->
+                <i class="iconify pi pi-copy primeicons-size"></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{  stats().total_license_last_updated || 'N/A' }}</h5>
+                </div>
+                <div class="col-md-5 text-end col-5">
+                  <button class="btn btn-light">View All</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg2">
+            <div class="card-grid-header">
+              <h5>Active <br />License</h5>
+              <h3>{{  stats().active_license }}</h3>
+              <div class="icon">
+                <!-- <span class="iconify" data-icon="hugeicons:note-done"></span> -->
+                <i class="iconify pi pi-search-plus primeicons-size"></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{  stats().active_license_last_updated || 'N/A' }}</h5>
+                </div>
+                <div class="col-md-5 col-5 text-end">
+                  <button class="btn btn-light">View Report</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg1">
+            <div class="card-grid-header">
+              <h5>Expired <br /> License</h5>
+              <h3>{{  stats().expired_license }}</h3>
+              <div class="icon">
+                <i class="iconify pi pi-calendar-clock primeicons-size"></i>
+                <!-- <span class="iconify" data-icon="hugeicons:note-remove"></span> -->
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{  stats().expired_license_last_updated || 'N/A' }}</h5>
+                </div>
+                <div class="col-md-5 col-5 text-end">
+                  <button class="btn btn-light">View Report</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg4">
+            <div class="card-grid-header">
+              <h5>Total Providers/ <br /> Vendors </h5>
+              <h3>{{  stats().total_providers }}</h3>
+              <div class="icon">
+                <i class="iconify pi pi-verified "></i>
+                <!-- <span class="iconify" data-icon="ph:handshake"></span> -->
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{  stats().total_providers_last_updated || 'N/A' }}</h5>
+                </div>
+                <div class="col-md-5 col-5 text-end">
+                  <button class="btn btn-light">View All</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- <section class="chart-section mt-3 mb-3">
+    <div class="row">
+      <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+        <div class="card-style1 piechart categoryWise">
+          <div class="card-header">
+            Category Wise Reports
+          </div>
+          <div class="card-body">
+            <div class="chart-wrapper">
+              <app-category-reports></app-category-reports>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+        <div class="card-style1 barchart StatusWise">
+          <div class="card-header">
+            Status Wise Report
+          </div>
+          <div class="card-body">
+            <app-status-report></app-status-report>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-lg-4 col-md-12 col-12">
+        <div class="card-style1 card-expirations">
+          <div class="card-header">
+            Upcoming Renewals
+          </div>
+          <div class="card-body">
+            <div class="grid-report">
+              <div class="icon">
+                <span class="iconify" data-icon="clarity:license-line"></span>
+              </div>
+              <div class="content">
+                <h5><a href="javascript:;">Fire License/ NOC</a></h5>
+                <p>Fire Safety - Expiring on <span class="text-danger">April 11, 2025</span></p>
+              </div>
+            </div>
+            <div class="grid-report">
+              <div class="icon">
+                <span class="iconify" data-icon="clarity:license-line"></span>
+              </div>
+              <div class="content">
+                <h5><a href="javascript:;">Bio Waste Refactor</a></h5>
+                <p>Fire Safety - Expiring on <span class="text-danger">April 11, 2025</span></p>
+              </div>
+            </div>
+            <div class="grid-report">
+              <div class="icon">
+                <span class="iconify" data-icon="clarity:license-line"></span>
+              </div>
+              <div class="content">
+                <h5><a href="javascript:;">MRI Receptor</a></h5>
+                <p>Fire Safety - Expiring on <span class="text-danger">April 11, 2025</span></p>
+              </div>
+            </div>
+            <div class="grid-report">
+              <div class="icon">
+                <span class="iconify" data-icon="clarity:license-line"></span>
+              </div>
+              <div class="content">
+                <h5><a href="javascript:;">FORM 28F</a></h5>
+                <p>Fire Safety - Expiring on <span class="text-danger">April 11, 2025</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section> -->
+
+    <section class="report-table mt-3 mb-3">
+      <div class="row">
+        <div class="col-md-12 col-12">
+          <div class="card-style2">
+            <div class="card-header backoption">
+              <div class="row">
+                <div class="col-md-5 col-12">
+                  <div class="heading-left">
+                    <h3>License Tracker List</h3>
+                  </div>
+                </div>
+                <div class="col-md-7 col-12">
+                  <div class="form-right">
+                    <a href="javascript:;" ngbTooltip="Filter" placement="top" class="icon-btn-square"
+                      (click)="filterToggle()">
+                      <i class="iconify pi pi-sliders-h"></i>
+                    </a>
+                    <div class="dropdown dropdown-style1 ms-2" appAccess="access_exp">
+                      <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Download Report
+                        <i class="iconify pi pi-angle-down"></i>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li
+                          [DCSV]="{ param :params,screenName:'License Tracker',data : licenseTrackerGrid.length,methodName : 'fnLicenseApi' }">
+                          <a class="dropdown-item" href="javascript:;">Download CSV</a>
+                        </li>
+                        <li
+                          appAccess="access_print" [PDF]="{ param :params,screenName:'License Tracker',data : licenseTrackerGrid.length,methodName : 'fnLicenseApi' }">
+                          <a class="dropdown-item" href="javascript:;">Download Pdf</a>
+                        </li>
+                        <li
+                          [EXCEL]="{ param :params,screenName:'License Tracker',data : licenseTrackerGrid.length,methodName : 'fnLicenseApi'  }">
+                          <a class="dropdown-item" href="javascript:;">Download Excel</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            @if (showFilter) {
+            <div class="filter-box form-sm">
+              <div class="row">
+                <div class="col-md-11 col-12">
+                  <div class="row gx-2">
+                    <div class="col-md-3 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="license_name_no">By License Name</label>
+                        <p-select id="license_name_no" [(ngModel)]="licenseTrackerFilters().license_name_no"
+                          name="license_name_no" [options]="licenseNameList" [filter]="true" [showClear]="true"
+                          (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="assigned_to">By Assigned To</label>
+                        <p-select id="assigned_to" [(ngModel)]="licenseTrackerFilters().assigned_to"
+                          name="assigned_to" [options]="assignedToList" [filter]="true" [showClear]="true"
+                          (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="status">By Status</label>
+                        <p-select id="status" [(ngModel)]="licenseTrackerFilters().status" name="status"
+                          [options]="statusList" [filter]="true" [showClear]="true" (onClear)="onFilterClear(true)"
+                          class="form-control" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1 col-12 ps-0">
+                  <button class="btn btn-primary w-100" (click)="onFilterClick()">Filter</button>
+                  <button class="btn btn-dark" (click)="onFilterClear(null)">Clear</button>
+                </div>
+              </div>
+            </div>
+            }
+
+            <div class="card-body table-style1 table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">S.No</th>
+                    <th width="15%" scope="col" sortable="license_name_no" (sort)="onSort($event)">
+                      License Name & No
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <!-- <th width="15%" scope="col" sortable="category" (sort)="onSort($event)">Category <span class="iconify" data-icon="bxs:sort-alt"></span></th> -->
+                    <th scope="col" sortable="provider_name" (sort)="onSort($event)">
+                      Provider / Vendor  
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="assigned_to" (sort)="onSort($event)">
+                      Assigned To 
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="issue_date" (sort)="onSort($event)">
+                      Date of Issue
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="expiry_date" (sort)="onSort($event)">
+                      Date of Expiry
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="renewal_application_date" (sort)="onSort($event)">
+                      Renewal Date
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="created_by" (sort)="onSort($event)">
+                      Created By
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="created_at" (sort)="onSort($event)">
+                      Created on
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="updated_by" (sort)="onSort($event)">
+                      Modified By
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="updated_at" (sort)="onSort($event)">
+                      Last Modified
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="status" (sort)="onSort($event)">
+                      Status
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" class="text-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (licenseTracker of licenseTrackerGrid; track licenseTracker.id) {
+                  <tr>
+                    <td scope="row">{{ licenseTracker.id }}</td>
+                    <td>{{ licenseTracker.license_name_no }}</td>
+                    <!-- <td>{{ licenseTracker.category }}</td> -->
+                    <td>{{ licenseTracker.provider_name }}</td>
+                    <td>{{ licenseTracker.assigned_to }}</td>
+                    <td>{{ licenseTracker.issue_date }}</td>
+                    <td>{{ licenseTracker.expiry_date }}</td>
+                    <td>{{ licenseTracker.renewal_application_date }}</td>
+                    <td>{{ licenseTracker.created_by }}</td>
+                    <td>{{ licenseTracker.created_at | appDate }}</td>
+                    <td>{{ licenseTracker.updated_by }}</td>
+                    <td>{{ licenseTracker.updated_at | appDate }}</td>
+                    <td [ngClass]="{
+                                                'text-danger': licenseTracker.status === 'Inactive' || licenseTracker.status === 'Expired',
+                                                'text-warning': licenseTracker.status === 'Expiring Soon' || licenseTracker.status === 'In Renewal' || licenseTracker.status === 'Incomplete',
+                                                'text-success': licenseTracker.status === 'Active',
+                                              }">
+                      {{ licenseTracker.status }}
+                    </td>
+                    <td>
+                      <div class="actiondot-dropdown">
+                        <div class="btn-group ms-2">
+                          <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="iconify pi pi-ellipsis-h"></i>
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li>
+                              <a class="dropdown-item" href="javascript:;"
+                                appAccess="access_view" (click)="onPageRoute('VIEW',licenseTracker)">View</a>
+                            </li>
+                            @if(licenseTracker.status !== 'Inactive'){
+                            <li>
+                              <a class="dropdown-item" href="javascript:;"
+                                appAccess="access_mod" (click)="onPageRoute('EDIT',licenseTracker)">Edit</a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" appAccess="access_del" (click)="onDelete(licenseTracker)">Delete</a>
+                            </li>
+                            }
+                            <!-- <li>
+                              <a class="dropdown-item" href="javascript:;"
+                                (click)="onPageRoute('EDIT',license-tracker-add)">Renewal</a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="javascript:;">Download</a>
+                            </li> -->
+                          </ul>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  }
+                </tbody>
+              </table>
+              <nav aria-label="Page navigation pagination text-end">
+                <ul class="pagination d-flex justify-content-end">
+                  <li class="page-adtInfo next" [class.disabled]="pageNators().pageNo === 1">
+                    <a class="page-link cursor" aria-label="Previous" (click)="changePage(pageNators().pageNo-1)">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                  @for(p of pageNumbers();track p){
+                  <li class="page-adtInfo" [class.active]="pageNators().pageNo === p">
+                    <a class="page-link cursor" (click)="changePage(p)">{{p}}</a>
+                  </li>
+                  }
+                  <li class="page-adtInfo prev" [class.disabled]="pageNators().pageNo === pageNators().totalPages">
+                    <a class="page-link cursor" aria-label="Next" (click)="changePage(pageNators().pageNo+1)">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>

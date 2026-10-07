@@ -1,0 +1,281 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                                        <i class="iconify pi pi-arrow-left"></i>
+                                    </a>
+                                    <h3>Care Continuity</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-12">
+                                <div class="form-right">
+                                    <button type="button" class="btn btn-dark" [disabled]="false"
+                                        (click)="onClearClick()">Clear</button>
+
+                                    <button type="submit" class="btn btn-primary" [disabled]="false"
+                                        (click)="onSubmitClick()">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="audit-info-cover mb-3">
+                            <div class="audit-status">
+                                <div class="row">
+                                    <div class="col-md-6 col-12">
+                                        <div class="left-content">
+                                            <h5>#78900346 </h5>
+                                            <p>Treatment Period: {{ ccMaster.treatment_start_date }} to
+                                                {{ ccMaster.treatment_end_date }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="right-content text-end">
+                                            <p class="mb-1">Status</p>
+                                            <span class="badge-green">{{ ccMaster.status }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-audit">
+                                <table class="table table-bordered table-line">
+                                    <tr>
+                                        <th>Patient Name </th>
+                                        <th>Age</th>
+                                        <th>Room No</th>
+                                        <th>Phone No</th>
+                                        <th>Admitted Unit</th>
+                                        <th>Diagnosis</th>
+                                        <th>Diagnosed Doctor</th>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ ccMaster.patient_name }}</td>
+                                        <td>{{ ccMaster.age }}</td>
+                                        <td>{{ ccMaster.room_no }}</td>
+                                        <td>{{ ccMaster.phone_no }}</td>
+                                        <td>{{ ccMaster.admitted_unit }}</td>
+                                        <td>{{ ccMaster.diagnosis }}</td>
+                                        <td>{{ ccMaster.doctor_name }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-md-3 col-12">
+                                <div class="formbox-left legends form-lg">
+                                    <div class="form-title">
+                                        Basic Information
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="procedure_id">Procedure / Surgery Name</label>
+                                                <p-select id="procedure_id" [(ngModel)]="ccMaster.procedure_id"
+                                                    (onBlur)="onGetErrorMsgs('procedure_id')"
+                                                    (onChange)="onGetErrorMsgs('procedure_id')" name="procedure_id"
+                                                    [options]="surgeryList" [filter]="true" [showClear]="true"
+                                                    class=" form-control" />
+                                                @if(errorMsg['procedure_id']!=''){
+                                                <small class="error">{{ errorMsg['procedure_id'] }}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="surgery_date">Surgery Date</label>
+                                                <input type="date" id="surgery_date"
+                                                    [(ngModel)]="ccMaster.surgery_date"
+                                                    (change)="onGetErrorMsgs('surgery_date')" name="surgery_date"
+                                                    class="form-control">
+                                                @if(errorMsg['surgery_date']!=''){
+                                                <small class="error">{{ errorMsg['surgery_date'] }}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="discharge_date">Discharge Date</label>
+                                                <input type="date" id="discharge_date"
+                                                    [(ngModel)]="ccMaster.discharge_date"
+                                                    (change)="onGetErrorMsgs('discharge_date')" name="discharge_date"
+                                                    class="form-control">
+                                                @if(errorMsg['discharge_date']!=''){
+                                                <small class="error">{{ errorMsg['discharge_date'] }}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="formbox-left legends form-lg ">
+                                    <div class="form-title">
+                                        Care Continuity Feedback
+                                    </div>
+                                    <div class="accordion custom-accordion1 accordion2" id="accordionExample">
+                                        @for(pathwayAdt of ccMaster['sections'];track $index;let scI = $index){
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header">
+                                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                                    [attr.data-bs-target]="'#collapseOne'+scI" aria-expanded="true"
+                                                    [attr.aria-controls]="'collapseOne'+scI">
+                                                    <h5>{{pathwayAdt.section_name}}</h5>
+                                                    <!-- <p>{{pathwayAdt.section_description}}</p> -->
+                                                </button>
+                                            </h2>
+                                            @for(qstn of pathwayAdt.questions;track $index;let j = $index){
+                                            <div [id]="'collapseOne'+scI" class="accordion-collapse collapse show"
+                                                data-bs-parent="#accordionExample">
+                                                <div class="accordion-body">
+                                                    <div class="table-audit table-responsive">
+                                                        <table class="table table-bordered mb-0">
+                                                            <tr>
+                                                                <td width="100%">
+                                                                    <div>
+
+                                                                        {{qstn.question_text }}
+                                                                        <div class="audit-check-group">
+                                                                            <input type="date"
+                                                                                [(ngModel)]="pathwayAdt.call_date"
+                                                                                name="call_date_{{scI}}"
+                                                                                class="form-control">
+                                                                            <div class="audit-check">
+                                                                                <ul>
+                                                                                    <li>
+                                                                                        <a (click)="selectAnswer(qstn,'YES')"
+                                                                                            [ngClass]="qstn.answer_text === 'YES'?'green':''"
+                                                                                            style="cursor: pointer">
+
+                                                                                            <i
+                                                                                                class="iconify pi pi-check-circle"></i>
+                                                                                            Yes</a>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <a (click)="selectAnswer(qstn,'NO')"
+                                                                                            [ngClass]="qstn.answer_text === 'NO'?'red':''"
+                                                                                            style="cursor: pointer">
+
+                                                                                            <i
+                                                                                                class="iconify pi pi-check-circle"></i>
+                                                                                            No</a>
+                                                                                    </li>
+                                                                                    @if(qstn.is_not_applicable){
+                                                                                    <li>
+                                                                                        <a (click)="selectAnswer(qstn,'NA')"
+                                                                                            [ngClass]="qstn.answer_text === 'NA'?'yellow-class':''"
+                                                                                            style="cursor: pointer">
+
+                                                                                            <i
+                                                                                                class="iconify pi pi-check-circle"></i>
+                                                                                            NA</a>
+                                                                                    </li>
+                                                                                    }
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div>
+                                                                        <textarea pTextarea
+                                                                            [(ngModel)]="qstn.remarks" rows="10"
+                                                                            name="remarks_{{j}}"
+                                                                            class="form-control"></textarea>
+                                                                    </div>
+                                                                </td>
+
+                                                            </tr>
+                                                        </table>
+                                                        @if(qstn.is_required){
+                                                        <div class="error">
+                                                            Response Required
+                                                        </div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            }
+                                        </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-12">
+                                <div class="formbox-left legends form-lg">
+                                    <div class="form-title">
+                                        Case Closure
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="next_checkup_date">Next Check up Date</label>
+                                                <input type="date" id="next_checkup_date"
+                                                    [(ngModel)]="ccMaster.next_checkup_date"
+                                                    (change)="onGetErrorMsgs('next_checkup_date')"
+                                                    name="next_checkup_date" class="form-control">
+                                                @if(errorMsg['next_checkup_date']!=''){
+                                                <small class="error">{{ errorMsg['next_checkup_date'] }}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-12">
+                                            <div class="radio-group mt-2">
+                                                <p>Did the patient came for check-up?</p>
+                                                <div class="form-radio-inline mt-2">
+                                                    <div class="form-group">
+                                                        <p-toggleswitch [(ngModel)]="ccMaster.is_visited"
+                                                            name="is_visited" [disabled]="false" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="visited_dt">Visited On</label>
+                                                <input type="date" id="visited_dt" [(ngModel)]="ccMaster.visited_dt"
+                                                    (change)="onGetErrorMsgs('visited_dt')" name="visited_dt"
+                                                    class="form-control">
+                                                @if(errorMsg['visited_dt']!=''){
+                                                <small class="error">{{ errorMsg['visited_dt'] }}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="complication">Any Complication</label>
+                                                <textarea pTextarea id="complication"
+                                                    [(ngModel)]="ccMaster.complication" rows="10" name="complication"
+                                                    class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<style>
+    .yellow-class {
+        background-color: yellow !important;
+    }
+
+    .error {
+        color: red;
+        font-weight: bold;
+    }
+
+    textarea {
+        height: 100% !important;
+    }
+</style>

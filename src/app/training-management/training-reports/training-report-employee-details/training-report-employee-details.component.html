@@ -1,0 +1,130 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                                        <i class="iconify pi pi-arrow-left"></i>
+                                    </a>
+                                    <h3>Employee's Training Report</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-12">
+                                <div class="form-right">
+                                    <div class="dropdown dropdown-style1 ms-2">
+                                        <button class="btn btn-light dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            Download Report <span class="iconify"
+                                                data-icon="akar-icons:chevron-down"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                                            <li><a class="dropdown-item" href="javascript:;">Download Word</a></li>
+                                            <li><a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body table-style1 table-responsive radius-4">
+                        <div class="audit-info-cover">
+                            <div class="table-audit table-responsive">
+                                <table class="table table-bordered table-line mb-0">
+                                    <tr>
+                                        <th>Employee Name</th>
+                                        <th>Department / Role</th>
+                                        <th>Trainings Attended</th>
+                                        <th>Total Certifications</th>
+                                    </tr>
+                                    @for(emp of empGrid;track $index){
+                                    <tr>
+                                        <td>{{emp.employee_name}}</td>
+                                        <td>{{emp.role}}</td>
+                                        <td class="hq-text-right">{{emp.trainings_attended}}</td>
+                                        <td class="hq-text-right">{{emp.total_certifications}}</td>
+                                    </tr>
+                                    }
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="card-header backoption mt-3">
+                            <div class="row">
+                                <div class="col-md-12 col-12">
+                                    <div class="heading-left">
+                                        <h3>Training Details</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-body table-style1 table-responsive">
+                            <table class="table table-striped mt-2">
+                                <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th>Training Name</th>
+                                        <th>Faculty Name</th>
+                                        <th>Mode of Training</th>
+                                        <th>Training Period</th>
+                                        <th>Attendance</th>
+                                        <th>Score</th>
+                                        <th>Result</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (training of trainingData; track $index) {
+                                    <tr>
+                                        <td>{{ training.sno.toString().padStart(2, '0') }}</td>
+                                        <td>{{ training.training_name }}</td>
+                                        <td>{{ training.faculty_name }}</td>
+                                        <td>{{ training.mode_of_training }}</td>
+                                        <td>{{ training.training_period }}</td>
+                                        <td [ngClass]="{
+                                                'text-success': training.attendance_num >= 70,
+                                                'text-warning': training.attendance_num >= 50 && training.attendance_num < 70,
+                                                'text-danger': training.attendance_num < 50
+                                            }">{{ training.attendance }}</td>
+                                        <td>{{ training.score }}</td>
+                                        <td [ngClass]="{
+                                                'text-success': training.result === 'Pass',
+                                                'text-danger': training.result === 'Fail'
+                                            }">{{ training.result }}</td>
+                                    </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                            <!-- <nav aria-label="Page navigation pagination text-end">
+                                    <ul class="pagination d-flex justify-content-end">
+                                      <li class="page-item next" [class.disabled]="pageNators().pageNo === 1">
+                                        <a class="page-link" aria-label="Previous" (click)="changePage(pageNators().pageNo-1)">
+                                          <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                      </li>
+                                      @for(p of pageNumbers();track p){
+                                      <li class="page-item" [class.active]="pageNators().pageNo === p">
+                                        <a class="page-link" (click)="changePage(p)">{{p}}</a>
+                                      </li>
+                                      }
+                                      <li class="page-item prev" [class.disabled]="pageNators().pageNo === pageNators().totalPages">
+                                        <a class="page-link" aria-label="Next" (click)="changePage(pageNators().pageNo+1)">
+                                          <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </nav> -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

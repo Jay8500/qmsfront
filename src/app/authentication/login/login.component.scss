@@ -1,0 +1,87 @@
+.login-page {
+    overflow: hidden;
+    .login-left {
+        height: 100vh;
+        img {
+            width: 100%;
+        }
+    }
+    .login-right {
+        .login-box {
+            border: 2px solid #EBF2FA;
+            border-radius: 8px;
+            padding: 40px;
+            width: 500px;
+            .logo {
+                margin-bottom: 10px;
+                img {
+                    width: 182px;
+                }
+            }
+            h3 {
+                font-size: 20px;
+                font-weight: 600;
+                color: #0E2024;
+                margin: 0 0 5px;
+            }
+            p {
+                font-size: 14px;
+                color: #0E2024;
+                margin-bottom: 15px;
+            }
+        }
+        form {
+            .form-group {
+                margin-bottom: 15px;
+                label {
+                    font-size: 14px;
+                    font-weight: 600;
+                    color: #0E2024;
+                    width: 100%;
+                    margin-bottom: 5px;
+                }
+                .form-control {
+                    background: #EBF2FA;
+                    border-color: #EBF2FA;
+                    height: 45px;
+                    border-radius: 6px;
+                    box-shadow: none !important;
+                    outline: none !important;
+                    font-size: 14px;
+                    color: #0E2024;
+                }
+            }
+            .btn-primary {
+                background: #1D7ECE;
+                border-color: #1D7ECE;
+                border-radius: 6px;
+                height: 45px;
+                font-size: 16px;
+                text-transform: uppercase;
+                &:hover, &:focus {
+                    background: #136db6;
+                    border-color: #136db6;
+                }
+            }
+            .form-check {
+                label {
+                    font-size: 14px;
+                    color: #0E2024;
+                }
+                .form-check-input {
+                    box-shadow: none;
+                    outline: none;
+                }
+            }
+            .form-check-input:checked {
+                background-color: #5acc78;
+                border-color: #5acc78;
+              }
+        }
+    }
+}
+
+.hv100 {
+    height: 100vh;
+}
+

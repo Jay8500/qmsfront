@@ -1,0 +1,383 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="row">
+      <div class="col-md-12 col-12">
+        <div class="card-style2">
+          <div class="card-header backoption">
+            <div class="row">
+              <div class="col-md-7 col-12">
+                <div class="heading-left">
+                  <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                    <i class="iconify pi pi-arrow-left"></i>
+                  </a>
+                  <h3>Create New Competency</h3>
+                </div>
+              </div>
+              <div class="col-md-5 col-12">
+                <div class="form-right">
+                  <button type="button" class="btn btn-dark">Clear</button>
+                  <button type="submit" class="btn btn-primary" (click)="submitForm()">Submit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12 col-12">
+                <div class="formbox-left form-lg">
+                  <form>
+                    <!-- Employee Details Section -->
+                    <div class="form-section margin0">
+                      <div class="form-title">Employee Details</div>
+                      <div class="row gx-2">
+                        <div class="col-md-2 col-12">
+                          <div class="form-group">
+                            <label>Department</label>
+                            <div style="position: relative;display:inline-block;width:100%">
+                            <select class="form-select" [(ngModel)]="selectedDepartment" name="department"
+                            (change)="onGetErrMsg('selectedDepartment')" (blur)="onGetErrMsg('selectedDepartment')">
+                              <option value="">Select Department</option>
+                              @for (dept of departments; track dept) {
+                              <option [value]="dept">{{dept}}</option>
+                              }
+                            </select>
+                          <div style="position: absolute;
+                            top: 0;
+                            right: 0px;
+                            width: 0px;
+                            height: 0;
+                            border-top: 12px solid red;
+                            border-left: 12px solid transparent;"></div>
+                        </div>
+                        @if(errMsg['selectedDepartment']!=''){
+                            <small class="error">{{ errMsg['selectedDepartment'] }}</small>
+                            }
+                          </div>
+                        </div>
+                        <div class="col-md-2 col-12">
+                          <div class="form-group">
+                            <label>Role</label>
+                            <div style="position: relative;display:inline-block;width:100%">
+                            <select class="form-select" [(ngModel)]="selectedRole" name="role" 
+                            (change)="onGetErrMsg('selectedRole')" (blur)="onGetErrMsg('selectedRole')">
+                              <option value="">Select Role</option>
+                              @for (role of roles; track role) {
+                              <option [value]="role">{{role}}</option>
+                              }
+                            </select>
+                            <div style="position: absolute;
+                            top: 0;
+                            right: 0px;
+                            width: 0px;
+                            height: 0;
+                            border-top: 12px solid red;
+                            border-left: 12px solid transparent;"></div>
+                        </div>
+                        @if(errMsg['selectedRole']!=''){
+                            <small class="error">{{ errMsg['selectedRole'] }}</small>
+                            }
+                          </div>
+                        </div>
+                        <div class="col-md-2 col-12">
+                          <div class="form-group">
+                            <label>Unit</label>
+                            <div style="position: relative;display:inline-block;width:100%">
+                            <select class="form-select" [(ngModel)]="selectedUnit" name="unit"
+                            (change)="onGetErrMsg('selectedUnit')" (blur)="onGetErrMsg('selectedUnit')">
+                              <option value="">Select Unit</option>
+                              @for (unit of units; track unit) {
+                              <option [value]="unit">{{unit}}</option>
+                              }
+                            </select>
+                            <div style="position: absolute;
+                            top: 0;
+                            right: 0px;
+                            width: 0px;
+                            height: 0;
+                            border-top: 12px solid red;
+                            border-left: 12px solid transparent;"></div>
+                        </div>
+                        @if(errMsg['selectedUnit']!=''){
+                            <small class="error">{{ errMsg['selectedUnit'] }}</small>
+                            }
+                          </div>
+                        </div>
+                        <div class="col-md-3 col-12">
+                          <div class="form-group">
+                            <label>Employee ID / Name</label>
+                            <div style="position: relative;display:inline-block;width:100%">
+                            <select class="form-select" [(ngModel)]="selectedEmployee" name="employee"
+                            (change)="onGetErrMsg('selectedEmployee')" (blur)="onGetErrMsg('selectedEmployee')">
+                              <option value="">Select Employees</option>
+                              @for (emp of employees; track emp) {
+                              <option [value]="emp">{{emp}}</option>
+                              }
+                            </select>
+                            <div style="position: absolute;
+                            top: 0;
+                            right: 0px;
+                            width: 0px;
+                            height: 0;
+                            border-top: 12px solid red;
+                            border-left: 12px solid transparent;"></div>
+                        </div>
+                        @if(errMsg['selectedEmployee']!=''){
+                            <small class="error">{{ errMsg['selectedEmployee'] }}</small>
+                            }
+                          </div>
+                        </div>
+                        <div class="col-md-3 col-12">
+                          <div class="form-group">
+                            <label>Assessment Completion Duration</label>
+                            <div style="position: relative;display:inline-block;width:100%">
+                            <select class="form-select" [(ngModel)]="assessmentDuration" name="duration"
+                            (change)="onGetErrMsg('assessmentDuration')" (blur)="onGetErrMsg('assessmentDuration')">
+                              <option value="30 Days">30 Days</option>
+                              <option value="60 Days">60 Days</option>
+                              <option value="90 Days">90 Days</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Assessment Frequency Section -->
+                    <div class="form-section">
+                      <div class="form-title">Assessment Frequency</div>
+                      <div class="row">
+                        <!-- 1st Assessment Frequency -->
+                        <div class="col-md-4 col-12">
+                          <div class="assessment-column">
+                            <div class="assessment-header">
+                              <h5>1st Assessment Frequency</h5>
+                              <div class="action-icons">
+                                <a href="javascript:;"><span class="iconify add-icon"
+                                    data-icon="basil:add-outline"></span> </a>
+                              </div>
+                            </div>
+                            <div class="assessment-fields">
+                              <div class="form-group">
+                                <select class="form-select" [(ngModel)]="firstAssessmentFrequency"
+                                  name="firstFrequency"  (change)="onGetErrMsg('firstAssessmentFrequency')" (blur)="onGetErrMsg('firstAssessmentFrequency')">
+                                  <option value="">Select Frequency Days</option>
+                                  @for (freq of frequencyDays; track freq) {
+                                  <option [value]="freq">{{freq}}</option>
+                                  }
+                                </select>
+                                @if(errMsg['firstAssessmentFrequency']!=''){
+                                  <small class="error">{{ errMsg['firstAssessmentFrequency'] }}</small>
+                                  }
+                              </div>
+                              <div class="form-group">
+                                <select class="form-select" [(ngModel)]="firstAssessmentType" name="firstType"
+                                (change)="onGetErrMsg('firstAssessmentType')" (blur)="onGetErrMsg('firstAssessmentType')">
+                                  <option value="">Select Assessment Type</option>
+                                  @for (type of assessmentTypes; track type) {
+                                  <option [value]="type">{{type}}</option>
+                                  }
+                                </select>
+                                @if(errMsg['firstAssessmentType']!=''){
+                                  <small class="error">{{ errMsg['firstAssessmentType'] }}</small>
+                                  }
+                              </div>
+                              <div class="form-group">
+                                <select class="form-select" [(ngModel)]="firstReviewer1" name="firstReviewer1"
+                                (change)="onGetErrMsg('firstReviewer1')" (blur)="onGetErrMsg('firstReviewer1')">
+                                  <option value="">Select 1st Reviewer</option>
+                                  @for (reviewer of reviewers; track reviewer) {
+                                  <option [value]="reviewer">{{reviewer}}</option>
+                                  }
+                                </select>
+                                @if(errMsg['firstReviewer1']!=''){
+                                  <small class="error">{{ errMsg['firstReviewer1'] }}</small>
+                                  }
+                              </div>
+                              <div class="form-group">
+                                <select class="form-select" [(ngModel)]="firstReviewer2" name="firstReviewer2" 
+                                (change)="onGetErrMsg('firstReviewer2')" (blur)="onGetErrMsg('firstReviewer2')">
+                                  <option value="">Select 2nd Reviewer</option>
+                                  @for (reviewer of reviewers; track reviewer) {
+                                  <option [value]="reviewer">{{reviewer}}</option>
+                                  }
+                                </select>
+                                @if(errMsg['firstReviewer2']!=''){
+                                  <small class="error">{{ errMsg['firstReviewer2'] }}</small>
+                                  }
+                              </div>
+                              <div class="form-group">
+                                <select class="form-select" [(ngModel)]="firstReviewer3" name="firstReviewer3"
+                                (change)="onGetErrMsg('firstReviewer3')" (blur)="onGetErrMsg('firstReviewer3')">
+                                  <option value="">Select 3rd Reviewer</option>
+                                  @for (reviewer of reviewers; track reviewer) {
+                                  <option [value]="reviewer">{{reviewer}}</option>
+                                  }
+                                </select>
+                                @if(errMsg['firstReviewer3']!=''){
+                                  <small class="error">{{ errMsg['firstReviewer3'] }}</small>
+                                  }
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- 2nd Assessment Frequency -->
+                        <div class="col-md-4 col-12">
+                          <div class="assessment-column">
+                            <div class="assessment-header">
+                              <h5>2nd Assessment Frequency</h5>
+                              <div class="action-icons">
+                                <a href="javascript:;"><span class="iconify add-icon"
+                                    data-icon="basil:add-outline"></span> </a>
+                                <a href="javascript:;"><span class="iconify add-icon"
+                                    data-icon="mdi:delete-outline"></span> </a>
+                              </div>
+                            </div>
+                            <div class="assessment-fields">
+                              <div class="form-group">
+                                <select class="form-select" [(ngModel)]="secondAssessmentFrequency"
+                                  name="secondFrequency"(change)="onGetErrMsg('secondAssessmentFrequency')" (blur)="onGetErrMsg('secondAssessmentFrequency')">
+                                  <option value="">Select Frequency Days</option>
+                                  @for (freq of frequencyDays; track freq) {
+                                  <option [value]="freq">{{freq}}</option>
+                                  }
+                                </select>
+                                @if(errMsg['secondAssessmentFrequency']!=''){
+                                  <small class="error">{{ errMsg['secondAssessmentFrequency'] }}</small>
+                                  }
+                              </div>
+                              <div class="form-group">
+                                <select class="form-select" [(ngModel)]="secondAssessmentType" name="secondType"
+                                (change)="onGetErrMsg('secondAssessmentType')" (blur)="onGetErrMsg('secondAssessmentType')">
+                                  <option value="">Select Assessment Type</option>
+                                  @for (type of assessmentTypes; track type) {
+                                  <option [value]="type">{{type}}</option>
+                                  }
+                                </select>
+                                @if(errMsg['secondAssessmentType']!=''){
+                                  <small class="error">{{ errMsg['secondAssessmentType'] }}</small>
+                                  }
+                              </div>
+                              <div class="form-group">
+                                <select class="form-select" [(ngModel)]="secondReviewer1" name="secondReviewer1"
+                                (change)="onGetErrMsg('secondReviewer1')" (blur)="onGetErrMsg('secondReviewer1')">
+                                  <option value="">Select 1st Reviewer</option>
+                                  @for (reviewer of reviewers; track reviewer) {
+                                  <option [value]="reviewer">{{reviewer}}</option>
+                                  }
+                                </select>
+                                @if(errMsg['secondReviewer1']!=''){
+                                  <small class="error">{{ errMsg['secondReviewer1'] }}</small>
+                                  }
+                              </div>
+                              <div class="form-group">
+                                <select class="form-select" [(ngModel)]="secondReviewer2" name="secondReviewer2"
+                                (change)="onGetErrMsg('secondReviewer2')" (blur)="onGetErrMsg('secondReviewer2')">
+                                  <option value="">Select 2nd Reviewer</option>
+                                  @for (reviewer of reviewers; track reviewer) {
+                                  <option [value]="reviewer">{{reviewer}}</option>
+                                  }
+                                </select>
+                                @if(errMsg['secondReviewer2']!=''){
+                                  <small class="error">{{ errMsg['secondReviewer2'] }}</small>
+                                  }
+                              </div>
+                              <div class="form-group">
+                                <select class="form-select" [(ngModel)]="secondReviewer3" name="secondReviewer3"
+                                (change)="onGetErrMsg('secondReviewer3')" (blur)="onGetErrMsg('secondReviewer3')">
+                                  <option value="">Select 3rd Reviewer</option>
+                                  @for (reviewer of reviewers; track reviewer) {
+                                  <option [value]="reviewer">{{reviewer}}</option>
+                                  }
+                                </select>
+                                @if(errMsg['secondReviewer3']!=''){
+                                  <small class="error">{{ errMsg['secondReviewer3'] }}</small>
+                                  }
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Annual Assessment Frequency -->
+                        <div class="col-md-4 col-12">
+                          <div class="assessment-column">
+                            <div class="assessment-header">
+                              <h5>Annual Assessment Frequency</h5>
+                            </div>
+                            <div class="assessment-fields">
+                              <div class="form-group">
+                                <select class="form-select" [(ngModel)]="annualAssessmentFrequency"
+                                  name="annualFrequency"   (change)="onGetErrMsg('annualAssessmentFrequency')" (blur)="onGetErrMsg('annualAssessmentFrequency')">
+                                  <option value="">Select Frequency Years</option>
+                                  @for (freq of frequencyYears; track freq) {
+                                  <option [value]="freq">{{freq}}</option>
+                                  }
+                                </select>
+                                @if(errMsg['annualAssessmentFrequency']!=''){
+                                  <small class="error">{{ errMsg['annualAssessmentFrequency'] }}</small>
+                                  }
+                              </div>
+                              <div class="form-group">
+                                <select class="form-select" [(ngModel)]="annualAssessmentType" name="annualType"
+                                (change)="onGetErrMsg('annualAssessmentType')" (blur)="onGetErrMsg('annualAssessmentType')">
+                                  <option value="">Select Assessment Type</option>
+                                  @for (type of assessmentTypes; track type) {
+                                  <option [value]="type">{{type}}</option>
+                                  }
+                                </select>
+                                @if(errMsg['annualAssessmentType']!=''){
+                                  <small class="error">{{ errMsg['annualAssessmentType'] }}</small>
+                                  }
+                              </div>
+                              <div class="form-group">
+                                <select class="form-select" [(ngModel)]="annualReviewer1" name="annualReviewer1"
+                                (change)="onGetErrMsg('annualReviewer1')" (blur)="onGetErrMsg('annualReviewer1')">
+                                  <option value="">Select 1st Reviewer</option>
+                                  @for (reviewer of reviewers; track reviewer) {
+                                  <option [value]="reviewer">{{reviewer}}</option>
+                                  }
+                                </select>
+                                @if(errMsg['annualReviewer1']!=''){
+                                  <small class="error">{{ errMsg['annualReviewer1'] }}</small>
+                                  }
+                              </div>
+                              <div class="form-group">
+                                <select class="form-select" [(ngModel)]="annualReviewer2" name="annualReviewer2"
+                                (change)="onGetErrMsg('annualReviewer2')" (blur)="onGetErrMsg('annualReviewer2')">
+                                  <option value="">Select 2nd Reviewer</option>
+                                  @for (reviewer of reviewers; track reviewer) {
+                                  <option [value]="reviewer">{{reviewer}}</option>
+                                  }
+                                </select>
+                                @if(errMsg['annualReviewer2']!=''){
+                                  <small class="error">{{ errMsg['annualReviewer2'] }}</small>
+                                  }
+                              </div>
+                              <div class="form-group">
+                                <select class="form-select" [(ngModel)]="annualReviewer3" name="annualReviewer3"
+                                (change)="onGetErrMsg('annualReviewer3')" (blur)="onGetErrMsg('annualReviewer3')">
+                                  <option value="">Select 3rd Reviewer</option>
+                                  @for (reviewer of reviewers; track reviewer) {
+                                  <option [value]="reviewer">{{reviewer}}</option>
+                                  }
+                                </select>
+                                @if(errMsg['annualReviewer3']!=''){
+                                  <small class="error">{{ errMsg['annualReviewer3'] }}</small>
+                                  }
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

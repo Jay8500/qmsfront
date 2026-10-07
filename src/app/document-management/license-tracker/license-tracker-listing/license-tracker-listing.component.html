@@ -1,0 +1,194 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="row">
+      <div class="col-md-12 col-12">
+        <div class="card-style2">
+          <div class="card-header backoption">
+            <div class="row">
+              <div class="col-md-5 col-12">
+                <div class="heading-left">
+                  <a href="javascript:;" class="icon-btn-square" (click)="goBack()"><span class="iconify" data-icon="famicons:arrow-back-outline"></span></a>
+                  <h3>License Tracker History</h3>
+                </div>
+              </div>
+              <div class="col-md-7 col-12">
+                <div class="form-right">
+                  <a href="javascript:;" ngbTooltip="Filter" placement="top" class="icon-btn-square" (click)="filterToggle()"><span class="iconify" data-icon="mage:filter"></span></a>
+                  <div class="dropdown dropdown-style1 ms-2">
+                    <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Download Report <span class="iconify" data-icon="akar-icons:chevron-down"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                      <li><a class="dropdown-item" href="javascript:;">Download Word</a></li>
+                      <li><a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          @if (showFilter) {
+            <div class="filter-box form-sm">
+              <div class="row">
+                <div class="col-md-11 col-12">
+                  <div class="row gx-2">
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                        <select class="form-select">
+                          <option>By License Name</option>
+                          <option>Bio-Medical Waste</option>
+                          <option>Fire Safety Certificate</option>
+                          <option>Pollution Control Board Clearance</option>
+                          <option>AERB License</option>
+                          <option>Pharmacy License</option>
+                          <option>Food Safety License</option>
+                          <option>Building Fitness Certificate</option>
+                          <option>Lift License</option>
+                          <option>Blood Bank License</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                        <select class="form-select">
+                          <option>By Category</option>
+                          <option>Fire Safety Checklist</option>
+                          <option>Radiation Equipment Safety List</option>
+                          <option>Waste Disposal Compliance</option>
+                          <option>Pharmacy Storage Norms</option>
+                          <option>Biomedical Waste Handling SOP</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                        <select class="form-select">
+                          <option>By Assigned To</option>
+                          <option>Taylor Swift (8745)</option>
+                          <option>Martin Garrix (8745)</option>
+                          <option>Kainen Lampe (8745)</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                        <input type="date" class="form-control" placeholder="By Date of Expiry">
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                        <input type="date" class="form-control" placeholder="By Renewal Date">
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                        <select class="form-select">
+                          <option>By Status</option>
+                          <option>Active</option>
+                          <option>Renewal</option>
+                          <option>Expired</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1 col-12 ps-0">
+                  <button class="btn btn-primary w-100">Filter</button>
+                </div>
+              </div>
+            </div>
+          }
+
+          <div class="card-body table-style1 table-responsive radius-4">
+            <div class="fixed-header-table">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">S.No</th>
+                    <th width="15%" scope="col" sortable="license" (sort)="onSort($event)">License Name & No <span class="iconify" data-icon="bxs:sort-alt"></span></th>
+                    <th width="15%" scope="col" sortable="category" (sort)="onSort($event)">Category <span class="iconify" data-icon="bxs:sort-alt"></span></th>
+                    <th scope="col" sortable="provider" (sort)="onSort($event)">Provider / Vendor  </th>
+                    <th scope="col" sortable="assigned" (sort)="onSort($event)">Assigned To </th>
+                    <th scope="col" sortable="dateissue" (sort)="onSort($event)">Date of Issue</th>
+                    <th scope="col" sortable="dateexpiry" (sort)="onSort($event)">Date of Expiry</th>
+                    <th scope="col" sortable="renewal" (sort)="onSort($event)">Renewal Application Date</th>
+                    <th scope="col" sortable="status" (sort)="onSort($event)">Status </th>
+                    <th scope="col" class="text-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (auditTable of countries; track auditTable.license) {
+                    <tr>
+                      <td scope="row">{{ auditTable.id }}</td>
+                      <td>{{ auditTable.license }}</td>
+                      <td>{{ auditTable.category }}</td>
+                      <td>{{ auditTable.provider }}</td>
+                      <td>{{ auditTable.assigned }}</td>
+                      <td>{{ auditTable.dateissue }}</td>
+                      <td>{{ auditTable.dateexpiry }}</td>
+                      <td>{{ auditTable.renewal }}</td>
+                                            <td [ngClass]="{
+                                                'text-danger': auditTable.status === 'Expired',
+                                                'text-success': auditTable.status === 'Active',
+                                                'text-primary': auditTable.status === 'Renewal',
+                                              }">
+                        {{ auditTable.status }}
+                      </td>
+                      <td>
+                        <div class="action-rowflex">
+                          <div class="action-dropdown float-end">
+                            <ul>
+                              <li>
+                                <a href="javascript:;" routerLink="/license-tracker-details"><span class="iconify" data-icon="lets-icons:view-alt-fill"></span></a>
+                              </li>
+                            </ul>
+                          </div>
+                          <div class="actiondot-dropdown">
+                            <div class="btn-group ms-2">
+                              <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="iconify" data-icon="tabler:dots"></span>
+                              </button>
+                              <ul class="dropdown-menu">
+                                <li>
+                                  <a class="dropdown-item" href="javascript:;"><span class="iconify" data-icon="lucide:folder-down"></span> Option1</a>
+                                </li>
+                                <li>
+                                  <a class="dropdown-item" href="javascript:;"><span class="iconify" data-icon="lucide:folder-down"></span> Option2</a>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+            <nav aria-label="Page navigation pagination text-end">
+              <ul class="pagination d-flex justify-content-end">
+                <li class="page-item next">
+                  <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">...</a></li>
+                <li class="page-item"><a class="page-link" href="#">10</a></li>
+                <li class="page-item prev">
+                  <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

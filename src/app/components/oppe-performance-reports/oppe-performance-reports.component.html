@@ -1,0 +1,16 @@
+<div id="chart" class="oppe-perf-report">
+  <apx-chart
+    [series]="chartOptions.series"
+    [chart]="chartOptions.chart"
+    [plotOptions]="chartOptions.plotOptions"
+    [labels]="chartOptions.labels"
+    [fill]="chartOptions.fill"
+    [stroke]="chartOptions.stroke"
+  ></apx-chart>
+</div>
+
+<div class="custom-legend">
+  <div><span class="dot green"></span> 70-100% </div>
+  <div><span class="dot yellow"></span> 30-70% </div>
+  <div><span class="dot red"></span> 0-30%</div>
+</div>

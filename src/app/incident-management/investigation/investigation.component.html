@@ -1,0 +1,124 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    @if (inc(); as d) {
+    <div class="qms-head">
+      <div class="d-flex align-items-center gap-2">
+        <a href="javascript:;" class="icon-btn-square" (click)="goBack()"><i class="iconify pi pi-arrow-left"></i></a>
+        <div>
+          <h3>Investigation · {{ d.incident_code }} <span class="qms-chip ms-1" [attr.data-s]="d.status">{{ d.status }}</span></h3>
+          <p class="qms-sub">Officer: {{ d.investigation?.investigation_officer || '-' }}@if (d.investigation?.assign_remarks) { · "{{ d.investigation.assign_remarks }}" }</p>
+        </div>
+      </div>
+      @if (d.can_investigate) {
+      <div class="qms-actions">
+        <button class="btn btn-light" [disabled]="saving()" (click)="save('DRAFT')"><i class="pi pi-save me-1"></i>Save Draft</button>
+        <button class="btn btn-outline-danger" [disabled]="saving()" (click)="rejectReason = ''; showReject.set(true)"><i class="pi pi-times me-1"></i>Reject</button>
+        <button class="btn btn-primary" [disabled]="saving()" (click)="save('APPROVE')"><i class="pi pi-send me-1"></i>Submit for HOD Review</button>
+      </div>
+      }
+    </div>
+    @if (!d.can_investigate) {
+    <div class="qms-note warn">This incident is not open for your investigation (status {{ d.status }}). Showing it read-only.</div>
+    }
+
+    <div class="row g-3">
+      <!-- incident summary -->
+      <div class="col-xl-4 col-12">
+        <div class="qms-card sticky">
+          <div class="qms-section-title">Incident</div>
+          <div class="qms-kv one">
+            <div><label>Type</label><span>{{ d.incident_type }}</span></div>
+            <div><label>Date &amp; time</label><span>{{ d.incident_date | appDate }}</span></div>
+            <div><label>Happened to</label><span>{{ d.happened_to }}@if (d.happened_to_name) { - {{ d.happened_to_name }} }</span></div>
+            <div><label>Department / Location</label><span>{{ d.department || '-' }} · {{ d.location || '-' }}</span></div>
+            <div><label>Reported by</label><span>{{ d.reported_by }}</span></div>
+          </div>
+          <div class="qms-text-box mt-2"><label>Description</label><p class="qms-text">{{ d.incident_description }}</p></div>
+          <div class="qms-text-box mt-2"><label>Reason</label><p class="qms-text">{{ d.reason_for_incident }}</p></div>
+          <div class="qms-text-box mt-2"><label>Immediate action</label><p class="qms-text">{{ d.immediate_action_taken }}</p></div>
+          @if (d.evidence?.length) { <label class="small text-muted mt-2 d-block">Evidence</label><qms-file-list [files]="d.evidence" [compact]="true" /> }
+        </div>
+      </div>
+
+      <!-- investigation form -->
+      <div class="col-xl-8 col-12">
+        <fieldset class="qms-form" [disabled]="!d.can_investigate">
+          <div class="qms-card">
+            <div class="qms-section-title">Findings <span class="qms-count" [class.bad]="len(m.findings) < 20">({{ len(m.findings) }})</span></div>
+            <div class="qms-req"><textarea pTextarea rows="4" class="form-control w-100" [(ngModel)]="m.findings" placeholder="What the investigation found (interviews, site visit, records)"></textarea></div>
+          </div>
+
+          <div class="qms-card">
+            <div class="qms-section-title">Root Cause Analysis</div>
+            <div class="row g-3 mb-2">
+              <div class="col-md-6 col-12">
+                <label>Method</label>
+                <div class="qms-pills">
+                  <button type="button" [class.on]="m.rca_method === '5WHYS'" (click)="m.rca_method = '5WHYS'">5 Whys</button>
+                  <button type="button" [class.on]="m.rca_method === 'FISHBONE'" (click)="m.rca_method = 'FISHBONE'">Fishbone</button>
+                </div>
+              </div>
+              <div class="col-md-6 col-12">
+                <label>RCA Category</label>
+                <div class="qms-req"><p-select [options]="categoryList" [(ngModel)]="m.rca_category_id" placeholder="Select" [disabled]="!d.can_investigate" appendTo="body" /></div>
+              </div>
+            </div>
+            @if (m.rca_method === '5WHYS') {
+            @for (w of m.whys; track $index; let i = $index) {
+            <div class="why-row">
+              <span class="why-n">Why {{ i + 1 }}</span>
+              <input pInputText class="form-control" [(ngModel)]="m.whys[i]" [placeholder]="i === 0 ? 'Why did it happen?' : 'Why?'">
+            </div>
+            }
+            } @else {
+            <div class="fishbone">
+              @for (f of fishboneKeys; track f.k) {
+              <div>
+                <label>{{ f.label }}</label>
+                <textarea pTextarea rows="2" class="form-control w-100" [(ngModel)]="m.fishbone[f.k]"></textarea>
+              </div>
+              }
+            </div>
+            }
+            <label class="mt-2">Root cause</label>
+            <div class="qms-req"><input pInputText class="form-control" maxlength="500" [(ngModel)]="m.root_cause" placeholder="The underlying cause found"></div>
+          </div>
+
+          <div class="qms-card">
+            <div class="qms-section-title">CAPA <small>Corrective and Preventive Action - goes to CAPA Summary</small></div>
+            <div class="row g-3">
+              <div class="col-md-6 col-12">
+                <label>Corrective Action <span class="qms-count" [class.bad]="len(m.corrective_action) < 20">({{ len(m.corrective_action) }})</span></label>
+                <div class="qms-req"><textarea pTextarea rows="4" class="form-control w-100" [(ngModel)]="m.corrective_action" placeholder="What is done to fix this incident's cause"></textarea></div>
+              </div>
+              <div class="col-md-6 col-12">
+                <label>Preventive Action <span class="qms-count" [class.bad]="len(m.preventive_action) < 20">({{ len(m.preventive_action) }})</span></label>
+                <div class="qms-req"><textarea pTextarea rows="4" class="form-control w-100" [(ngModel)]="m.preventive_action" placeholder="What stops it happening again (training, SOP change ...)"></textarea></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="qms-card">
+            <div class="qms-section-title">Supporting Documents / Evidence</div>
+            <qms-file-list [files]="d.investigation?.io_evidence" emptyText="No files yet" />
+            @if (d.can_investigate) { <div class="mt-2"><qms-file-picker #picker [max]="5" label="Attach evidence" /></div> }
+          </div>
+        </fieldset>
+      </div>
+    </div>
+    } @else {
+    <div class="qms-empty mt-4">{{ loading() ? 'Loading ...' : 'Open an incident from the dashboard or My Investigations' }}</div>
+    }
+  </div>
+</section>
+
+<p-dialog header="Reject Incident" [visible]="showReject()" (visibleChange)="showReject.set($event)" [modal]="true"
+  [style]="{ width: '500px' }" [breakpoints]="{ '768px': '95vw' }" [draggable]="false">
+  <div class="qms-note warn">Use this when the report is not an incident (duplicate, wrong entry ...). It is archived, not deleted.</div>
+  <label class="small">Reason for rejection <span class="text-danger">*</span></label>
+  <textarea pTextarea rows="3" maxlength="500" class="form-control w-100" [(ngModel)]="rejectReason"></textarea>
+  <ng-template #footer>
+    <button class="btn btn-light me-2" (click)="showReject.set(false)">Cancel</button>
+    <button class="btn btn-danger" [disabled]="saving()" (click)="save('REJECT')">Reject</button>
+  </ng-template>
+</p-dialog>

@@ -1,0 +1,233 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                                        <i class="iconify pi pi-arrow-left"></i>
+                                    </a>
+                                    <h3>{{_hqms.getPageModeContext(pageMode, 'Provider') }}</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-12">
+                                <div class="form-right">
+                                    <button class="btn btn-dark" [disabled]="pageMode=='VIEW'"
+                                        (click)="onClearClick()">Clear</button>
+                                    <button class="btn btn-primary" [disabled]="pageMode=='VIEW'"
+                                        (click)="onSubmitClick()">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="formbox-left form-lg">
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-3 col-12">
+                                        <div class="flex flex-col gap-1">
+                                            <label for="provider_name">Provider Name</label>
+                                            <div style="position: relative;display:inline-block;width:100%">
+                                                <input pInputText id="provider_name" placeholder="Provider Name"
+                                                    [(ngModel)]="providerMaster().provider_name"
+                                                    (blur)="onGetErrorMsgs('provider_name')"
+                                                    [disabled]="pageMode=='VIEW'" name="provider_name"
+                                                    class=" form-control" autocomplete="off"
+                                                    appNospaces>
+                                                    <div style=" position: absolute;
+                                                                top: 0;
+                                                                right: 0;
+                                                                width: 0;
+                                                                height: 0;
+                                                                border-top: 12px solid red;
+                                                                border-left: 12px solid transparent;">
+                                                        </div>
+                                            </div>
+                                            @if(errorMsg['provider_name']!=''){
+                                            <small class="error">{{ errorMsg['provider_name'] }}</small>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-12">
+                                        <div class="flex flex-col gap-1">
+                                            <label for="auditType">Provider Type</label>
+                                            <div style="position: relative;display:inline-block;width:100%">
+                                                <p-select id="auditType" placeholder="Provider Type"
+                                                    [(ngModel)]="providerMaster().provider_type_id"
+                                                    (onBlur)="onGetErrorMsgs('provider_type_id')"
+                                                    (onChange)="onGetErrorMsgs('provider_type_id')"
+                                                    [options]="providerTypeList" [filter]="true" [showClear]="true"
+                                                    [disabled]="pageMode=='VIEW'" name="auditType"
+                                                    class=" form-control" />
+                                                    <div style=" position: absolute;
+                                                                top: 0;
+                                                                right: 0;
+                                                                width: 0;
+                                                                height: 0;
+                                                                border-top: 12px solid red;
+                                                                border-left: 12px solid transparent;">
+                                                        </div>
+                                            </div>
+                                            @if(errorMsg['provider_type_id']!=''){
+                                            <small class="error">{{ errorMsg['provider_type_id'] }}</small>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-12">
+                                        <div class="flex flex-col gap-1">
+                                            <label for="contact_person">Contact Person</label>
+                                            <div style="position: relative;display:inline-block;width:100%">
+                                                <input pInputText id="contact_person" placeholder="Contact Person"
+                                                    [(ngModel)]="providerMaster().contact_person"
+                                                    (blur)="onGetErrorMsgs('contact_person')"
+                                                    [disabled]="pageMode=='VIEW'" name="contact_person"
+                                                    class=" form-control" autocomplete="off"
+                                                    appNospaces>
+                                                    <div style=" position: absolute;
+                                                                top: 0;
+                                                                right: 0;
+                                                                width: 0;
+                                                                height: 0;
+                                                                border-top: 12px solid red;
+                                                                border-left: 12px solid transparent;">
+                                                        </div>
+                                            </div>
+                                            @if(errorMsg['contact_person']!=''){
+                                            <small class="error">{{ errorMsg['contact_person'] }}</small>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-12">
+                                        <div class="flex flex-col gap-1">
+                                            <label for="mobile_no1">Mobile No.</label>
+                                            <div style="position: relative;display:inline-block;width:100%">
+                                                <input pInputText id="mobile_no1" placeholder="Mobile No"
+                                                    [(ngModel)]="providerMaster().mobile_no1"
+                                                    (blur)="onGetErrorMsgs('mobile_no1')"
+                                                    [disabled]="pageMode=='VIEW'" name="mobile_no1"
+                                                    class=" form-control" autocomplete="off"
+                                                    appNospaces>
+                                                    <div style=" position: absolute;
+                                                                top: 0;
+                                                                right: 0;
+                                                                width: 0;
+                                                                height: 0;
+                                                                border-top: 12px solid red;
+                                                                border-left: 12px solid transparent;">
+                                                        </div>
+                                            </div>
+                                            @if(errorMsg['mobile_no1']!=''){
+                                            <small class="error">{{ errorMsg['mobile_no1'] }}</small>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-12">
+                                        <div class="flex flex-col gap-1">
+                                            <label for="email_id">Email</label>
+                                            <div style="position: relative;display:inline-block;width:100%">
+                                                <input pInputText id="email_id" placeholder="Email"
+                                                    [(ngModel)]="providerMaster().email_id"
+                                                    (blur)="onGetErrorMsgs('email_id')" [disabled]="pageMode=='VIEW'"
+                                                    name="email_id" class=" form-control"
+                                                    autocomplete="off" appNospaces>
+                                                    <div style=" position: absolute;
+                                                                top: 0;
+                                                                right: 0;
+                                                                width: 0;
+                                                                height: 0;
+                                                                border-top: 12px solid red;
+                                                                border-left: 12px solid transparent;">
+                                                        </div>
+                                            </div>
+                                            @if(errorMsg['email_id']!=''){
+                                            <small class="error">{{ errorMsg['email_id'] }}</small>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-12">
+                                        <div class="flex flex-col gap-1">
+                                            <label for="web_url">Weburl</label>
+                                            <div style="position: relative;display:inline-block;width:100%">
+                                                <input pInputText id="web_url" [(ngModel)]="providerMaster().web_url"
+                                                    (blur)="onGetErrorMsgs('web_url')" [disabled]="pageMode=='VIEW'"
+                                                    name="web_url" class=" form-control" placeholder="Weburl"
+                                                    autocomplete="off" appNospaces>
+                                                    <div style=" position: absolute;
+                                                                top: 0;
+                                                                right: 0;
+                                                                width: 0;
+                                                                height: 0;
+                                                                border-top: 12px solid red;
+                                                                border-left: 12px solid transparent;">
+                                                        </div>
+                                            </div>
+                                            @if(errorMsg['web_url']!=''){
+                                            <small class="error">{{ errorMsg['web_url'] }}</small>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-12">
+                                        <div class="flex flex-col gap-1">
+                                            <label for="address">Address</label>
+                                            <div style="position: relative;display:inline-block;width:100%">
+                                                <textarea pTextarea id="address" placeholder="Address"
+                                                    [(ngModel)]="providerMaster()['address']"
+                                                    [disabled]="pageMode=='VIEW'" name="address" rows="10"
+                                                    class="form-control" appNospaces></textarea>
+                                                    <div style=" position: absolute;
+                                                                top: 0;
+                                                                right: 0;
+                                                                width: 0;
+                                                                height: 0;
+                                                                border-top: 12px solid red;
+                                                                border-left: 12px solid transparent;">
+                                                        </div>
+                                            </div>
+                                        </div>
+                                        @if(errorMsg['address']!=''){
+                                            <small class="error">{{ errorMsg['address'] }}</small>
+                                            }
+                                    </div>
+                                    <div class="col-md-12 col-12">
+                                        <div class="flex flex-col gap-1">
+                                            <label for="description">Description</label>
+                                            <div style="position: relative;display:inline-block;width:100%">
+                                                <textarea pTextarea id="description"
+                                                    [(ngModel)]="providerMaster()['description']"
+                                                    (blur)="onGetErrorMsgs('description')" placeholder="Description"
+                                                    [disabled]="pageMode=='VIEW'" name="description" rows="10"
+                                                    class=" form-control" appNospaces></textarea>
+                                                    <div style=" position: absolute;
+                                                                top: 0;
+                                                                right: 0;
+                                                                width: 0;
+                                                                height: 0;
+                                                                border-top: 12px solid red;
+                                                                border-left: 12px solid transparent;">
+                                                        </div>
+                                            </div>
+                                            @if(errorMsg['description']!=''){
+                                            <small class="error">{{ errorMsg['description'] }}</small>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-12">
+                                        <label>Status</label>
+                                        <div class="form-group">
+                                            <p-toggleswitch [(ngModel)]="providerMaster().is_active" name="status"
+                                                [disabled]="pageMode=='VIEW' || pageMode=='NEW'" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

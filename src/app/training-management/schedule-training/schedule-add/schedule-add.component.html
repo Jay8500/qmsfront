@@ -1,0 +1,263 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="row">
+      <div class="col-md-12 col-12">
+        <div class="card-style2">
+          <div class="card-header backoption">
+            <div class="row">
+              <div class="col-md-7 col-12">
+                <div class="heading-left">
+                  <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                    <i class="iconify pi pi-arrow-left"></i>
+                  </a>
+                  <h3> {{_hqms.getPageModeContext(pageMode, 'Training Schedule') }}</h3>
+                </div>
+              </div>
+              <div class="col-md-5 col-12">
+                <div class="form-right">
+                  <button class="btn btn-dark" [disabled]="pageMode=='VIEW'" (click)="onClearClick()">Clear</button>
+                  <button class="btn btn-primary" [disabled]="pageMode=='VIEW'"
+                    (click)="onSubmitClick()">Submit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-6 col-md-12 col-12">
+                <div class="formbox-left legends form-lg mt-4">
+                  <div class="form-title">
+                    Basic Training Details
+                  </div>
+                  <form>
+                    <div class="row">
+                      <div class="col-md-12 col-12">
+                        <label>Schedule Source</label>
+                        <div class="radio-group mb-2">
+                          @for (asLst of enRollMentSourceList; track asLst.ind) {
+                          <p-radioButton [name]="asLst.value_code" [value]="asLst.value"
+                            [(ngModel)]='createScheduleTraining().basic_training' [inputId]="'ing1'+asLst.value"
+                            [disabled]="pageMode=='VIEW'" (onClick)="onTypeClick(asLst.value_code)" />
+                          <label [for]="'ing1'+asLst.value"
+                            style="margin-left:10px;margin-right:5px;">{{ asLst.label }}</label>
+                          }
+                        </div>
+                      </div>
+
+                      @if( createScheduleTraining().basic_training !== null ){
+                      <div class="col-md-12 col-12">
+                        <label for="is_dep_role">{{ selectedSrcType === 'DEPARTMENT' ? 'Department' : 'Role' }}</label>
+                        <p-select id="is_dep_role" [(ngModel)]="createScheduleTraining().is_dep_role"
+                          name="is_dep_role" (onBlur)="onDepRoleChange()" (onChange)="onDepRoleChange()"
+                          [disabled]="pageMode=='VIEW'"
+                          [options]="selectedSrcType === 'DEPARTMENT' ? departmentList : roleList" [filter]="true"
+                          class=" form-control" />
+                        @if(errorMsg[selectedSrcType === 'DEPARTMENT' ? 'department' : 'role']!=''){
+                        <small class="error">{{ errorMsg[selectedSrcType === 'DEPARTMENT' ? 'department' :
+                          'role'] }}</small>
+                        }
+                      </div>
+                      }
+
+                      <div class="col-md-12 col-12">
+                        <label for="training_id">Training Name</label>
+                        <p-select id="training_id" [(ngModel)]="createScheduleTraining().training_id"
+                          name="training_id" (onBlur)="onTrainingChange()" (onChange)="onTrainingChange()"
+                          [disabled]="pageMode=='VIEW'||createScheduleTraining().basic_training == null"
+                          [options]="trainingList" [filter]="true" class=" form-control" />
+                        @if(errorMsg['training_id']!=''){
+                        <small class="error">{{ errorMsg['training_id'] }}</small>
+                        }
+                      </div>
+                      <div class="col-md-12 col-12">
+                        <label for="faculty_name">Faculty Name</label>
+                        <input pInputText id="faculty_name" [(ngModel)]="createScheduleTraining().faculty_name"
+                          [disabled]="true" name="faculty_name" class="form-control" autocomplete="off">
+                      </div>
+                      <div class="col-md-12 col-12">
+                        <label for="mode_of_training_id">Mode of Training</label>
+                        <p-select id="mode_of_training_id" [(ngModel)]="createScheduleTraining().mode_of_training_id"
+                          name="mode_of_training_id" (onBlur)="onGetErrorMsgs('mode_of_training_id')"
+                          (onChange)="onGetErrorMsgs('mode_of_training_id')" [disabled]="pageMode=='VIEW'"
+                          [options]="modeOfTrainingList" [filter]="true" class=" form-control" />
+                        @if(errorMsg['mode_of_training_id']!=''){
+                        <small class="error">{{ errorMsg['mode_of_training_id'] }}</small>
+                        }
+                      </div>
+                      <div class="col-md-12 col-12">
+                        <label for="venue_id">Venue</label>
+                        <p-select id="venue_id" [(ngModel)]="createScheduleTraining().venue_id" name="venue_id"
+                          (onBlur)="onGetErrorMsgs('venue_id')" (onChange)="onGetErrorMsgs('venue_id')"
+                          [disabled]="pageMode=='VIEW'" [options]="venueList" [filter]="true"
+                          class=" form-control" />
+                        @if(errorMsg['venue_id']!=''){
+                        <small class="error">{{ errorMsg['venue_id'] }}</small>
+                        }
+                      </div>
+                      <div class="col-md-6 col-6">
+                        <label for="from_dt">From Date &amp; Time</label>
+                        <input type="datetime-local" id="from_dt" [(ngModel)]="createScheduleTraining().from_dt"
+                          (change)="onGetErrorMsgs('from_dt')" [disabled]="pageMode=='VIEW'" name="from_dt"
+                          [min]="minDateSetter()" class="form-control">
+                        @if(errorMsg['from_dt']!=''){
+                        <small class="error">{{ errorMsg['from_dt'] }}</small>
+                        }
+                      </div>
+                      <div class="col-md-6 col-6">
+                        <label for="to_dt">To Date &amp; Time</label>
+                        <input type="datetime-local" id="to_dt" [(ngModel)]="createScheduleTraining().to_dt"
+                          (change)="onGetErrorMsgs('to_dt')" [disabled]="pageMode=='VIEW'" name="to_dt"
+                          [min]="createScheduleTraining().from_dt" class="form-control">
+                        @if(errorMsg['to_dt']!=''){
+                        <small class="error">{{ errorMsg['to_dt'] }}</small>
+                        }
+                      </div>
+                      <div class="col-md-6 col-6">
+                        <label for="attendance_type_id">Select Attendance Type</label>
+                        <p-select id="attendance_type_id" [(ngModel)]="createScheduleTraining().attendance_type_id"
+                          name="attendance_type_id" (onBlur)="onGetErrorMsgs('attendance_type_id')"
+                          (onChange)="onGetErrorMsgs('attendance_type_id')" [disabled]="pageMode=='VIEW'"
+                          [options]="attendanceTypeList" [filter]="true" class=" form-control" />
+                        @if(errorMsg['attendance_type_id']!=''){
+                        <small class="error">{{ errorMsg['attendance_type_id'] }}</small>
+                        }
+                      </div>
+                      <div class="col-md-6 col-6">
+                        <label for="participants_fb_id">Participants Feedback</label>
+                        <p-select id="participants_fb_id" [(ngModel)]="createScheduleTraining().participants_fb_id"
+                          name="participants_fb_id" (onBlur)="onGetErrorMsgs('participants_fb_id')"
+                          (onChange)="onGetErrorMsgs('participants_fb_id')" [disabled]="pageMode=='VIEW'"
+                          [options]="feedbackList" [filter]="true" class=" form-control" />
+                        @if(errorMsg['participants_fb_id']!=''){
+                        <small class="error">{{ errorMsg['participants_fb_id'] }}</small>
+                        }
+                      </div>
+                      <div class="col-md-12 col-12">
+                        <label>Status</label>
+                        <div class="form-group">
+                          <p-toggleswitch [(ngModel)]="createScheduleTraining().is_active" name="status"
+                            [disabled]="pageMode=='VIEW' || pageMode=='NEW'" />
+                        </div>
+                      </div>
+
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <div class="col-lg-6 col-md-12 col-12">
+                <!-- <div class="formbox-left legends form-lg mt-4">
+                    <div class="form-title">
+                      Certificate Signature Information
+                    </div>
+                    <form>
+                      <div class="row">
+                        <div class="col-md-12 col-12">
+                          <div class="form-group">
+                            <label>Signature 1</label>
+                            <select class="form-select">
+                              <option>Select Signature 1</option>
+                              <option>Option</option>
+                              <option>Option</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-12 col-12">
+                          <div class="form-group mb-0">
+                            <label>Assessment Name</label>
+                            <select class="form-select">
+                              <option>Select Signature 2</option>
+                              <option>Option</option>
+                              <option>Option</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div> NR-->
+
+                <div class="form-lg emplist-cover">
+                  <h5>Participants List</h5>
+                  <div class="row empfilter gx-1">
+                    <div class="col-md-12 col-12">
+                      <!-- <div class="row gx-1"> -->
+                      <!-- <div class="col-md-4 col-12"> -->
+                      <div class="form-group inputs-search">
+                        <input class="form-control" placeholder="Search by ID / Name"
+                          [disabled]="pageMode=='VIEW'|| attendees().length == 0" />
+                      </div>
+                      <!-- </div> -->
+                      <!-- <div class="col-md-4 col-12">
+                          <div class="form-group">
+
+
+                            <hqms-select [formName]="FORM_NAME" [labelName]="'By Department'"
+                              [isDisabled]="pageMode=='VIEW'" [fieldName]="'by_department'" [isLabelShow]="false"
+                              [(ngModel)]="createScheduleTraining().by_department" name="by_department"
+                              (statusChange)="onFieldStatusChange($event)" [selectOptions]="departmentList">
+                            </hqms-select>
+                          </div>
+                        </div> -->
+                      <!-- <div class="col-md-4 col-12">
+                          <div class="form-group">
+                            <hqms-select [formName]="FORM_NAME" [labelName]="'By Role'" [isDisabled]="pageMode=='VIEW'"
+                              [fieldName]="'by_role'" [(ngModel)]="createScheduleTraining().by_role" name="by_role"
+                              [isLabelShow]="false" (statusChange)="onFieldStatusChange($event)"
+                              [selectOptions]="roleList">
+                            </hqms-select>
+                          </div>
+                        </div> -->
+                      <!-- </div> -->
+                    </div>
+                    <!-- <div class="col-md-2 col-12">
+                      <button class="btn btn-primary">Search</button>
+                    </div> -->
+                  </div>
+                  <!-- @if(isEmpLoading() ){
+                  <div>
+                    <p>fetching Participants</p>
+                  </div>
+                  }@else{ -->
+                  <div class="employee-table table-style1 table-responsive tablemd1">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th width="3%">
+                            <input type="checkbox" class="check-single" [ngModel]="isAllSelected()"
+                              (ngModelChange)="toggleAll(!isAllSelected())"
+                              [disabled]="pageMode=='VIEW'|| attendees().length == 0" />
+                          </th>
+                          <th>Participant Name (ID)</th>
+                          <!-- <th>Department</th> -->
+                          <!-- <th>Role</th> -->
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @for (facultyProp of attendees(); track $index) {
+                        <tr>
+                          <td>
+                            <input type="checkbox" class="check-single" [ngModel]="facultyProp['is_selected']"
+                              (ngModelChange)="toggleSelection(facultyProp['id'])" [disabled]="pageMode=='VIEW'" />
+                          </td>
+                          <td>{{ facultyProp['employee_name'] }}</td>
+                        </tr>
+                        }
+                        @empty{
+                        <tr>
+                          <td colspan="2" style="text-align: center;color:gray">No participants were found...</td>
+                        </tr>
+                        }
+                      </tbody>
+                    </table>
+                  </div>
+                  <p>{{ selectedEmployeesCnt() }} Selected participants</p>
+                  <!-- } -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

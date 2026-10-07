@@ -1,0 +1,514 @@
+<section class="wrapper-body">
+  <div class="container-fluid">
+    <section class="status-card">
+      <div class="main-heading-link">
+        <h3 class="main-heading">Staff Competency</h3>
+        <div class="btn-group-row">
+          <div class="dropdown dropdown-style1 filterDropdown">
+            <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="iconify pi pi-calendar-clock primeicons-size"></i>
+              {{ selectedRange }}
+              <i class="iconify pi pi-angle-down"></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 7 days')">Last 7 days</a></li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 30 days')">Last 30 days</a></li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last Month')">Last Month</a></li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 6 Months')">Last 6 Months</a>
+              </li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last Year')">Last Year</a></li>
+            </ul>
+          </div>
+          <a href="javascript:;" class="btn btn-success" routerLink="/staff-competency-manage-reviewer"> <span
+              class="iconfiy"> <i class=" pi pi-plus-circle" style="margin-right: 2px;"></i></span> Manage Reviewer </a>
+          <a href="javascript:;" class="btn btn-success" routerLink="/staff-competency-add"> <span class="iconfiy"> <i
+                class=" pi pi-plus-circle" style="margin-right: 2px;"></i></span>Create New Competency </a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg1">
+            <div class="card-grid-header">
+              <h5>Total <br /> Staff</h5>
+              <h3>462</h3>
+              <div class="icon">
+                <i class="iconify pi pi-copy primeicons-size"></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>April 11, 2025 10:23:00</h5>
+                </div>
+                <div class="col-md-5 text-end col-5">
+                  <!-- <button class="btn btn-light">View Report</button> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg2">
+            <div class="card-grid-header">
+              <h5>Nominated <br /> Staffs</h5>
+              <h3>150</h3>
+              <div class="icon">
+                <i class="iconify pi pi-search-plus primeicons-size"></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>April 11, 2025 10:23:00</h5>
+                </div>
+                <div class="col-md-5 col-5 text-end">
+                  <!-- <button class="btn btn-light">View Report</button> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg3">
+            <div class="card-grid-header">
+              <h5>Overall <br /> Assessment Frequency</h5>
+              <h3>35</h3>
+              <div class="icon">
+                <i class="iconify pi pi-calendar-clock primeicons-size"></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>April 11, 2025 10:23:00</h5>
+                </div>
+                <div class="col-md-5 col-5 text-end">
+                  <!-- <button class="btn btn-light">View All</button> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg4">
+            <div class="card-grid-header">
+              <h5>Overall <br /> Annual Frequency</h5>
+              <h3>15</h3>
+              <div class="icon">
+                <i class="iconify pi pi-verified "></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>April 11, 2025 10:23:00</h5>
+                </div>
+                <div class="col-md-5 col-5 text-end">
+                  <!-- <button class="btn btn-light">View All</button> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="chart-section mt-3 mb-3">
+      <div class="row">
+        <div class="col-xl-4 col-lg-6 col-md-6 col-12">
+          <div class="card-style1 piechart">
+            <div class="card-header">
+              Unit Wise Reports
+            </div>
+            <div class="card-body">
+              <div class="chart-wrapper">
+                <app-unit-wise-reports></app-unit-wise-reports>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-6 col-md-6 col-12">
+          <div class="card-style1 barchart">
+            <div class="card-header">
+              Reviewer Rating Score
+            </div>
+            <div class="card-body">
+              <app-reviewer-rating-score></app-reviewer-rating-score>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-6 col-md-12 col-12">
+          <div class="card-style1 barchart">
+            <div class="card-header">
+              Self / Reviewer Score
+            </div>
+            <div class="card-body">
+              <app-self-reviewer-score></app-self-reviewer-score>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="report-table mt-3 mb-3">
+      <div class="row">
+        <div class="col-md-12 col-12">
+          <div class="card-style2">
+            <div class="card-header backoption">
+              <div class="row">
+                <div class="col-md-5 col-12">
+                  <div class="heading-left">
+                    <h3>Staff Competency List</h3>
+                  </div>
+                </div>
+                <div class="col-md-7 col-12">
+                  <div class="form-right">
+                    <a href="javascript:;" ngbTooltip="Filter" placement="top" class="icon-btn-square"
+                      (click)="filterToggle()"><i class="iconify pi pi-sliders-h"></i></a>
+                    <a href="javascript:;" class="btn btn-success uploadBtn ms-2" data-bs-toggle="modal"
+                      data-bs-target="#reviewDataModal"><span class="iconify"
+                        data-icon="material-symbols:upload-rounded"></span> Upload Data </a>
+                    <div class="dropdown dropdown-style1 ms-1">
+                      <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Download Report <i class="iconify pi pi-angle-down"></i>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                        <li><a class="dropdown-item" href="javascript:;">Download Word</a></li>
+                        <li><a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            @if (showFilter) {
+            <div class="filter-box form-sm">
+              <div class="row">
+                <div class="col-md-11 col-12">
+                  <div class="row gx-2">
+                    <div class="col-md-3 col-12">
+                      <div class="form-group">
+                        <select class="form-select">
+                          <option>By Employee ID / Name</option>
+                          <option>Radha Madhav (23653)</option>
+                          <option>Krishna (90348)</option>
+                          <option>Karthikeyan (90340)</option>
+                          <option>Kaviya Priya</option>
+                          <option>Mythili</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                        <select class="form-select">
+                          <option>By Department</option>
+                          <option>ICU</option>
+                          <option>Laboratory</option>
+                          <option>Causality</option>
+                          <option>Emergency</option>
+                          <option>Radiology</option>
+                          <option>General Surgery</option>
+                          <option>Cardiology</option>
+                          <option>Orthopedics</option>
+                          <option>Gastroenterology</option>
+                          <option>Pulmonology</option>
+                          <option>Psychiatry</option>
+                          <option>Pharmacy</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                        <select class="form-select">
+                          <option>By Role</option>
+                          <option>Doctor</option>
+                          <option>Nurse</option>
+                          <option>Surgeon</option>
+                          <option>Assitant</option>
+                          <option>Technician</option>
+                          <option>Physiotherapist</option>
+                          <option>Lab Supervisor</option>
+                          <option>Radiologist</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                        <select class="form-select">
+                          <option>By Unit</option>
+                          <option>ICU</option>
+                          <option>Emergency Room</option>
+                          <option>Operating Room</option>
+                          <option>Outpatient Clinic</option>
+                          <option>Laboratory</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                        <select class="form-select">
+                          <option>By Status</option>
+                          <option>Expert</option>
+                          <option>Proficient</option>
+                          <option>Competent</option>
+                          <option>Beginner</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-1 col-12 ps-0">
+                      <button class="btn btn-primary w-100">Filter</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            }
+            <div class="card-body table-style1 table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <th>Employee ID / Name</th>
+                    <th>Department</th>
+                    <th>Role</th>
+                    <th>Unit</th>
+                    <th>Date of Competency</th>
+                    <th>Next Competency</th>
+                    <th>Self | Reviewer Rating</th>
+                    <th class="text-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>01</td>
+                    <td>Radha Madhav (23653)</td>
+                    <td>Cardialogy - OP</td>
+                    <td>Nurse</td>
+                    <td>Home Care</td>
+                    <td>25-02-2025</td>
+                    <td>25-02-2025</td>
+                    <td>
+                      <div class="reviewer-rating">
+                        <ul>
+                          <li class="text-success">Expert</li>
+                          <li class="text-warning last">Proficient</li>
+                        </ul>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="actiondot-dropdown float-end">
+                        <div class="btn-group ms-2">
+                          <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="iconify pi pi-ellipsis-h"></i>
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" routerLink="/staff-competency-listing">
+                                View
+                              </a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="javascript:;">
+                                Download
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>02</td>
+                    <td>Krishna (90348)</td>
+                    <td>Laboratory</td>
+                    <td>Physiotherapist</td>
+                    <td>ICU</td>
+                    <td>25-02-2025</td>
+                    <td>25-02-2025</td>
+                    <td>
+                      <div class="reviewer-rating">
+                        <ul>
+                          <li class="text-success">Proficient</li>
+                          <li class="text-warning last">Proficient</li>
+                        </ul>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="actiondot-dropdown float-end">
+                        <div class="btn-group ms-2">
+                          <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="iconify pi pi-ellipsis-h"></i>
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" routerLink="/staff-competency-listing">
+                                View
+                              </a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="javascript:;">
+                                Download
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>03</td>
+                    <td>Radha Madhav (23653)</td>
+                    <td>Emergency</td>
+                    <td>Nurse</td>
+                    <td>Home Care</td>
+                    <td>25-02-2025</td>
+                    <td>25-02-2025</td>
+                    <td>
+                      <div class="reviewer-rating">
+                        <ul>
+                          <li class="text-warning">Competent</li>
+                          <li class="text-warning last">Competent</li>
+                        </ul>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="actiondot-dropdown float-end">
+                        <div class="btn-group ms-2">
+                          <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <span class="iconify" data-icon="tabler:dots"></span>
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" routerLink="/staff-competency-listing">
+                                View
+                              </a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="javascript:;">
+                                Download
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>04</td>
+                    <td>Radha Madhav (23653)</td>
+                    <td>Orthopedics</td>
+                    <td>Surgeon</td>
+                    <td>Home Care</td>
+                    <td>25-02-2025</td>
+                    <td>25-02-2025</td>
+                    <td>
+                      <div class="reviewer-rating">
+                        <ul>
+                          <li class="text-danger">Beginner</li>
+                          <li class="text-danger last">Beginner</li>
+                        </ul>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="actiondot-dropdown float-end">
+                        <div class="btn-group ms-2">
+                          <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <span class="iconify" data-icon="tabler:dots"></span>
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" routerLink="/staff-competency-listing">
+                                View
+                              </a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="javascript:;">
+                                Download
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <nav aria-label="Page navigation pagination text-end">
+              <ul class="pagination d-flex justify-content-end">
+                <li class="page-item next">
+                  <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">...</a></li>
+                <li class="page-item"><a class="page-link" href="#">10</a></li>
+                <li class="page-item prev">
+                  <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>
+
+
+
+<!-- Review Data Modal -->
+<div class="modal fade" id="reviewDataModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="exampleModalLabel">Upload Data </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <div class="label-flex-link">
+            <label>Upload File </label>
+            <a href="javascript:;"><span class="iconify" data-icon="material-symbols:download"></span> Download
+              Template</a>
+          </div>
+          <div class="upload-image">
+            <button class="btn btn-primary"><span class="iconify" data-icon="material-symbols:upload-rounded"></span>
+              Bulk Upload</button>
+            <div class="upload-fileinfo">
+              <p>karthikeyan-review2025.xlxs </p>
+              <a href="javascript:;">Remove</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="button-group">
+          <div class="row">
+            <div class="col-md-12 col-12">
+              <button class="btn btn-dark">Clear</button>
+              <button class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Review Data Modal End -->

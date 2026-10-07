@@ -1,0 +1,279 @@
+<section class="wrapper-body settings-cover">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main-heading-link">
+          <h3 class="main-heading">Settings</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-8 col-12">
+        <div class="settings-content">
+          <!-- Account Management -->
+          <div class="settings-section">
+            <h4 class="section-title">Account Management</h4>
+            <div class="settings-list">
+              <!-- <div class="settings-item">
+              <a href="javascript:;" class="settings-link">
+                <span class="settings-text">Edit Profile</span>
+                <span class="iconify settings-arrow" data-icon="akar-icons:chevron-right"></span>
+              </a>
+            </div> -->
+              <div class="settings-item" (click)="onOpenCPclick()">
+                <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#changePasswordModal2"
+                  class="settings-link">
+                  <span class="settings-text">Change Password</span>
+                  <i class="pi pi-chevron-right iconify"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Notification Preferences -->
+          <div class="settings-section">
+            <h4 class="section-title">Notification Preferences</h4>
+            <div class="settings-list">
+              <div class="settings-item">
+                <a href="javascript:;" class="settings-link">
+                  <span class="settings-text">Audit Reminders</span>
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" [(ngModel)]="stngsInfo['is_audit_remainders']"
+                      (change)="onClick($event,'is_audit_remainders')">
+                  </div>
+                </a>
+              </div>
+              <div class="settings-item">
+                <a href="javascript:;" class="settings-link">
+                  <span class="settings-text">Overdue Tasks</span>
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" [(ngModel)]="stngsInfo['is_overdue_tasks']"
+                      (change)="onClick($event,'is_overdue_tasks')">
+                  </div>
+                </a>
+              </div>
+              <div class="settings-item">
+                <a href="javascript:;" class="settings-link">
+                  <span class="settings-text">New Assignments</span>
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" [(ngModel)]="stngsInfo['is_new_assignments']"
+                      (change)="onClick($event,'is_new_assignments')">
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Branding -->
+          <div class="settings-section">
+            <h4 class="section-title">Branding</h4>
+            <div class="settings-list">
+              <div class="settings-item">
+                <a href="javascript:;" routerLink="/theme-brand" class="settings-link">
+                  <span class="settings-text">Change Theme</span>
+                  <i class="pi pi-chevron-right iconify"></i>
+                </a>
+              </div>
+              <!-- <div class="settings-item">
+                <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#uploadLogoModal" class="settings-link">
+                  <span class="settings-text">Change Logo</span>
+                  <i class="pi pi-chevron-right iconify"></i>
+                </a>
+              </div> -->
+            </div>
+          </div>
+
+          <!-- General & App Information -->
+          <div class="settings-section">
+            <h4 class="section-title">General & App Information</h4>
+            <div class="settings-list">
+              <div class="settings-item">
+                <a href="javascript:;" routerLink="/help-support" class="settings-link">
+                  <span class="settings-text">Help & Support</span>
+                  <i class="pi pi-chevron-right iconify"></i>
+                </a>
+              </div>
+              <!-- <div class="settings-item">
+                <a href="javascript:;" class="settings-link" routerLink="/help-support">
+                  <span class="settings-text">About</span>
+                  <i class="pi pi-chevron-right iconify"></i>
+                </a>
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<p-dialog [header]="'Change Password'" [(visible)]="isChngPwdVisible" [modal]="true" [dismissableMask]="true"
+  [breakpoints]="{'425px' : '99vw'}" [style]="{width: '300px', height: 'auto'}" [closeOnEscape]='false'
+  [closable]='isClosabled' [resizable]="false" [baseZIndex]="999999999" (onHide)="onCloseCP()">
+  <div class="modal-body form-lg">
+    @if(!isPwdUpdatd){
+    <div class="form-group">
+      <div>
+        <label>Old Password</label>
+      </div>
+      <p-password [(ngModel)]="changePwd['current_pwd']" [feedback]="false" autocomplete="off" [toggleMask]="true">
+      </p-password>
+    </div>
+    <div class="form-group">
+      <div>
+        <label>New Password</label>
+      </div>
+      <p-password [(ngModel)]="changePwd['new_pwd']" [feedback]="true" autocomplete="off" [toggleMask]="true"
+        (copy)="preventCopyPaste($event)" (paste)="preventCopyPaste($event)" (input)="checkStrength($event)"
+        (onBlur)="onPwdVldtnClick('new_pwd')" [disabled]="changePwd['current_pwd']==''||changePwd['current_pwd']==null">
+        <ng-template pTemplate="content">
+          <div class="strength-bar" *ngIf="rules.length > 0" style="height:10px !important;">
+            <div class="strength-bar_fill" [ngStyle]="{'width.%':strengthPercentage,'background-color':strengthColor}"
+              style="height:10px !important;">
+
+            </div>
+          </div>
+          <div class="password-strength" [ngClass]="strengthClasss" *ngIf="rules.length > 0">
+            {{strengthMessage}}
+          </div>
+          <div class="mt-2" *ngIf="passwordPolicies.length>0">
+            <ul class="pl-4 ml-2 mt-0" style="line-height: 1.5">
+              <li *ngFor="let policy of passwordPolicies">{{policy}}</li>
+            </ul>
+          </div>
+        </ng-template>
+      </p-password>
+      <div>
+        @if(errorText != ''){
+        <small class="error"> {{ errorText }} </small>
+        }
+      </div>
+    </div>
+    <div class="form-group">
+      <div>
+        <label>Confirm New Password</label>
+      </div>
+      <p-password [(ngModel)]="changePwd['cnfrm_pwd']" [feedback]="false" autocomplete="off" [toggleMask]="true"
+        (copy)="preventCopyPaste($event)" (paste)="preventCopyPaste($event)" (onBlur)="onPwdVldtnClick('cnfrm_pwd')"
+        [disabled]="changePwd['new_pwd']==''|| changePwd['new_pwd']==null ">
+      </p-password>
+      <div>
+        @if(cnfrmErrorText != ''){
+        <small class="error"> {{ cnfrmErrorText }} </small>
+        }
+      </div>
+    </div>
+    }@else{
+    <div>
+      Login again with new password to continue
+    </div>
+    }
+  </div>
+  <ng-template #footer>
+    @if(!isPwdUpdatd){
+    <button class="btn btn-dark" (click)="onPwdClear()">Clear</button>
+    <button class="btn btn-primary" (click)="updatePwd()">Update</button>
+    }@else{
+    <button class="btn btn-primary" (click)="_hqms.onLogOutClick()">Logout</button>
+    }
+  </ng-template>
+
+</p-dialog>
+
+
+<!-- Logo Modal -->
+<div class="modal fade" id="uploadLogoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="exampleModalLabel">Change Logo </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body form-lg">
+        <div class="form-group">
+          <div class="label-flex-link">
+            <label>Upload Logo (.png) </label>
+          </div>
+          <input type="file" #fileInput accept="image/*" style="display: none;" (change)="onFileSelected($event)">
+          <div class="upload-image">
+            <button type="button" class="btn btn-primary" (click)="triggerFileInput()" [disabled]="isUploading">
+              <span class="iconify" data-icon="material-symbols:upload-rounded"></span>
+              {{ isUploading ? 'Uploading...' : 'Upload' }}
+            </button>
+            @if (uploadedFileName) {
+            <div class="upload-fileinfo">
+              <p>{{ uploadedFileName }}</p>
+              <a href="javascript:;" (click)="removeLogo()">Remove</a>
+            </div>
+            }
+          </div>
+          <!-- Image Preview -->
+          @if (uploadedLogo) {
+          <div class="logo-preview">
+            <label>Preview:</label>
+            <div class="preview-container">
+              <img [src]="uploadedLogo" alt="Logo Preview" class="img-fluid" />
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="button-group">
+          <div class="row">
+            <div class="col-md-12 col-12">
+              <button type="button" class="btn btn-dark" (click)="clearForm()">Clear</button>
+              <button type="button" class="btn btn-primary" (click)="submitLogo()"
+                data-bs-dismiss="modal">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Logo Modal End -->
+
+
+<style>
+  :host ::ng-deep p-password>div {
+    width: 100% !important;
+  }
+
+  .password-strength {
+    margin-top: 5px;
+    font-weight: bold
+  }
+
+  .strong {
+    color: green;
+  }
+
+  .medium {
+    color: orange;
+  }
+
+  .weak {
+    color: red;
+  }
+
+  .strength-bar {
+    width: 100%;
+    background-color: #e0e0e0;
+    margin-top: 5px;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .strength-bar_fill {
+    border-radius: 5px;
+    transition: width 0.3s ease-in-out
+  }
+
+  :host ::ng-deep .p-dialog-content {
+    /* overflow-y: auto; */
+    padding: 18px 32px;
+    /* padding: var(--p-dialog-content-padding); */
+  }
+</style>

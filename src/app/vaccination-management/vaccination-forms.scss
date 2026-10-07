@@ -1,0 +1,228 @@
+// Shared look for the Vaccination forms and popups (component-scoped; global styles unchanged).
+// Wrap a form area in class "vacc-form" to get equal field heights, consistent labels and toggle rows.
+@use '../../variables';
+
+$field-height: 46px;
+
+:host ::ng-deep .vacc-form {
+  .flex.flex-col {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 14px;
+  }
+
+  label {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  // Text, number and date inputs
+  input.form-control {
+    height: $field-height;
+    font-size: 14px;
+  }
+
+  // PrimeNG dropdowns / multiselects with class "form-control": same height as inputs
+  .p-select.form-control,
+  .p-multiselect.form-control {
+    height: $field-height;
+    padding: 0 !important;
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    .p-select-label,
+    .p-multiselect-label {
+      padding: 0 12px !important;
+      line-height: $field-height;
+      font-size: 14px;
+    }
+  }
+
+  textarea.form-control {
+    font-size: 14px;
+  }
+
+  // Required-field marker: same red corner the other HQMS forms draw with an inline div.
+  .req {
+    position: relative;
+    display: block;
+    width: 100%;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 0;
+      height: 0;
+      border-top: 12px solid red;
+      border-left: 12px solid transparent;
+      pointer-events: none;
+      z-index: 1;
+    }
+  }
+
+  .error {
+    margin-top: 4px;
+  }
+
+  // "Label ........ toggle" rows (Mandatory, Allow Decision, Status)
+  .toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: $field-height;
+    padding: 0 12px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    background: variables.$inputBg;
+
+    label {
+      margin-bottom: 0;
+    }
+  }
+
+  .section-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  // Read-only facts (Administration: campaign, capacity, route …)
+  .info-tile {
+    height: 100%;
+    padding: 10px 12px;
+    border-radius: 6px;
+    background: variables.$inputBg;
+
+    .info-label {
+      font-size: 12px;
+      opacity: 0.7;
+      margin-bottom: 2px;
+    }
+
+    .info-value {
+      font-size: 14px;
+      font-weight: 600;
+      word-break: break-word;
+    }
+  }
+
+  .hint {
+    font-size: 13px;
+    opacity: 0.75;
+  }
+
+  // Campaign facts in one line (Administration)
+  .fact-chip {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 16px;
+    background: variables.$inputBg;
+    font-size: 14px;
+    font-weight: 600;
+
+    span {
+      font-size: 12px;
+      font-weight: 400;
+      opacity: 0.7;
+    }
+  }
+
+  // Compact card (Administration top bar): short fields so the list below stays in view
+  .formbox-left.compact {
+    padding: 12px 16px !important;
+
+    label {
+      font-size: 12px;
+      margin-bottom: 2px;
+    }
+
+    input.form-control {
+      height: 38px;
+    }
+
+    .p-select.form-control,
+    .p-multiselect.form-control {
+      height: 38px;
+
+      .p-select-label,
+      .p-multiselect-label {
+        line-height: 38px;
+      }
+    }
+
+    .fact-chip {
+      padding: 3px 10px;
+      font-size: 13px;
+
+      span {
+        font-size: 11px;
+      }
+    }
+
+    .hint {
+      font-size: 12px;
+    }
+
+    .req::after {
+      border-top-width: 10px;
+      border-left-width: 10px;
+    }
+  }
+
+  .status-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+
+    .tab-count {
+      display: inline-block;
+      min-width: 22px;
+      margin-left: 4px;
+      padding: 0 6px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.08);
+      font-size: 12px;
+    }
+  }
+
+  .search-box {
+    max-width: 260px;
+    height: 38px !important;
+  }
+
+  .bulk-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    background: variables.$inputBg;
+  }
+
+  .staff-table {
+    td {
+      vertical-align: middle;
+    }
+
+    tr.row-changed td {
+      background: #fff8e6;
+    }
+  }
+
+  .row-actions {
+    display: inline-flex;
+    gap: 6px;
+    white-space: nowrap;
+  }
+}

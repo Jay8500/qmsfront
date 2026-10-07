@@ -1,0 +1,119 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <section class="status-card">
+      <div class="main-heading-link d-flex justify-content-between align-items-center">
+        <h3 class="main-heading">My Vaccines <app-vaccination-policy-link /></h3>
+        <button type="button" class="btn btn-primary" (click)="onAddPrevious()">
+          <i class="pi pi-plus"></i> Add Previous Record</button>
+      </div>
+      <div class="row">
+        <div class="col-xl-4 col-md-4 col-12">
+          <div class="card-grid-cover bg3">
+            <div class="card-grid-header">
+              <h5>Scheduled</h5>
+              <h3>{{ (counts()['Scheduled'] || 0) + (counts()['Partially Done'] || 0) }}</h3>
+              <div class="icon"><i class="iconify pi pi-calendar-clock primeicons-size"></i></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-md-4 col-12">
+          <div class="card-grid-cover bg1">
+            <div class="card-grid-header">
+              <h5>Missed</h5>
+              <h3>{{ counts()['Missed'] || 0 }}</h3>
+              <div class="icon"><i class="iconify pi pi-exclamation-circle primeicons-size"></i></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-md-4 col-12">
+          <div class="card-grid-cover bg2">
+            <div class="card-grid-header">
+              <h5>Completed</h5>
+              <h3>{{ counts()['Completed'] || 0 }}</h3>
+              <div class="icon"><i class="iconify pi pi-verified primeicons-size"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="report-table mt-3 mb-3">
+      <div class="card-style2">
+        <div class="card-header backoption overflow-auto">
+          <p-selectbutton [options]="statusTabs" [ngModel]="selectedTab()" (ngModelChange)="selectedTab.set($event)"
+            [allowEmpty]="false" name="statusTab" />
+        </div>
+        <div class="card-body">
+          @if(loading){
+          <p class="text-center mb-0">Loading…</p>
+          } @else {
+          <div class="row">
+            @for(rec of visibleRecords(); track rec.vaccination_administration_id){
+            <div class="col-xl-4 col-md-6 col-12 mb-3">
+              <div class="formbox-left form-lg h-100" style="cursor: pointer;" (click)="onOpen(rec)">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                  <h5 class="mb-0">{{ rec.vaccine_name }}</h5>
+                  <span [class]="statusBadge(rec.status)">{{ rec.status }}</span>
+                </div>
+                <div><i class="pi pi-calendar" style="margin-right: 4px;"></i>{{ rec.scheduled_date || '-' }}</div>
+                @if(rec.time_slot){
+                <div><i class="pi pi-clock" style="margin-right: 4px;"></i>{{ rec.time_slot }}</div>
+                }
+                @if(rec.venue_name){
+                <div><i class="pi pi-map-marker" style="margin-right: 4px;"></i>{{ rec.venue_name }}</div>
+                }
+                <div class="mt-1">
+                  Dose {{ rec.dosage || '-' }}
+                  @if(rec.dose_completion_pct != null){
+                  <small>({{ rec.dose_completion_pct }}% complete)</small>
+                  }
+                </div>
+                @if(certificateService.hasCompletedDose(rec.dosage)){
+                <button type="button" class="btn btn-sm btn-outline-primary mt-2"
+                  (click)="$event.stopPropagation(); onDownloadCertificate(rec)">
+                  <i class="pi pi-download"></i> Certificate</button>
+                }
+              </div>
+            </div>
+            } @empty {
+            <div class="col-12">
+              <p class="text-center mb-0">No vaccinations in this list.</p>
+            </div>
+            }
+          </div>
+          }
+        </div>
+      </div>
+    </section>
+
+    @if(previousRecords.length){
+    <!-- Previous vaccinations sent for approval (SRS 2.x5) -->
+    <section class="report-table mb-3">
+      <div class="card-style2">
+        <div class="card-header backoption"><h5 class="mb-0">My previous records</h5></div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table mb-0">
+              <thead><tr><th>Request</th><th>Vaccine / Dose</th><th>Date</th><th>Issued by</th><th>Status</th></tr></thead>
+              <tbody>
+                @for(pr of previousRecords; track pr.vaccination_history_request_id){
+                <tr>
+                  <td>{{ pr.request_no }}</td>
+                  <td>{{ pr.vaccine_name }} — Dose {{ pr.dose_label || pr.dose_no }}</td>
+                  <td>{{ pr.vaccination_date }}</td>
+                  <td>{{ pr.issuer || '-' }}</td>
+                  <td><span [class]="pr.status === 'Approved' ? 'badge-green' : pr.status === 'Rejected' ? 'badge-red' : 'badge-yellow'">{{ pr.status === 'Pending' ? 'Waiting for approval' : pr.status }}</span>
+                    @if(pr.reject_reason){ <small class="d-block text-danger">{{ pr.reject_reason }}</small> }</td>
+                </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+    }
+  </div>
+</section>
+
+<app-history-record-dialog #recordDialog [(visible)]="showRecordDialog" (closed)="onRecordClosed($event)" />

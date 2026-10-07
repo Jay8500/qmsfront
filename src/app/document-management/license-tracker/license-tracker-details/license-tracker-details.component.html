@@ -1,0 +1,261 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                                        <i class="iconify pi pi-arrow-left"></i>
+                                    </a>
+                                    <h3>License Tracker Detail</h3>
+                                </div>
+                            </div>
+                            @if(canRenew()){
+                            <div class="col-md-5 col-12">
+                                <div class="form-right">
+                                    <button class="btn btn-primary" (click)="openRenew()">
+                                        <i class="pi pi-refresh me-1"></i> Renew License
+                                    </button>
+                                </div>
+                            </div>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="audit-info-cover">
+                            <div class="audit-status">
+                                <div class="row">
+                                    <div class="col-md-6 col-12">
+                                        <div class="left-content">
+                                            <h5>{{readOnlyLicense().license_no}}</h5>
+                                            @if(readOnlyLicense().updated_at!=null){
+                                            <p>Last Updated On <strong>{{readOnlyLicense().updated_at}}</strong></p>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="right-content text-end">
+                                            <p class="mb-1">Status</p>
+                                            <span [class]="statusClass(readOnlyLicense().status)">{{readOnlyLicense().status}}</span>
+                                            @if(readOnlyLicense().is_active && readOnlyLicense().days_to_expiry != null){
+                                            <p class="mb-0 mt-1">
+                                                @if(readOnlyLicense().days_to_expiry >= 0){
+                                                <small>{{readOnlyLicense().days_to_expiry}} days to expiry</small>
+                                                } @else {
+                                                <small class="text-danger">Expired {{-readOnlyLicense().days_to_expiry}} days ago</small>
+                                                }
+                                            </p>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-audit table-responsive">
+                                <table class="table table-bordered table-line mb-0">
+                                    <tr>
+                                        <th>License Name </th>
+                                        <th>License No</th>
+                                        <th>Provider / Vendor</th>
+                                        <th>Assigned To</th>
+                                        <th>Date of Issue </th>
+                                        <th>Date of Expiry </th>
+                                        <th>Renewal Application Date</th>
+                                    </tr>
+                                    <tr>
+                                        <td>{{readOnlyLicense().license_name}}</td>
+                                        <td>{{readOnlyLicense().license_no}}</td>
+                                        <td>{{readOnlyLicense().provider_name}}</td>
+                                        <td>{{readOnlyLicense().assigned_employee_id}}</td>
+                                        <td>{{readOnlyLicense().issue_date | appDate:'date'}}</td>
+                                        <td>{{readOnlyLicense().expiry_date | appDate:'date'}}</td>
+                                        <td>{{readOnlyLicense().renewal_application_date | appDate:'date'}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="audit-info-cover">
+                            <div class="audit-status">
+                                <div class="row">
+                                    <div class="col-md-12 col-12">
+                                        <div class="left-content">
+                                            <h5>Uploaded License</h5>
+                                            <p>
+                                                {{readOnlyLicense().license_files.length}} Documents found
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="table-audit-row">
+                                <div class="table-audit">
+                                    <table class="table table-bordered mb-0">
+                                        <tr>
+                                            @for(lf of readOnlyLicense().license_files;track $index){
+                                            <td colspan="2">
+                                                <p class="document-name">{{lf.file_name}}
+                                                    @if(lf.version_no){ <small class="text-muted">(v{{lf.version_no}})</small> }
+                                                    @if(lf.fileOrImageUrl){
+                                                    <a class="link-blue ms-2" style="cursor: pointer"
+                                                        (click)="onViewClick(lf)">View</a>
+                                                    }
+                                                </p>
+                                            </td>
+                                            }@empty{
+                                            <td colspan="2">No data found</td>
+                                            }
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="audit-info-cover">
+                            <div class="audit-status">
+                                <div class="row">
+                                    <div class="col-md-12 col-12">
+                                        <div class="left-content">
+                                            <h5>Renewal Actions (Checklist)</h5>
+                                            <p>{{readOnlyLicense().checklist_done}} of {{readOnlyLicense().checklist_total}} done
+                                                · {{readOnlyLicense().license_name_no}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="criteria-list">
+                                <ul>
+                                    @for (licence of readOnlyLicense().license_criteria;
+                                    track $index;let addIndex=$index) {
+                                    <li>
+                                        @if(licence['is_completed']){
+                                        <i class="pi pi-check-square text-success me-2"></i>
+                                        } @else {
+                                        <i class="pi pi-stop me-2 text-muted"></i>
+                                        }
+                                        {{ licence['criteria_name'] }}
+                                        @if(licence['is_completed'] && licence['completed_by']){
+                                        <small class="text-muted ms-2">({{ licence['completed_by'] }}, {{ licence['completed_at'] }})</small>
+                                        }
+                                    </li>
+                                    } @empty {
+                                    <li>No checklist items</li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="audit-info-cover">
+                            <div class="audit-status">
+                                <div class="row">
+                                    <div class="col-md-12 col-12">
+                                        <div class="left-content">
+                                            <h5>Renewal History</h5>
+                                            <p>{{ renewalHistory().length }} renewal(s) - read only</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-audit tablehrz table-responsive">
+                                <table class="table table-bordered table-line mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Renewed On</th>
+                                            <th>Renewed By</th>
+                                            <th>Old Validity</th>
+                                            <th>New Validity</th>
+                                            <th>Renewal Application</th>
+                                            <th>Proof</th>
+                                            <th>Remarks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for(rh of renewalHistory(); track rh.license_renewal_history_id){
+                                        <tr>
+                                            <td>{{ rh.renewed_at }}</td>
+                                            <td>{{ rh.renewed_by }}</td>
+                                            <td>{{ rh.old_issue_date | appDate:'date' }} to {{ rh.old_expiry_date | appDate:'date' }}</td>
+                                            <td>{{ rh.new_issue_date | appDate:'date' }} to {{ rh.new_expiry_date | appDate:'date' }}</td>
+                                            <td>{{ rh.new_renewal_application_date | appDate:'date' }}</td>
+                                            <td>
+                                                @for(pf of rh.files; track pf.file_id){
+                                                <a class="link-blue d-block" style="cursor:pointer" (click)="onViewClick(pf)">{{ pf.file_name }}</a>
+                                                }
+                                            </td>
+                                            <td>{{ rh.remarks }}</td>
+                                        </tr>
+                                        } @empty {
+                                        <tr><td colspan="7">No renewals yet</td></tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<p-dialog header="Renew License" [visible]="showRenew()" (visibleChange)="showRenew.set($event)" [modal]="true"
+    [style]="{ width: '640px' }" [breakpoints]="{ '768px': '95vw' }" [draggable]="false">
+    <div class="row g-3">
+        <div class="col-12">
+            <small class="text-muted">
+                The same license is updated with the new dates; the old dates and proof are kept in Renewal History.
+                Current validity: {{ readOnlyLicense().issue_date | appDate:'date' }} to
+                {{ readOnlyLicense().expiry_date | appDate:'date' }}.
+            </small>
+            @if(renewError){
+            <div class="text-danger mt-1"><small>{{ renewError }}</small></div>
+            }
+        </div>
+        <div class="col-md-4 col-12">
+            <label>New Issue Date</label>
+            <p-datepicker [(ngModel)]="renewForm.new_issue_date" dateFormat="dd-mm-yy" appendTo="body"
+                placeholder="Issue Date" styleClass="w-full" class="form-control" />
+        </div>
+        <div class="col-md-4 col-12">
+            <label>New Expiry Date</label>
+            <p-datepicker [(ngModel)]="renewForm.new_expiry_date" dateFormat="dd-mm-yy" appendTo="body"
+                [minDate]="toDate(renewForm.new_issue_date)" placeholder="Expiry Date" styleClass="w-full"
+                class="form-control" />
+        </div>
+        <div class="col-md-4 col-12">
+            <label>Renewal Application Date</label>
+            <p-datepicker [(ngModel)]="renewForm.new_renewal_application_date" dateFormat="dd-mm-yy" appendTo="body"
+                [minDate]="toDate(renewForm.new_issue_date)" [maxDate]="toDate(renewForm.new_expiry_date)"
+                placeholder="Optional" styleClass="w-full" class="form-control" />
+        </div>
+        <div class="col-12">
+            <label>Renewed License / Proof (PDF, JPG, PNG - max 5 MB)</label>
+            <p-fileUpload mode="basic" #renewDocs chooseLabel="Upload" [auto]="true" [maxFileSize]="5242880"
+                accept="application/pdf,image/jpeg,image/png" (onSelect)="onRenewFileSelect(renewDocs, $event)"
+                invalidFileSizeMessageSummary="File too large" invalidFileSizeMessageDetail="Maximum upload size is 5MB">
+            </p-fileUpload>
+            <div class="flex gap-2 flex-wrap mt-2">
+                @for(rf of renewForm.license_files; track rf.file_name; let i = $index){
+                <div style="border: 1px solid #cacaca;padding: 5px; border-radius: 7px;font-size: 11px;">
+                    {{ rf.file_name }}
+                    <a href="javascript:;" class="ms-2" (click)="removeRenewFile(i)"><i class="pi pi-times-circle"></i></a>
+                </div>
+                }
+            </div>
+        </div>
+        <div class="col-12">
+            <label>Remarks</label>
+            <textarea pTextarea [(ngModel)]="renewForm.remarks" rows="3" maxlength="500" class="form-control w-full"
+                placeholder="Inspection notes, application reference ..."></textarea>
+        </div>
+    </div>
+    <ng-template #footer>
+        <button class="btn btn-light me-2" (click)="showRenew.set(false)">Cancel</button>
+        <button class="btn btn-primary" [disabled]="renewSaving()" (click)="onRenewSave()">Save Renewal</button>
+    </ng-template>
+</p-dialog>

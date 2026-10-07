@@ -1,0 +1,225 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <h3>OPPE for Doctors</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-12">
+                                <div class="form-right">
+                                    <button type="button" class="btn btn-dark">Clear</button>
+                                    <button type="submit" class="btn btn-primary" (click)="onSubmit()">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body radius-4">
+                        <div class="row justify-content-center">
+                            <div class="col-md-6 col-12">
+                                <div class="formbox-left form-lg">
+                                    <h5>Doctor Details</h5>
+                                    <p class="text-gray mb-2">Enter Doctor details to generate a OPPE Report for Doctor
+                                    </p>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-12">
+                                            <div class="form-group">
+                                                <label for="deptList_id">Department</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <p-select id="deptList_id" [(ngModel)]="oppeDoc.deptList_id"
+                                                        name="deptList_id" (onChange)="onGetErrMsg('deptList_id')"
+                                                        (onBlur)="onGetErrMsg('deptList_id')"
+                                                        [disabled]="pageMode=='VIEW'" [options]="deptList"
+                                                        [filter]="true" [showClear]="true" placeholder="Department"
+                                                        class="form-control" />
+                                                    <div style="position: absolute;
+                                                        top: 0;
+                                                        right: 0px;
+                                                        width: 0px;
+                                                        height: 0;
+                                                        border-top: 12px solid red;
+                                                        border-left: 12px solid transparent;"></div>
+                                                </div>
+                                                @if(errMsg['deptList_id']!=''){
+                                                <small class="error">{{ errMsg['deptList_id'] }}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-12">
+                                            <div class="form-group">
+                                                <label for="designationList_id">Designation</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <p-select id="designationList_id"
+                                                        [(ngModel)]="oppeDoc.designationList_id"
+                                                        name="designationList_id" placeholder="Designation"
+                                                        (onChange)="onGetErrMsg('designationList_id')"
+                                                        (onBlur)="onGetErrMsg('designationList_id')"
+                                                        [options]="designationList" [filter]="true" [showClear]="true"
+                                                        [disabled]="pageMode=='VIEW'" class="form-control" />
+                                                    <div style="position: absolute;
+                                                top: 0;
+                                                right: 0px;
+                                                width: 0px;
+                                                height: 0;
+                                                border-top: 12px solid red;
+                                                border-left: 12px solid transparent;"></div>
+                                                </div>
+                                                @if(errMsg['designationList_id']!=''){
+                                                <small class="error">{{ errMsg['designationList_id'] }}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-12">
+                                            <div class="form-group">
+                                                <label for="speciaList_id">Specialization</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <p-select id="speciaList_id" [(ngModel)]="oppeDoc.speciaList_id"
+                                                        name="speciaList_id" placeholder="Specialization"
+                                                        (onChange)="onGetErrMsg('speciaList_id')"
+                                                        (onBlur)="onGetErrMsg('speciaList_id')" [options]="speciaList"
+                                                        [filter]="true" [showClear]="true" [disabled]="pageMode=='VIEW'"
+                                                        class="form-control" />
+                                                    <div style="position: absolute;
+                                                top: 0;
+                                                right: 0px;
+                                                width: 0px;
+                                                height: 0;
+                                                border-top: 12px solid red;
+                                                border-left: 12px solid transparent;"></div>
+                                                </div>
+                                                @if(errMsg['speciaList_id']!=''){
+                                                <small class="error">{{ errMsg['speciaList_id'] }}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-12">
+                                            <div class="form-group">
+                                                <label for="consultList_id">Consultant / Doctor Name</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <p-select id="consultList_id" [(ngModel)]="oppeDoc.consultList_id"
+                                                        name="consultList_id" placeholder="Consultant"
+                                                        (onChange)="onGetErrMsg('consultList_id')"
+                                                        (onBlur)="onGetErrMsg('consultList_id')" [options]="consultList"
+                                                        [filter]="true" [showClear]="true" [disabled]="pageMode=='VIEW'"
+                                                        class="form-control" />/>
+                                                    <div style="position: absolute;
+                                                top: 0;
+                                                right: 0px;
+                                                width: 0px;
+                                                height: 0;
+                                                border-top: 12px solid red;
+                                                border-left: 12px solid transparent;"></div>
+                                                </div>
+                                                @if(errMsg['consultList_id']!=''){
+                                                <small class="error">{{ errMsg['consultList_id'] }}</small>
+                                                }
+                                            </div>
+                                        </div>
+
+                                        <!-- <div class="col-md-12 co-12">
+                                            <div class="form-group">
+                                                <label>Evaluation Peroid</label>
+                                                <div class="radio-group">
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="agendaApproval" id="r1" value="1" checked>
+                                                        <label class="form-check-label" for="r1">Monthly</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="agendaApproval" id="r2" value="2">
+                                                        <label class="form-check-label" for="r2">Quarterly</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="agendaApproval" id="r3" value="3">
+                                                        <label class="form-check-label" for="r3">Half Yearly</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="agendaApproval" id="r4" value="4">
+                                                        <label class="form-check-label" for="r4">Yearly</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> -->
+
+                                        <!-- <div class="col-lg-12 col-md-12 co-12">
+                                            <div class="form-group">
+                                                <label>Choose Month</label>
+                                                <select class="form-select">
+                                                    <option>January</option>
+                                                    <option>February</option>
+                                                    <option>March</option>
+                                                    <option>April</option>
+                                                    <option>May</option>
+                                                    <option>June</option>
+                                                    <option>July</option>
+                                                    <option>August</option>
+                                                    <option>September</option>
+                                                    <option>October</option>
+                                                    <option>November</option>
+                                                    <option>December</option>
+                                                </select>
+                                            </div>
+                                        </div> -->
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label for="from_dt">From Date</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <div class="input-group">
+                                                        <p-datePicker type="date" id="from_dt" name="from_dt"
+                                                            class="form-control" [(ngModel)]="oppeDoc.consultList_id"
+                                                            placeholder="From Date" (onChange)="onGetErrMsg('from_dt')"
+                                                            (onBlur)="onGetErrMsg('from_dt')"
+                                                            [disabled]="pageMode=='VIEW'" />
+                                                        <div style="position: absolute;
+                                                    top: 0;
+                                                    right: 0px;
+                                                    width: 0px;
+                                                    height: 0;
+                                                    border-top: 12px solid red;
+                                                    border-left: 12px solid transparent;"></div>
+                                                    </div>
+                                                </div>
+                                                @if(errMsg['from_dt']!=''){
+                                                <small class="error">{{ errMsg['from_dt'] }}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label for="to_dt">To Date</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <div class="input-group">
+                                                        <p-datePicker type="date" id="to_dt" name="to_dt"
+                                                            class="form-control" placeholder="To Date"
+                                                            (onChange)="onGetErrMsg('to_dt')"
+                                                            (onBlur)="onGetErrMsg('to_dt')"
+                                                            [disabled]="pageMode=='VIEW'" />
+                                                        <div style="position: absolute;
+                                                    top: 0;
+                                                    right: 0px;
+                                                    width: 0px;
+                                                    height: 0;
+                                                    border-top: 12px solid red;
+                                                    border-left: 12px solid transparent;"></div>
+                                                    </div>
+                                                </div>
+                                                @if(errMsg['to_dt']!=''){
+                                                <small class="error">{{ errMsg['to_dt'] }}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

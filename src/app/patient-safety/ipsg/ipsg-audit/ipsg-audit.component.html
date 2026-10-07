@@ -1,0 +1,329 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="row">
+      <div class="col-md-12 col-12">
+        <div class="card-style2">
+          <div class="card-header backoption">
+            <div class="row">
+              <div class="col-md-7 col-12">
+                <div class="heading-left">
+                  <a
+                    href="javascript:;"
+                    class="icon-btn-square"
+                    (click)="goBack()"
+                  >
+                    <i class="iconify pi pi-arrow-left"></i>
+                  </a>
+                  <h3>
+                    {{ _hqms.getPageModeContext(pageMode, "IPSG Audit") }}
+                  </h3>
+                </div>
+              </div>
+              <div class="col-md-5 col-12">
+                @if (ipsgAudits["sections"].length > 0) {
+                  <!-- @if(ipsgAudits.status == 'draft'){ -->
+                  <div class="form-right">
+                    <button
+                      type="button"
+                      class="btn btn-dark"
+                      [disabled]="false"
+                      (click)="onClearClick()"
+                    >
+                      Clear
+                    </button>
+                    <button
+                      type="submit"
+                      class="btn btn-info"
+                      [disabled]="false"
+                      (click)="onSubmitClick('draft')"
+                    >
+                      Draft
+                    </button>
+                    <button
+                      type="submit"
+                      class="btn btn-primary"
+                      [disabled]="false"
+                      (click)="onSubmitClick('submitted')"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                  <!-- } -->
+                }
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-3">
+                <div class="formbox-left">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="department_id">Department</label>
+                        <div
+                          style="
+                            position: relative;
+                            display: inline-block;
+                            width: 100%;
+                          "
+                        >
+                          <p-select
+                            id="department_id"
+                            [(ngModel)]="ipsgAudits.department_id"
+                            (onBlur)="onGetErrorMsgs('department_id')"
+                            placeholder="Department"
+                            (onChange)="onGetErrorMsgs('department_id')"
+                            name="department_id"
+                            [options]="departmentList"
+                            [filter]="true"
+                            [showClear]="true"
+                            class="form-control"
+                          />
+                          <div
+                            style="
+                              position: absolute;
+                              top: 0;
+                              right: 0;
+                              width: 0;
+                              height: 0;
+                              border-top: 12px solid red;
+                              border-left: 12px solid transparent;
+                            "
+                          ></div>
+                        </div>
+                        @if (errorMsg["department_id"] != "") {
+                          <small class="error">{{
+                            errorMsg["department_id"]
+                          }}</small>
+                        }
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <label for="audit_date">Audit Date</label>
+                      <div
+                        style="
+                          position: relative;
+                          display: inline-block;
+                          width: 100%;
+                        "
+                      >
+                        <p-datePicker
+                          type="date"
+                          id="audit_date"
+                          [(ngModel)]="ipsgAudits.audit_date"
+                          placeholder="Audit Date"
+                          name="audit_date"
+                          class="form-control"
+                          (onBlur)="onGetErrorMsgs('audit_date')"
+                          (onChange)="onGetErrorMsgs('audit_date')"
+                        />
+                        <div
+                          style="
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            width: 0;
+                            height: 0;
+                            border-top: 12px solid red;
+                            border-left: 12px solid transparent;
+                          "
+                        ></div>
+                      </div>
+                      @if (errorMsg["audit_date"] != "") {
+                        <small class="error">{{
+                          errorMsg["audit_date"]
+                        }}</small>
+                      }
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <button
+                      type="submit"
+                      class="btn btn-primary"
+                      [disabled]="false"
+                      (click)="onConductAudit()"
+                    >
+                      Audit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-9">
+              @if (ipsgAudits.sections.length > 0) {
+                <div
+                  class="accordion custom-accordion1 accordion2"
+                  id="accordionExample"
+                >
+                  @for (
+                    pathwayAdt of ipsgAudits.sections;
+                    track $index;
+                    let scI = $index
+                  ) {
+                    <div class="accordion-item">
+                      <h2 class="accordion-header">
+                        <button
+                          class="accordion-button"
+                          type="button"
+                          data-bs-toggle="collapse"
+                          [attr.data-bs-target]="'#collapseOne' + scI"
+                          aria-expanded="true"
+                          [attr.aria-controls]="'collapseOne' + scI"
+                        >
+                          <h5>{{ pathwayAdt.section_name }}</h5>
+                          <!-- <p>{{pathwayAdt.section_description}}</p> -->
+                        </button>
+                      </h2>
+                      @for (
+                        qstn of pathwayAdt.questions;
+                        track $index;
+                        let j = $index
+                      ) {
+                        <div
+                          [id]="'collapseOne' + scI"
+                          class="accordion-collapse collapse show"
+                          data-bs-parent="#accordionExample"
+                        >
+                          <div class="accordion-body">
+                            <div class="table-audit table-responsive">
+                              <table class="table table-bordered mb-0">
+                                <tr>
+                                  <td width="100%">
+                                    <div>
+                                      {{ qstn.question_text }}
+                                      <div class="audit-check-group">
+                                        <div class="audit-check">
+                                          <ul>
+                                            <li>
+                                              <a
+                                                (click)="
+                                                  selectAnswer(qstn, 'YES')
+                                                "
+                                                [ngClass]="
+                                                  qstn.answer_text === 'YES'
+                                                    ? 'green'
+                                                    : ''
+                                                "
+                                                style="cursor: pointer"
+                                              >
+                                                <i
+                                                  class="iconify pi pi-check-circle"
+                                                ></i>
+                                                Yes</a
+                                              >
+                                            </li>
+                                            <li>
+                                              <a
+                                                (click)="
+                                                  selectAnswer(qstn, 'NO')
+                                                "
+                                                [ngClass]="
+                                                  qstn.answer_text === 'NO'
+                                                    ? 'red'
+                                                    : ''
+                                                "
+                                                style="cursor: pointer"
+                                              >
+                                                <i
+                                                  class="iconify pi pi-check-circle"
+                                                ></i>
+                                                No</a
+                                              >
+                                            </li>
+                                            @if (qstn.is_not_applicable) {
+                                              <li>
+                                                <a
+                                                  (click)="
+                                                    selectAnswer(qstn, 'NA')
+                                                  "
+                                                  [ngClass]="
+                                                    qstn.answer_text === 'NA'
+                                                      ? 'yellow-class'
+                                                      : ''
+                                                  "
+                                                  style="cursor: pointer"
+                                                >
+                                                  <i
+                                                    class="iconify pi pi-check-circle"
+                                                  ></i>
+                                                  NA</a
+                                                >
+                                              </li>
+                                            }
+                                          </ul>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div>
+                                      <textarea
+                                        pTextarea
+                                        [(ngModel)]="qstn.remarks"
+                                        rows="10"
+                                        [disabled]="
+                                          ipsgAudits['status'] == 'submitted'
+                                        "
+                                        name="remarks_{{ scI }}_{{ j }}"
+                                        class="form-control"
+                                      ></textarea>
+                                    </div>
+                                  </td>
+                                </tr>
+                              </table>
+                              @if (qstn.is_required) {
+                                <div class="error">Response Required</div>
+                              }
+                            </div>
+                          </div>
+                        </div>
+                      }
+                    </div>
+                  }
+                </div>
+              } @else {
+                Audit questionnaire not found
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .yellow-class {
+    background-color: yellow !important;
+  }
+
+  .error {
+    color: red;
+    font-weight: bold;
+  }
+
+  textarea {
+    height: 100% !important;
+  }
+  ::ng-deep .p-datepicker {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center;
+    padding: 0 !important;
+  }
+
+  ::ng-deep .p-datepicker .p-inputtext {
+    flex: 1;
+    width: 100% !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  ::ng-deep .p-datepicker.form-control,
+  ::ng-deep .p-datepicker .p-datepicker {
+    border: 1px solid var(--red-500, red);
+    border-radius: 4px;
+    padding: 0.375rem 0.75rem;
+  }
+</style>

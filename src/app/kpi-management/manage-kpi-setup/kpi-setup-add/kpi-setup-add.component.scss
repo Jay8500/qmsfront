@@ -1,0 +1,250 @@
+// Import variables
+@use '../../../../variables.scss';
+
+// Custom styles for staff competency add component
+.form-section {
+    background: variables.$textWhite;
+    border-radius: 12px;
+    padding: 25px 25px 35px;
+    margin-bottom: 30px;
+    border: 2px solid variables.$barbgBlue;
+    position: relative;
+
+    .form-title {
+        position: absolute;
+        top: -20px;
+        left: 30px;
+        padding: 7px 15px;
+        border: 2px solid variables.$barbgBlue;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 500;
+        background: variables.$textWhite;
+        color: variables.$textBlackPrimary;
+        text-align: center;        
+    }
+}
+
+.form-title, .form-group {
+    .info-icon {
+        cursor: pointer;
+        color: variables.$infoIconDark;
+        font-size: 18px;
+    }
+}
+
+.assessment-column {
+    background: variables.$barbgBlue;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 10px;
+    border: 1px solid #E5E7EB;
+    height: 100%;    
+
+    .assessment-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 0;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #F3F4F6;
+
+        h5 {
+            font-size: 14px;
+            font-weight: 600;
+            color: variables.$textBlackPrimary;
+            margin: 0;
+        }
+
+        .header-icons {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .action-icons {
+            display: flex;
+            a {
+                color: variables.$textBlack;
+                margin-left: 10px;
+                font-size: 20px;
+                &:hover {
+                    color: variables.$textBlue;
+                }
+            }
+        }        
+
+        .delete-icon {
+            color: variables.$textRed;
+            
+            &:hover {
+                color: #B91C1C;
+            }
+        }
+    }
+
+    .assessment-fields {
+        .form-group {
+            margin-bottom: 10px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            .form-select, .form-control {
+                background-color: variables.$textWhite;
+                border: 1px solid #E5E7EB;
+                border-radius: 6px;
+                height: 40px;
+                font-size: 14px;
+                color: variables.$textBlackPrimary;
+                padding: 8px 12px;
+                width: 100%;
+                transition: border-color 0.3s ease;
+
+                &:focus {
+                    outline: none;
+                    border-color: variables.$primaryColor;
+                    box-shadow: 0 0 0 3px rgba(29, 126, 206, 0.1);
+                }
+
+                &::placeholder {
+                    color: variables.$inputPlaceholder;
+                }
+            }
+        }
+    }
+}
+
+// Override form-lg styles for this component
+.formbox-left.form-lg {
+    .form-group {
+        margin-bottom: 15px;
+
+        label {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: variables.$textBlackPrimary;
+            display: block;
+        }
+
+        .form-select {
+            background-color: variables.$inputBg;
+            border: 1px solid #E5E7EB;
+            border-radius: 6px;
+            height: 40px;
+            font-size: 14px;
+            color: variables.$textBlackPrimary;
+            padding: 8px 12px;
+            width: 100%;
+            transition: border-color 0.3s ease;
+
+            &:focus {
+                outline: none;
+                border-color: variables.$primaryColor;
+                box-shadow: 0 0 0 3px rgba(29, 126, 206, 0.1);
+            }
+
+            &::placeholder {
+                color: variables.$inputPlaceholder;
+            }
+        }
+    }
+}
+
+// Button group styling
+.button-group {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 30px;
+
+    .btn {
+        font-size: 14px;
+        font-weight: 500;
+        border-radius: 6px;
+        min-width: 100px;
+        height: 40px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &.btn-dark {
+            background-color: variables.$btndarkBg;
+            color: variables.$textWhite;
+
+            &:hover {
+                background-color: variables.$btndarkBgHover;
+            }
+        }
+
+        &.btn-primary {
+            background-color: variables.$primaryColor;
+            color: variables.$textWhite;
+
+            &:hover {
+                background-color: #1565C0;
+            }
+        }
+    }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+    .form-section {
+        padding: 20px 15px;
+
+        .form-title {
+            left: 15px;
+            font-size: 14px;
+            padding: 5px 12px;
+        }
+    }
+
+    .assessment-column {
+        margin-bottom: 20px;
+        padding: 15px;
+
+        .assessment-header {
+            margin-bottom: 15px;
+
+            h5 {
+                font-size: 13px;
+            }
+        }
+
+        .assessment-fields {
+            .form-group {
+                margin-bottom: 12px;
+
+                .form-select {
+                    height: 38px;
+                    font-size: 13px;
+                }
+            }
+        }
+    }
+
+    .button-group {
+        flex-direction: column;
+        gap: 10px;
+
+        .btn {
+            width: 100%;
+            min-width: auto;
+        }
+    }
+}
+
+.formbox-left {
+    border-radius: 12px;
+    padding: 30px;
+    border: 1px solid variables.$barbgBlue;
+}
+
+.formbox-left.margin0   {
+    padding-bottom: 5px !important;    
+}
+

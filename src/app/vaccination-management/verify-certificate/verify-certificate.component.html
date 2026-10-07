@@ -1,0 +1,36 @@
+<section class="verify-page">
+    <div class="verify-card">
+        <h4 class="mb-1">Vaccination Certificate Verification</h4>
+        @if(loading()){
+        <p class="hint mb-0">Checking…</p>
+        } @else {
+        @switch(result()?.status){
+        @case('Valid'){
+        <div class="verify-status valid"><i class="pi pi-check-circle"></i> Valid certificate</div>
+        }
+        @case('Revoked'){
+        <div class="verify-status revoked"><i class="pi pi-times-circle"></i> Revoked
+            @if(result()?.revoked_at){ <small>on {{ result()?.revoked_at }}</small> }</div>
+        }
+        @case('Not found'){
+        <div class="verify-status revoked"><i class="pi pi-question-circle"></i> Certificate not found</div>
+        }
+        @default {
+        <div class="verify-status revoked"><i class="pi pi-exclamation-triangle"></i> Could not check the certificate. Try again later.</div>
+        }
+        }
+        @if(result()?.certificate_no){
+        <table class="verify-table">
+            <tr><th>Certificate No.</th><td>{{ result()?.certificate_no }}</td></tr>
+            <tr><th>Employee</th><td>{{ result()?.employee_name }} ({{ result()?.employee_code }})</td></tr>
+            <tr><th>Vaccine</th><td>{{ result()?.vaccine_name }}</td></tr>
+            <tr><th>Doses</th><td>{{ result()?.doses_completed }} of {{ result()?.doses_total }} (last: Dose {{ result()?.dose_label }})</td></tr>
+            <tr><th>Date</th><td>{{ result()?.vaccination_date || '-' }}</td></tr>
+            <tr><th>Batch</th><td>{{ result()?.batch_no || '-' }}</td></tr>
+            <tr><th>Issued</th><td>{{ result()?.issued_at }}</td></tr>
+            <tr><th>Issued by</th><td>{{ result()?.org_name }}</td></tr>
+        </table>
+        }
+        }
+    </div>
+</section>

@@ -1,0 +1,245 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                                        <i class="iconify pi pi-arrow-left"></i></a>
+                                    <h3>{{_hqms.getPageModeContext(pageMode, 'Vaccine Schedule') }}</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-12">
+                                <div class="form-right">
+                                    @if(canSave()){
+                                    <button type="button" class="btn btn-dark" (click)="onClearClick()">Clear</button>
+                                    <button type="submit" class="btn btn-primary"
+                                        (click)="onSubmitClick()">Submit</button>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body vacc-form">
+                        <div class="row">
+                            <div class="col-xl-5 col-lg-6 col-12">
+                                <div class="formbox-left form-lg">
+                                    <form>
+                                        <div class="row">
+                                            <div class="col-md-12 col-12">
+                                                <div class="flex flex-col gap-1">
+                                                    <label for="campaign_name">Campaign Name</label>
+                                                    <div class="req">
+                                                        <input pInputText id="campaign_name"
+                                                            [(ngModel)]="schVaccine.campaign_name"
+                                                            (blur)="onGetErrorMsgs('campaign_name')"
+                                                            [disabled]="pageMode=='VIEW'" name="campaign_name"
+                                                            class=" form-control" autocomplete="off"
+                                                            appNospaces>
+                                                    </div>
+                                                    @if(errorMsg['campaign_name']!=''){
+                                                    <small class="error">{{ errorMsg['campaign_name'] }}</small>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-12">
+                                                <div class="flex flex-col gap-1">
+                                                    <label for="vaccine_id">Vaccine</label>
+                                                    <div class="req">
+                                                        <p-select id="vaccine_id" [(ngModel)]="schVaccine.vaccine_id"
+                                                            (onBlur)="onGetErrorMsgs('vaccine_id')"
+                                                            (onChange)="onGetErrorMsgs('vaccine_id')"
+                                                            [options]="aciveVaccinesList" [filter]="true"
+                                                            [showClear]="true" [disabled]="pageMode=='VIEW'"
+                                                            name="vaccine_id" class=" form-control" appendTo="body" />
+                                                    </div>
+                                                    @if(errorMsg['vaccine_id']!=''){
+                                                    <small class="error">{{ errorMsg['vaccine_id'] }}</small>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-12">
+                                                <div class="flex flex-col gap-1">
+                                                    <label for="venue_id">Venue</label>
+                                                    <div class="req">
+                                                        <p-select id="venue_id" [(ngModel)]="schVaccine.venue_id"
+                                                            (onBlur)="onGetErrorMsgs('venue_id')"
+                                                            (onChange)="onGetErrorMsgs('venue_id')"
+                                                            [options]="venuesList" [filter]="true" [showClear]="true"
+                                                            [disabled]="pageMode=='VIEW'" name="venue_id"
+                                                            class=" form-control" appendTo="body" />
+                                                    </div>
+                                                    @if(errorMsg['venue_id']!=''){
+                                                    <small class="error">{{ errorMsg['venue_id'] }}</small>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-12">
+                                                <div class="flex flex-col gap-1">
+                                                    <label for="start_date">From Date &amp; Time</label>
+                                                    <div class="req">
+                                                        <input type="datetime-local" id="start_date"
+                                                            [(ngModel)]="schVaccine.start_date"
+                                                            (change)="onGetErrorMsgs('start_date'); onGetErrorMsgs('end_date')"
+                                                            [disabled]="pageMode=='VIEW'" name="start_date"
+                                                            [min]="minDateSetter()" class="form-control">
+                                                    </div>
+                                                    @if(errorMsg['start_date']!=''){
+                                                    <small class="error">{{ errorMsg['start_date'] }}</small>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-12">
+                                                <div class="flex flex-col gap-1">
+                                                    <label for="end_date">To Date &amp; Time</label>
+                                                    <div class="req">
+                                                        <input type="datetime-local" id="end_date"
+                                                            [(ngModel)]="schVaccine.end_date"
+                                                            (change)="onGetErrorMsgs('end_date')"
+                                                            [disabled]="pageMode=='VIEW'||schVaccine.start_date==null"
+                                                            name="end_date"
+                                                            [min]="schVaccine.start_date || minDateSetter()"
+                                                            class="form-control">
+                                                    </div>
+                                                    @if(errorMsg['end_date']!=''){
+                                                    <small class="error">{{ errorMsg['end_date'] }}</small>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-12">
+                                                <div class="flex flex-col gap-1">
+                                                    <label for="capacity">Capacity (1 – 999)</label>
+                                                    <div class="req">
+                                                        <input type="number" min="1" max="999" id="capacity"
+                                                            [(ngModel)]="schVaccine.capacity"
+                                                            (blur)="onGetErrorMsgs('capacity')"
+                                                            [disabled]="pageMode=='VIEW'" name="capacity"
+                                                            class="form-control">
+                                                    </div>
+                                                    @if(errorMsg['capacity']!=''){
+                                                    <small class="error">{{ errorMsg['capacity'] }}</small>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-12">
+                                                <div class="flex flex-col">
+                                                    <label>Status</label>
+                                                    <div class="toggle-row">
+                                                        <label for="sch_status">{{ schVaccine.is_active ? 'Active' : 'Inactive' }}</label>
+                                                        <p-toggleswitch [(ngModel)]="schVaccine.is_active" name="status"
+                                                            inputId="sch_status"
+                                                            [disabled]="pageMode=='VIEW' || pageMode=='NEW'" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <!-- Target Scope (SRS 2.2 v0.2) -->
+                            <div class="col-xl-7 col-lg-6 col-12">
+                                <div class="formbox-left form-lg">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="section-title">Target Scope</div>
+                                        </div>
+                                        <div class="col-sm-6 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="dept_ids">Step 1 – Department(s)</label>
+                                                <div class="req">
+                                                <p-multiselect id="dept_ids" [(ngModel)]="schVaccine.dept_ids"
+                                                    name="dept_ids" [options]="departmentList" [filter]="true"
+                                                    [showClear]="true" placeholder="Select departments"
+                                                    [disabled]="pageMode=='VIEW'" (onChange)="onScopeChange()"
+                                                    (onClear)="onScopeChange()" class="form-control"
+                                                    appendTo="body" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="role_ids">Filter by Role (optional)</label>
+                                                <p-multiselect id="role_ids" [(ngModel)]="schVaccine.role_ids"
+                                                    name="role_ids" [options]="roleList" [filter]="true"
+                                                    [showClear]="true" placeholder="All roles"
+                                                    [disabled]="pageMode=='VIEW' || schVaccine.dept_ids.length == 0"
+                                                    (onChange)="onScopeChange()" (onClear)="onScopeChange()"
+                                                    class="form-control" appendTo="body" />
+                                            </div>
+                                        </div>
+                                        <div class="col-12 mt-2">
+                                            <div class="d-flex flex-wrap gap-1 justify-content-between align-items-center mb-1">
+                                                <label>Step 2 – Employees</label>
+                                                <span class="badge-green">{{ selectedEmployees().length }} Employees
+                                                    Selected</span>
+                                            </div>
+                                            <input pInputText class="form-control mb-1" placeholder="Search employee or department"
+                                                [ngModel]="employeeSearch()" (ngModelChange)="employeeSearch.set($event)"
+                                                name="employeeSearch" [disabled]="employees().length == 0" />
+                                            <div class="table-responsive" style="max-height: 320px;">
+                                                <table class="table table-sm table-striped mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 40px;">
+                                                                <p-checkbox [binary]="true" [ngModel]="allFilteredSelected()"
+                                                                    (onChange)="toggleAllFiltered($event.checked)"
+                                                                    name="selectAll"
+                                                                    [disabled]="pageMode=='VIEW' || filteredEmployees().length == 0" />
+                                                            </th>
+                                                            <th>Employee</th>
+                                                            <th>Department</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if(loadingEmployees){
+                                                        <tr>
+                                                            <td colspan="3" class="text-center">Loading employees…</td>
+                                                        </tr>
+                                                        } @else {
+                                                        @for(emp of filteredEmployees(); track emp.employee_id){
+                                                        <tr>
+                                                            <td>
+                                                                <p-checkbox [binary]="true" [ngModel]="isSelected(emp)"
+                                                                    (onChange)="toggleEmployee(emp, $event.checked)"
+                                                                    [name]="'emp_' + emp.employee_id"
+                                                                    [disabled]="pageMode=='VIEW'" />
+                                                            </td>
+                                                            <td>{{ emp.employee_name }}</td>
+                                                            <td>{{ emp.department_name }}</td>
+                                                        </tr>
+                                                        } @empty {
+                                                        <tr>
+                                                            <td colspan="3" class="text-center">
+                                                                {{ schVaccine.dept_ids.length == 0 ? 'Select department(s) to load employees.' : 'No employees found.' }}
+                                                            </td>
+                                                        </tr>
+                                                        }
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            @if(capacityExceeded()){
+                                            <small class="text-warning d-block mt-1">
+                                                <i class="pi pi-exclamation-triangle"></i>
+                                                {{ selectedEmployees().length }} employees selected — more than the
+                                                capacity of {{ schVaccine.capacity }}.
+                                            </small>
+                                            }
+                                            @if(errorMsg['target']!=''){
+                                            <small class="error">{{ errorMsg['target'] }}</small>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

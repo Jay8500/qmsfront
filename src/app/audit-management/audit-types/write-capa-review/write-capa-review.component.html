@@ -1,0 +1,237 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                                        <!-- <span class="iconify" data-icon="famicons:arrow-back-outline"></span> -->
+                                        <i class="iconify pi pi-arrow-left"></i>
+                                    </a>
+                                    <h3>CAPA Review {{conducAudit().audit_name}} &nbsp;&nbsp;&nbsp;
+                                        #{{conducAudit().audit_template_code  }}
+                                    </h3>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-5 col-12">
+                                <div class="form-right">
+                                    <div class="dropdown dropdown-style1 ms-2">
+                                        <button class="btn btn-light dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            Download <span class="iconify" data-icon="akar-icons:chevron-down"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                                            <li><a class="dropdown-item" href="javascript:;">Download Word</a></li>
+                                            <li><a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="audit-info-cover">
+                            <div class="audit-status">
+                                <div class="row">
+                                    <div class="col-md-6 col-12">
+                                        <div class="left-content">
+                                            <h5>{{conducAudit().audit_name}} </h5>
+                                            <p>Last Updated On <strong>{{conducAudit().audit_date   }}</strong></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="right-content text-end">
+                                            <p class="mb-1">Status</p>
+                                            <span class="badge-green">{{conducAudit().status   }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-audit tablehrz">
+                                <table class="table table-bordered table-line mb-0">
+                                    <tr>
+                                        <th>Audit Title</th>
+                                        <th>Department</th>
+                                        <th>Location</th>
+                                        <th>Auditor</th>
+                                        <th>Auditee</th>
+                                    </tr>
+                                    <tr>
+                                        <td>{{conducAudit().audit_title   }}</td>
+                                        <td>{{conducAudit().department_name   }}</td>
+                                        <td>{{conducAudit().audit_location_name   }}</td>
+                                        <td>{{conducAudit().auditor_name   }} </td>
+                                        <td>{{conducAudit().auditee_name   }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="audit-info-cover mt-3">
+                            <div class="form-section p-0">
+                                <div class="row">
+                                    <div class="col-md-6 col-12">
+                                        <div class="audit-heading">
+                                            <h5>{{conducAudit().audit_name}} Report</h5>
+                                            <p>{{qstnCnt}} Questions</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="right-content text-end">
+                                            <p class="mb-1">Status</p>
+                                            <span class="badge-green">90%</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="audit-table mt-1">
+                                    @for(condtAdt of conducAudit().sections;track $index;let scI = $index){
+                                    <div class="audit-heading mb-2">
+                                        <h5>{{condtAdt.section_name}}</h5>
+                                        <p class="light-text">{{condtAdt.section_description}}
+                                        </p>
+                                    </div>
+                                    <div class="table-audit table-responsive">
+                                        <table class="table table-bordered mb-0">
+                                            @for(qstn of condtAdt.questions;track $index;let j = $index){
+                                            <tr>
+                                                <td>{{qstn.question_text }}</td>
+                                                <td class="text-end text-success"> {{ qstn.answer_text}} </td>
+                                            </tr>
+                                            }
+                                        </table>
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="audit-info-cover">
+                            <div class="audit-table mt-0">
+                                <div class="audit-heading mb-2 ms-0">
+                                    <h5>CAPA Written </h5>
+                                    <!-- @if(conducAudit().capa_details.length>0){
+                                    <p class="light-text">Written By
+                                        {{  conducAudit().capa_details[0]['created_by']  }}</p>
+                                    } -->
+                                </div>
+                                <div class="table-audit table-responsive">
+                                    <table class="table table-bordered mb-0">
+                                        @for(capa of conducAudit().capa_details;track $index){
+                                        <tr>
+                                            <th>Description</th>
+                                            <th>Action taken</th>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw500">{{capa['description']}}</td>
+                                            <td>
+                                                {{capa['action_taken']}}
+                                            </td>
+                                        </tr>
+                                        }@empty{
+                                        <tr>
+                                            <td [attr.colspan]="2">No CAPA Write found</td>
+                                        </tr>
+                                        }
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <div class="form-check checkbox-black">
+                                <input class="form-check-input" type="checkbox" value="" id="checkDefault"
+                                    [(ngModel)]="conducAudit()['is_agree']">
+                                <label class="form-check-label" for="checkDefault">
+                                    I agree that above CAPA & Action Taken is reviewed.
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-lg mt-3">
+                            <div class="row">
+                                <div class="col-md-12 col-12">
+
+                                    <div class="flex flex-col gap-1">
+                                        <label for="approval_remarks">Comments / Suggestions</label>
+                                        <textarea pTextarea id="approval_remarks" [(ngModel)]="conducAudit()['approval_remarks']"
+                                            name="approval_remarks" rows="10" class="form-control" appNospaces></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="button-group mt-2">
+                                <div class="row">
+                                    <button type="button" class="btn audit-play cursor"
+                                        (click)="is_history_drawer = true">
+                                        <i class="iconify pi pi-check-circle"></i>
+                                    </button>
+                                </div>
+                                <div class="row">
+                                    <!-- @if(conducAudit().can_approve){ -->
+                                    @for(agnda of apprvlsList;track $index){
+                                    <div class="col-md-6 col-12">
+                                        <p-button [label]="agnda['label']" [severity]="agnda['severity']"
+                                            (click)="onStatusUpdate(agnda['value']);" />
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<p-drawer [(visible)]="is_history_drawer" header="Approvals" position="right">
+    @for(apprvrs of conducAudit().approval_workflow_level;track $index){
+    <div class="form-section mb-1">
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="approval_level">Level :-</label>
+                    <span>
+                        {{apprvrs.approval_level }}
+                    </span>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="employee_name">Approval By :-</label>
+                    <div>
+                        {{apprvrs.employee_name }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="employee_name">Comments/ Suggestions :-</label>
+                    <div>
+                        {{apprvrs.approval_remarks }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="approve_status">Status :-</label>
+                    <span [ngClass]="{
+                  'text-success': apprvrs.approve_status === 'Approved',
+                  'text-danger': apprvrs.approve_status === 'Rejected',
+                  'text-warning': apprvrs.approve_status === 'Pending'}">
+                        {{apprvrs.approve_status }}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    }@empty{
+    <div style="text-align: center">No Approvers Found</div>
+    }
+</p-drawer>

@@ -1,0 +1,189 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                                        <i class="iconify pi pi-arrow-left"></i>
+                                    </a>
+                                    <h3>Vaccine Detail</h3>
+                                </div>
+                            </div>
+                            @if(certificateService.hasCompletedDose(readOnlyVaccineView().dosage)){
+                            <div class="col-md-5 col-12">
+                                <div class="form-right">
+                                    <button type="button" class="btn btn-primary" (click)="onDownloadCertificate()">
+                                        <i class="pi pi-download"></i> Download Certificate</button>
+                                    @if(viewMode !== 'MY' && aefiAccess().access_add){
+                                    <button type="button" class="btn btn-outline-danger ms-2" (click)="onReportAefi()">
+                                        <i class="pi pi-exclamation-triangle"></i> Report AEFI</button>
+                                    }
+                                    @if(viewMode !== 'MY' && detailsAccess().access_mod){
+                                    <button type="button" class="btn btn-outline-secondary ms-2" (click)="openCorrection()" title="Admin / Quality only (SRS 2.x11)">
+                                        <i class="pi pi-pencil"></i> Correct record</button>
+                                    }
+                                </div>
+                            </div>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="audit-info-cover">
+                            <div class="audit-status centerFlex">
+                                <div class="row">
+                                    <div class="col-md-6 col-12">
+                                        <div class="left-content">
+                                            <h5>Vaccine Summary</h5>
+                                        </div>
+                                    </div>
+                                    @if(readOnlyVaccineView().status){
+                                    <div class="col-md-6 col-12">
+                                        <div class="right-content text-end">
+                                            <p class="mb-1">Status</p>
+                                            <span [class]="statusBadge(readOnlyVaccineView().status)">
+                                                {{ readOnlyVaccineView().status }}</span>
+                                            @if(readOnlyVaccineView().is_corrected){ <span class="badge-yellow ms-1" title="This record was corrected">Corrected</span> }
+                                            <div class="mt-1"><app-vaccination-policy-link /></div>
+                                        </div>
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="table-audit table-responsive">
+                                <table class="table table-bordered table-line mb-0">
+                                    <tr>
+                                        <th width="25%">Employee ID / Name</th>
+                                        <td>{{ readOnlyVaccineView().employee_code }} {{ readOnlyVaccineView().employee_code ? '—' : '' }}
+                                            {{ readOnlyVaccineView().user_display_name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Vaccine Name</th>
+                                        <td>{{ readOnlyVaccineView().vaccine_name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Department</th>
+                                        <td>{{ readOnlyVaccineView().department_name }}</td>
+                                    </tr>
+                                    @if(readOnlyVaccineView().campaign_name){
+                                    <tr>
+                                        <th>Campaign / Venue</th>
+                                        <td>{{ readOnlyVaccineView().campaign_name }}
+                                            {{ readOnlyVaccineView().venue_name ? '— ' + readOnlyVaccineView().venue_name : '' }}</td>
+                                    </tr>
+                                    }
+                                    @if(readOnlyVaccineView().time_slot){
+                                    <tr>
+                                        <th>Time Slot</th>
+                                        <td>{{ readOnlyVaccineView().time_slot }}</td>
+                                    </tr>
+                                    }
+                                    <tr>
+                                        <th>Dosage Status</th>
+                                        <td>{{ readOnlyVaccineView().dosage }}
+                                            @if(readOnlyVaccineView().dose_completion_pct != null){
+                                            ({{ readOnlyVaccineView().dose_completion_pct }}% complete)
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Last Vaccinated Date</th>
+                                        <td>{{ readOnlyVaccineView().last_vaccinated_date || '-' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Next Vaccination Date</th>
+                                        <td>{{ readOnlyVaccineView().next_vaccine_dt || '-' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Vaccinated By</th>
+                                        <td>{{ readOnlyVaccineView().vaccinated_by || '-' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Vaccine Brand</th>
+                                        <td>{{ readOnlyVaccineView().brand_name || readOnlyVaccineView().brand_batch_no || '-' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Batch Details</th>
+                                        <td>{{ readOnlyVaccineView().batch_no || '-' }}</td>
+                                    </tr>
+                                    @if(readOnlyVaccineView().missed_reason){
+                                    <tr>
+                                        <th>Missed Reason</th>
+                                        <td>{{ readOnlyVaccineView().missed_reason }}
+                                            {{ readOnlyVaccineView().missed_notes ? '— ' + readOnlyVaccineView().missed_notes : '' }}</td>
+                                    </tr>
+                                    }
+                                    @if(readOnlyVaccineView().decision_reason){
+                                    <tr>
+                                        <th>{{ readOnlyVaccineView().status }} Reason</th>
+                                        <td>{{ readOnlyVaccineView().decision_reason }}
+                                            {{ readOnlyVaccineView().decision_notes ? '— ' + readOnlyVaccineView().decision_notes : '' }}</td>
+                                    </tr>
+                                    }
+                                    @if(readOnlyVaccineView().consent_taken){
+                                    <tr>
+                                        <th>Consent</th>
+                                        <td>Taken</td>
+                                    </tr>
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<app-aefi-report-dialog #aefiDialog [(visible)]="showAefiDialog" />
+
+<!-- Controlled correction of a completed dose (SRS 2.x11) — Admin / Quality only (checked on the server) -->
+<p-dialog [modal]="true" [(visible)]="showCorrection" [style]="{width:'640px'}" [breakpoints]="{'680px':'95vw'}" header="Correct vaccination record">
+    <div class="vacc-form form-lg">
+        <p class="hint mb-2">Changes are kept in the audit trail with your reason. The record shows "Corrected" and its certificate is re-issued.</p>
+        <div class="row g-2">
+            <div class="col-12">
+                <label for="cor_dose">Dose</label>
+                <div class="req"><p-select id="cor_dose" [(ngModel)]="correction.vaccination_administration_id" name="cor_dose"
+                    [options]="correctionDoses" (onChange)="onCorrectionDose()" class="form-control" appendTo="body" /></div>
+            </div>
+            <div class="col-md-4 col-12">
+                <label for="cor_date">Vaccination date</label>
+                <input type="date" id="cor_date" class="form-control" [(ngModel)]="correction.administered_at" name="cor_date" [max]="todayIso">
+            </div>
+            <div class="col-md-4 col-12">
+                <label for="cor_brand">Brand</label>
+                <input pInputText id="cor_brand" class="form-control" maxlength="150" [(ngModel)]="correction.brand_name" name="cor_brand">
+            </div>
+            <div class="col-md-4 col-12">
+                <label for="cor_batch">Batch No.</label>
+                <input pInputText id="cor_batch" class="form-control" maxlength="100" [(ngModel)]="correction.batch_no" name="cor_batch">
+            </div>
+            <div class="col-md-6 col-12">
+                <label for="cor_by">Vaccinated by</label>
+                <p-select id="cor_by" [(ngModel)]="correction.administered_by" name="cor_by" [options]="staffList" [filter]="true"
+                    [showClear]="true" placeholder="Keep as is" class="form-control" appendTo="body" />
+            </div>
+            <div class="col-md-6 col-12">
+                <label for="cor_reason">Correction reason</label>
+                <div class="req"><p-select id="cor_reason" [(ngModel)]="correction.correction_reason_id" name="cor_reason"
+                    [options]="correctionReasons" placeholder="Select" class="form-control" appendTo="body" /></div>
+            </div>
+            <div class="col-12">
+                <label for="cor_notes">Comment</label>
+                <div class="req"><textarea pTextarea id="cor_notes" rows="2" maxlength="500" class="form-control"
+                    [(ngModel)]="correction.correction_notes" name="cor_notes"></textarea></div>
+            </div>
+        </div>
+        @if(correctionErr){ <small class="error">{{ correctionErr }}</small> }
+    </div>
+    <ng-template #footer>
+        <button type="button" class="btn btn-dark" (click)="showCorrection = false">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="onCorrectionSave()">Save correction</button>
+    </ng-template>
+</p-dialog>

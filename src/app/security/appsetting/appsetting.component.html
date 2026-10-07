@@ -1,0 +1,133 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="row">
+      <div class="col-md-12 col-12">
+        <div class="card-style2">
+          <div class="card-header backoption">
+            <div class="row">
+              <div class="col-md-7 col-12">
+                <div class="heading-left">
+                  <h3>
+                    {{
+                      _hqms.getPageModeContext(pageMode, "Application Setting")
+                    }}
+                  </h3>
+                </div>
+              </div>
+              <div class="col-md-5 col-12">
+                <div class="form-right">
+                  <button appAccess="access_mod"
+                    class="btn btn-primary"
+                    [disabled]="pageMode == 'VIEW'"
+                    (click)="onSubmitClick()"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="formbox-left form-lg">
+              <form>
+                <div class="row">
+                  <div class="col-md-3 col-12">
+                    <div class="flex flex-col gap-1">
+                      <label for="date_format_id">Date Formats</label>
+                      <div
+                        style="
+                          position: relative;
+                          display: inline-block;
+                          width: 100%;
+                        "
+                      >
+                        <p-select
+                          id="date_format_id"
+                          [(ngModel)]="appStngs['date_format_id']"
+                          (onBlur)="onGetErrorMsgs('date_format_id')"
+                          (onChange)="onGetErrorMsgs('date_format_id')"
+                          placeholder="Date Formats"
+                          [options]="dateFormatsList"
+                          name="date_format_id"
+                          class="form-control"
+                          [filter]="true"
+                        />
+                        <div
+                          style="
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            width: 0;
+                            height: 0;
+                            border-top: 12px solid red;
+                            border-left: 12px solid transparent;
+                          "
+                        ></div>
+                      </div>
+                      @if (errorMsg["date_format_id"] != "") {
+                        <small class="error">{{
+                          errorMsg["date_format_id"]
+                        }}</small>
+                      }
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-12">
+                    <div class="flex flex-col gap-1">
+                      <label for="idle_timeout_minutes_id">Idle Timeout</label>
+                      <div
+                        style="
+                          position: relative;
+                          display: inline-block;
+                          width: 100%;
+                        "
+                      >
+                        <p-select
+                          id="idle_timeout_minutes_id"
+                          [(ngModel)]="appStngs['idle_timeout_minutes_id']"
+                          (onBlur)="onGetErrorMsgs('idle_timeout_minutes_id')"
+                          (onChange)="
+                            onGetErrorMsgs('idle_timeout_minutes_id');
+                            errorMsg['idle_timeout_minutes_id'] = ''
+                          "
+                          placeholder="Idle Timeout"
+                          [options]="idleTimeList"
+                          name="idle_timeout_minutes_id"
+                          class="form-control"
+                          [filter]="true"
+                        />
+                        <div
+                          style="
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            width: 0;
+                            height: 0;
+                            border-top: 12px solid red;
+                            border-left: 12px solid transparent;
+                          "
+                        ></div>
+                      </div>
+                      @if (errorMsg["idle_timeout_minutes_id"] != "") {
+                        <small class="error">{{
+                          errorMsg["idle_timeout_minutes_id"]
+                        }}</small>
+                      }
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .error {
+    color: red;
+    font-weight: bold;
+    font-size: 12px;
+  }
+</style>

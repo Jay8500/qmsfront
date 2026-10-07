@@ -1,0 +1,337 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="row">
+      <div class="col-md-12 col-12">
+        <div class="card-style2">
+          <div class="card-header backoption">
+            <div class="row">
+              <div class="col-md-7 col-12">
+                <div class="heading-left">
+                  <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                    <i class="iconify pi pi-arrow-left"></i>
+                  </a>
+                  <h3>{{ _hqms.getPageModeContext(pageMode, 'Committee') }}</h3>
+                </div>
+              </div>
+              <div class="col-md-5 col-12">
+                <div class="form-right">
+                  <button type="button" class="btn btn-dark" [disabled]="pageMode=='VIEW'"
+                    (click)="onClearClick()">Clear</button>
+                  <button type="submit" class="btn btn-primary" [disabled]="pageMode=='VIEW'"
+                    (click)="onSubmitClick()">Submit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row d-flex justify-content-center">
+              <div class="col-lg-8 col-md-12 col-12">
+                <div class="formbox-left form-lg">
+                  <form>
+                    <div class="row">
+                      <div class="col-md-12 col-12">
+                        <div class="form-group">
+                          <p>Committee Type</p>
+                          <div class="radio-group">
+                            @for (asLst of committeeTypeList; track asLst.label) {
+                            <p-radioButton [name]="asLst.value_code" [value]="asLst.value"
+                              [(ngModel)]='createCommittee().committee_type_id' [inputId]="'ing1'+asLst.value"
+                              [disabled]="pageMode=='VIEW'" />
+                            <label [for]="'ing1'+asLst.value">{{ asLst.label }}</label>
+                            }
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <div class="flex flex-col gap-1">
+                          <label for="committee_name">Committee Name</label>
+                          <div style="position: relative;display:inline-block;width:100%">
+                            <input pInputText id="committee_name" [(ngModel)]="createCommittee().committee_name"
+                              (blur)="onGetErrorMsgs('committee_name')" [disabled]="pageMode=='VIEW'"
+                              placeholder="Committee Name" name="committee_name" class=" form-control"
+                              autocomplete="off" appNospaces>
+                            <div style=" position: absolute;
+                              top: 0;
+                              right: 0;
+                              width: 0;
+                              height: 0;
+                              border-top: 12px solid red;
+                              border-left: 12px solid transparent;">
+                            </div>
+                          </div>
+                          @if(errorMsg['committee_name']!=''){
+                          <small class="error">{{ errorMsg['committee_name'] }}</small>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <div class="flex flex-col gap-1">
+                          <label for="chair_person_id">Chair Person</label>
+                          <div style="position: relative;display:inline-block;width:100%">
+                            <p-select id="chair_person_id" [(ngModel)]="createCommittee().chair_person_id"
+                              [appendTo]="'body'" (onBlur)="onGetErrorMsgs('chair_person_id')"
+                              (onChange)="onGetErrorMsgs('chair_person_id')" [options]="chairPersonList" [filter]="true"
+                              [showClear]="true" placeholder="Chair Person" [disabled]="pageMode=='VIEW'"
+                              name="chair_person_id" class=" form-control w-full" />
+                            <div style=" position: absolute;
+                              top: 0;
+                              right: 0;
+                              width: 0;
+                              height: 0;
+                              border-top: 12px solid red;
+                              border-left: 12px solid transparent;">
+                            </div>
+                          </div>
+                          @if(errorMsg['chair_person_id']!=''){
+                          <small class="error">{{ errorMsg['chair_person_id'] }}</small>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <div class="flex flex-col gap-1">
+                          <label for="co_chair_person_id">Co-Chair Person</label>
+                          <div style="position: relative;display:inline-block;width:100%">
+                            <p-select id="co_chair_person_id" [(ngModel)]="createCommittee().co_chair_person_id"
+                              (onBlur)="onGetErrorMsgs('co_chair_person_id')" [appendTo]="'body'"
+                              placeholder="Co-Chair Person" (onChange)="onGetErrorMsgs('co_chair_person_id')"
+                              [options]="cochairPersonList" [filter]="true" [showClear]="true"
+                              [disabled]="pageMode=='VIEW'" placeholder="Co-Chair Person" name="co_chair_person_id"
+                              class=" form-control" />
+                            <div style=" position: absolute;
+                              top: 0;
+                              right: 0;
+                              width: 0;
+                              height: 0;
+                              border-top: 12px solid red;
+                              border-left: 12px solid transparent;">
+                            </div>
+                          </div>
+                          @if(errorMsg['co_chair_person_id']!=''){
+                          <small class="error">{{ errorMsg['co_chair_person_id'] }}</small>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <div class="flex flex-col gap-1">
+                          <label for="co_ordinator_id">Co-Ordinator</label>
+                          <div style="position: relative;display:inline-block;width:100%">
+                            <p-select id="co_ordinator_id" [(ngModel)]="createCommittee().co_ordinator_id"
+                              [appendTo]="'body'" (onBlur)="onGetErrorMsgs('co_ordinator_id')"
+                              (onChange)="onGetErrorMsgs('co_ordinator_id')" [options]="coordinatorList" [filter]="true"
+                              [showClear]="true" placeholder="Co-Ordinator" [disabled]="pageMode=='VIEW'"
+                              name="co_ordinator_id" class=" form-control" />
+                            <div style=" position: absolute;
+                              top: 0;
+                              right: 0;
+                              width: 0;
+                              height: 0;
+                              border-top: 12px solid red;
+                              border-left: 12px solid transparent;">
+                            </div>
+                          </div>
+                          @if(errorMsg['co_ordinator_id']!=''){
+                          <small class="error">{{ errorMsg['co_ordinator_id'] }}</small>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <div class="flex flex-col gap-1">
+                          <label for="committee_members">Committee Members</label>
+                          <div style="position: relative;display:inline-block;width:100%">
+                            <p-multiselect id="committee_members" [(ngModel)]="createCommittee().committee_members"
+                              (onBlur)="onGetErrorMsgs('committee_members')" placeholder="Committee Members"
+                              [appendTo]="'body'" (onChange)="onGetErrorMsgs('committee_members')"
+                              [options]="committeeMembersList" [filter]="true" [showClear]="true"
+                              [disabled]="pageMode=='VIEW'" name="committee_members" class=" form-control" />
+                            <div style=" position: absolute;
+                              top: 0;
+                              right: 0;
+                              width: 0;
+                              height: 0;
+                              border-top: 12px solid red;
+                              border-left: 12px solid transparent;">
+                            </div>
+                          </div>
+                          @if(errorMsg['committee_members']!=''){
+                          <small class="error">{{ errorMsg['committee_members'] }}</small>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <div class="flex flex-col gap-1">
+                          <label for="agenda_entry_type_id">Agenda Entry Type</label>
+                          <div style="position: relative;display:inline-block;width:100%">
+                            <p-select id="agenda_entry_type_id" [(ngModel)]="createCommittee().agenda_entry_type_id"
+                              (onBlur)="onGetErrorMsgs('agenda_entry_type_id')" placeholder="Agenda Entry Type"
+                              [appendTo]="'body'" (onChange)="onGetErrorMsgs('agenda_entry_type_id')"
+                              [options]="agendaEntryTypeList" [filter]="true" [showClear]="true"
+                              [disabled]="pageMode=='VIEW'" name="agenda_entry_type_id" class=" form-control" />
+                            <div style=" position: absolute;
+                              top: 0;
+                              right: 0;
+                              width: 0;
+                              height: 0;
+                              border-top: 12px solid red;
+                              border-left: 12px solid transparent;">
+                            </div>
+                          </div>
+                          @if(errorMsg['agenda_entry_type_id']!=''){
+                          <small class="error">{{ errorMsg['agenda_entry_type_id'] }}</small>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <div class="flex flex-col gap-1">
+                          <label for="remainder_frequency_id">Remainder Frequency</label>
+                          <div style="position: relative;display:inline-block;width:100%">
+                            <p-select id="remainder_frequency_id" [(ngModel)]="createCommittee().remainder_frequency_id"
+                              placeholder="Remainder Frequency" (onBlur)="onGetErrorMsgs('remainder_frequency_id')"
+                              [appendTo]="'body'" (onChange)="onGetErrorMsgs('remainder_frequency_id')"
+                              [options]="remainFrequencyList" [filter]="true" [showClear]="true"
+                              [disabled]="pageMode=='VIEW'" name="remainder_frequency_id" class=" form-control" />
+                            <div style=" position: absolute;
+                              top: 0;
+                              right: 0;
+                              width: 0;
+                              height: 0;
+                              border-top: 12px solid red;
+                              border-left: 12px solid transparent;">
+                            </div>
+                          </div>
+                          @if(errorMsg['remainder_frequency_id']!=''){
+                          <small class="error">{{ errorMsg['remainder_frequency_id'] }}</small>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-md-12 col-12">
+                        <div class="row">
+                          <div class="col-md-6 col-12">
+                            <div class="form-group">
+                              <p>Do you want to send the agenda for approval?</p>
+                              <div class="radio-group">
+                                @for (asLsta of agendaApprovalList; track asLsta.label) {
+                                <p-radioButton [name]="'aop'" [value]="asLsta.value"
+                                  [(ngModel)]='createCommittee().agenda_for_approval_id'
+                                  [inputId]="'ing11'+asLsta.value" [disabled]="pageMode=='VIEW'"
+                                  (click)="onAgendaClick(asLsta.value_code)" />
+                                <label [for]="'ing11'+asLsta.value"
+                                  style="margin-left: 5px;margin-top:5px;">{{ asLsta.label }}</label>
+                                }
+                              </div>
+                            </div>
+                          </div>
+                          @if (isAgendaApproval==='YES') {
+                          <div class="col-md-6 col-12">
+                            <div class="flex flex-col gap-1">
+                              <label for="agenda_approver_user_id">Agenda Approver (if yes)</label>
+                              <div style="position: relative;display:inline-block;width:100%">
+                                <p-select id="agenda_approver_user_id"
+                                  [(ngModel)]="createCommittee().agenda_approver_user_id"
+                                  (onBlur)="onGetErrorMsgs('agenda_approver_user_id')"
+                                  placeholder="Agenda Approver (if yes)"
+                                  (onChange)="onGetErrorMsgs('agenda_approver_user_id')" [appendTo]="'body'"
+                                  [options]="agendaApproverList" [filter]="true" [showClear]="true"
+                                  [disabled]="pageMode=='VIEW'" name="agenda_approver_user_id" class=" form-control" />
+                                <div style=" position: absolute;
+                              top: 0;
+                              right: 0;
+                              width: 0;
+                              height: 0;
+                              border-top: 12px solid red;
+                              border-left: 12px solid transparent;">
+                                </div>
+                              </div>
+                              @if(errorMsg['agenda_approver_user_id']!=''){
+                              <small class="error">{{ errorMsg['agenda_approver_user_id'] }}</small>
+                              }
+                            </div>
+                          </div>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-md-12 col-12">
+                        <div class="row">
+                          <div class="col-md-6 col-12">
+                            <div class="form-group">
+                              <p>Do you want to send the MoM for approval?</p>
+                              <div class="radio-group">
+                                @for (asLstm of momApprovalList; track asLstm.label) {
+                                <p-radioButton [name]="'mpmapp'" [value]="asLstm.value"
+                                  [(ngModel)]='createCommittee().mom_for_approval_id' [inputId]="'ing1'+asLstm.value"
+                                  [disabled]="pageMode=='VIEW'" (click)="onMomClick(asLstm.value_code)" />
+                                <label [for]="'ing1'+asLstm.value">{{ asLstm.label }}</label>
+                                }
+                              </div>
+                            </div>
+                          </div>
+                          @if (isMomApproval==='YES') {
+                          <div class="col-md-6 col-12">
+                            <div class="flex flex-col gap-1">
+                              <label for="mom_approver_user_id">MoM Approver (if yes)</label>
+                              <div style="position: relative;display:inline-block;width:100%">
+                                <p-select id="mom_approver_user_id" [(ngModel)]="createCommittee().mom_approver_user_id"
+                                  [appendTo]="'body'" (onBlur)="onGetErrorMsgs('mom_approver_user_id')"
+                                  placeholder="MoM Approver (if yes)"
+                                  (onChange)="onGetErrorMsgs('mom_approver_user_id')" [options]="momApproverList"
+                                  [filter]="true" [showClear]="true" [disabled]="pageMode=='VIEW'"
+                                  name="mom_approver_user_id" class=" form-control" />
+                                <div style=" position: absolute;
+                              top: 0;
+                              right: 0;
+                              width: 0;
+                              height: 0;
+                              border-top: 12px solid red;
+                              border-left: 12px solid transparent;">
+                                </div>
+                              </div>
+                              @if(errorMsg['mom_approver_user_id']!=''){
+                              <small class="error">{{ errorMsg['mom_approver_user_id'] }}</small>
+                              }
+                            </div>
+                          </div>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-md-12 col-12">
+                        <div class="form-group">
+                          <label>Term of Reference (TOR)</label>
+                          <div class="upload-image">
+                            <p-fileUpload mode="basic"
+                              (onSelect)="onCoverPageFileSelect(upCoverPage, $event,'Term of Reference (TOR)',createCommittee(),null)"
+                              chooseLabel="Term of Reference (TOR)" [multiple]="false" [auto]="true" #upCoverPage
+                              accept="image/png, image/jpeg" [maxFileSize]="2097152" [fileLimit]="1"
+                              [disabled]="pageMode=='VIEW'" invalidFileSizeMessageSummary="File too large"
+                              invalidFileSizeMessageDetail="Maximum upload size is 2MB">
+                            </p-fileUpload>
+                            <div *ngIf="createCommittee().tor_files.length>0" class="flex gap-2 flex-wrap mt-2">
+                              <div *ngFor="let mDoc of createCommittee().tor_files; let imgIndex=index">
+                                <div *ngIf="mDoc.is_active==true" class="reg-img-view"
+                                  style="border: 1px solid #cacaca;padding: 5px; border-radius: 7px;font-size: 11px;">
+                                  {{ mDoc['file_name'] }}
+                                  <a class="time-icons time-remove ml-2" href="javascript:return false"><i
+                                      *ngIf="pageMode!='VIEW'" class="pi pi-times-circle"
+                                      (click)="removeImage(mDoc, imgIndex)"></i></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12 col-12">
+                        <label>Status</label>
+                        <div class="form-group">
+                          <p-toggleswitch [(ngModel)]="createCommittee().is_active" name="status"
+                            [disabled]="pageMode=='VIEW' || pageMode=='NEW'" />
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

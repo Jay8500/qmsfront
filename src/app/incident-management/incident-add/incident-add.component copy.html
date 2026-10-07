@@ -1,0 +1,30 @@
+<div class="col-md-12">
+    <div class="form-group">
+        <p-dropdown [options]="cities" [(ngModel)]="selectedCity" filter="true" name="selectedCity" optionLabel="name"
+            placeholder="Select a City">
+        </p-dropdown>
+    </div>
+</div>
+<div class="col-md-4">
+    <div class="form-group">
+        <label>From Date</label>
+        <p-calendar [(ngModel)]="date" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay" />
+    </div>
+</div>
+<div class="col-md-4">
+    <div class="form-group">
+        <label>To Date</label>
+        <p-calendar [(ngModel)]="date2" />
+    </div>
+</div>
+<div class="col-md-4">
+    <div class="form-group">
+        <label>Timer</label>
+        <p-calendar [(ngModel)]="date3" [iconDisplay]="'input'" [showIcon]="true" [timeOnly]="true"
+            inputId="templatedisplay">
+            <ng-template pTemplate="inputicon" let-clickCallBack="clickCallBack">
+                <i class="pi pi-clock pointer-events-none" (click)="clickCallBack($event)"></i>
+            </ng-template>
+        </p-calendar>
+    </div>
+</div>

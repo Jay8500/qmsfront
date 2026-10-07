@@ -1,0 +1,400 @@
+<section class="login-page hv100">
+  <div class="container-fluid hv100 p-0">
+    <div class="row hv100 d-flex align-items-center">
+      <div class="col-xl-7 col-lg-6 col-md-12 col-12 hv100 col-left">
+        <div class="login-left">
+          <img [src]="loginBg" alt="" title="" class="img-fluid" />
+        </div>
+      </div>
+      <div class="col-xl-5 col-lg-6 col-md-12 col-12 hv100 d-flex align-items-center justify-content-center col-right">
+        <div class="login-right">
+          @if(org_id != null){
+          <div class="login-box">
+            @if(isOrgLoading){
+            <div class="logo">
+              <p-skeleton width="15rem" height="5rem"></p-skeleton>
+            </div>
+            }@else{
+            <div class="logo">
+              <img [src]="orgInfo['defaultLogo']" [alt]="orgInfo['defaultLogo']" title="logo" />
+            </div>
+            <h3>Welcome to {{orgInfo['display_name']}}</h3>
+            }
+            @if(!isLoginSuccess){
+            <div class="row">
+              <div class="col-md-12 col-12">
+                <div class="flex flex-col gap-2">
+                  <label for="userName">User Name</label>
+                  <div style="position: relative;display:inline-block;width:100%">
+                    <input pInputText id="userName" [(ngModel)]="userLogin['userName']"
+                      (blur)="onGetErrorMsgs('userName')" placeholder="Enter Name" class=" form-control"
+                      autocomplete="off" (keydown.enter)="onEnterKey($event)" appNospaces />
+                    <div style=" position: absolute;
+                          top: 0;
+                          right: 0;
+                          width: 0;
+                          height: 0;
+                          border-top: 12px solid red;
+                          border-left: 12px solid transparent;"></div>
+
+                  </div>
+                  @if(errorMsg['userName']!=''){
+                  <small class="error">{{ errorMsg['userName']}}</small>
+                  }
+                </div>
+              </div>
+              <div class="col-md-12 col-12">
+                <div class="flex flex-col gap-2 mt-3">
+                  <label for="password">Password</label>
+                  <div style="position: relative;display:inline-block;width:100%">
+                    <input [type]="toggledShowPwd() ? 'text' :'password'" id="password"
+                      [(ngModel)]="userLogin['password']" (blur)="onGetErrorMsgs('password')"
+                      placeholder="Enter Password" class=" form-control" autocomplete="off"
+                      (keydown.enter)="onEnterKey($event)" />
+                    <div style=" position: absolute;
+                              top: 0;
+                              right: 0;
+                              width: 0;
+                              height: 0;
+                              border-top: 12px solid red;
+                              border-left: 12px solid transparent;"></div>
+                    <div class="password-toggle" (click)="updateToggleState()">
+                      @if(toggledShowPwd()){
+                      <i class="pi pi-eye-slash"></i>
+                      }@else{
+                      <i class="pi pi-eye"></i>
+                      }
+                    </div>
+                  </div>
+                  @if(errorMsg['password']!=''){
+                  <small class="error">{{ errorMsg['password']}}</small>
+                  }
+                </div>
+              </div>
+              <div class="col-md-12 co1-12">
+                <div class="row mt-2">
+                  <div class="col-6">
+                    <div class="flex flex-col gap-2">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="checkChecked"
+                          [(ngModel)]="userLogin.rememberMe" [disabled]="false" name="rememberMe" autocomplete="off" />
+                        <label class="form-check-label" for="checkChecked">
+                          Remember Me
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="flex flex-col gap-2" style="text-align: right">
+                      <a href="javascript:void(0)" (click)="displayForgotDialog=true">Forgot Password?</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 co1-12 mt-3">
+                <button class="btn btn-primary btn-lg w-100" (click)="onHqmsLoginClick()">
+                  Sign In
+                </button>
+              </div>
+              @if(result()){
+              <div class="error">{{result()}}</div>
+              }@else if(redirectNotice()){
+              <div class="error">{{ redirectNotice() }}</div>
+              }
+            </div>
+            }@else{
+            <div class="row">
+              <div class="col-12">
+                <div class="flex flex-col gap-1">
+                  <label for="scale_type">Location</label>
+
+                  <div style="position: relative;display:inline-block;width:100%">
+                    <p-select id="scale_type" [(ngModel)]="selectedLocation" [appendTo]="'body'"
+                      placeholder="Select Location" [options]="locationsList" class="w-full md:w-56"
+                      class=" form-control" [filter]="true" (onBlur)="onLocErrorMsgs('selectedLocation')"
+                      (onChange)="onLocErrorMsgs('selectedLocation')" />
+                    <div style=" position: absolute;
+                          top: 0;
+                          right: 0;
+                          width: 0;
+                          height: 0;
+                          border-top: 12px solid red;
+                          border-left: 12px solid transparent;"></div>
+                  </div>
+                  @if(clrLcErr['selectedLocation']!=''){
+                  <small class="error">{{ clrLcErr['selectedLocation']}}</small>
+                  }
+                </div>
+              </div>
+              <div class="col-12 mt-3">
+                <button class="btn btn-primary btn-lg w-100" (click)="onLocationSelect()">
+                  Sign In
+                </button>
+              </div>
+            </div>
+            }
+          </div>
+          }@else if(!isOrgLoading && orgErr){
+          <p-message variant="outlined" severity="warn">
+            {{ orgErr }}
+          </p-message>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<p-dialog header="Reset Password" [(visible)]="displayForgotDialog" [modal]="true" [style]="{width:'30vw'}"
+  [dismissableMask]="true" (onHide)="onResetHide()">
+  @if(resetStep == 1){
+  <div class="row">
+    <div class="col-4">
+      <div class="flex flex-col gap-1">
+        <label for="rset">Reset Type</label>
+        <p-selectbutton id="rset" [(ngModel)]="resetPwd['resetType']" placeholder="Reset Type" [options]="resetList"
+          class=" form-control" (onChange)="onResetTypeClick($event)">
+          <ng-template #item let-item>
+            <i [class]="item.icon"></i>
+          </ng-template>
+        </p-selectbutton>
+      </div>
+    </div>
+    <div class="col-8">
+      <div class="flex flex-col gap-1">
+        <label for="resetInput">Enter
+          {{  resetPwd['resetType'] === 'M' ?  'Mobile Number' : resetPwd['resetType'] === 'E' ? 'Email Address' : 'User Name'   }}</label>
+        <div style="position: relative;display:inline-block;width:100%">
+          <input pInputText id="resetInput" [(ngModel)]="resetPwd['resetInput']"
+            [placeholder]="resetPwd['resetType'] === 'M' ? 'Mobile Number': resetPwd['resetType'] === 'E' ? 'Email Address' : 'User Name'"
+            autocomplete="off" class="form-control " appNospaces (blur)="onGetResetErr('resetInput')"
+            (keydown.enter)="onResetTypeEnter($event)"
+            [maxLength]="resetPwd['resetType'] === 'M' ?  10: resetPwd['resetType'] === 'E' ? 80 : 80 " />
+          <div style=" position: absolute;
+                top: 0;
+                right: 0;
+                width: 0;
+                height: 0;
+                border-top: 12px solid red;
+                border-left: 12px solid transparent;"></div>
+        </div>
+        @if(resetErr['resetInput']!=''){
+        <small class="error">{{ resetErr['resetInput']}}</small>
+        }
+      </div>
+    </div>
+    <div class="col-md-12 co1-12 mt-1">
+      <button class="btn btn-primary btn-lg w-100" (click)="onSendOtp()">
+        Send OTP
+      </button>
+    </div>
+  </div>
+  }
+  @if(resetStep == 2){
+  <div class="row">
+    <div class="col-12">
+      <div class="flex flex-col gap-1">
+        <label for="otp">Verify OTP</label>
+        <div style="position: relative;display:inline-block;width:100%">
+          <p-inputotp [(ngModel)]="resetPwd['otp']" (blur)="onGetResetErr('otp')" length="6" pKeyFilter="num"
+            (keydown.enter)="onOTPEnterKey($event)" autofocus="true" />
+          <div style=" position: absolute;
+                    top: 0;
+                    right: 0;
+                    width: 0;
+                    height: 0;
+                    border-top: 12px solid red;
+                    border-left: 12px solid transparent;"></div>
+        </div>
+        @if(resetErr['otp']!=''){
+        <small class="error">{{ resetErr['otp']}}</small>
+        }
+      </div>
+    </div>
+    <div class="col-md-12 co1-12 mt-1">
+      <button class="btn btn-primary btn-lg w-100" (click)="onVerifyOtp()">
+        Verify OTP
+      </button>
+    </div>
+  </div>
+  }
+  @if(resetStep == 3){
+  <div class="row">
+    <div class="col-12">
+      <div class="flex flex-col gap-2">
+        <label for="npassword">New Password</label>
+        <div style="position: relative;display:inline-block;width:100%">
+          <p-password [(ngModel)]="resetPwd['password']" [feedback]="true" autocomplete="off" [toggleMask]="true"
+            (copy)="preventCopyPaste($event)" (paste)="preventCopyPaste($event)" (input)="checkStrength($event)"
+            (onBlur)="onGetResetErr('password')" styleClass="w-full" [style]="{'width':'100%'}"
+            [inputStyle]="{'width':'100%'}" [disabled]="false">
+            <ng-template pTemplate="content">
+              <div class="strength-bar" *ngIf="rules.length > 0" style="height:10px !important;">
+                <div class="strength-bar_fill"
+                  [ngStyle]="{'width.%':strengthPercentage,'background-color':strengthColor}"
+                  style="height:10px !important;">
+                </div>
+              </div>
+              <div class="password-strength" [ngClass]="strengthClasss" *ngIf="rules.length > 0">
+                {{strengthMessage}}
+              </div>
+              <div class="mt-2" *ngIf="passwordPolicies.length>0">
+                <ul class="pl-4 ml-2 mt-0" style="line-height: 1.5">
+                  <li *ngFor="let policy of passwordPolicies">{{policy}}</li>
+                </ul>
+              </div>
+            </ng-template>
+          </p-password>
+          <div style=" position: absolute;
+                    top: 0;
+                    right: 0;
+                    width: 0;
+                    height: 0;
+                    border-top: 12px solid red;
+                    border-left: 12px solid transparent;">
+          </div>
+        </div>
+        @if(resetErr['password']!=''){
+        <small class="error">{{ resetErr['password']}}</small>
+        }
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="flex flex-col gap-2">
+        <label for="confirmpassword">Confirm Password</label>
+        <div style="position: relative;display:inline-block;width:100%">
+          <input pInputText [type]="'password'" id="confirmpassword" [(ngModel)]="resetPwd['confirmpassword']"
+            appNospaces (blur)="onGetResetErr('confirmpassword')" placeholder="Enter Name" class=" form-control"
+            autocomplete="off" (copy)="preventCopyPaste($event)" (paste)="preventCopyPaste($event)"
+            (cut)="preventCopyPaste($event)" (keydown.enter)="onConfrimPwd($event)" />
+
+          <p-password [(ngModel)]="resetPwd['confirmpassword']" [feedback]="false" autocomplete="off"
+            [toggleMask]="true" (copy)="preventCopyPaste($event)" (paste)="preventCopyPaste($event)"
+            (input)="checkStrength($event)" (onBlur)="onGetResetErr('confirmpassword')" styleClass="w-full"
+            [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" [disabled]="false">
+          </p-password>
+          <div style=" position: absolute;
+                    top: 0;
+                    right: 0;
+                    width: 0;
+                    height: 0;
+                    border-top: 12px solid red;
+                    border-left: 12px solid transparent;"></div>
+          <!-- <div class="password-toggle" (click)="updateCnfrmToggleState()">
+            @if(toggledCnfrmShowPwd()){
+            <i class="pi pi-eye-slash"></i>
+            }@else{
+            <i class="pi pi-eye"></i>
+            }
+          </div> -->
+
+        </div>
+
+        @if(resetErr['confirmpassword']!=''){
+        <small class="error">{{ resetErr['confirmpassword']}}</small>
+        }
+      </div>
+    </div>
+    <div class="col-md-12 co1-12 mt-1">
+      <button class="btn btn-primary btn-lg w-100" (click)="submitNewPassword()">
+        Reset
+      </button>
+    </div>
+  </div>
+  }
+  @if(restToaster['message'] != ''){
+  <p-message [life]="6000" variant="outlined" [severity]="restToaster['severity']">
+    {{ restToaster['message'] }}
+  </p-message>
+  }
+
+  @if(resetStep == 2){
+  <p-message variant="outlined" [severity]="'warn'">
+    @if(timeLeft !== '00:00'){
+    OTP Expires in {{timeLeft}}
+    }@else{
+    OTP Expired.
+    <a href="javascript:void(0)" (click)="requestOtp()">Request OTP</a>
+    }
+  </p-message>
+  }
+</p-dialog>
+
+<style>
+  .error {
+    color: red;
+    font-weight: bold;
+    font-size: 12px;
+  }
+
+  .notice {
+    margin-top: 12px;
+    color: #555;
+    font-size: 13px
+  }
+
+  .password-toggle {
+    position: absolute !important;
+    right: 12px !important;
+    top: 12px !important;
+    transform: translateY(-20%) !important;
+    cursor: pointer !important;
+    z-index: 999 !important;
+  }
+
+  :host ::ng-deep .p-selectbutton {
+    display: inline-flex;
+    user-select: none;
+    vertical-align: bottom;
+    outline-color: transparent;
+    border-radius: var(--p-selectbutton-border-radius);
+    height: 38px !important;
+  }
+
+  :host ::ng-deep .p-inputotp {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-left: 67px;
+  }
+
+
+  .password-strength {
+    margin-top: 5px;
+    font-weight: bold
+  }
+
+  .strong {
+    color: green;
+  }
+
+  .medium {
+    color: orange;
+  }
+
+  .weak {
+    color: red;
+  }
+
+  .strength-bar {
+    width: 100%;
+    background-color: #e0e0e0;
+    margin-top: 5px;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .strength-bar_fill {
+    border-radius: 5px;
+    transition: width 0.3s ease-in-out
+  }
+
+  :host ::ng-deep.p-password {
+    width: 100%;
+    display: block;
+  }
+
+  :host ::ng-deep.p-password.p-inputtext {
+    width: 100% !important;
+  }
+</style>

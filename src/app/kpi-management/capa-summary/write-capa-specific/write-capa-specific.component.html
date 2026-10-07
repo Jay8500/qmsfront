@@ -1,0 +1,227 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                                        <i class="iconify pi pi-arrow-left"></i>
+                                    </a>
+                                    <h3>Write CAPA</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-12">
+                                <div class="form-right">
+                                    <button type="button" class="btn btn-dark" (click)="onClearClick()">Clear</button>
+                                    <button type="submit" class="btn btn-primary"
+                                        (click)="onSubmitClick()">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 col-12">
+                                <div class="formbox-left form-lg">
+                                    <form>
+                                        <div class="row">
+                                            <div class="col-md-12 col-12">
+                                                <div class="audit-info-cover mt-0">
+                                                    <div class="table-audit tablehrz">
+                                                        <table class="table table-bordered table-line mb-0">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>KPI Code</th>
+                                                                    <th>KPI Name</th>
+                                                                    <th>KPI Type</th>
+                                                                    <th>Department</th>
+                                                                    <th>Data Capture Period</th>
+                                                                    <th>UOM</th>
+                                                                    <th>Formula</th>
+                                                                    <th>Target</th>
+                                                                    <th>KPI Status</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>{{createCapa().kpi_code}}</td>
+                                                                    <td>{{createCapa().kpi_name}}</td>
+                                                                    <td>{{createCapa().kpi_type_name}}</td>
+                                                                    <td>{{createCapa().department_name}}</td>
+                                                                    <td>{{createCapa().frequency_name}}</td>
+                                                                    <td>{{createCapa().unit_of_measure_name}}</td>
+                                                                    <td>{{createCapa().kpi_formula}}</td>
+                                                                    <td>{{createCapa().target_benchmark}}</td>
+                                                                    <td
+                                                                        [class]="_hqms.kpiStatus(createCapa().kpi_actual_score_status)">
+                                                                        {{createCapa().kpi_actual_score_status }}
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-3">
+                                            <div class="col-md-7 col-12">
+                                                <div class="row">
+                                                    <div class="col-md-12 col-12">
+                                                        <div class="flex flex-col gap-1">
+                                                            <label for="reason_for_deviation">Reasons for any deviations</label>
+                                                            <div style="position: relative;display:inline-block;width:100%">
+                                                            <textarea pTextarea id="reason_for_deviation" [(ngModel)]="createCapa().reason_for_deviation"
+                                                                (blur)="onGetErrorMsgs('reason_for_deviation')" rows="3" placeholder="Reasons for any deviations"
+                                                                name="reason_for_deviation" class=" form-control" appNospaces></textarea>
+                                                                <div style=" position: absolute;
+                                                                top: 0;
+                                                                right: 0;
+                                                                width: 0;
+                                                                height: 0;
+                                                                border-top: 12px solid red;
+                                                                border-left: 12px solid transparent;">
+                                                            </div>
+                                                            </div>
+                                                            @if(errorMsg['reason_for_deviation']!=''){
+                                                            <small class="error">{{ errorMsg['reason_for_deviation']}}</small>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 col-12">
+                                                        <div class="flex flex-col gap-1">
+                                                            <label for="description">Write CAPA</label>
+                                                            <div style="position: relative;display:inline-block;width:100%">
+                                                            <textarea pTextarea id="description" [(ngModel)]="createCapa().description"
+                                                                (blur)="onGetErrorMsgs('description')" rows="3" placeholder="Write CAPA"
+                                                                name="description" class=" form-control" appNospaces></textarea>
+                                                                <div style=" position: absolute;
+                                                                top: 0;
+                                                                right: 0;
+                                                                width: 0;
+                                                                height: 0;
+                                                                border-top: 12px solid red;
+                                                                border-left: 12px solid transparent;">
+                                                            </div>
+                                                            </div>
+                                                            @if(errorMsg['description']!=''){
+                                                            <small class="error">{{ errorMsg['description']}}</small>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 col-12">
+                                                        <div class="flex flex-col gap-1">
+                                                            <label for="interpretation_learning">Interpretation and Learning</label>
+                                                            <div style="position: relative;display:inline-block;width:100%">
+                                                            <textarea pTextarea id="interpretation_learning" [(ngModel)]="createCapa().interpretation_learning"
+                                                                (blur)="onGetErrorMsgs('interpretation_learning')" rows="3" placeholder="Interpretation and Learning"
+                                                                name="interpretation_learning" class=" form-control" appNospaces></textarea>
+                                                                <div style=" position: absolute;
+                                                                top: 0;
+                                                                right: 0;
+                                                                width: 0;
+                                                                height: 0;
+                                                                border-top: 12px solid red;
+                                                                border-left: 12px solid transparent;">
+                                                            </div>
+                                                            </div>
+                                                            @if(errorMsg['interpretation_learning']!=''){
+                                                            <small class="error">{{ errorMsg['interpretation_learning']}}</small>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 col-12">
+                                                        <div class="flex flex-col gap-1">
+                                                            <label for="action_taken">Action Taken</label>
+                                                            <div style="position: relative;display:inline-block;width:100%">
+                                                            <textarea pTextarea id="action_taken" [(ngModel)]="createCapa().action_taken"
+                                                                (blur)="onGetErrorMsgs('action_taken')" rows="3" placeholder="Action Taken"
+                                                                name="action_taken" class=" form-control" appNospaces></textarea>
+                                                                <div style=" position: absolute;
+                                                                top: 0;
+                                                                right: 0;
+                                                                width: 0;
+                                                                height: 0;
+                                                                border-top: 12px solid red;
+                                                                border-left: 12px solid transparent;">
+                                                            </div>
+                                                            </div>
+                                                            @if(errorMsg['action_taken']!=''){
+                                                            <small class="error">{{ errorMsg['action_taken']}}</small>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 col-12">
+                                                        <div class="flex flex-col gap-1">
+                                                            <label for="reviewer_comments">Reviewer Comments</label>
+                                                            <div style="position: relative;display:inline-block;width:100%">
+                                                            <textarea pTextarea id="reviewer_comments" [(ngModel)]="createCapa().reviewer_comments"
+                                                                (blur)="onGetErrorMsgs('reviewer_comments')" rows="3" placeholder="Reviewer Comments"
+                                                                name="reviewer_comments" class=" form-control" appNospaces></textarea>
+                                                                <div style=" position: absolute;
+                                                                top: 0;
+                                                                right: 0;
+                                                                width: 0;
+                                                                height: 0;
+                                                                border-top: 12px solid red;
+                                                                border-left: 12px solid transparent;">
+                                                            </div>
+                                                            </div>
+                                                            @if(errorMsg['reviewer_comments']!=''){
+                                                            <small class="error">{{ errorMsg['reviewer_comments']}}</small>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5 col-12">
+                                                <div class="report-card">
+                                                    <div class="audit-status selectflex mb-3">
+                                                        <div class="row">
+                                                            <div class="col-md-8 col-12">
+                                                                <div class="left-content">
+                                                                    <h5>{{ createCapa().kpi_type_name }}</h5>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4 col-12">
+                                                                <div class="dropdown dropdown-style1 ">
+                                                                    <button class="btn btn-light dropdown-toggle"
+                                                                        type="button" data-bs-toggle="dropdown"
+                                                                        aria-expanded="false">
+                                                                        {{ periodText }} <span class="iconify"
+                                                                            data-icon="akar-icons:chevron-down"></span>
+                                                                    </button>
+                                                                    <ul class="dropdown-menu">
+                                                                        @for (option of periodList; track option) {
+                                                                        <li>
+                                                                            <a class="dropdown-item" href="javascript:;"
+                                                                                (click)="peridChartInfo(option)">
+                                                                                {{ option }}
+                                                                            </a>
+                                                                        </li>
+                                                                        }
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="audit-info-row card-whitebox">
+                                                        <app-kpi-indicators #indcWseRpt></app-kpi-indicators>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

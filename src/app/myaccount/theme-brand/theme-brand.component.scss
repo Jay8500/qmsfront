@@ -1,0 +1,248 @@
+@use '../../../variables';
+
+.theme-brand-cover {
+    .theme-header {
+        margin-bottom: 30px;
+        
+        .back-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            gap: 10px;
+            
+            .back-arrow {
+                font-size: 20px;
+                color: variables.$textBlackPrimary;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .theme-title {
+                font-size: 24px;
+                font-weight: 600;
+                color: variables.$textBlackPrimary;
+            }
+            
+            &:hover {
+                .back-arrow {
+                    color: variables.$primaryColor;
+                }
+            }
+        }
+    }
+    
+    .present-themes-section {
+        .section-subtitle {
+            font-size: 18px;
+            font-weight: 600;
+            color: variables.$textBlackPrimary;
+            margin: 10px 0 8px;
+        }
+        
+        .section-description {
+            font-size: 14px;
+            color: variables.$textGray;
+            margin: 0 0 30px;
+        }
+        
+        .theme-selection-grid {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 40px;
+            
+            .theme-option {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                cursor: pointer;
+                transition: transform 0.2s ease;
+                border: 1px solid variables.$themeborderGray;
+                border-radius: 50px;
+                padding: 20px 15px;
+                min-width: 160px;
+                height: 62px;
+                justify-content: start;
+                align-items: center;
+                gap: 10px;
+                
+                &:hover {
+                    //transform: translateY(-5px);
+                    border-color: variables.$themberborderGrayHover;
+                }
+                
+                &.selected {
+                    border-color: variables.$themberborderGrayHover;
+                    box-shadow: 0 0 0 3px rgba(29, 126, 206, 0.2);                    
+                }
+                
+                .theme-circle {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    border: 2px solid #ddd;
+                    position: relative;
+                    overflow: hidden;
+                    
+                    .circle-half {
+                        position: absolute;
+                        width: 50%;
+                        height: 100%;
+                        top: 0;
+                    }
+                    
+                    .left {
+                        left: 0;
+                    }
+                    
+                    .right {
+                        right: 0;
+                        background: variables.$textWhite;
+                    }
+                    
+                    // Theme color variations
+                    &.blue-default {
+                        .left {
+                            background: variables.$primaryColor;
+                        }
+                    }
+                    
+                    &.blue-theme {
+                        .left {
+                            background: variables.$themeblueDark;
+                        }
+                        .right {
+                            background: variables.$themeblueLight;
+                        }
+                    }
+                    
+                    &.teal-theme {
+                        .left {
+                            background: variables.$themetealDark;
+                        }
+                        .right {
+                            background: variables.$themetealLight;
+                        }
+                    }
+                    
+                    &.green-theme {
+                        .left {
+                            background: variables.$themegreenDark;
+                        }
+                        .right {
+                            background: variables.$themegreenLight;
+                        }
+                    }
+                    
+                    &.orange-theme {
+                        .left {
+                            background: variables.$themeorangeDark;
+                        }
+                        .right {
+                            background: variables.$themeorangeLight;
+                        }
+                    }
+                }
+                
+                .theme-label {
+                    font-size: 16px;
+                    color: variables.$textBlackPrimary;
+                    font-weight: 600;
+                    text-align: center;
+                }
+            }
+        }
+        
+        .button-group {
+            .btn {
+                min-width: 150px;
+            }
+        }
+        
+    }
+}
+
+// Global theme classes for body element
+:global(body.blue-theme) {
+    --primary-color: #2563EB;
+    --primary-hover: #1D4ED8;
+    
+    .btn-primary,
+    .primary-color {
+        background-color: var(--primary-color) !important;
+        border-color: var(--primary-color) !important;
+    }
+    
+    .primary-color-text {
+        color: var(--primary-color) !important;
+    }
+}
+
+:global(body.teal-theme) {
+    --primary-color: #14B8A6;
+    --primary-hover: #0D9488;
+    
+    .btn-primary,
+    .primary-color {
+        background-color: var(--primary-color) !important;
+        border-color: var(--primary-color) !important;
+    }
+    
+    .primary-color-text {
+        color: var(--primary-color) !important;
+    }
+}
+
+:global(body.green-theme) {
+    --primary-color: #1D8C3A;
+    --primary-hover: #097526;
+    
+    .btn-primary,
+    .primary-color {
+        background-color: var(--primary-color) !important;
+        border-color: var(--primary-color) !important;
+    }
+    
+    .primary-color-text {
+        color: var(--primary-color) !important;
+    }
+}
+
+:global(body.orange-theme) {
+    --primary-color: #FF8446;
+    --primary-hover: #FF6B21;
+    
+    .btn-primary,
+    .primary-color {
+        background-color: var(--primary-color) !important;
+        border-color: var(--primary-color) !important;
+    }
+    
+    .primary-color-text {
+        color: var(--primary-color) !important;
+    }
+}
+
+.alert-modal2 {
+    .modal-header {
+        border-bottom: none !important;
+        padding-bottom: 0 !important;
+    }
+    .modal-body {
+        text-align: center;
+        padding: 0 0 30px;
+        h5 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: variables.$textBlackPrimary;
+        }
+        p {
+            font-size: 14px;
+            color: variables.$textDark;
+        }
+        .button-group {
+            justify-content: center !important;
+            margin-top: 20px;
+        }
+    }
+}

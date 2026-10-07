@@ -1,0 +1,379 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="row">
+      <div class="col-md-12 col-12">
+        <div class="card-style2">
+          <div class="card-header backoption">
+            <div class="row">
+              <div class="col-md-7 col-12">
+                <div class="heading-left">
+                  <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                    <i class="iconify pi pi-arrow-left"></i>
+                  </a>
+                  <h3>Reviewer List</h3>
+                </div>
+              </div>
+              <div class="col-md-5 col-12">
+                <div class="form-right">
+                  <a href="javascript:;" class="icon-btn-square" (click)="filterToggle()"> <i
+                      class="iconify pi pi-sliders-h"></i></a>
+                  <div class="dropdown dropdown-style1 ms-2">
+                    <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                      Download Report <i class="iconify pi pi-angle-down"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                      <li><a class="dropdown-item" href="javascript:;">Download Word</a></li>
+                      <li><a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                    </ul>
+                  </div>
+                  <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#addReviewerModal"
+                    class="btn btn-primary addbtn2"><span class="iconify" data-icon="icons8:plus"></span> Add New </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body table-style1 table-responsive radius-4">
+            @if (showFilter) {
+            <div class="filter-box form-sm">
+              <div class="row">
+                <div class="col-md-11 col-12">
+                  <div class="row gx-2">
+                    <div class="col-md-3 col-12">
+                      <div class="form-group">
+                        <select class="form-select">
+                          <option>By Reviewer Name</option>
+                          <option>Rama Moorthy (87689) </option>
+                          <option>Prathyush P (4525)</option>
+                          <option>Radha Madhav (23653)</option>
+                          <option>Krishna (90348)</option>
+                          <option>Karthikeyan (90340)</option>
+                          <option>Kaviya Priya (90337)</option>
+                          <option>Mythili (90355)</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-12">
+                      <div class="form-group">
+                        <select class="form-select">
+                          <option>By Department</option>
+                          <option>ICU </option>
+                          <option>Laboratory </option>
+                          <option>Causality </option>
+                          <option>Emergency </option>
+                          <option>Radiology </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-12">
+                      <div class="form-group">
+                        <select class="form-select">
+                          <option>By Role</option>
+                          <option>Doctor</option>
+                          <option>Nurse</option>
+                          <option>Surgeon</option>
+                          <option>Physiotherapist</option>
+                          <option>Lab Supervisor</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-12">
+                      <div class="form-group">
+                        <select class="form-select">
+                          <option>By Status</option>
+                          <option>Active</option>
+                          <option>Inactive</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1 col-12 ps-0">
+                  <button class="btn btn-primary w-100">Filter</button>
+                </div>
+              </div>
+            </div>
+            }
+
+            <div class="table-responsive">
+              <table class="table table-striped mt-2">
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <th width="25%">Reviewer Name </th>
+                    <th>Department </th>
+                    <th>Role </th>
+                    <th>Status </th>
+                    <th>Action </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>01</td>
+                    <td>Rama Moorthy (87689) </td>
+                    <td>OPD</td>
+                    <td>Surgeon</td>
+                    <td class="text-success">Active</td>
+                    <td>
+                      <div class="actiondot-dropdown">
+                        <div class="btn-group ms-2">
+                          <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <span class="iconify" data-icon="tabler:dots"></span>
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" data-bs-toggle="modal"
+                                data-bs-target="#addReviewerModal">View</a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" data-bs-toggle="modal"
+                                data-bs-target="#addReviewerModal">Edit</a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="javascript:;">Delete</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>02</td>
+                    <td>Prathyush P (4525)</td>
+                    <td>Radiology</td>
+                    <td>Chief Supervisor
+                    <td class="text-danger">Inactive</td>
+                    <td>
+                      <div class="actiondot-dropdown">
+                        <div class="btn-group ms-2">
+                          <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <span class="iconify" data-icon="tabler:dots"></span>
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" data-bs-toggle="modal"
+                                data-bs-target="#addReviewerModal">View</a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" data-bs-toggle="modal"
+                                data-bs-target="#addReviewerModal">Edit</a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="javascript:;">Delete</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>03</td>
+                    <td>Rama Moorthy (87670) </td>
+                    <td>OPD</td>
+                    <td>Surgeon</td>
+                    <td class="text-success">Active</td>
+                    <td>
+                      <div class="actiondot-dropdown">
+                        <div class="btn-group ms-2">
+                          <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <span class="iconify" data-icon="tabler:dots"></span>
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" data-bs-toggle="modal"
+                                data-bs-target="#addReviewerModal">View</a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" data-bs-toggle="modal"
+                                data-bs-target="#addReviewerModal">Edit</a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="javascript:;">Delete</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>04</td>
+                    <td>Prathyush P (4540)</td>
+                    <td>Radiology</td>
+                    <td>Chief Supervisor
+                    <td class="text-danger">Inactive</td>
+                    <td>
+                      <div class="actiondot-dropdown">
+                        <div class="btn-group ms-2">
+                          <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <span class="iconify" data-icon="tabler:dots"></span>
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" data-bs-toggle="modal"
+                                data-bs-target="#addReviewerModal">View</a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" data-bs-toggle="modal"
+                                data-bs-target="#addReviewerModal">Edit</a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="javascript:;">Delete</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>05</td>
+                    <td>Rama Moorthy (87632) </td>
+                    <td>OPD</td>
+                    <td>Surgeon</td>
+                    <td class="text-success">Active</td>
+                    <td>
+                      <div class="actiondot-dropdown">
+                        <div class="btn-group ms-2">
+                          <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <span class="iconify" data-icon="tabler:dots"></span>
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" data-bs-toggle="modal"
+                                data-bs-target="#addReviewerModal">View</a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" data-bs-toggle="modal"
+                                data-bs-target="#addReviewerModal">Edit</a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="javascript:;">Delete</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>06</td>
+                    <td>Prathyush P (4535)</td>
+                    <td>Radiology</td>
+                    <td>Chief Supervisor
+                    <td class="text-danger">Inactive</td>
+                    <td>
+                      <div class="actiondot-dropdown">
+                        <div class="btn-group ms-2">
+                          <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <span class="iconify" data-icon="tabler:dots"></span>
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" data-bs-toggle="modal"
+                                data-bs-target="#addReviewerModal">View</a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" data-bs-toggle="modal"
+                                data-bs-target="#addReviewerModal">Edit</a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="javascript:;">Delete</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Reviewer Add -->
+<div class="modal fade" id="addReviewerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="exampleModalLabel">Add New Reviewer </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body form-lg">
+        <div class="form-group">
+          <label>Department</label>
+          <select class="form-select">
+            <option>ICU </option>
+            <option>Laboratory </option>
+            <option>Causality </option>
+            <option>Emergency </option>
+            <option>Radiology </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Role</label>
+          <select class="form-select">
+            <option>Doctor</option>
+            <option>Nurse</option>
+            <option>Surgeon</option>
+            <option>Physiotherapist</option>
+            <option>Lab Supervisor</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Employee ID / Name</label>
+          <select class="form-select">
+            <option>John Doe (EMP001)</option>
+            <option>Jane Smith (EMP002)</option>
+            <option>Mike Johnson (EMP003)</option>
+            <option>Sarah Wilson (EMP004)</option>
+            <option>David Brown (EMP005)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Status</label>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked" checked>
+            <label class="form-check-label" for="switchCheckChecked">&nbsp;</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="label-flex-link">
+            <label>Upload Reviewer List </label>
+            <a href="javascript:;"><span class="iconify" data-icon="material-symbols:download"></span> Download
+              Template</a>
+          </div>
+          <div class="upload-image">
+            <button class="btn btn-primary"><span class="iconify" data-icon="material-symbols:upload-rounded"></span>
+              Bulk Upload</button>
+            <div class="upload-fileinfo">
+              <p>Upload Reviewer List .xlxs </p>
+              <a href="javascript:;">Remove</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="button-group">
+          <div class="row">
+            <div class="col-md-12 col-12">
+              <button class="btn btn-dark">Clear</button>
+              <button class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Reviewer Add End -->

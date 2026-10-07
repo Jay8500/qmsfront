@@ -1,0 +1,3542 @@
+{
+  "LoginForm": {
+    "userNameInput": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "User Name is required."
+      }
+    },
+    "passwordInput": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Password is required."
+      }
+    },
+    "checkBoxInput": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "User Name is required."
+      }
+    },
+    "mobileNumberInput": {
+      "validators": [
+        "required",
+        "numeric",
+        "length10"
+      ],
+      "messages": {
+        "required": "Mobile Number is required.",
+        "numeric": "The mobile number must only contain digits.",
+        "length10": "Mobile Number must be exactly 10 digits."
+      }
+    }
+  },
+  "AuditAssignmentForm": {
+    "audit_type_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Audit Type is required."
+      }
+    },
+    "audit_name": {
+      "validators": [
+        "required",
+        "alphaOnly"
+      ],
+      "messages": {
+        "required": "Audit Name is required.",
+        "alphaOnly": "Only letters and spaces are allowed."
+      }
+    },
+    "category_type_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Audit Category is required."
+      }
+    },
+    "section_name": {
+      "validators": [],
+      "messages": {
+        "required": ""
+      }
+    },
+    "section_description": {
+      "validators": [],
+      "messages": {
+        "required": ""
+      }
+    },
+    "question_text": {
+      "validators": [],
+      "messages": {
+        "required": ""
+      }
+    },
+    "question_description": {
+      "validators": [],
+      "messages": {
+        "required": ""
+      }
+    }
+  },
+  "NewTrainingForm": {
+    "training_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Training Name is required."
+      }
+    },
+    "description": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Training Description is required."
+      }
+    },
+    "multi": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Multi is required."
+      }
+    },
+    "date": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Date is required."
+      }
+    },
+    "time": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Time is required."
+      }
+    },
+    "mode_of_training": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Training Mode is required."
+      }
+    },
+    "faculty_type_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Faculty Type is required."
+      }
+    },
+    "faculty_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Faculty Name is required."
+      }
+    },
+    "diagnosis": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Diagnosis  is required."
+      }
+    },
+    "treatment_start_date": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Treatment Type is required."
+      },
+      "patient_id": {
+        "validators": [
+          "required"
+        ],
+        "messages": {
+          "required": "Patient Type is required."
+        }
+      },
+      "prom_type_id": {
+        "validators": [
+          "required"
+        ],
+        "messages": {
+          "required": "PROM Type is required."
+        }
+      },
+      "admitted_unit_id": {
+        "validators": [
+          "required"
+        ],
+        "messages": {
+          "required": "Admitted Unit  is required."
+        }
+      },
+      "doctor_id": {
+        "validators": [
+          "required"
+        ],
+        "messages": {
+          "required": "Doctor Type is required."
+        }
+      }
+    }
+  },
+  "FacultyForm": {
+    "faculty_type_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Faculty Type is required."
+      }
+    },
+    "faculty_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Faculty is required."
+      }
+    },
+    "faculty_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Faculty Name is required."
+      }
+    },
+    "specialization_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Faculty Designation is required."
+      }
+    },
+    "specialization_id": {
+      "validators": [],
+      "messages": {
+        "required": "Faculty Designation is required."
+      }
+    }
+  },
+  "AssessmentForm": {
+    "training_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Training Name is required."
+      }
+    },
+    "total_score": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Total Score is required."
+      }
+    },
+    "pass_mark": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Passmark is required."
+      }
+    }
+  },
+  "ScheduleAddForm": {
+    "department": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Department Name is required."
+      }
+    },
+    "role": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Role is required."
+      }
+    },
+    "training_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Training Name is required."
+      }
+    },
+    "mode_of_training_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Mode of Training is required."
+      }
+    },
+    "venue_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Venue is required."
+      }
+    },
+    "attendance_type_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Attendance Type is required."
+      }
+    },
+    "from_dt": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "From Date is required."
+      }
+    },
+    "to_dt": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "To Date is required."
+      }
+    },
+    "from_time": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "From Time is required."
+      }
+    },
+    "to_time": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "To Time is required."
+      }
+    },
+    "participants_fb_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Participants Feedback is required."
+      }
+    }
+  },
+  "LicenseTrackerAddForm": {
+    "license_master_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "License is required."
+      }
+    },
+    "license_no": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "License No is required."
+      }
+    },
+    "provider_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Provider / Vendor is required."
+      }
+    },
+    "assigned_employee_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Assigning To is required."
+      }
+    },
+    "issue_date": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Date of Issue is required."
+      }
+    },
+    "expiry_date": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Date of Expiry is required."
+      }
+    },
+    "renewal_application_date": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Renewal Application Date is required."
+      }
+    },
+    "criteriaText": {
+      "validators": [],
+      "messages": {
+        "required": "Checklist is required."
+      }
+    }
+  },
+  "MouTrackerAddForm": {
+    "mou_no": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "MoU / Legal No. is required."
+      }
+    },
+    "partner_org": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Partner Organization is required."
+      }
+    },
+    "agreement_date": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Date of Agreement is required."
+      }
+    },
+    "expiry_date": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Date of Expiry is required."
+      }
+    }
+  },
+  "TrainingGridFilters": {
+    "training_name": {
+      "validators": [],
+      "messages": {
+        "required": "Training Name is required."
+      }
+    },
+    "faculty_type_name": {
+      "validators": [],
+      "messages": {
+        "required": "Faculty Type is required."
+      }
+    },
+    "faculty_name": {
+      "validators": [],
+      "messages": {
+        "required": "Faculty Name is required."
+      }
+    },
+    "specialization_name": {
+      "validators": [],
+      "messages": {
+        "required": "Designation is required."
+      }
+    }
+  },
+  "scheduleAudit": {
+    "audit_template_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Audit is required."
+      }
+    },
+    "department_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Department is required."
+      }
+    },
+    "location_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Location is required."
+      }
+    },
+    "auditor_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Auditor is required."
+      }
+    },
+    "auditee_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Auditee is required."
+      }
+    },
+    "audit_date": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Date is required."
+      }
+    },
+    "audit_title": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Title is required."
+      }
+    },
+    "patient_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "UHID is required."
+      }
+    },
+    "treating_consultant_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Treating Consultant is required."
+      }
+    },
+    "specialty_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Speciality is required."
+      }
+    },
+    "encounter_type_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Encounter Type is required."
+      }
+    },
+    "record_source_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Record Source is required."
+      }
+    },
+    "diagnosis": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Diagnosis is required."
+      }
+    },
+    "additional_comments": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Additional Comments is required."
+      }
+    }
+  },
+  "schFilters": {
+    "audit_name": {
+      "validators": [],
+      "messages": {
+        "required": "Audit Name is required."
+      }
+    },
+    "audit_title": {
+      "validators": [],
+      "messages": {
+        "required": "Audit Title is required."
+      }
+    },
+    "department_name": {
+      "validators": [],
+      "messages": {
+        "required": "Department is required."
+      }
+    },
+    "auditor_name": {
+      "validators": [],
+      "messages": {
+        "required": "Auditor is required."
+      }
+    },
+    "auditee_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Auditee is required."
+      }
+    },
+    "audit_date": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Audit Date is required."
+      }
+    }
+  },
+  "adtFilters": {
+    "auditTitle": {
+      "validators": [],
+      "messages": {
+        "required": "Audit Title is required."
+      }
+    },
+    "department": {
+      "validators": [],
+      "messages": {
+        "required": "Department is required."
+      }
+    },
+    "location": {
+      "validators": [],
+      "messages": {
+        "required": "Location is required."
+      }
+    },
+    "auditor": {
+      "validators": [],
+      "messages": {
+        "required": "Auditor is required."
+      }
+    },
+    "auditee": {
+      "validators": [],
+      "messages": {
+        "required": "Auditee is required."
+      }
+    },
+    "status": {
+      "validators": [],
+      "messages": {
+        "required": "Status is required."
+      }
+    }
+  },
+  "trainingRptGraphs": {
+    "selectedScoreReport": {
+      "validators": [],
+      "messages": {
+        "required": "Training  is required."
+      }
+    }
+  },
+  "NewVersionControlForm": {
+    "document_no": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Document No. is required."
+      }
+    },
+    "document_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Document Name is required."
+      }
+    },
+    "document_type_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Document Type is required."
+      }
+    },
+    "description": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Description is required."
+      }
+    },
+    "current_version": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Current Version is required."
+      }
+    },
+    "department_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Department is required."
+      }
+    },
+    "role_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Role is required."
+      }
+    },
+    "employee_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Employee Name is required."
+      }
+    }
+  },
+  "RiskManagementForm": {
+    "risk_type_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Risk Type is required."
+      }
+    },
+    "location_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Location is required."
+      }
+    },
+    "department_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Department is required."
+      }
+    },
+    "reported_by_user_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Reported By Name is required."
+      }
+    },
+    "date_of_risk": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Risk Date & Time is required."
+      }
+    },
+    "description": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Description is required."
+      }
+    },
+    "impact_type_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Impact Type is required."
+      }
+    },
+    "risk_status_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Risk Status is required."
+      }
+    }
+  },
+  "NewIncidentAddForm": {
+    "incd_happnd_ref_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Name is required."
+      }
+    },
+    "incd_happnd_ref_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Name is required."
+      }
+    },
+    "incident_type_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Incident Type is required."
+      }
+    },
+    "incident_location_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Location of the Incident is required."
+      }
+    },
+    "reported_by": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Reported By is required."
+      }
+    },
+    "reported_at": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Reported Date & Time is required."
+      }
+    },
+    "incident_description": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Incident Description is required."
+      }
+    },
+    "reason_for_incident": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Reason for the Incident is required."
+      }
+    },
+    "immediate_action_taken": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Immediate Action Taken is required."
+      }
+    },
+    "incd_act_status_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Incident Status is required."
+      }
+    }
+  },
+  "TaskAssignAddForm": {
+    "task_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Task Name is required."
+      }
+    },
+    "role_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Role is required."
+      }
+    },
+    "assigned_to_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Assign to is required."
+      }
+    },
+    "start_datetime": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "From Date & Time is required."
+      }
+    },
+    "end_datetime": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "To Date & Time is required."
+      }
+    },
+    "task_description": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Task Description is required."
+      }
+    },
+    "deadline": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Deadline is required."
+      }
+    }
+  },
+  "AUDIT_RPT": {
+    "audit_type_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Audit Type is required."
+      }
+    },
+    "audit_template_id": {
+      "validators": [],
+      "messages": {
+        "required": "Audit is required."
+      }
+    },
+    "from_dt": {
+      "validators": [],
+      "messages": {
+        "required": "From is required."
+      }
+    },
+    "to_dt": {
+      "validators": [],
+      "messages": {
+        "required": "To is required."
+      }
+    }
+  },
+  "CONDUCT_AUDIT": {
+    "remarks": {
+      "validators": [],
+      "messages": {
+        "required": "Remarks is required."
+      }
+    }
+  },
+  "AUDITCAPA": {
+    "description": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Description is required."
+      }
+    },
+    "action_taken": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Action taken is required."
+      }
+    },
+    "reviewer_comments": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Review comments is required."
+      }
+    }
+  },
+  "PROVIDERS": {
+    "provider_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Provider is required."
+      }
+    },
+    "provider_type_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Provider Type is required."
+      }
+    },
+    "contact_person": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Contact Person is required."
+      }
+    },
+    "mobile_no1": {
+      "validators": [
+        "required",
+        "numeric",
+        "length10"
+      ],
+      "messages": {
+        "required": "Contact No. is required.",
+        "numeric": "Alphabets not allowed.",
+        "length10": "Mobile No should be 10 is required."
+      }
+    },
+    "email_id": {
+      "validators": [
+        "required",
+        "email"
+      ],
+      "messages": {
+        "required": "Email is required.",
+        "email": "Email format is wrong"
+      }
+    },
+    "web_url": {
+      "validators": [
+        "required",
+        "webUrl"
+      ],
+      "messages": {
+        "required": "Weburl is required.",
+        "webUrl": "Weburl Format is wrong."
+      }
+    },
+    "address": {
+      "validators": [
+        "required",
+        "anythingUpto180"
+      ],
+      "messages": {
+        "required": "Description is required.",
+        "anythingUpto180": "Upto 180 charcters are allowed"
+      }
+    },
+    "description": {
+      "validators": [
+        "required",
+        "anythingUpto180"
+      ],
+      "messages": {
+        "required": "Description is required.",
+        "anythingUpto180": "Upto 180 charcters are allowed"
+      }
+    }
+  },
+  "LicenseMasterAddForm": {
+    "license_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "License Name is required."
+      }
+    },
+    "criteriaName": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Criteria Name is required."
+      }
+    },
+    "category_type_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Category Type is required."
+      }
+    },
+    "renewal_frequency_months": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Renewal Frequency Months is required."
+      }
+    },
+    "description": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Description is required."
+      }
+    }
+  },
+  "TraningFeedbckResponse": {
+    "is_response": {
+      "validators": [],
+      "messages": {
+        "required": "Reponse is required."
+      }
+    }
+  },
+  "riskGridFilters": {
+    "risk_cd": {
+      "validators": [],
+      "messages": {
+        "required": "Risk Number is required."
+      }
+    },
+    "risk_type": {
+      "validators": [],
+      "messages": {
+        "required": "Risk Type is required."
+      }
+    },
+    "location": {
+      "validators": [],
+      "messages": {
+        "required": "Location is required."
+      }
+    },
+    "department": {
+      "validators": [],
+      "messages": {
+        "required": "Department is required."
+      }
+    },
+    "status": {
+      "validators": [],
+      "messages": {
+        "required": "Status is required."
+      }
+    }
+  },
+  "RiskEvaluation": {
+    "risk": {
+      "validators": [],
+      "messages": {
+        "required": "Risk is required."
+      }
+    },
+    "impact_score": {
+      "validators": [
+        "required",
+        "numeric",
+        "length1"
+      ],
+      "messages": {
+        "required": "Impact Score is required.",
+        "numeric": "Alphabets not allowed.",
+        "length1": "Maximum Single digit."
+      }
+    },
+    "probability_score": {
+      "validators": [
+        "required",
+        "numeric",
+        "length1"
+      ],
+      "messages": {
+        "required": "Probability Score is required.",
+        "numeric": "Alphabets not allowed.",
+        "length1": "Maximum Single digit."
+      }
+    },
+    "initial_risk_score": {
+      "validators": [
+        "required",
+        "numeric"
+      ],
+      "messages": {
+        "required": "Initial Risk Score is required.",
+        "numeric": "Alphabets not allowed."
+      }
+    },
+    "final_impact_score": {
+      "validators": [
+        "required",
+        "numeric"
+      ],
+      "messages": {
+        "required": "Final Impact Score is required.",
+        "numeric": "Alphabets not allowed."
+      }
+    },
+    "final_probability_score": {
+      "validators": [
+        "required",
+        "numeric"
+      ],
+      "messages": {
+        "required": "Final Probability Score is required.",
+        "numeric": "Alphabets not allowed."
+      }
+    },
+    "final_risk_score": {
+      "validators": [
+        "required",
+        "numeric"
+      ],
+      "messages": {
+        "required": "Final Risk Score is required.",
+        "numeric": "Alphabets not allowed."
+      }
+    },
+    "mitigation_plan": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Capa is required."
+      }
+    },
+    "action_taken": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Action is required."
+      }
+    },
+    "risk_closer_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Risk Closure is required."
+      }
+    },
+    "risk_review_plan_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Risk Plan is required."
+      }
+    }
+  },
+  "INCIDENT_INVESTIGATIONS": {
+    "investigation_ofc_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Investigation officer is required."
+      }
+    },
+    "findings": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Findings is required."
+      }
+    },
+    "capa_findings": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Capa Findings is required."
+      }
+    },
+    "action_taken": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Action Taken is required."
+      }
+    },
+    "action_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Investigation Action is required."
+      }
+    },
+    "auto_risk_days": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Auto Risk Days is required."
+      }
+    },
+    "recurrence_days": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Recurrence is required."
+      }
+    }
+  },
+  "CommitteeAddForm": {
+    "committee_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Committee Name is required."
+      }
+    },
+    "chair_person_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Chair Person is required."
+      }
+    },
+    "co_chair_person_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Co-Chair Person is required."
+      }
+    },
+    "co_ordinator_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Co-Ordinator is required."
+      }
+    },
+    "committee_members": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Committee Members is required."
+      }
+    },
+    "agenda_entry_type_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Agenda Entry Type is required."
+      }
+    },
+    "remainder_frequency_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Remainder Frequency is required."
+      }
+    },
+    "agenda_approver_user_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Agenda Approver is required."
+      }
+    },
+    "mom_approver_user_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "MoM Approver is required."
+      }
+    }
+  },
+  "VaccinationMasterForm": {
+    "vaccine_name": {
+      "validators": [
+        "required",
+        "minLength3"
+      ],
+      "messages": {
+        "required": "Vaccine Name is required.",
+        "minLength3": "Vaccine Name needs at least 3 characters."
+      }
+    },
+    "manufacture_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Manufacturer is required."
+      }
+    },
+    "batch_no": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Batch No is required."
+      }
+    },
+    "reminder_days": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Reminder is required."
+      }
+    },
+    "route_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Route is required."
+      }
+    },
+    "dosage_value": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Dosage is required."
+      }
+    },
+    "dosage_unit": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Dosage Unit is required."
+      }
+    },
+    "gap_days": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Gap days is required."
+      }
+    },
+    "recurrence_interval": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Recurrence is required."
+      }
+    },
+    "age_group_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Agegroup is required."
+      }
+    },
+    "target_source_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Target is required."
+      }
+    },
+    "department": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Department Name is required."
+      }
+    },
+    "role": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Role is required."
+      }
+    }
+  },
+  "CATAGORYMASTRS": {
+    "category_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Category Name is required."
+      }
+    },
+    "catgegory_short_code": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Category Code is required."
+      }
+    },
+    "description": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Description is required."
+      }
+    }
+  },
+  "KpiMasterForm": {
+    "kpi_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "KPI Name is required."
+      }
+    },
+    "kpi_category_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Catgeory is required."
+      }
+    },
+    "department_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Department is required."
+      }
+    },
+    "kpi_type_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Indicator is required."
+      }
+    },
+    "frequency_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Frequency is required."
+      }
+    },
+    "unit_of_measure_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Unit of Measure is required."
+      }
+    },
+    "numerator_label": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Numerator Name is required."
+      }
+    },
+    "denominator_label": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Denominator Name is required."
+      }
+    },
+    "kpi_formula": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Formula is required."
+      }
+    },
+    "field_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Label is required."
+      }
+    },
+    "field_value": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Type is required."
+      }
+    },
+    "options_json": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Options is required."
+      }
+    },
+    "target_benchmark": {
+      "validators": [
+        "required",
+        "numeric",
+        "notAbove100"
+      ],
+      "messages": {
+        "required": "Target is required.",
+        "numeric": "Numbers are allowed.",
+        "notAbove100": "Should not exceed above 100."
+      }
+    },
+    "complaint_benchmark": {
+      "validators": [
+        "required",
+        "numeric",
+        "notAbove100",
+        "comparedKey"
+      ],
+      "messages": {
+        "required": "Complaint is required.",
+        "numeric": "Numbers are allowed.",
+        "notAbove100": "Should not exceed above 100.",
+        "comparedKey": "Complaint should not exceed than target"
+      }
+    },
+    "partial_complaint_benchmark": {
+      "validators": [
+        "required",
+        "numeric",
+        "notAbove100",
+        "comparedKey"
+      ],
+      "messages": {
+        "required": "Partial is required.",
+        "numeric": "Numbers are allowed.",
+        "notAbove100": "Should not exceed above 100.",
+        "comparedKey": "Partial should not exceed than Complaint"
+      }
+    },
+    "non_complaint_benchark": {
+      "validators": [
+        "required",
+        "numeric",
+        "comparedKey"
+      ],
+      "messages": {
+        "required": "Non-Complaint is required.",
+        "numeric": "Numbers are allowed.",
+        "comparedKey": "Non-Complaint should not exceed than Partial"
+      }
+    },
+    "deviation_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Deviation Reason is required."
+      }
+    },
+    "kpi_definition": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "KPI Definition is required."
+      }
+    },
+    "exclusion_criteria": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Exclusion Criteria is required."
+      }
+    }
+  },
+  "DCCAPTURE": {
+    "selected_dt": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Date is required."
+      }
+    },
+    "selected_kpi": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "KPI Name is required."
+      }
+    },
+    "numerator_value": {
+      "validators": [
+        "required",
+        "numeric"
+      ],
+      "messages": {
+        "required": "Numerator is required.",
+        "numeric": "Numbers are allowed."
+      }
+    },
+    "denominator_value": {
+      "validators": [
+        "required",
+        "numeric"
+      ],
+      "messages": {
+        "required": "Denominator is required.",
+        "numeric": "Numbers are allowed."
+      }
+    },
+    "display_score": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Actual Score is required."
+      }
+    },
+    "selectedVaccine": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Selected Vaccine is required."
+      }
+    }
+  },
+  "WRITECAPA": {
+    "reason_for_deviation": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Reasons for any deviations is required."
+      }
+    },
+    "description": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Write CAPA is required."
+      }
+    },
+    "interpretation_learning": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Interpretation and Learning is required."
+      }
+    },
+    "action_taken": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Action Taken is required."
+      }
+    },
+    "reviewer_comments": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Reviewer Comments is required."
+      }
+    }
+  },
+  "VaccinationDashbordFilters": {
+    "campaign_name": {
+      "validators": [],
+      "messages": {
+        "required": "Campaign  is required."
+      }
+    },
+    "vaccine_name": {
+      "validators": [],
+      "messages": {
+        "required": "Vaccine is required."
+      }
+    },
+    "venue": {
+      "validators": [],
+      "messages": {
+        "required": "Venue is required."
+      }
+    },
+    "status": {
+      "validators": [],
+      "messages": {
+        "required": "Status is required."
+      }
+    }
+  },
+  "schVaccneSch": {
+    "campaign_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Campaign Name is required."
+      }
+    },
+    "vaccine_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Vaccine is required."
+      }
+    },
+    "venue_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Venue is required."
+      }
+    },
+    "start_date": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "From Date & Time is required."
+      }
+    },
+    "end_date": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "To Date & Time is required."
+      }
+    },
+    "capacity": {
+      "validators": [
+        "required",
+        "range1to999"
+      ],
+      "messages": {
+        "required": "Capacity is required.",
+        "range1to999": "Capacity must be between 1 and 999."
+      }
+    }
+  },
+  "VaccineAdminForm": {
+    "selectedVaccine": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Vaccine is required."
+      }
+    },
+    "administered_at": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Vaccination Date is required."
+      }
+    },
+    "administered_by": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Vaccinated By is required."
+      }
+    },
+    "brand_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Vaccine Brand is required."
+      }
+    },
+    "batch_no": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Batch Details are required."
+      }
+    }
+  },
+  "VaccineDecisionForm": {
+    "decision_reason_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Reason is required."
+      }
+    },
+    "decision_notes": {
+      "validators": [
+        "required",
+        "anythingUpto500"
+      ],
+      "messages": {
+        "required": "Notes are required when the reason is Other.",
+        "anythingUpto500": "Notes can have up to 500 characters."
+      }
+    }
+  },
+  "VaccineMissedForm": {
+    "missed_reason_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Missed Reason is required."
+      }
+    },
+    "missed_notes": {
+      "validators": [
+        "required",
+        "anythingUpto180"
+      ],
+      "messages": {
+        "required": "Notes are required when the reason is Other.",
+        "anythingUpto180": "Notes can have up to 180 characters."
+      }
+    }
+  },
+  "CPMASTERFORM": {
+    "cp_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "CP Name is required."
+      }
+    },
+    "department_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Department is required."
+      }
+    },
+    "section_name": {
+      "validators": [],
+      "messages": {
+        "required": ""
+      }
+    },
+    "section_description": {
+      "validators": [],
+      "messages": {
+        "required": ""
+      }
+    },
+    "question_text": {
+      "validators": [],
+      "messages": {
+        "required": ""
+      }
+    },
+    "question_description": {
+      "validators": [],
+      "messages": {
+        "required": ""
+      }
+    }
+  },
+  "newAuditAddForm": {
+    "patient_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "UHID is required."
+      }
+    },
+    "cp_master_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "CP is required."
+      }
+    },
+    "department_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Department is required."
+      }
+    },
+    "consultant_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Consultant is required."
+      }
+    },
+    "audit_date": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Audit Date is required."
+      }
+    },
+    "admission_date": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Date of Admission is required."
+      }
+    },
+    "surgery_date": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Date of Surgery is required."
+      }
+    },
+    "discharge_date": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Date of Discharge is required."
+      }
+    },
+    "remarks": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Description is required."
+      }
+    }
+  },
+  "clinicalcapa": {
+    "write_capa": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Write is required."
+      }
+    },
+    "action_taken": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Action Taken is required."
+      }
+    }
+  },
+  "reviewcapa": {
+    "reviewer_comments": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Comments is required."
+      }
+    }
+  },
+  "premfeedback": {
+    "prem_type_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "PREM Type is required."
+      }
+    },
+    "patient_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "UHID is required."
+      }
+    },
+    "department_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Department is required."
+      }
+    },
+    "issue_type_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Issue Type is required."
+      }
+    },
+    "description": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Others is required."
+      }
+    }
+  },
+  "patientsftaddsurvey": {
+    "survey_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Survey is required."
+      }
+    },
+    "role_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Participant is required."
+      }
+    },
+    "from_dt": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "From Date is required."
+      }
+    },
+    "to_dt": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "To Date is required."
+      }
+    }
+  },
+  "scsurvey": {
+    "survey_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Survey is required."
+      }
+    }
+  },
+  "NewEmpSurvey": {
+    "survey_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Survey Name is required."
+      }
+    },
+    "participants_type_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Participants is required."
+      }
+    },
+    "from_date": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "From Date is required."
+      }
+    },
+    "to_date": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "To Date is required."
+      }
+    }
+  },
+  "sftcltreCapa": {
+    "capa_write": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Description is required."
+      }
+    },
+    "action_taken": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Action Taken is required."
+      }
+    },
+    "reviewer_comments": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Comments is required."
+      }
+    }
+  },
+  "GrievanceAddForm": {
+    "employee_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Employee Name/ID is required."
+      }
+    },
+    "role_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Role is required."
+      }
+    },
+    "complaint_type_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Type of Compliant is required."
+      }
+    },
+    "description": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Compliant Description is required."
+      }
+    },
+    "immediate_action": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Immediate Action is required."
+      }
+    },
+    "happened_on": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Happened on is required."
+      }
+    }
+  },
+  "careContinuityForm": {
+    "procedure_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Employee Name/ID is required."
+      }
+    },
+    "surgery_date": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Role is required."
+      }
+    },
+    "discharge_date": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Type of Compliant is required."
+      }
+    },
+    "diagnosis": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Compliant Description is required."
+      }
+    },
+    "next_checkup_date": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Immediate Action is required."
+      }
+    },
+    "visited_dt": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Happened on is required."
+      }
+    }
+  },
+  "PASSWORDPOLICY": {
+    "passw_policy_min_len": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Minimum Length is required."
+      }
+    },
+    "passw_policy_special_char_len": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Minimum Special Character is required."
+      }
+    },
+    "passw_policy_min_capital_letters_len": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Minimum Upper Case is required."
+      }
+    },
+    "passw_policy_min_small_letters_len": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Minimum Lower Case is required."
+      }
+    },
+    "passw_policy_digits_min_len": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Minimum Numbers is required."
+      }
+    },
+    "passw_expiry_days": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Password Validity is required."
+      }
+    },
+    "passw_remainder_days": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Password Reminder is required."
+      }
+    },
+    "remarks": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Remarks is required."
+      }
+    }
+  },
+  "SEC_ROLE": {
+    "role_name": {
+      "validators": [
+        "required",
+        "alphaOnly"
+      ],
+      "messages": {
+        "required": "Role Name is required.",
+        "alphaOnly": "Only letters and spaces are allowed."
+      }
+    },
+    "role_short_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Role Code is required."
+      }
+    },
+    "role_desc": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Description is required."
+      }
+    }
+  },
+  "organization": {
+    "org_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Organization Name is required."
+      }
+    },
+    "location_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Location Name is required."
+      }
+    },
+    "display_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Display Name is required."
+      }
+    },
+    "no_of_locations": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "No of Locations is required."
+      }
+    },
+    "org_desc": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Description is required."
+      }
+    },
+    "contact_person": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Contact Person is required."
+      }
+    },
+    "about_us": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "About Us is required."
+      }
+    },
+    "company_url": {
+      "validators": [
+        "required",
+        "webUrl"
+      ],
+      "messages": {
+        "required": "Company URL is required.",
+        "webUrl": "Company URL Format is wrong."
+      }
+    },
+    "privacy_policy_url": {
+      "validators": [
+        "required",
+        "webUrl"
+      ],
+      "messages": {
+        "required": "privacy URL is required.",
+        "webUrl": "privacy URL Format is wrong."
+      }
+    },
+    "terms_of_usage_url": {
+      "validators": [
+        "required",
+        "webUrl"
+      ],
+      "messages": {
+        "required": "Terms of Usage is required.",
+        "webUrl": "Terms of Usage is wrong."
+      }
+    },
+    "copy_right": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Copy right is required."
+      }
+    },
+    "org_key": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Practice Key is required."
+      }
+    },
+    "default_currency_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Currect ID is required."
+      }
+    },
+    "email_id": {
+      "validators": [
+        "required",
+        "email"
+      ],
+      "messages": {
+        "required": "Email ID is required.",
+        "email": "Email format is wrong"
+      }
+    },
+    "office_phone": {
+      "validators": [
+        "required",
+        "length10"
+      ],
+      "messages": {
+        "required": "Office Phone is required.",
+        "length10": "Office No should be 10 is required."
+      }
+    },
+    "fax_number": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Fax No. is required."
+      }
+    },
+    "mobile_phone": {
+      "validators": [
+        "required",
+        "length10"
+      ],
+      "messages": {
+        "required": "Mobile No. is required.",
+        "length10": "Office No should be 10 is required."
+      }
+    },
+    "website_url": {
+      "validators": [
+        "required",
+        "webUrl"
+      ],
+      "messages": {
+        "required": "Website URL is required.",
+        "webUrl": "Weburl Format is wrong."
+      }
+    },
+    "address1": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Address One is required."
+      }
+    },
+    "address2": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Address Two is required."
+      }
+    },
+    "area": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Area is required."
+      }
+    },
+    "city": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "City is required."
+      }
+    },
+    "state_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "State is required."
+      }
+    },
+    "country_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Country is required."
+      }
+    },
+    "accreditation_no": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Accreditation Code is required."
+      }
+    },
+    "accreditation_body": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Accreditation Body is required."
+      }
+    },
+    "accreditation_for": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Accreditation For is required."
+      }
+    },
+    "valid_start_dt": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Start from is required."
+      }
+    },
+    "valid_end_dt": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Start To is required."
+      }
+    },
+    "accr_status_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Status is required."
+      }
+    }
+  },
+  "user": {
+    "first_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "First Name is required."
+      }
+    },
+    "middle_name": {
+      "validators": [],
+      "messages": {
+        "required": "Middle Name is required."
+      }
+    },
+    "last_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Last Name is required."
+      }
+    },
+    "dob": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "DOB is required."
+      }
+    },
+    "joining_dt": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Joining Date is required."
+      }
+    },
+    "employment_type_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Employee Type is required."
+      }
+    },
+    "designation_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Designation is required."
+      }
+    },
+    "dept_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Department is required."
+      }
+    },
+    "speciality_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Speciality is required."
+      }
+    },
+    "email_id": {
+      "validators": [
+        "required",
+        "email"
+      ],
+      "messages": {
+        "required": "Email is required.",
+        "email": "Email format is wrong"
+      }
+    },
+    "office_phone": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Office Phone No. is required."
+      }
+    },
+    "mobile_phone": {
+      "validators": [
+        "required",
+        "numeric",
+        "length10"
+      ],
+      "messages": {
+        "required": "Mobile Number is required.",
+        "numeric": "The mobile number must only contain digits.",
+        "length10": "Mobile Number must be exactly 10 digits."
+      }
+    },
+    "area_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Area Name is required."
+      }
+    },
+    "user_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "User Name is required."
+      }
+    },
+    "title_cd": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Title is required."
+      }
+    },
+    "role_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Role is required."
+      }
+    },
+    "location_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Location is required."
+      }
+    },
+    "address1": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Address is required."
+      }
+    }
+  },
+  "document": {
+    "document_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Document Name is required."
+      }
+    },
+    "primary_url": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Primary Url is required."
+      }
+    },
+    "last_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Last Name is required."
+      }
+    },
+    "dob": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "DOB is required."
+      }
+    },
+    "joining_dt": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Joining Date is required."
+      }
+    },
+    "employment_type_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Employee Type is required."
+      }
+    },
+    "designation_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Designation is required."
+      }
+    },
+    "dept_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Department is required."
+      }
+    },
+    "speciality_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Speciality is required."
+      }
+    },
+    "email_id": {
+      "validators": [
+        "required",
+        "email"
+      ],
+      "messages": {
+        "required": "Email is required.",
+        "email": "Email format is wrong"
+      }
+    },
+    "office_phone": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Office Phone No. is required."
+      }
+    },
+    "mobile_phone": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Mobile Phone No. is required."
+      }
+    }
+  },
+  "ACCESSBYROLEUSER": {
+    "loc_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Location is required."
+      }
+    },
+    "module_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Module is required."
+      }
+    },
+    "role_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Role is required."
+      }
+    },
+    "user_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "User is required."
+      }
+    }
+  },
+  "Apprvworkflw": {
+    "apprvl_workflw_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Approval Workflow Name is required."
+      }
+    },
+    "application_type": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Application Type is required."
+      }
+    },
+    "description": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Description is required."
+      }
+    },
+    "location": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Location is required."
+      }
+    },
+    "user_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "User Name is required."
+      }
+    },
+    "waiting_time": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Waiting Time is required."
+      }
+    },
+    "auto_apprvdec_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Auto Approve / Decline is required."
+      }
+    },
+    "module_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Module Type is required."
+      }
+    },
+    "document_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Documents is required."
+      }
+    },
+    "users": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": " Users is required."
+      }
+    }
+  },
+  "SchMeetingAddForm": {
+    "committee_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Committee is required."
+      }
+    },
+    "external_members": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "External Members is required."
+      }
+    },
+    "meeting_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Meeting Name is required."
+      }
+    },
+    "meeting_date": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Meeting Date is required."
+      }
+    },
+    "start_time": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "From Time is required."
+      }
+    },
+    "end_time": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "To Time is required."
+      }
+    },
+    "venue_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Venue is required."
+      }
+    },
+    "meeting_agenda": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Meeting Agenda is required."
+      }
+    }
+  },
+  "EntityForm": {
+    "entity_code": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Entity Code is required."
+      }
+    },
+    "entity_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Entity Name is required."
+      }
+    },
+    "category_type": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Category Type is required."
+      }
+    },
+    "display_order": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Display Order is required."
+      }
+    },
+    "description": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Description is required."
+      }
+    },
+    "value_code": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Value Code is required."
+      }
+    },
+    "short_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Short Name is required."
+      }
+    },
+    "display_value": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Display Value is required."
+      }
+    }
+  },
+  "APPSETTINGS": {
+    "date_format_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Date Format is required."
+      }
+    },
+    "idle_timeout_minutes_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Idle Time Out is required."
+      }
+    }
+  },
+  "OPPEDOC": {
+    "deptList_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Department is required."
+      }
+    },
+    "designationList_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Designation is required."
+      }
+    },
+    "speciaList_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Specialist Type is required."
+      }
+    },
+    "consultList_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Consult Typeis required."
+      }
+    },
+    "from_dt": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "From Date is required."
+      }
+    },
+    "to_dt": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "To Date is required."
+      }
+    }
+  },
+  "NEW_COMPETENCEY": {
+    "selectedDepartment": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Department is required."
+      }
+    },
+    "selectedRole": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Role is required."
+      }
+    },
+    "selectedUnit": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Unit  is required."
+      }
+    },
+    "selectedEmployee": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Employee required."
+      }
+    },
+    "assessmentDuration": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Assesment Duration is required."
+      }
+    },
+    "firstAssessmentFrequency": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "First Assesement Frequency is required."
+      }
+    },
+    "firstAssessmentType": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "First Assesement Type is required."
+      }
+    },
+    "firstReviewer1": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "First Reviewer1  is required."
+      }
+    },
+    "firstReviewer2": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "First Reviewer2  is required."
+      }
+    },
+    "firstReviewer3": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "EmploFirst Reviewer3 is required."
+      }
+    },
+    "secondAssessmentFrequency": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "second Assesement Frequency is required."
+      }
+    },
+    "secondAssessmentType": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "second Assesement Type is required."
+      }
+    },
+    "secondReviewer1": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "second Reviewer1  is required."
+      }
+    },
+    "secondReviewer2": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "second Reviewer2  is required."
+      }
+    },
+    "secondReviewer3": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "second Reviewer3 is required."
+      }
+    },
+    "annualAssessmentFrequency": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Annual Assesement Frequency is required."
+      }
+    },
+    "annualAssessmentType": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Annual Assesement Type is required."
+      }
+    },
+    "annualReviewer1": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Annual Reviewer1  is required."
+      }
+    },
+    "annualReviewer2": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Annual Reviewer2  is required."
+      }
+    },
+    "annualReviewer3": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Annual Reviewer3 is required."
+      }
+    }
+  },
+  "COMMITTEERPT": {
+    "from_dt": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "From Date is required."
+      }
+    },
+    "to_dt": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "To Date is required."
+      }
+    },
+    "committee_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Commite is required."
+      }
+    },
+    "committee_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Committee Name is required."
+      }
+    },
+    "committee_type_id": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Committee Typeis required."
+      }
+    },
+    "committee_type_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Committe type Name is required."
+      }
+    },
+    "meeting_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Meeting Name is required."
+      }
+    }
+  },
+  "CREATEMODOC": {
+    "module_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Module Name is required."
+      }
+    },
+    "module_route": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Module Route is required."
+      }
+    },
+    "document_name": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Document Name is required."
+      }
+    },
+    "primary_url": {
+      "validators": [
+        "required"
+      ],
+      "messages": {
+        "required": "Primary URL is required."
+      }
+    }
+  }
+}

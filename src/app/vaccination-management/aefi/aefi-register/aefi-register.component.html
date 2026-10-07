@@ -1,0 +1,145 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="card-style2">
+            <div class="card-header backoption">
+                <div class="row align-items-center">
+                    <div class="col-md-6 col-12">
+                        <div class="heading-left">
+                            <h3>AEFI Register</h3>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <div class="form-right">
+                            @if(access().access_exp){
+                            <button type="button" class="btn btn-light" (click)="onExport()" [disabled]="rows.length == 0">
+                                <i class="pi pi-file-excel"></i> Export</button>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body vacc-form">
+                <!-- Filters -->
+                <div class="formbox-left form-lg compact mb-3">
+                    <div class="row g-2 align-items-end">
+                        <div class="col-xl-2 col-md-3 col-6">
+                            <label for="aefi_from">Event from</label>
+                            <input type="date" id="aefi_from" class="form-control" [(ngModel)]="filters.from_dt" name="aefi_from">
+                        </div>
+                        <div class="col-xl-2 col-md-3 col-6">
+                            <label for="aefi_to">to</label>
+                            <input type="date" id="aefi_to" class="form-control" [(ngModel)]="filters.to_dt" name="aefi_to">
+                        </div>
+                        <div class="col-xl-3 col-md-3 col-12">
+                            <label for="aefi_vaccine">Vaccine</label>
+                            <p-select id="aefi_vaccine" [(ngModel)]="filters.vaccine_id" name="aefi_vaccine" [options]="vaccineList"
+                                [showClear]="true" [filter]="true" placeholder="All vaccines" class="form-control" appendTo="body" />
+                        </div>
+                        <div class="col-xl-2 col-md-3 col-12">
+                            <label for="aefi_sev">Severity</label>
+                            <p-select id="aefi_sev" [(ngModel)]="filters.severity_id" name="aefi_sev" [options]="severityList"
+                                [showClear]="true" placeholder="All" class="form-control" appendTo="body" />
+                        </div>
+                        <div class="col-xl-3 col-12 d-flex gap-2">
+                            <button type="button" class="btn btn-primary" (click)="load()">Apply</button>
+                            <button type="button" class="btn btn-dark" (click)="onClearFilters()">Clear</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cards -->
+                <div class="row g-3 mb-3">
+                    <div class="col-xl-3 col-md-6 col-12">
+                        <div class="aefi-card"><span>Reported AEFI</span><b>{{ stats?.total_aefi ?? 0 }}</b></div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 col-12">
+                        <div class="aefi-card danger"><span>Severe</span><b>{{ stats?.severe_aefi ?? 0 }}</b></div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 col-12">
+                        <div class="aefi-card"><span>AEFI per 1,000 doses</span><b>{{ stats?.aefi_per_1000 ?? 0 }}</b>
+                            <small>{{ stats?.completed_doses ?? 0 }} doses given</small></div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 col-12">
+                        <div class="aefi-card"><span>Avg. time to action</span>
+                            <b>{{ stats?.avg_minutes_to_action != null ? stats.avg_minutes_to_action + ' min' : '-' }}</b></div>
+                    </div>
+                </div>
+
+                <!-- Breakdowns -->
+                <div class="row g-3 mb-3">
+                    @for(block of [
+                        { title: 'By severity', list: stats?.by_severity },
+                        { title: 'By brand', list: stats?.by_brand },
+                        { title: 'By batch', list: stats?.by_batch }]; track block.title){
+                    <div class="col-lg-4 col-12">
+                        <div class="formbox-left h-100">
+                            <h6 class="mb-2">{{ block.title }}</h6>
+                            @for(item of (block.list || []); track item.label){
+                            <div class="aefi-bar">
+                                <span class="aefi-bar-label">{{ item.label }}</span>
+                                <span class="aefi-bar-track"><span class="aefi-bar-fill" [style.width.%]="barWidth(block.list, item.value)"></span></span>
+                                <b>{{ item.value }}</b>
+                            </div>
+                            } @empty {
+                            <p class="hint mb-0">No data</p>
+                            }
+                        </div>
+                    </div>
+                    }
+                </div>
+
+                <!-- List -->
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h6 class="mb-0">Reports ({{ visibleRows().length }})</h6>
+                    <input pInputText class="form-control search-box" placeholder="Search AEFI no., employee, vaccine, batch"
+                        [(ngModel)]="searchText" name="aefiSearch" />
+                </div>
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th>AEFI No.</th>
+                                <th>Event</th>
+                                <th>Employee</th>
+                                <th>Vaccine / Dose</th>
+                                <th>Brand / Batch</th>
+                                <th>Severity</th>
+                                <th>Symptoms</th>
+                                <th>Outcome</th>
+                                <th>Action (min)</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for(row of visibleRows(); track row.vaccination_aefi_id){
+                            <tr>
+                                <td class="fw-semibold">{{ row.aefi_no }}
+                                    @if(row.quality_notified){ <i class="pi pi-bell text-danger" title="Quality Team notified"></i> }</td>
+                                <td>{{ row.event_time }}</td>
+                                <td>{{ row.employee_name }}<br><small class="hint">{{ row.employee_code }} · {{ row.department_name || '-' }}</small></td>
+                                <td>{{ row.vaccine_name }}<br><small class="hint">Dose {{ row.dose_label }} · {{ row.vaccination_date || '-' }}</small></td>
+                                <td>{{ row.brand_name || '-' }}<br><small class="hint">{{ row.batch_no || '-' }}</small></td>
+                                <td><span [class]="severityClass(row.severity_code)">{{ row.severity }}</span></td>
+                                <td>{{ row.symptoms || '-' }}{{ row.other_symptom ? (row.symptoms ? ', ' : '') + row.other_symptom : '' }}</td>
+                                <td>{{ row.outcome || '-' }}</td>
+                                <td>{{ row.minutes_to_action ?? '-' }}</td>
+                                <td class="text-end">
+                                    @if(access().access_mod){
+                                    <a href="javascript:;" (click)="onEdit(row)" title="Open / update"><i class="pi pi-pencil"></i></a>
+                                    }
+                                </td>
+                            </tr>
+                            } @empty {
+                            <tr><td colspan="10" class="text-center hint py-4">{{ loading ? 'Loading…' : 'No AEFI reported in this period.' }}</td></tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <p class="hint mt-2 mb-0">Report a new AEFI from Vaccine Administration (completed row) or from the vaccination record (Vaccine View).</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<app-aefi-report-dialog #aefiDialog [(visible)]="showDialog" (closed)="onDialogClosed($event)" />

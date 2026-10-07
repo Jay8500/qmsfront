@@ -1,0 +1,411 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="row">
+      <div class="col-md-12 col-12">
+        <div class="card-style2">
+          <div class="card-header backoption">
+            <div class="row">
+              <div class="col-md-7 col-12">
+                <div class="heading-left">
+                  <h3>Committee Reports</h3>
+                </div>
+              </div>
+              <div class="col-md-5 col-12">
+                <div class="form-right">
+                  <button
+                    type="submit"
+                    class="btn btn-primary"
+                    (click)="getCommittee()"
+                  >
+                    Get
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-dark"
+                    (click)="onClear()"
+                  >
+                    Clear
+                  </button>
+                  <div class="dropdown dropdown-style1 ms-2">
+                    <button
+                      class="btn btn-light dropdown-toggle"
+                      type="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      Download<i class="iconify pi pi-angle-down"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li
+                        [DCSV]="{
+                          param: params,
+                          screenName: 'Committee Reports',
+                          data: committeeList.length,
+                          methodName: 'fnCommitteeReportsApi',
+                        }"
+                      >
+                        <a class="dropdown-item" href="javascript:;"
+                          >Download CSV</a
+                        >
+                      </li>
+                      <li
+                        [PDF]="{
+                          param: params,
+                          screenName: 'Committee Reports',
+                          data: committeeList.length,
+                          methodName: 'fnCommitteeReportsApi',
+                        }"
+                      >
+                        <a class="dropdown-item" href="javascript:;"
+                          >Download Pdf</a
+                        >
+                      </li>
+                      <li
+                        [EXCEL]="{
+                          param: params,
+                          screenName: 'Committee Reports',
+                          data: committeeList.length,
+                          methodName: 'fnCommitteeReportsApi',
+                        }"
+                      >
+                        <a class="dropdown-item" href="javascript:;"
+                          >Download Excel</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row mt-5">
+              <div class="col-lg-3 col-md-4 col-12">
+                <div class="row form-sm gx-2 mb-3">
+                  <div class="col-12">
+                    <div class="flex flex-col gap-1">
+                      <label for="committee_type_id">Committee Type</label>
+                      <div
+                        style="
+                          position: relative;
+                          display: inline-block;
+                          width: 100%;
+                        "
+                      >
+                        <p-select
+                          id="committee_type_id"
+                          [(ngModel)]="reportParams().committee_type_id"
+                          placeholder="Committee Type"
+                          (onChange)="onFilterChange()"
+                          name="committee_type_id"
+                          [appendTo]="'body'"
+                          [options]="committeeTypeList"
+                          [filter]="true"
+                          [showClear]="true"
+                          (onBlur)="onGetErrMsg('committee_type_id')"
+                          class="form-control w-full"
+                        />
+                        <div
+                          style="
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            width: 0;
+                            height: 0;
+                            border-top: 12px solid red;
+                            border-left: 12px solid transparent;
+                          "
+                        ></div>
+                      </div>
+                      @if (errMsg["committee_type_id"] != "") {
+                        <small class="error">{{
+                          errMsg["committee_type_id"]
+                        }}</small>
+                      }
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="flex flex-col gap-1">
+                      <label for="committee_name">Committee Name</label>
+                      <div
+                        style="
+                          position: relative;
+                          display: inline-block;
+                          width: 100%;
+                        "
+                      >
+                        <p-select
+                          id="committee_name"
+                          [(ngModel)]="reportParams().committee_name"
+                          (onBlur)="onGetErrMsg('committee_name')"
+                          (onChange)="onFilterChange()"
+                          name="committee_name"
+                          placeholder="Committee Name"
+                          [options]="committeeNameList"
+                          [filter]="true"
+                          [showClear]="true"
+                          class="form-control"
+                        />
+                        <div
+                          style="
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            width: 0;
+                            height: 0;
+                            border-top: 12px solid red;
+                            border-left: 12px solid transparent;
+                          "
+                        ></div>
+                      </div>
+                      @if (errMsg["committee_name"] != "") {
+                        <small class="error">{{
+                          errMsg["committee_name"]
+                        }}</small>
+                      }
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="flex flex-col gap-1">
+                      <label for="meeting_name">Meeting Name</label>
+                      <div
+                        style="
+                          position: relative;
+                          display: inline-block;
+                          width: 100%;
+                        "
+                      >
+                        <p-select
+                          id="meeting_name"
+                          [(ngModel)]="reportParams().meeting_name"
+                          (onChange)="onFilterChange()"
+                          name="meeting_name"
+                          placeholder="Meeting Name"
+                          [options]="meetingNameList"
+                          [filter]="true"
+                          [showClear]="true"
+                          (onBlur)="onGetErrMsg('meeting_name')"
+                          class="form-control"
+                        />
+                        <div
+                          style="
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            width: 0;
+                            height: 0;
+                            border-top: 12px solid red;
+                            border-left: 12px solid transparent;
+                          "
+                        ></div>
+                      </div>
+                      @if (errMsg["meeting_name"] != "") {
+                        <small class="error">{{
+                          errMsg["meeting_name"]
+                        }}</small>
+                      }
+                    </div>
+                    <div class="col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="from_dt">From Date</label>
+                        <div
+                          style="
+                            position: relative;
+                            display: inline-block;
+                            width: 100%;
+                          "
+                        >
+                          <p-datePicker
+                            type="date"
+                            id="from_dt"
+                            [(ngModel)]="reportParams().from_dt"
+                            placeholder="From Date"
+                            (onChange)="onFilterChange()"
+                            name="from_dt"
+                            class="form-control"
+                            (onBlur)="onGetErrMsg('from_dt')"
+                          />
+                          <div
+                            style="
+                              position: absolute;
+                              top: 0;
+                              right: 0;
+                              width: 0;
+                              height: 0;
+                              border-top: 12px solid red;
+                              border-left: 12px solid transparent;
+                            "
+                          ></div>
+                        </div>
+                        @if (errMsg["from_dt"] != "") {
+                          <small class="error">{{ errMsg["from_dt"] }}</small>
+                        }
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="to_dt">To Date</label>
+                        <div
+                          style="
+                            position: relative;
+                            display: inline-block;
+                            width: 100%;
+                          "
+                        >
+                          <p-datePicker
+                            type="date"
+                            id="to_dt"
+                            [(ngModel)]="reportParams().to_dt"
+                            placeholder="To Date"
+                            (onChange)="onFilterChange()"
+                            (onBlur)="onGetErrMsg('to_dt')"
+                            [disabled]="reportParams().from_dt == null"
+                            name="to_dt"
+                            [minDate]="reportParams().from_dt"
+                            class="form-control"
+                          />
+                          <div
+                            style="
+                              position: absolute;
+                              top: 0;
+                              right: 0;
+                              width: 0;
+                              height: 0;
+                              border-top: 12px solid red;
+                              border-left: 12px solid transparent;
+                            "
+                          ></div>
+                        </div>
+                        @if (errMsg["to_dt"] != "") {
+                          <small class="error">{{ errMsg["to_dt"] }}</small>
+                        }
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="col-lg-9 col-md-8 col-12 table-style1 table-responsive radius-4"
+                >
+                  <div class="table-responsive">
+                    <table class="table table-striped mt-2">
+                      <thead>
+                        <tr>
+                          <th scope="col">S.No</th>
+                          <th
+                            scope="col"
+                            sortable="committee_name"
+                            (sort)="onSort($event)"
+                          >
+                            Committee Name
+                            <i class="iconify pi pi-sort"></i>
+                          </th>
+                          <th
+                            scope="col"
+                            sortable="committee_type_name"
+                            (sort)="onSort($event)"
+                          >
+                            Committee Type
+                            <i class="iconify pi pi-sort"></i>
+                          </th>
+                          <th
+                            scope="col"
+                            sortable="meeting_name"
+                            (sort)="onSort($event)"
+                          >
+                            Meeting Name
+                            <i class="iconify pi pi-sort"></i>
+                          </th>
+                          <th
+                            scope="col"
+                            sortable="chair_person_name"
+                            (sort)="onSort($event)"
+                          >
+                            Chair Person
+                            <i class="iconify pi pi-sort"></i>
+                          </th>
+                          <th
+                            scope="col"
+                            sortable="co_ordinator_name"
+                            (sort)="onSort($event)"
+                          >
+                            Co-Ordinator
+                            <i class="iconify pi pi-sort"></i>
+                          </th>
+                          <th
+                            scope="col"
+                            sortable="meeting_date"
+                            (sort)="onSort($event)"
+                          >
+                            Meeting Date
+                            <i class="iconify pi pi-sort"></i>
+                          </th>
+                          <!-- <th scope="col" class="text-end">Action</th> -->
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @for (item of committeeList; track item.id) {
+                          <tr>
+                            <td scope="row">{{ getFormattedSNo(item.id) }}</td>
+                            <td>{{ item.committee_name }}</td>
+                            <td>{{ item.committee_type_name }}</td>
+                            <td>{{ item.meeting_name }}</td>
+                            <td>{{ item.chair_person_name }}</td>
+                            <td>{{ item.co_ordinator_name }}</td>
+                            <td>{{ item.meeting_date }}</td>
+                            <!-- <td>
+                                            <div class="actiondot-dropdown">
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="iconify pi pi-ellipsis-h"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li>
+                                                            <a class="dropdown-item" href="javascript:;"
+                                                                (click)="onPageRoute('VIEW',item)">View</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </td> -->
+                          </tr>
+                        } @empty {
+                          <tr style="text-align: center">
+                            <td colspan="8">No Data Found</td>
+                          </tr>
+                        }
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  ::ng-deep .p-datepicker {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center;
+    padding: 0 !important;
+  }
+
+  ::ng-deep .p-datepicker .p-inputtext {
+    flex: 1;
+    width: 100% !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  ::ng-deep .p-datepicker.form-control,
+  ::ng-deep .p-datepicker .p-datepicker {
+    border: 1px solid var(--red-500, red);
+    border-radius: 4px;
+    padding: 0.375rem 0.75rem;
+  }
+</style>

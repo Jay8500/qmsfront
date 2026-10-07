@@ -1,0 +1,22 @@
+<app-header></app-header>
+<app-sidemenu></app-sidemenu>
+<div class="main-content-container">
+    <router-outlet></router-outlet>
+</div>
+<app-footer></app-footer>
+<style>
+    app-sidemenu {
+        z-index: 1000 !important;
+        position: relative;
+    }
+
+    .main-content-container {
+        position: relative;
+        width: 100%;
+        height: calc(100vh-100px);
+        overflow-y: auto;
+        padding: 1rem;
+    }
+
+
+</style>

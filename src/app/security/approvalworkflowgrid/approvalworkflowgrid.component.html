@@ -1,0 +1,171 @@
+<section class="wrapper-body">
+    <div class="container-fluid">
+        <section class="status-card">
+            <div class="main-heading-link">
+                <h3 class="main-heading">Approval Workflow List</h3>
+                <div class="btn-group-row">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-12 col-12">
+                                <div class="form-right">
+                                    <a href="javascript:;" ngbTooltip="Filter" placement="top" class="icon-btn-square"
+                                        (click)="filterToggle()">
+                                        <i class="iconify pi pi-sliders-h"></i>
+                                    </a>
+                                    <div class="dropdown dropdown-style1" appAccess="access_exp">
+                                        <button class="btn btn-light dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            Download Report
+                                            <i class="iconify pi pi-angle-down"></i>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li
+                                                [DCSV]="{ param :params,screenName:'Approval Workflow',data : aprvalwrkflowMstrGrid.length,methodName : 'fnRoleApi' }">
+                                                <a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                                            <li
+                                                appAccess="access_print" [PDF]="{ param :params,screenName:'Approval Workflow',data : aprvalwrkflowMstrGrid.length,methodName : 'fnRoleApi' }">
+                                                <a class="dropdown-item" href="javascript:;">Download Pdf</a> </li>
+                                            <li
+                                                [EXCEL]="{ param :params,screenName:'Approval Workflow',data : aprvalwrkflowMstrGrid.length,methodName : 'fnRoleApi'  }">
+                                                <a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="javascript:;" class="btn btn-success" appAccess="access_add" (click)="onPageRoute('NEW',null)">
+                        <span class="iconfiy"> <i class=" pi pi-plus-circle" style="margin-right: 2px;"></i></span>
+                        New Workflow
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="report-table mt-3 mb-3">
+            <div class="row">
+                <div class="col-md-12 col-12">
+                    <div class="card-style2">
+
+
+                        @if (showFilter) {
+                        <div class="filter-box form-sm">
+                            <div class="row">
+                                <div class="col-md-11 col-12">
+                                    <div class="row gx-2">
+                                        <div class="col-md-3 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="approval_workflow_name">By Workflow Name</label>
+                                                <p-select id="approval_workflow_name"
+                                                    [(ngModel)]="aprvalwrkflowFltrs().approval_workflow_name"
+                                                    name="approval_workflow_name" [options]="apprvlWorkflwList"
+                                                    [filter]="true" [showClear]="true"
+                                                    (onClear)="onFilterClear(true)" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1 col-12 ps-0">
+                                    <button class="btn btn-primary w-100" (click)="onFilterClick()">Filter</button>
+                                    <button class="btn btn-dark" (click)="onFilterClear(null)">Clear</button>
+                                </div>
+                            </div>
+                        </div>
+                        }
+
+                        <div class="card-body table-style1 ">
+                            <!-- table-responsive -->
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">S.No</th>
+                                        <th scope="col" sortable="approval_workflow_name" (sort)="onSort($event)">
+                                            Approval Workflow Name
+                                            <i class="iconify pi pi-sort"></i>
+                                        </th>
+                                        <th scope="col" sortable="application_type" (sort)="onSort($event)">
+                                            Module
+                                            <i class="iconify pi pi-sort"></i>
+                                        </th>
+                                        <th scope="col" sortable="module_name" (sort)="onSort($event)">
+                                            Document
+                                            <i class="iconify pi pi-sort"></i>
+                                        </th>
+                                        <th scope="col" sortable="created_by" (sort)="onSort($event)">
+                                            Created By
+                                            <i class="iconify pi pi-sort"></i>
+                                        </th>
+                                        <th scope="col" sortable="created_at" (sort)="onSort($event)">
+                                            Created on
+                                            <i class="iconify pi pi-sort"></i>
+                                        </th>
+                                        <th scope="col" sortable="updated_by" (sort)="onSort($event)">
+                                            Modified By
+                                            <i class="iconify pi pi-sort"></i>
+                                        </th>
+                                        <th scope="col" sortable="updated_at" (sort)="onSort($event)">
+                                            Last Modified
+                                            <i class="iconify pi pi-sort"></i>
+                                        </th>
+                                        <th scope="col" sortable="status" (sort)="onSort($event)">
+                                            Status
+                                            <i class="iconify pi pi-sort"></i>
+                                        </th>
+                                        <th scope="col" class="text-end">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (info of aprvalwrkflowMstrGrid; track info.id) {
+                                    <tr>
+                                        <td scope="row">{{ info.id }}</td>
+                                        <td>{{ info.approval_workflow_name }}</td>
+                                        <td>{{ info.module_name }}</td>
+                                        <td>{{ info.document_name }}</td>
+                                        <td>{{ info.created_by }}</td>
+                                        <td>{{ info.created_at | appDate }}</td>
+                                        <td>{{ info.updated_by }}</td>
+                                        <td>{{ info.updated_at | appDate }}</td>
+                                        <td [ngClass]="{
+                                                                'text-danger': info.status === 'Inactive',
+                                                                'text-warning': info.status === 'Expiring Soon',
+                                                                'text-success': info.status === 'Active',
+                                                              }">
+                                            {{ info.status }}
+                                        </td>
+                                        <td class="text-end">
+                                            <div class="actiondot-dropdown">
+                                                <div class="btn-group ms-2">
+                                                    <button type="button" class="btn dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="iconify pi pi-ellipsis-h"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li>
+                                                            <a class="dropdown-item" href="javascript:;"
+                                                                appAccess="access_view" (click)="onPageRoute('VIEW',info)">View</a>
+                                                        </li>
+                                                        @if(info.status !== 'Inactive'){
+                                                        <li>
+                                                            <a class="dropdown-item" href="javascript:;"
+                                                                appAccess="access_mod" (click)="onPageRoute('EDIT',info)">Edit</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="javascript:;"
+                                                                appAccess="access_del" (click)="onDelete(info)">Delete</a>
+                                                        </li>
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>

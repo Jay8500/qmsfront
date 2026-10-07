@@ -1,0 +1,78 @@
+.steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  padding: 10px 16px;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #8c959f;
+
+  .n {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid #d0d7de;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+  }
+
+  &.done {
+    color: #166534;
+
+    .n {
+      background: #2da44e;
+      border-color: #2da44e;
+      color: #fff;
+    }
+  }
+
+  &.current {
+    color: #1f2328;
+    font-weight: 600;
+
+    .n {
+      border-color: #3b6fd8;
+      box-shadow: 0 0 0 3px #e7f0ff;
+    }
+  }
+
+  &.rejected {
+    color: #991b1b;
+
+    .n {
+      background: #d73a49;
+      border-color: #d73a49;
+      color: #fff;
+    }
+  }
+}
+
+.whys {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 13px;
+}
+
+.risk-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding: 6px 8px;
+  border: 1px solid #eef0f2;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  text-decoration: none;
+  color: inherit;
+
+  &:hover {
+    background: #f8fafc;
+  }
+}

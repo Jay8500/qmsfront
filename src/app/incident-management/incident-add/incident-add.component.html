@@ -1,0 +1,249 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="qms-head">
+      <div class="d-flex align-items-center gap-2">
+        <a href="javascript:;" class="icon-btn-square" (click)="goBack()"><i class="iconify pi pi-arrow-left"></i></a>
+        <div>
+          <h3>Report Incident</h3>
+          <p class="qms-sub">Once submitted the report cannot be edited; the Quality Team takes it forward.</p>
+        </div>
+      </div>
+      <div class="qms-actions">
+        <button class="btn btn-dark" (click)="onClear()">Clear</button>
+        <button class="btn btn-primary" [disabled]="saving()" (click)="onSubmit()"><i class="pi pi-send me-1"></i>Submit</button>
+      </div>
+    </div>
+
+    <div class="qms-form">
+      <!-- 1. form type + who -->
+      <div class="qms-card">
+        <div class="qms-section-title">Report Form</div>
+        <div class="form-tiles">
+          @for (f of forms; track f.code) {
+          <button type="button" class="form-tile" [class.on]="model.report_form === f.code" (click)="model.report_form = f.code">
+            <i class="pi" [class]="'pi ' + f.icon"></i><span>{{ f.label }}</span>
+          </button>
+          }
+        </div>
+
+        <div class="row g-3 mt-1">
+          <div class="col-12">
+            <label>Incident happened to <span class="text-danger">*</span></label>
+            <div class="qms-pills">
+              @for (h of happenedList; track h.value) {
+              <button type="button" [class.on]="model.happened_to_id === h.value" (click)="model.happened_to_id = h.value">{{ h.label }}</button>
+              }
+            </div>
+          </div>
+          @if (happenedName(model.happened_to_id) === 'Hospital Staff') {
+          <div class="col-lg-4 col-md-6 col-12">
+            <label>Staff member</label>
+            <div class="qms-req">
+              <p-select [options]="staffList" [(ngModel)]="model.incd_happnd_ref_id" [filter]="true" placeholder="Select staff" appendTo="body" />
+            </div>
+          </div>
+          }
+          @if (happenedName(model.happened_to_id) === 'Visitor' || happenedName(model.happened_to_id) === 'Other') {
+          <div class="col-lg-4 col-md-6 col-12">
+            <label>Name of the person</label>
+            <div class="qms-req"><input pInputText class="form-control" maxlength="64" [(ngModel)]="model.incd_happnd_ref_name" placeholder="Name"></div>
+          </div>
+          }
+        </div>
+
+        @if (needsPatient()) {
+        <div class="row g-3 mt-1">
+          <div class="col-lg-3 col-md-6 col-12">
+            <label>Patient UHID</label>
+            <div class="qms-req"><input pInputText class="form-control" maxlength="50" [(ngModel)]="model.patient_uhid" placeholder="UHID"></div>
+          </div>
+          <div class="col-lg-4 col-md-6 col-12">
+            <label>Patient Name</label>
+            <div class="qms-req"><input pInputText class="form-control" maxlength="150" [(ngModel)]="model.patient_name" placeholder="Patient name"></div>
+          </div>
+          <div class="col-lg-2 col-md-6 col-6">
+            <label>Age</label>
+            <input pInputText type="number" min="0" max="130" class="form-control" [(ngModel)]="model.patient_age">
+          </div>
+          <div class="col-lg-3 col-md-6 col-6">
+            <label>Gender</label>
+            <p-select [options]="genderList" [(ngModel)]="model.patient_gender" placeholder="Select" [showClear]="true" appendTo="body" />
+          </div>
+          <div class="col-12"><small class="text-muted">Patient details are typed in (HIMS lookup not connected yet).</small></div>
+        </div>
+        }
+      </div>
+
+      <!-- 2. what / where / when -->
+      <div class="qms-card">
+        <div class="qms-section-title">Incident Details</div>
+        <div class="row g-3">
+          <div class="col-lg-3 col-md-6 col-12">
+            <label>Incident Type</label>
+            <div class="qms-req"><p-select [options]="lists.INCIDENT_TYPE" [(ngModel)]="model.incident_type_id" [filter]="true" placeholder="Select type" appendTo="body" /></div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-12">
+            <label>Department</label>
+            <div class="qms-req"><p-select [options]="departmentList" [(ngModel)]="model.department_id" [filter]="true" placeholder="Select department" appendTo="body" /></div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-12">
+            <label>Location</label>
+            <div class="qms-req"><p-select [options]="lists.INCIDENT_LOC" [(ngModel)]="model.incident_location_id" [filter]="true" placeholder="Select location" appendTo="body" /></div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-12">
+            <label>Incident Date &amp; Time</label>
+            <div class="qms-req">
+              <p-datepicker [(ngModel)]="model.incident_date" [showTime]="true" hourFormat="24" dateFormat="dd-mm-yy"
+                [minDate]="minDate" [maxDate]="maxDate" [showIcon]="true" appendTo="body" />
+            </div>
+            <small class="text-muted">Not older than {{ pastDays }} days</small>
+          </div>
+
+          <div class="col-12">
+            <label>Incident Description
+              <span class="qms-count" [class.bad]="len(model.incident_description) < 100" [class.good]="len(model.incident_description) >= 100">({{ len(model.incident_description) }} / min 100)</span></label>
+            <div class="qms-req">
+              <textarea pTextarea rows="4" class="form-control w-100" [(ngModel)]="model.incident_description"
+                placeholder="What happened, where, who was involved, sequence of events ..."></textarea>
+            </div>
+          </div>
+          <div class="col-lg-6 col-12">
+            <label class="d-flex align-items-center justify-content-between">Reason for the Incident
+              <p-select class="tpl" [options]="lists.INC_REASON_TPL" placeholder="Use a template" (onChange)="useTemplate('reason_for_incident', $event.value)" appendTo="body" />
+            </label>
+            <div class="qms-req"><textarea pTextarea rows="3" class="form-control w-100" [(ngModel)]="model.reason_for_incident" placeholder="Why it happened"></textarea></div>
+          </div>
+          <div class="col-lg-6 col-12">
+            <label class="d-flex align-items-center justify-content-between">Immediate Action Taken
+              <p-select class="tpl" [options]="lists.INC_ACTION_TPL" placeholder="Use a template" (onChange)="useTemplate('immediate_action_taken', $event.value)" appendTo="body" />
+            </label>
+            <div class="qms-req"><textarea pTextarea rows="3" class="form-control w-100" [(ngModel)]="model.immediate_action_taken" placeholder="What was done immediately"></textarea></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. type-specific blocks -->
+      @if (model.report_form === 'BLOOD_TRANSFUSION') {
+      <div class="qms-card">
+        <div class="qms-section-title">Blood Transfusion Reaction <small>NABH COP.14</small></div>
+        <div class="row g-3">
+          <div class="col-lg-4 col-md-6 col-12">
+            <label>Consultant</label>
+            <input pInputText class="form-control" maxlength="150" [(ngModel)]="model.bt.consultant" placeholder="Doctor in charge">
+          </div>
+          <div class="col-lg-8 col-md-6 col-12">
+            <label>Blood Component Issued</label>
+            <div class="qms-req"><p-multiselect [options]="lists.BLOOD_COMPONENT" [(ngModel)]="model.bt.components" display="chip" placeholder="Select" appendTo="body" /></div>
+          </div>
+          <div class="col-lg-6 col-12">
+            <label>Pre-transfusion vitals</label>
+            <div class="vitals">
+              <input pInputText class="form-control" [(ngModel)]="model.bt.pre_temp" placeholder="Temp °F">
+              <input pInputText class="form-control" [(ngModel)]="model.bt.pre_pulse" placeholder="Pulse /min">
+              <input pInputText class="form-control" [(ngModel)]="model.bt.pre_bp" placeholder="BP mmHg">
+            </div>
+          </div>
+          <div class="col-lg-6 col-12">
+            <label>Post-transfusion vitals</label>
+            <div class="vitals">
+              <input pInputText class="form-control" [(ngModel)]="model.bt.post_temp" placeholder="Temp °F">
+              <input pInputText class="form-control" [(ngModel)]="model.bt.post_pulse" placeholder="Pulse /min">
+              <input pInputText class="form-control" [(ngModel)]="model.bt.post_bp" placeholder="BP mmHg">
+            </div>
+          </div>
+          <div class="col-lg-6 col-12">
+            <label>Reaction Symptoms</label>
+            <p-multiselect [options]="lists.TRANSFUSION_SYMPTOM" [(ngModel)]="model.bt.symptoms" display="chip" placeholder="Select" appendTo="body" />
+          </div>
+          <div class="col-lg-6 col-12">
+            <label>Doctor (signature / designation)</label>
+            <input pInputText class="form-control" maxlength="150" [(ngModel)]="model.bt.doctor" placeholder="Name, designation">
+          </div>
+          <div class="col-12">
+            <label>Reaction Notes</label>
+            <textarea pTextarea rows="2" class="form-control w-100" [(ngModel)]="model.bt.reaction_notes"></textarea>
+          </div>
+        </div>
+      </div>
+      }
+
+      @if (model.report_form === 'ADR') {
+      <div class="qms-card">
+        <div class="qms-section-title">Adverse Drug Reaction <small>NABH AAC.5 / PQM.1.7</small></div>
+        <div class="row g-3">
+          <div class="col-lg-4 col-md-6 col-12">
+            <label>Reaction Date &amp; Time</label>
+            <p-datepicker [(ngModel)]="model.adr.event_time" [showTime]="true" hourFormat="24" dateFormat="dd-mm-yy" [maxDate]="maxDate" [showIcon]="true" appendTo="body" />
+          </div>
+          <div class="col-lg-4 col-md-6 col-12">
+            <label>Action Taken (medicine)</label>
+            <p-select [options]="lists.ADR_ACTION" [(ngModel)]="model.adr.action" placeholder="Select" [showClear]="true" appendTo="body" />
+          </div>
+          <div class="col-lg-4 col-md-6 col-12">
+            <label>Outcome</label>
+            <p-select [options]="lists.ADR_OUTCOME" [(ngModel)]="model.adr.outcome" placeholder="Select" [showClear]="true" appendTo="body" />
+          </div>
+          <div class="col-lg-8 col-12">
+            <label>Severity / Causality</label>
+            <p-multiselect [options]="lists.ADR_SEVERITY" [(ngModel)]="model.adr.severity" display="chip" placeholder="Select" appendTo="body" />
+          </div>
+          <div class="col-lg-4 col-12">
+            <label>Reporter contact</label>
+            <input pInputText class="form-control" maxlength="100" [(ngModel)]="model.adr.reporter_contact" placeholder="Phone / extension">
+          </div>
+          <div class="col-12">
+            <label class="d-flex align-items-center">Suspected Medicine(s) <a href="javascript:;" class="ms-auto link-blue" (click)="addMedicine()"><i class="pi pi-plus-circle me-1"></i>Add</a></label>
+            @for (md of model.adr.medicines; track $index; let i = $index) {
+            <div class="med-row">
+              <div [class.qms-req]="i === 0"><input pInputText class="form-control" [(ngModel)]="md.drug" placeholder="Drug name"></div>
+              <input pInputText class="form-control" [(ngModel)]="md.batch" placeholder="Batch no.">
+              <input pInputText class="form-control" [(ngModel)]="md.dose" placeholder="Dose">
+              <input pInputText class="form-control" [(ngModel)]="md.route" placeholder="Route">
+              <input pInputText class="form-control" [(ngModel)]="md.frequency" placeholder="Frequency">
+              @if (model.adr.medicines.length > 1) {
+              <a href="javascript:;" (click)="removeMedicine(i)" class="rm"><i class="pi pi-trash text-danger"></i></a>
+              }
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+      }
+
+      @if (model.report_form === 'MEDICAL_ERROR') {
+      <div class="qms-card">
+        <div class="qms-section-title">Medical Error <small>NABH IMS.10</small></div>
+        <div class="row g-3">
+          <div class="col-lg-3 col-md-6 col-12">
+            <label>Error Type</label>
+            <div class="qms-req"><p-select [options]="lists.MED_ERROR_TYPE" [(ngModel)]="model.me.error_type" placeholder="Select" appendTo="body" /></div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-12">
+            <label>Error Stage</label>
+            <div class="qms-req"><p-select [options]="lists.MED_ERROR_STAGE" [(ngModel)]="model.me.error_stage" placeholder="Select" appendTo="body" /></div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-12">
+            <label>Outcome of Error</label>
+            <p-select [options]="lists.MED_ERROR_OUTCOME" [(ngModel)]="model.me.outcome" placeholder="Select" [showClear]="true" appendTo="body" />
+          </div>
+          <div class="col-lg-3 col-md-6 col-12">
+            <label>Contributing Factors</label>
+            <p-multiselect [options]="lists.MED_ERROR_FACTOR" [(ngModel)]="model.me.factors" display="chip" placeholder="Select" appendTo="body" />
+          </div>
+        </div>
+      </div>
+      }
+
+      <!-- 4. evidence -->
+      <div class="qms-card">
+        <div class="qms-section-title">Evidence <small>optional</small></div>
+        <qms-file-picker #picker [max]="maxFiles" label="Attach evidence" />
+      </div>
+
+      <div class="d-flex justify-content-end gap-2 mb-4">
+        <button class="btn btn-dark" (click)="onClear()">Clear</button>
+        <button class="btn btn-primary" [disabled]="saving()" (click)="onSubmit()"><i class="pi pi-send me-1"></i>Submit Incident</button>
+      </div>
+    </div>
+  </div>
+</section>

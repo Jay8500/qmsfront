@@ -1,0 +1,109 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="card-style2">
+            <div class="card-header backoption">
+                <div class="row align-items-center">
+                    <div class="col-md-6 col-12">
+                        <div class="heading-left">
+                            <h3>Vaccination History Approvals</h3>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <div class="form-right">
+                            @if(access().access_add){
+                            <button type="button" class="btn btn-primary" (click)="onAddRecord()">
+                                <i class="pi pi-plus"></i> Add record for an employee</button>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body vacc-form">
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                    <div class="status-tabs">
+                        @for(t of TABS; track t){
+                        <button type="button" class="btn btn-sm" [ngClass]="tab === t ? 'btn-primary' : 'btn-light'" (click)="onTab(t)">{{ t }}</button>
+                        }
+                    </div>
+                    <input pInputText class="form-control search-box" placeholder="Search request, employee, vaccine"
+                        [(ngModel)]="searchText" name="histSearch" />
+                </div>
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th>Request</th>
+                                <th>Employee</th>
+                                <th>Vaccine / Dose</th>
+                                <th>Date</th>
+                                <th>Brand / Batch</th>
+                                <th>Issued by</th>
+                                <th>Proof</th>
+                                <th>{{ tab === 'Pending' ? 'Requested' : 'Decided' }}</th>
+                                <th class="text-end">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for(row of visibleRows(); track row.vaccination_history_request_id){
+                            <tr>
+                                <td class="fw-semibold">{{ row.request_no }}</td>
+                                <td>{{ row.employee_name }}<br><small class="hint">{{ row.employee_code }} · {{ row.department_name || '-' }}</small></td>
+                                <td>{{ row.vaccine_name }}<br><small class="hint">Dose {{ row.dose_label || row.dose_no }}</small></td>
+                                <td>{{ row.vaccination_date }}</td>
+                                <td>{{ row.brand_name || '-' }}<br><small class="hint">{{ row.batch_no || '-' }}</small></td>
+                                <td>{{ row.issuer || '-' }}</td>
+                                <td>
+                                    @for(pf of row.proof_files; track pf.file_id){
+                                    @if(pf.fileOrImageUrl){
+                                    <a [href]="pf.fileOrImageUrl" target="_blank" class="d-block small"><i class="pi pi-paperclip"></i> {{ pf.file_name }}</a>
+                                    } @else {
+                                    <small class="hint d-block">{{ pf.file_name }}</small>
+                                    }
+                                    } @empty { <small class="hint">-</small> }
+                                </td>
+                                <td>
+                                    @if(tab === 'Pending'){
+                                    {{ row.requested_at }}<br><small class="hint">{{ row.requested_by }}</small>
+                                    } @else {
+                                    {{ row.decided_at || '-' }}<br><small class="hint">{{ row.decided_by }}</small>
+                                    @if(row.reject_reason){ <small class="d-block text-danger">{{ row.reject_reason }}</small> }
+                                    }
+                                </td>
+                                <td class="text-end">
+                                    @if(canDecide(row)){
+                                    <button type="button" class="btn btn-sm btn-success me-1" (click)="onApprove(row)"><i class="pi pi-check"></i> Approve</button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger" (click)="onReject(row)"><i class="pi pi-times"></i> Reject</button>
+                                    } @else if(row.status === 'Pending' && row.is_own){
+                                    <small class="hint">Your own request</small>
+                                    } @else {
+                                    <span [class]="row.status === 'Approved' ? 'badge-green' : row.status === 'Rejected' ? 'badge-red' : 'badge-yellow'">{{ row.status }}</span>
+                                    }
+                                </td>
+                            </tr>
+                            } @empty {
+                            <tr><td colspan="9" class="text-center hint py-4">{{ loading ? 'Loading…' : 'No ' + tab.toLowerCase() + ' requests.' }}</td></tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<p-dialog [modal]="true" [(visible)]="showReject" [style]="{width:'460px'}" [breakpoints]="{'500px':'95vw'}" header="Reject request">
+    <div class="vacc-form">
+        <p class="mb-2 fw-semibold">{{ rejectRow?.request_no }} — {{ rejectRow?.employee_name }}</p>
+        <label for="reject_reason">Reason</label>
+        <div class="req">
+            <textarea pTextarea id="reject_reason" rows="3" maxlength="500" class="form-control" [(ngModel)]="rejectReason" name="reject_reason"></textarea>
+        </div>
+        @if(rejectErr){ <small class="error">{{ rejectErr }}</small> }
+    </div>
+    <ng-template #footer>
+        <button type="button" class="btn btn-dark" (click)="showReject = false">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="onRejectSave()">Reject</button>
+    </ng-template>
+</p-dialog>
+
+<app-history-record-dialog #recordDialog [(visible)]="showRecordDialog" (closed)="onRecordClosed($event)" />

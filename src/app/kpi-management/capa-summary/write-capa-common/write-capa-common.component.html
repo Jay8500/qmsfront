@@ -1,0 +1,219 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                                        <i class="iconify pi pi-arrow-left"></i>
+                                    </a>
+                                    <h3>Write CAPA</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-12">
+                                <div class="form-right">
+                                    <button type="button" class="btn btn-dark">Clear</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 col-12">
+                                <div class="formbox-left form-lg">
+                                    <form>
+                                        <div class="row">
+                                            <div class="col-lg-10 col-md-12 col-12">
+                                                <div class="row">
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group">
+                                                            <label>Department</label>
+                                                            <select class="form-select">
+                                                                <option>Select Department</option>
+                                                                <option>ICU</option>
+                                                                <option>Laboratory</option>
+                                                                <option>Causality</option>
+                                                                <option>Emergency</option>
+                                                                <option>Radiology</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group">
+                                                            <label>Sub - Department</label>
+                                                            <select class="form-select">
+                                                                <option value="">Select Sub - Department</option>
+                                                                <option value="opd">OPD</option>
+                                                                <option value="mri">MRI</option>
+                                                                <option value="pharmacy">Pharmacy</option>
+                                                                <option value="ward-7">Ward 7</option>
+                                                                <option value="emergency">Emergency</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group">
+                                                            <label>Indicator Name</label>
+                                                            <select class="form-select">
+                                                                <option>Select Indicator Name</option>
+                                                                <option>Patient Fall Rate</option>
+                                                                <option>Hand Hygiene Compliance</option>
+                                                                <option>Medication Error Rate</option>
+                                                                <option>Surgical Site Infection Rate</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group">
+                                                            <label>Data Collection Type</label>
+                                                            <select class="form-select">
+                                                                <option>Data Collection Type</option>
+                                                                <option>Automatic</option>
+                                                                <option>Semi Automatic</option>
+                                                                <option>Manual</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2 col-md-12 col-12">
+                                                <button type="button" class="btn btn-primary w-100 btnauto mt-4"
+                                                    (click)="clearForm()">Clear</button>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-3">
+                                            <div class="col-md-7 col-12">
+                                                <div class="row">
+                                                    <div class="col-lg-4 col-md-6 col-12">
+                                                        <div class="form-group">
+                                                            <label>Numerator </label>
+                                                            <input type="text" class="form-control"
+                                                                placeholder="Enter Numerator">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-6 col-12">
+                                                        <div class="form-group">
+                                                            <label>Denominator</label>
+                                                            <input type="text" class="form-control"
+                                                                placeholder="Enter Denominator">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-12 col-12">
+                                                        <div class="form-group">
+                                                            <label>Compliance Rate (%)</label>
+                                                            <input type="text" class="form-control" placeholder="0%">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-12 col-12">
+                                                        <div class="form-group">
+                                                            <div class="label-row">
+                                                                <label>Reasons for any deviations <b
+                                                                        class="star">*</b></label>
+                                                                <div class="indicident-action">
+                                                                    <ul>
+                                                                        <li><a href="javascript:;"><span class="iconify"
+                                                                                    data-icon="lets-icons:save"></span></a>
+                                                                        </li>
+                                                                        <li><a href="javascript:;"
+                                                                                data-bs-toggle="modal"
+                                                                                data-bs-target="#incident-reason-modal"><span
+                                                                                    class="iconify"
+                                                                                    data-icon="gg:add"></span></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <textarea class="form-control" rows="2"
+                                                                placeholder="Minimum 120 Characters"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-12 col-12">
+                                                        <div class="form-group">
+                                                            <div class="label-row">
+                                                                <label>Write CAPA <b class="star">*</b></label>
+                                                                <div class="indicident-action">
+                                                                    <ul>
+                                                                        <li><a href="javascript:;"><span class="iconify"
+                                                                                    data-icon="lets-icons:save"></span></a>
+                                                                        </li>
+                                                                        <li><a href="javascript:;"
+                                                                                data-bs-toggle="modal"
+                                                                                data-bs-target="#incident-reason-modal"><span
+                                                                                    class="iconify"
+                                                                                    data-icon="gg:add"></span></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <textarea class="form-control" rows="2"
+                                                                placeholder="Minimum 120 Characters"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 col-12">
+                                                        <div class="form-group">
+                                                            <div class="label-row">
+                                                                <label>Interpretation &amp; Learning <b
+                                                                        class="star">*</b></label>
+                                                                <div class="indicident-action">
+                                                                    <ul>
+                                                                        <li><a href="javascript:;"><span class="iconify"
+                                                                                    data-icon="lets-icons:save"></span></a>
+                                                                        </li>
+                                                                        <li><a href="javascript:;"
+                                                                                data-bs-toggle="modal"
+                                                                                data-bs-target="#incident-reason-modal"><span
+                                                                                    class="iconify"
+                                                                                    data-icon="gg:add"></span></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <textarea class="form-control" rows="2"
+                                                                placeholder="Minimum 120 Characters"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5 col-12">
+                                                <div class="report-card">
+                                                    <div class="audit-status selectflex mb-3">
+                                                        <div class="row">
+                                                            <div class="col-md-8 col-12">
+                                                                <div class="left-content">
+                                                                    <h5>Patient Fall Rate Report</h5>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4 col-12">
+                                                                <div class="form-right">
+                                                                    <select class="form-select form-select-sm">
+                                                                        <option>Last 2 Months</option>
+                                                                        <option>Last 4 Months</option>
+                                                                        <option>Last 6 Months</option>
+                                                                        <option>Last 1 Year</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="audit-info-row card-whitebox">
+                                                        <app-patient-fall-rate-report></app-patient-fall-rate-report>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

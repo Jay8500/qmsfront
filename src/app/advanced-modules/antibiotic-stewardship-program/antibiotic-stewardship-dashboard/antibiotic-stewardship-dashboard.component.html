@@ -1,0 +1,304 @@
+<section class="wrapper-body">
+  <div class="container-fluid">
+    <section class="status-card">
+      <div class="main-heading-link">
+        <h3 class="main-heading">Antibiotic Stewardship Program (ASP)</h3>
+        <div class="btn-group-row">
+          <div class="dropdown dropdown-style1 filterDropdown">
+            <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="iconify pi pi-calendar-clock primeicons-size"></i>
+              {{ selectedRange }}
+              <i class="iconify pi pi-angle-down"></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 7 days')">Last 7 days</a></li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 30 days')">Last 30 days</a></li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last Month')">Last Month</a></li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 6 Months')">Last 6 Months</a>
+              </li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last Year')">Last Year</a></li>
+            </ul>
+          </div>
+          <a href="javascript:;" class="btn btn-success" routerLink="/antibiotic-integrity-overview">
+            <span class="iconfiy"> <i class=" pi pi-plus-circle" style="margin-right: 2px;"></i></span> Antibiotics
+            Integrity </a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg1">
+            <div class="card-grid-header">
+              <h5>Antibiotics <br /> Given</h5>
+              <h3>198</h3>
+              <div class="icon">
+                <i class="iconify pi pi-copy primeicons-size"></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>April 11, 2025 10:23:00</h5>
+                </div>
+                <div class="col-md-5 text-end col-5">
+                  <!-- <button class="btn btn-light">View Report</button> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg2">
+            <div class="card-grid-header">
+              <h5>Total <br /> Consultants</h5>
+              <h3>278</h3>
+              <div class="icon">
+                <i class="iconify pi pi-search-plus primeicons-size"></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>April 11, 2025 10:23:00</h5>
+                </div>
+                <div class="col-md-5 col-5 text-end">
+                  <!-- <button class="btn btn-light">View Report</button> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg4">
+            <div class="card-grid-header">
+              <h5>Highly Prescribed <br /> Antibiotic</h5>
+              <h3>88%</h3>
+              <div class="icon">
+                <i class="iconify pi pi-calendar-clock primeicons-size"></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>April 11, 2025 10:23:00</h5>
+                </div>
+                <div class="col-md-5 col-5 text-end">
+                  <!-- <button class="btn btn-light">View All</button> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg3">
+            <div class="card-grid-header">
+              <h5>Highly Rejected <br /> Antibiotic</h5>
+              <h3>214</h3>
+              <div class="icon">
+                <i class="iconify pi pi-verified "></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>April 11, 2025 10:23:00</h5>
+                </div>
+                <div class="col-md-5 col-5 text-end">
+                  <!-- <button class="btn btn-light">View All</button> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="report-table mt-3 mb-3">
+      <div class="row">
+        <div class="col-md-12 col-12">
+          <div class="card-style2">
+            <div class="card-header backoption">
+              <div class="row">
+                <div class="col-md-5 col-12">
+                  <div class="heading-left">
+                    <h3>Antibiotic Stewardship Program List</h3>
+                  </div>
+                </div>
+                <div class="col-md-7 col-12">
+                  <div class="form-right">
+                    <a href="javascript:;" ngbTooltip="Filter" placement="top" class="icon-btn-square"
+                      (click)="filterToggle()"><i class="iconify pi pi-sliders-h"></i></a>
+                    <div class="dropdown dropdown-style1 ms-2">
+                      <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Download Report <i class="iconify pi pi-angle-down"></i>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                        <li><a class="dropdown-item" href="javascript:;">Download Word</a></li>
+                        <li><a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            @if (showFilter) {
+            <div class="filter-box form-sm">
+              <div class="row">
+                <div class="col-md-11 col-12">
+                  <div class="row gx-2">
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                        <input class="form-control" placeholder="By UHID / Name" />
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-12">
+                      <div class="form-group">
+                        <select class="form-select">
+                          <option>By Consultant</option>
+                          <option>Kamaraj (32421)</option>
+                          <option>Nagesh (23422)</option>
+                          <option>Adhitya (35921)</option>
+                          <option>Yugesh (32556)</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                        <select class="form-select">
+                          <option>By Antibiotics</option>
+                          <option>CARBAPENEM</option>
+                          <option>COLISTIN / POLYMYXIN B</option>
+                          <option>AMPHOTERICIN B</option>
+                          <option>VANCOMYCIN / TEICOPLANIN</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-12">
+                      <div class="form-group">
+                        <select class="form-select">
+                          <option>By Consultant's Justification</option>
+                          <option>Based on Culture report</option>
+                          <option>Failed narrow spectrum antibiotics</option>
+                          <option>Septic Shock / Sepsis</option>
+                          <option>Others - Side Effects are High</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                        <select class="form-select">
+                          <option>By Status</option>
+                          <option>Pending</option>
+                          <option>Under Review</option>
+                          <option>Closed</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1 col-12 ps-0">
+                  <button class="btn btn-primary w-100">Filter</button>
+                </div>
+              </div>
+            </div>
+            }
+
+            <div class="card-body table-style1 table-responsive radius-4">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">S.No</th>
+                    <th width="15%" scope="col" sortable="uhid" (sort)="onSort($event)">UHID</th>
+                    <th scope="col" sortable="age" (sort)="onSort($event)">Age</th>
+                    <th scope="col" sortable="diagnosis" (sort)="onSort($event)">Diagnosis</th>
+                    <th scope="col" sortable="consultant" (sort)="onSort($event)">Consultant</th>
+                    <th scope="col" sortable="antibioticsGiven" (sort)="onSort($event)">Antibiotics Given</th>
+                    <th scope="col" sortable="consultantsJustification" (sort)="onSort($event)">Consultant's
+                      Justification</th>
+                    <th scope="col" sortable="dateOfEntry" (sort)="onSort($event)">Date of Entry</th>
+                    <th scope="col" sortable="status" (sort)="onSort($event)">Status</th>
+                    <th scope="col" class="text-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (item of antibioticData; track item.uhid) {
+                  <tr>
+                    <td scope="row">{{ item.id }}</td>
+                    <td>{{ item.uhid }}</td>
+                    <td>{{ item.age }}</td>
+                    <td>{{ item.diagnosis }}</td>
+                    <td>{{ item.consultant }}</td>
+                    <td>{{ item.antibioticsGiven }}</td>
+                    <td>{{ item.consultantsJustification }}</td>
+                    <td>{{ item.dateOfEntry }}</td>
+                    <td [ngClass]="{
+                                                'text-warning': item.status === 'Pending',
+                                                'text-danger': item.status === 'Under Review',
+                                                'text-success': item.status === 'Closed'
+                                            }">
+                      {{ item.status }}
+                    </td>
+                    <td>
+                      <div class="actiondot-dropdown float-end">
+                        <div class="btn-group ms-2">
+                          <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="iconify pi pi-ellipsis-h"></i>
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li>
+                              <a class="dropdown-item" href="javascript:;"
+                                routerLink="/antibiotic-stewardship-review-closed">
+                                View
+                              </a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" routerLink="/antibiotic-stewardship-review">
+                                Review
+                              </a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="javascript:;">
+                                Download
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  }
+                </tbody>
+              </table>
+              <nav aria-label="Page navigation pagination text-end">
+                <ul class="pagination d-flex justify-content-end">
+                  <li class="page-item next">
+                    <a class="page-link" href="#" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item"><a class="page-link" href="#">...</a></li>
+                  <li class="page-item"><a class="page-link" href="#">10</a></li>
+                  <li class="page-item prev">
+                    <a class="page-link" href="#" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>

@@ -1,0 +1,18 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="qms-head">
+      <div>
+        <h3>My Investigations</h3>
+        <p class="qms-sub">Incidents waiting for you: investigation (officer), HOD review (department head), assignment / closure (Quality Team)</p>
+      </div>
+    </div>
+    <div class="qms-card">
+      <div class="qms-tabs">
+        <button class="btn btn-sm" [class.btn-primary]="tab() === 'MINE'" [class.btn-light]="tab() !== 'MINE'" (click)="setTab('MINE')">
+          <i class="pi pi-inbox me-1"></i>Waiting for me</button>
+        <button class="btn btn-sm" [class.btn-primary]="tab() === 'ALL'" [class.btn-light]="tab() !== 'ALL'" (click)="setTab('ALL')">All I can see</button>
+      </div>
+      <app-incident-list [rows]="rows()" [loading]="loading()" (open)="open($event)" />
+    </div>
+  </div>
+</section>

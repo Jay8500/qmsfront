@@ -1,0 +1,362 @@
+<section class="wrapper-body">
+  <div class="container-fluid">
+    <section class="status-card">
+      <div class="main-heading-link">
+        <h3 class="main-heading">Vaccination Master</h3>
+        <div class="btn-group-row">
+          <div class="dropdown dropdown-style1 filterDropdown">
+            <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="iconify icon-calc pi pi-calendar"></i>
+              {{ selectedRange }}
+              <i class="iconify pi pi-angle-down"></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 7 days')">Last 7 days</a></li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 30 days')">Last 30 days</a></li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last Month')">Last Month</a></li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 6 Months')">Last 6 Months</a>
+              </li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last Year')">Last Year</a></li>
+            </ul>
+          </div>
+          <a href="javascript:;" class="btn btn-light" (click)="policyDialog.open()" title="Vaccination Policy / SOP versions">
+            <span class="iconfiy"> <i class=" pi pi-book" style="margin-right: 2px;"></i></span>
+            Policy
+          </a>
+          @if(access().access_add){
+          <a href="javascript:;" class="btn btn-light" (click)="showBulkUpload = true">
+            <span class="iconfiy"> <i class=" pi pi-upload" style="margin-right: 2px;"></i></span>
+            Bulk Upload
+          </a>
+          <a href="javascript:;" class="btn btn-success" (click)="onPageRoute('NEW',null)">
+            <span class="iconfiy"> <i class=" pi pi-plus-circle" style="margin-right: 2px;"></i></span>
+            New Vaccine
+          </a>
+          }
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg1">
+            <div class="card-grid-header">
+              <h5>No of <br /> Vaccine</h5>
+              <h3>{{ stats().no_of_vaccine_cnt }}</h3>
+              <div class="icon">
+                <i class="iconify pi pi-copy primeicons-size"></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{ stats().no_of_vaccine_cnt_last_updated || 'N/A' }}</h5>
+                </div>
+                <div class="col-md-5 text-end col-5">
+                  <button class="btn btn-light">View Report</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg2">
+            <div class="card-grid-header">
+              <h5>Vaccinated <br /> Employees</h5>
+              <h3>{{ stats().vaccinated_emp_cnt }}</h3>
+              <div class="icon">
+                <i class="iconify pi pi-search-plus primeicons-size"></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{ stats().vaccinated_emp_cnt_last_updated|| 'N/A'  }}</h5>
+                </div>
+                <div class="col-md-5 col-5 text-end">
+                  <button class="btn btn-light">View Report</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg3">
+            <div class="card-grid-header">
+              <h5>Scheduled <br /> Vaccines</h5>
+              <h3>{{ stats().scheduled_vaccines_cnt }}</h3>
+              <div class="icon">
+                <i class="iconify pi pi-calendar-clock primeicons-size"></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{ stats().scheduled_vaccines_cnt_last_updated|| 'N/A'  }}</h5>
+                </div>
+                <div class="col-md-5 col-5 text-end">
+                  <button class="btn btn-light">View All</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg4">
+            <div class="card-grid-header">
+              <h5>Vaccines <br /> Brand </h5>
+              <h3>{{ stats().vaccines_brands_cnt }}</h3>
+              <div class="icon">
+                <i class="iconify pi pi-verified "></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{ stats().vaccines_brands_cnt_last_updated|| 'N/A'  }}</h5>
+                </div>
+                <div class="col-md-5 col-5 text-end">
+                  <button class="btn btn-light">View All</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="report-table mt-3 mb-3">
+      <div class="row">
+        <div class="col-md-12 col-12">
+          <div class="card-style2">
+            <div class="card-header backoption">
+              <div class="row">
+                <div class="col-md-5 col-12"></div>
+                <div class="col-md-7 col-12">
+                  <div class="form-right">
+                    <a href="javascript:;" ngbTooltip="Filter" placement="top" class="icon-btn-square"
+                      (click)="filterToggle()">
+                      <i class="iconify pi pi-sliders-h"></i>
+                    </a>
+                    @if(access().access_exp || access().access_print){
+                    <div class="dropdown dropdown-style1 ms-2">
+                      <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Download Report
+                        <i class="iconify pi pi-angle-down"></i>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li
+                          [DCSV]="{ param :params,screenName:'Vaccine Master',data : filteredData.length,methodName : 'vaccineMasterApi' }">
+                          <a class="dropdown-item" href="javascript:;">Download CSV</a>
+                        </li>
+                        <li
+                          [PDF]="{ param :params,screenName:'Vaccine Master',data : filteredData.length,methodName : 'vaccineMasterApi' }">
+                          <a class="dropdown-item" href="javascript:;">Download Pdf</a>
+                        </li>
+                        <li
+                          [EXCEL]="{ param :params,screenName:'Vaccine Master',data : filteredData.length,methodName : 'vaccineMasterApi'  }">
+                          <a class="dropdown-item" href="javascript:;">Download Excel</a>
+                        </li>
+                      </ul>
+                    </div>
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            @if (showFilter) {
+            <div class="filter-box form-sm">
+              <div class="row">
+                <div class="col-lg-11 col-12">
+                  <div class="row gx-2">
+                    <div class="col-xl-2 col-lg-4 col-sm-6 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="vaccine_name">By Vaccine Name</label>
+                        <p-select id="vaccine_name" [(ngModel)]="vaccineFilters().vaccine_name" name="vaccine_name"
+                          [options]="vaccineNameList" [filter]="true" [showClear]="true"
+                          (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-4 col-sm-6 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="route">By Route</label>
+                        <p-select id="route" [(ngModel)]="vaccineFilters().route" name="route"
+                          [options]="routeList" [filter]="true" [showClear]="true"
+                          (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-4 col-sm-6 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="recurrence">By Recurrence</label>
+                        <p-select id="recurrence" [(ngModel)]="vaccineFilters().recurrence" name="recurrence"
+                          [options]="recurrenceList" [filter]="true" [showClear]="true"
+                          (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-4 col-sm-6 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="dose_count">By Dose Frequency</label>
+                        <p-select id="dose_count" [(ngModel)]="vaccineFilters().dose_count" name="dose_count"
+                          [options]="doseCountList" [showClear]="true"
+                          (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-4 col-sm-6 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="manufacture_name">By Manufacturer</label>
+                        <p-select id="manufacture_name" [(ngModel)]="vaccineFilters().manufacture_name"
+                          name="manufacture_name" [options]="manuFacturerList" [filter]="true" [showClear]="true"
+                          (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-4 col-sm-6 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="status">By Status</label>
+                        <p-select id="status" [(ngModel)]="vaccineFilters().status" name="status"
+                          [options]="statusList" [filter]="true" [showClear]="true" (onClear)="onFilterClear(true)"
+                          class="form-control" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-1 col-12 d-flex flex-lg-column gap-1 align-items-start">
+                  <button class="btn btn-primary w-100" (click)="onFilterClick()">Filter</button>
+                  <button class="btn btn-dark" (click)="onFilterClear(null)">Clear</button>
+                </div>
+              </div>
+            </div>
+            }
+            <div class="card-body table-style1 table-responsive radius-4">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">S.No</th>
+                    <th scope="col" sortable="vaccine_code" (sort)="onSort($event)">Vaccine Code
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="vaccine_name" (sort)="onSort($event)">Vaccine Name
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="scope" (sort)="onSort($event)">Department / Role
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="volume" (sort)="onSort($event)">Volume
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="route" (sort)="onSort($event)">Route
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="recurrence" (sort)="onSort($event)">Recurrence
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="dose_count" (sort)="onSort($event)">Dosages
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="manufacture_name" (sort)="onSort($event)">Manufacturer
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="updated_by" (sort)="onSort($event)">
+                      Modified By
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="updated_at" (sort)="onSort($event)">
+                      Last Modified
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="status" (sort)="onSort($event)">Status
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" class="text-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (mstr of vaccineGrid; track mstr.vaccine_id) {
+                  <tr>
+                    <td scope="row">{{ mstr.id }}</td>
+                    <td>{{ mstr.vaccine_code }}</td>
+                    <td>{{ mstr.vaccine_name }}</td>
+                    <td>{{ mstr.scope }}</td>
+                    <td>{{ mstr.volume }}</td>
+                    <td>{{ mstr.route }}</td>
+                    <td>{{ mstr.recurrence }}</td>
+                    <td class="right">{{ mstr.dose_count }}</td>
+                    <td>{{ mstr.manufacture_name }}</td>
+                    <td>{{ mstr.updated_by || mstr.created_by }}</td>
+                    <td>{{ mstr.updated_at || mstr.created_at }}</td>
+                    <td [ngClass]="{
+                          'text-danger': mstr.status === 'Inactive',
+                          'text-success': mstr.status === 'Active',
+                        }">
+                      {{ mstr.status }}
+                    </td>
+                    <td class="text-end">
+                      <div class="actiondot-dropdown">
+                        <div class="btn-group ms-2">
+                          <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="iconify pi pi-ellipsis-h"></i>
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" (click)="onPageRoute('VIEW',mstr)">View</a>
+                            </li>
+                            @if(mstr.status !== 'Inactive'){
+                            @if(access().access_mod){
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" (click)="onPageRoute('EDIT',mstr)">Edit</a>
+                            </li>
+                            }
+                            @if(access().access_del){
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" (click)="onDelete(mstr)">Delete</a>
+                            </li>
+                            }
+                            }
+                          </ul>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  } @empty {
+                  <tr>
+                    <td colspan="13" class="text-center">No vaccines found.</td>
+                  </tr>
+                  }
+                </tbody>
+              </table>
+              <nav aria-label="Page navigation pagination text-end">
+                <ul class="pagination d-flex justify-content-end">
+                  <li class="page-item next" [class.disabled]="pageNators().pageNo === 1">
+                    <a class="page-link" aria-label="Previous" (click)="changePage(pageNators().pageNo-1)">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                  @for(p of pageNumbers();track p){
+                  <li class="page-item" [class.active]="pageNators().pageNo === p">
+                    <a class="page-link" (click)="changePage(p)">{{p}}</a>
+                  </li>
+                  }
+                  <li class="page-item prev" [class.disabled]="pageNators().pageNo === pageNators().totalPages">
+                    <a class="page-link" aria-label="Next" (click)="changePage(pageNators().pageNo+1)">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>
+
+@if(showBulkUpload){
+<app-vaccine-bulk-upload (closed)="onBulkUploadDone($event)"></app-vaccine-bulk-upload>
+}
+
+<app-vaccination-policy-dialog #policyDialog [(visible)]="showPolicy" [canEdit]="access().access_add" />

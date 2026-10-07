@@ -1,0 +1,303 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="row">
+      <div class="col-md-12 col-12">
+        <div class="card-style2">
+          <div class="card-header backoption">
+            <div class="row">
+              <div class="col-md-7 col-12">
+                <div class="heading-left">
+                  <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                    <i class="iconify pi pi-arrow-left"></i>
+                  </a>
+                  <h3>Training Details</h3>
+                </div>
+              </div>
+              <div class="col-md-5 col-12">
+                <div class="form-right">
+                  @if(false){
+                  <a href="javascript:;" ngbTooltip="Filter" placement="top" class="icon-btn-square"
+                    (click)="filterToggle()">
+                    <i class="iconify pi pi-sliders-h"></i>
+                  </a>
+                  <div class="dropdown dropdown-style1 ms-2">
+                    <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                      Download Report
+                      <i class="iconify pi pi-angle-down"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li
+                        [DCSV]="{ param :params,screenName:'Training Details',data : reportDetGrid.length,methodName : 'fnTrainingFeedbackListApi' }">
+                        <a class="dropdown-item" href="javascript:;">Download CSV</a>
+                      </li>
+                      <li
+                        [PDF]="{ param :params,screenName:'Training Details',data : reportDetGrid.length,methodName : 'fnTrainingFeedbackListApi' }">
+                        <a class="dropdown-item" href="javascript:;">Download Pdf</a>
+                      </li>
+                      <li
+                        [EXCEL]="{ param :params,screenName:'Training Details',data : reportDetGrid.length,methodName : 'fnTrainingFeedbackListApi'  }">
+                        <a class="dropdown-item" href="javascript:;">Download Excel</a>
+                      </li>
+                    </ul>
+                  </div>
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+
+          @if (showFilter) {
+          <div class="filter-box form-sm">
+            <div class="row">
+              <div class="col-md-11 col-12">
+                <div class="row gx-2">
+                  <div class="col-md-3 col-12">
+                    <p-select [(ngModel)]="reportFilters().employee_name" name="employee_name"
+                      [options]="empNameList" [filter]="true" [showClear]="true"
+                      (onClear)="onFilterClear(true)" class="form-control" />
+                  </div>
+                  <div class="col-md-2 col-12">
+                    <p-select [(ngModel)]="reportFilters().department_role" name="department_role"
+                      [options]="departList" [filter]="true" [showClear]="true"
+                      (onClear)="onFilterClear(true)" class="form-control" />
+                  </div>
+                  <div class="col-md-2 col-12">
+                    <p-select [(ngModel)]="reportFilters().status" name="status"
+                      [options]="statusList" [filter]="true" [showClear]="true"
+                      (onClear)="onFilterClear(true)" class="form-control" />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-1 col-12 ps-0">
+                <button class="btn btn-primary w-100" (click)="onFilterClick()">Filter</button>
+                <button class="btn btn-dark" (click)="onFilterClear(null)">Clear</button>
+              </div>
+            </div>
+          </div>
+          }
+
+          <div class="card-body table-style1 table-responsive radius-4">
+            <div class="audit-info-cover">
+              <div class="table-audit table-responsive">
+                <table class="table table-bordered table-line mb-0">
+                  <tr>
+                    <th>Training Name</th>
+                    <th>Faculty Name</th>
+                    <th>Mode of Training</th>
+                    <th>Venue</th>
+                    <th>Training Period</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                  </tr>
+                  <tr>
+                    <td>{{readOnlyReport().training_name}}</td>
+                    <td>{{readOnlyReport().faculty_name}}</td>
+                    <td>{{readOnlyReport().mode_of_training}}</td>
+                    <td>{{readOnlyReport().venue_name}}</td>
+                    <td>{{readOnlyReport().training_period}}</td>
+                    <td>{{readOnlyReport().time}}</td>
+                    <td [ngClass]="{
+                      'text-success': readOnlyReport().status === 'Active',
+                      'text-danger': readOnlyReport().status === 'Inactive'
+                  }">
+                      {{ readOnlyReport().status }}
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+
+            <div class="card-header backoption mt-3">
+              <div class="row">
+                <div class="col-md-7 col-12">
+                  <div class="heading-left">
+                    <h3>Training Participants</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <table class="table table-striped mt-2">
+              <thead>
+                <tr>
+                  <th scope="col">S.No</th>
+                  <th scope="col" sortable="employee_name" (sort)="onSort($event)">
+                    Employee Name
+                    <i class="iconify pi pi-sort"></i>
+                  </th>
+                  <th scope="col" sortable="department_role" (sort)="onSort($event)">
+                    Department / Role
+                    <i class="iconify pi pi-sort"></i>
+                  </th>
+                  <th scope="col" sortable="pre_assessment_score" (sort)="onSort($event)">
+                    Pre Assessment Score
+                    <i class="iconify pi pi-sort"></i>
+                  </th>
+                  <th scope="col" sortable="post_assessment_score" (sort)="onSort($event)">
+                    Post Assessment Score
+                    <i class="iconify pi pi-sort"></i>
+                  </th>
+                  <th scope="col" sortable="total_score" (sort)="onSort($event)">
+                    Total Score
+                    <i class="iconify pi pi-sort"></i>
+                  </th>
+                  <th scope="col" sortable="attendance" (sort)="onSort($event)">
+                    Total Attendance
+                    <i class="iconify pi pi-sort"></i>
+                  </th>
+                  <th scope="col" sortable="status" (sort)="onSort($event)">
+                    Status
+                    <i class="iconify pi pi-sort"></i>
+                  </th>
+                  <!-- <th>Action </th> -->
+                </tr>
+              </thead>
+              <tbody>
+                @for(att of readOnlyReport()['attendees']; track $index){
+                <tr>
+                  <td>{{att.sno}}</td>
+                  <td>{{att.employee_name}} </td>
+                  <td>{{att.department_role}}</td>
+                  <td>{{att.pre_assessment_score}}</td>
+                  <td>{{ att.post_assessment_score }}</td>
+                  <td>{{ att.total_score }}</td>
+                  <td>{{att.attendance}}</td>
+                  <td [ngClass]="{
+                    'text-success': att.status === 'Active',
+                    'text-danger': att.status === 'Inactive'
+                }">
+                    {{ att.status }}
+                  </td>
+                  <!-- <td>
+                    <div class="actiondot-dropdown">
+                      <div class="btn-group ms-2">
+                        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                          aria-expanded="false">
+                          <span class="iconify" data-icon="tabler:dots"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li>
+                            <a class="dropdown-item" href="javascript:;" routerLink="/reports-nominee-view"> View</a>
+                          </li>
+                          <li>
+                            <a class="dropdown-item" href="javascript:;"> Download</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </td> -->
+                </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+
+          <!-- <div class="mt-3">
+            <a href="javascript:;" class="btn btn-primary" (click)="toggleFeedbackDetails()">View Feedbacks</a>
+          </div>
+
+          @if (showFeedbackDetails) {
+          <div class="view-feedback-details">
+            <div class="card-header mt-3">
+              <div class="row">
+                <div class="col-md-12 col-12">
+                  <div class="heading-left">
+                    <h3>Feedback List</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body table-style1 table-responsive">
+              <table class="table table-striped mt-2">
+                <thead>
+                  <tr>
+                    <th scope="col">S.No</th>
+                    <th width="35%" scope="col" sortable="feedback" (sort)="onSort($event)">
+                      Feedback
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th class="status-tooltip d-flex" width="20%" scope="col" sortable="score" (sort)="onSort($event)">
+                      Score
+                      <i class="iconify pi pi-sort"></i>
+                      <div class="info-icon tooltip-statusth">
+                        <span class="info-label"></span>
+                        <div class="tooltipbox">
+                          <span class="iconify icon" data-icon="material-symbols:info-rounded"></span>
+                          <div class="status-tooltip-default">
+                            <div class="tooltip-item">
+                              <span class="dot red-dot"></span>
+                              <span class="tooltip-text">Very Bad - 1/5</span>
+                            </div>
+                            <div class="tooltip-item">
+                              <span class="dot orangedark-dot"></span>
+                              <span class="tooltip-text">Bad - 2/5</span>
+                            </div>
+                            <div class="tooltip-item">
+                              <span class="dot orange-dot"></span>
+                              <span class="tooltip-text">Fair - 3/5</span>
+                            </div>
+                            <div class="tooltip-item">
+                              <span class="dot greenlight-dot"></span>
+                              <span class="tooltip-text">Good - 4/5</span>
+                            </div>
+                            <div class="tooltip-item">
+                              <span class="dot green-dot"></span>
+                              <span class="tooltip-text">Excellent - 5/5</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </th>
+                    <th width="35%" scope="col" sortable="feedback_date_time" (sort)="onSort($event)">
+                      Feedback Date & Time
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (reportDetls of readOnlyReport().fb_questions; track $index) {
+                  <tr>
+                    <td scope="row">{{ $index +1 }}</td>
+                    <td>{{ reportDetls.feedback }}</td>
+                    <td [ngClass]="{
+                        'textparretGreen': reportDetls.score === 'Excellent',
+                        'text-success': reportDetls.score === 'Good',
+                        'text-warning': reportDetls.score === 'Fair',
+                        'textorangeDark': reportDetls.score === 'Bad',
+                        'text-danger': reportDetls.score === 'Very Bad'
+                    }">
+                      {{ reportDetls.score }}
+                    </td>
+                    <td>{{ reportDetls.feedback_date_time }}</td>
+                  </tr>
+                  }
+                </tbody>
+              </table>
+              <nav aria-label="Page navigation pagination text-end">
+                <ul class="pagination d-flex justify-content-end">
+                  <li class="page-item next">
+                    <a class="page-link" href="#" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item"><a class="page-link" href="#">...</a></li>
+                  <li class="page-item"><a class="page-link" href="#">10</a></li>
+                  <li class="page-item prev">
+                    <a class="page-link" href="#" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+          } -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

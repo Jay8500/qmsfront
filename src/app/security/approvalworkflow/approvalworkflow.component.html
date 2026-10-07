@@ -1,0 +1,256 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                                        <i class="iconify pi pi-arrow-left"></i>
+                                    </a>
+                                    <h3>{{_hqms.getPageModeContext(pageMode, 'Approval Workflow') }}</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-12">
+                                <div class="form-right">
+                                    <button class="btn btn-dark" [disabled]="pageMode=='VIEW'"
+                                        (click)="onClearClick()">Clear</button>
+                                    <button class="btn btn-primary" [disabled]="pageMode=='VIEW'"
+                                        (click)="onSubmitClick()">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3 col-12">
+                                <div>
+                                    <div class="flex flex-col gap-1">
+                                        <label for="apprvl_workflw_name">Approval Workflow Name</label>
+                                        <div style="position: relative;display:inline-block;width:100%">
+                                            <input pInputText id="apprvl_workflw_name"
+                                                [(ngModel)]="apprvlWrkFlow.apprvl_workflw_name"
+                                                placeholder="Approval Workflow Name" class="form-control"
+                                                (blur)="onGetErrorMsgs('apprvl_workflw_name')"
+                                                [disabled]="pageMode=='VIEW'" name="apprvl_workflw_name"
+                                                autocomplete="off" appNospaces>
+                                            @if(errorMsg['apprvl_workflw_name']!=''){
+                                            <small class="error">{{ errorMsg['apprvl_workflw_name']}}</small>
+                                            }
+                                            <div style=" position: absolute;
+                                            top: 0;
+                                            right: 0;
+                                            width: 0;
+                                            height: 0;
+                                            border-top: 12px solid red;
+                                            border-left: 12px solid transparent;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="flex flex-col gap-1">
+                                            <label for="module_id">Module</label>
+                                            <div style="position: relative;display:inline-block;width:100%">
+                                                <p-select id="module_id" [(ngModel)]="apprvlWrkFlow.module_id"
+                                                    (onBlur)="onGetErrorMsgs('module_id')"
+                                                    (onBlur)="onGetErrorMsgs('module_id')" [disabled]="pageMode=='VIEW'"
+                                                    name="module_id" [options]="mdlsLst" placeholder="Module"
+                                                    [filter]="true" (onChange)="onModuleChange()"
+                                                    class="form-control" />
+                                                <div style=" position: absolute;
+                                            top: 0;
+                                            right: 0;
+                                            width: 0;
+                                            height: 0;
+                                            border-top: 12px solid red;
+                                            border-left: 12px solid transparent;">
+                                                </div>
+                                            </div>
+                                            @if(errorMsg['module_id']!=''){
+                                            <small class="error">{{ errorMsg['module_id']}}</small>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="flex flex-col gap-1">
+                                            <label for="document_id">Document</label>
+                                            <div style="position: relative;display:inline-block;width:100%">
+                                                <p-select id="document_id" [(ngModel)]="apprvlWrkFlow.document_id"
+                                                    (onBlur)="onGetErrorMsgs('document_id')"
+                                                    (onChange)="onDocumentChange()" placeholder="Document"
+                                                    [disabled]="pageMode=='VIEW'" name="document_id" [options]="docLst"
+                                                    [filter]="true" class="form-control" />
+                                                <div style=" position: absolute;
+                                            top: 0;
+                                            right: 0;
+                                            width: 0;
+                                            height: 0;
+                                            border-top: 12px solid red;
+                                            border-left: 12px solid transparent;">
+                                                </div>
+                                            </div>
+                                            @if(errorMsg['document_id']!=''){
+                                            <small class="error">{{ errorMsg['document_id']}}</small>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="form-group p-fluid">
+                                            <div>
+                                                <label>Users</label>
+                                            </div>
+                                            <div style="position: relative;display:inline-block;width:100%">
+                                                <p-autoComplete [(ngModel)]="apprvlWrkFlow.users"
+                                                    [suggestions]="filterModules" [disabled]="pageMode=='VIEW'"
+                                                    (onBlur)="onGetErrorMsgs('users')"
+                                                    (completeMethod)="filterGroupedModules($event)" [unique]="true"
+                                                    placeholder="Search for User" (onSelect)="onUserSelect($event)"
+                                                    [showClear]="true" styleClass="p-autocomplete-input d-block">
+                                                    <ng-template let-group #group>
+                                                        <div> {{ group.label  }} </div>
+                                                    </ng-template>
+                                                </p-autoComplete>
+                                                <div style=" position: absolute;
+                                        top: 0;
+                                        right: 0;
+                                        width: 0;
+                                        height: 0;
+                                        border-top: 12px solid red;
+                                        border-left: 12px solid transparent;">
+                                                </div>
+                                            </div>
+                                            @if(errorMsg['users']!=''){
+                                            <small class="error">{{ errorMsg['users']}}</small>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="flex flex-col gap-1">
+                                            <label for="description">Description</label>
+                                            <div style="position: relative;display:inline-block;width:100%">
+                                                <textarea pTextarea id="description"
+                                                    [(ngModel)]="apprvlWrkFlow.description"
+                                                    (blur)="onGetErrorMsgs('description')" rows="10"
+                                                    placeholder="Description" [disabled]="pageMode=='VIEW'"
+                                                    name="description" class=" form-control" appNospaces></textarea>
+                                                <div style=" position: absolute;
+                                            top: 0;
+                                            right: 0;
+                                            width: 0;
+                                            height: 0;
+                                            border-top: 12px solid red;
+                                            border-left: 12px solid transparent;">
+                                                </div>
+                                            </div>
+                                            @if(errorMsg['description']!=''){
+                                            <small class="error">{{ errorMsg['description']}}</small>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label>Status</label>
+                                        <div class="form-group">
+                                            <p-toggleswitch [(ngModel)]="apprvlWrkFlow.is_active" name="status"
+                                                [disabled]="pageMode=='VIEW' || pageMode=='NEW'" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-9 col-12">
+                                <div class="card-body table-style1 ">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    S.No
+                                                </th>
+                                                <th>
+                                                    Employee
+                                                </th>
+                                                <th>
+                                                    Locations
+                                                </th>
+                                                <th>
+                                                    Auto Approve/ Reject
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody cdkDropList [cdkDropListData]="apprvlWrkFlow.approval_workflow_map"
+                                            (cdkDropListDropped)="dropSection($event)">
+                                            @for(accCntrl of apprvlWrkFlow.approval_workflow_map;track $index;let
+                                            accCtrlIn=$index){
+                                            @if(accCntrl.is_select){
+                                            <tr cdkDrag [cdkDragData]="accCntrl">
+                                                <td>
+                                                    @if(pageMode != 'VIEW'){
+                                                    @if(accCntrl.is_select){
+                                                    <i class="iconify pi pi-bars" pTooltip="Drag & Drop"
+                                                        tooltipPosition="left" cdkDragHandle></i>
+                                                    }
+                                                    }
+                                                    {{accCtrlIn+1}}
+                                                    <input type="checkbox" id="is_select"
+                                                        [(ngModel)]="accCntrl.is_select" name="is_select"
+                                                        [disabled]="pageMode=='VIEW'"
+                                                        (change)="onUserSelection($event,accCntrl)" />
+
+                                                </td>
+                                                <td>
+                                                    {{ accCntrl['display_name'] }}
+                                                </td>
+                                                <td>
+                                                    <p-multiselect [(ngModel)]="accCntrl.workflow_loc_map"
+                                                        name="workflow_loc_map" [options]="accCntrl['user_role']"
+                                                        [showClear]="true"
+                                                        [disabled]="pageMode=='VIEW'||!accCntrl.is_select"
+                                                        class="form-control" />
+                                                </td>
+
+                                                <td>
+                                                    <div class="form-group">
+                                                        <p-toggleswitch [(ngModel)]="accCntrl.is_auto_approval"
+                                                            name="status"
+                                                            [disabled]="pageMode=='VIEW' ||!accCntrl.is_select" />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            }
+                                            }@empty{
+                                            <tr style="text-align: center">
+                                                <td [attr.colspan]="5">
+                                                    No Data Found
+                                                </td>
+                                            </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .editing {
+        color: blue !important;
+    }
+
+    .edited {
+        color: green !important;
+    }
+
+    .pi {
+        font-size: 11px;
+    }
+
+    :host ::ng-deep .p-autocomplete-input .p-inputtext {
+        width: 100% !important;
+    }
+</style>

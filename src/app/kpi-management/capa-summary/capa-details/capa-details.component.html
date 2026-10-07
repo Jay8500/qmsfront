@@ -1,0 +1,179 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                                        <i class="iconify pi pi-arrow-left"></i>
+                                    </a>
+                                    <h3>CAPA Summary View</h3>
+                                </div>
+                            </div>
+                            @if(false){
+                            <div class="col-md-5 col-12">
+                                <div class="form-right">
+                                    <div class="dropdown dropdown-style1 ms-2">
+                                        <button class="btn btn-light dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            Download
+                                            <i class="iconify pi pi-angle-down"></i>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                                            <li><a class="dropdown-item" href="javascript:;">Download PDF</a></li>
+                                            <li><a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="audit-info-cover">
+                            <div class="audit-status">
+                                <div class="row">
+                                    <div class="col-md-6 col-12">
+                                        <div class="left-content">
+                                            <h5>{{readOnlyCapa().kpi_code}} </h5>
+                                            @if(readOnlyCapa().updated_at!=null){
+                                            <p>Last Updated On <strong>{{readOnlyCapa().updated_at}}</strong></p>
+                                            }
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-md-6 col-12">
+                                        <div class="right-content text-end">
+                                            <p class="mb-1">Status</p>
+                                            @if(readOnlyCapa().status === 'Active'){
+                                            <span class="badge-green">{{readOnlyCapa().status}}</span>
+                                            }
+                                            @else{
+                                            <span class="badge-red">{{readOnlyCapa().status}}</span>
+                                            }
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </div>
+                            <div class="table-audit tablehrz">
+                                <table class="table table-bordered table-line">
+                                    <thead>
+                                        <tr>
+                                            <!-- <th>KPI Code</th> -->
+                                            <th>KPI Name</th>
+                                            <th>Indicator</th>
+                                            <th>Department</th>
+                                            <th>Data Capture Period</th>
+                                            <th>UOM</th>
+                                            <th>Formula</th>
+                                            <th>Target</th>
+                                            <th>KPI Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <!-- <td>{{readOnlyCapa().kpi_code}}</td> -->
+                                            <td>{{readOnlyCapa().kpi_name}}</td>
+                                            <td>{{readOnlyCapa().kpi_type_name}}</td>
+                                            <td>{{readOnlyCapa().department_name}}</td>
+                                            <td>{{readOnlyCapa().frequency_name}}</td>
+                                            <td>{{readOnlyCapa().unit_of_measure_name}}</td>
+                                            <td>{{readOnlyCapa().kpi_formula}}</td>
+                                            <td>{{readOnlyCapa().target_benchmark}}</td>
+                                            <td [class]="_hqms.kpiStatus(readOnlyCapa().kpi_actual_score_status)">
+                                                {{readOnlyCapa().kpi_actual_score_status }}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="audit-info-cover">
+                            <div class="audit-status">
+                                <div class="row">
+                                    <div class="col-md-12 col-12">
+                                        <div class="left-content">
+                                            <h5>CAPA Summary</h5>
+                                            <p>Non Compliance Analysis</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="table-audit tablehrz mt-3">
+                                @for(wCpa of readOnlyCapa().capa_details;track $index){
+                                <table class="table table-bordered table-line">
+                                    <thead>
+                                        <tr>
+                                            <th>Written CAPA</th>
+                                            <th>Interpretation & Learning</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{{ wCpa.description}}</td>
+                                            <td>{{ wCpa.interpretation_learning}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                }@empty{
+                                No Summary Found
+                                }
+                            </div>
+                        </div>
+                        <div class="audit-info-cover">
+                            <div class="audit-status">
+                                <div class="row">
+                                    <div class="col-md-12 col-12">
+                                        <div class="left-content">
+                                            <h5>Benchmark Details</h5>
+                                            <!-- <p>Internal/External Benchmark Standards</p> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-audit tablehrz">
+                                <table class="table table-bordered table-line">
+                                    <thead>
+                                        <tr>
+                                            <th>Full Compliance</th>
+                                            <th>Partial Compliance</th>
+                                            <th>Non Compliance</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{{  readOnlyCapa().complaint_benchmark}}</td>
+                                            <td>{{  readOnlyCapa().partial_complaint_benchmark}}</td>
+                                            <td>{{  readOnlyCapa().non_complaint_benchark}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- <div class="table-audit tablehrz mt-3">
+                                <table class="table table-bordered table-line">
+                                    <thead>
+                                        <tr>
+                                            <th>External Benchmark Reference</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{{  readOnlyCapa().benchmark_reference}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

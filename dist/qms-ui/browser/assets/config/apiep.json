@@ -1,0 +1,12 @@
+{
+     "localhost": {
+          "isShowOtpOnLoginPage": true,
+          "isAttenViewPunchsEnable": false,
+          "apiHostUrl": "http://localhost:3054/api/commonRoutings/"
+     },
+     "emr": {
+          "isShowOtpOnLoginPage": true,
+          "isAttenViewPunchsEnable": false,
+          "apiHostUrl": "http://emr.doc9.xyz/hqms/api/commonRoutings/"
+     }
+}

@@ -1,0 +1,172 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="row">
+      <div class="col-md-12 col-12">
+        <div class="card-style2">
+          <div class="card-header backoption">
+            <div class="row">
+              <div class="col-md-5 col-12">
+                <div class="heading-left">
+                  <a href="javascript:;" class="icon-btn-square" (click)="goBack()"><span class="iconify" data-icon="famicons:arrow-back-outline"></span></a>
+                  <h3>Version Control History</h3>
+                </div>
+              </div>
+              <div class="col-md-7 col-12">
+                <div class="form-right">
+                  <a href="javascript:;" ngbTooltip="Filter" placement="top" class="icon-btn-square" (click)="filterToggle()"><span class="iconify" data-icon="mage:filter"></span></a>
+                  <div class="dropdown dropdown-style1 ms-2">
+                    <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Download Report <span class="iconify" data-icon="akar-icons:chevron-down"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                      <li><a class="dropdown-item" href="javascript:;">Download Word</a></li>
+                      <li><a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          @if (showFilter) {
+            <div class="filter-box form-sm">
+              <div class="row">
+                <div class="col-md-11 col-12">
+                  <div class="row gx-2">
+                    <div class="col-md-3 col-12">
+                      <div class="form-group">
+                        <select class="form-select">
+                          <option>By Document Type</option>
+                          <option>Medical</option>
+                          <option>Manual</option>
+                          <option>Policy</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-12">
+                      <div class="form-group">
+                        <input type="text" class="form-control" placeholder="By Assigned to">
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-12">
+                      <div class="form-group">
+                        <select class="form-select">
+                          <option>By Approval Status</option>
+                          <option>Approved</option>
+                          <option>Rejected</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-12">
+                      <div class="form-group">
+                        <select class="form-select">
+                          <option>By Status</option>
+                          <option>Active</option>
+                          <option>Inactive</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1 col-12 ps-0">
+                  <button class="btn btn-primary w-100">Filter</button>
+                </div>
+              </div>
+            </div>
+          }
+
+          <div class="card-body table-style1 table-responsive radius-4">
+            <div class="fixed-header-table">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">S.No</th>
+                    <th width="10%" scope="col" sortable="docno" (sort)="onSort($event)">Document No </th>
+                    <th width="15%" scope="col" sortable="docname" (sort)="onSort($event)">Document Name <span class="iconify" data-icon="bxs:sort-alt"></span></th>
+                    <th width="15%" scope="col" sortable="doctype" (sort)="onSort($event)">Document Type <span class="iconify" data-icon="bxs:sort-alt"></span></th>
+                    <th scope="col" sortable="assignto" (sort)="onSort($event)">Assigned To </th>
+                    <th scope="col" sortable="created" (sort)="onSort($event)">Created On </th>
+                    <th scope="col" sortable="modify" (sort)="onSort($event)">Last Modified </th>
+                    <th scope="col" sortable="current" (sort)="onSort($event)">Current Version</th>
+                    <th scope="col" sortable="approve" (sort)="onSort($event)">Approve Status </th>
+                    <th scope="col" sortable="status" (sort)="onSort($event)">Status</th>
+                    <th scope="col" class="text-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (auditTable of countries; track auditTable.doctype) {
+                    <tr>
+                      <td scope="row">{{ auditTable.id }}</td>
+                      <td>{{ auditTable.docno }}</td>
+                      <td>{{ auditTable.docname }}</td>
+                      <td>{{ auditTable.doctype }}</td>
+                      <td>{{ auditTable.assignto }}</td>
+                      <td>{{ auditTable.created }}</td>
+                      <td>{{ auditTable.modify }}</td>
+                      <td>{{ auditTable.current }}</td>
+                      <td>
+                        @if (auditTable.approve.startsWith('L1')) {
+                          <div class="approved-flex" [ngClass]="{'green': auditTable.approve.includes('Approved'), 'red': auditTable.approve.includes('Rejected')}">
+                            <span>L1</span>
+                            <p>{{ auditTable.approve.includes('Approved') ? 'Approved' : 'Rejected' }}</p>
+                          </div>
+                        }
+                        @if (auditTable.approve.startsWith('L2')) {
+                          <div class="approved-flex" [ngClass]="{'green': auditTable.approve.includes('Approved'), 'red': auditTable.approve.includes('Rejected')}">
+                            <span>L2</span>
+                            <p>{{ auditTable.approve.includes('Approved') ? 'Approved' : 'Rejected' }}</p>
+                          </div>
+                        }
+                      </td>
+
+                                            <td [ngClass]="{
+                                                'text-danger': auditTable.status === 'Inactive',
+                                                'text-success': auditTable.status === 'Active',
+                                              }">
+                        {{ auditTable.status }}
+                      </td>
+                      <td>
+                        <div class="action-rowflex">
+                          <div class="action-dropdown float-end">
+                            <ul>
+                              <li>
+                                <a href="javascript:;" routerLink="/version-control-details"><span class="iconify" data-icon="lets-icons:view-alt-fill"></span></a>
+                              </li>
+                              <li>
+                                <a href="javascript:;"><span class="iconify" data-icon="tabler:dots"></span></a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+            <nav aria-label="Page navigation pagination text-end">
+              <ul class="pagination d-flex justify-content-end">
+                <li class="page-item next">
+                  <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">...</a></li>
+                <li class="page-item"><a class="page-link" href="#">10</a></li>
+                <li class="page-item prev">
+                  <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

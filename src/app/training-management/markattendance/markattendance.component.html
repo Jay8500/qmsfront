@@ -1,0 +1,176 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                                        <i class="iconify pi pi-arrow-left"></i>
+                                    </a>
+                                    <h3>Mark Attendance</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-12">
+                                <div class="form-right">
+                                    @if(false){
+                                    <a href="javascript:;" ngbTooltip="Filter" placement="top" class="icon-btn-square"
+                                        (click)="filterToggle()">
+                                        <i class="iconify pi pi-sliders-h"></i>
+                                    </a>
+                                    <div class="dropdown dropdown-style1 ms-2">
+                                        <button class="btn btn-light dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            Download Report
+                                            <i class="iconify pi pi-angle-down"></i>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li
+                                                [DCSV]="{ param :params,screenName:'Mark Attendance',data : markAttendGrid.length,methodName : 'fnAttendanceListGet' }">
+                                                <a class="dropdown-item" href="javascript:;">Download CSV</a>
+                                            </li>
+                                            <li
+                                                [PDF]="{ param :params,screenName:'Mark Attendance',data : markAttendGrid.length,methodName : 'fnAttendanceListGet' }">
+                                                <a class="dropdown-item" href="javascript:;">Download Pdf</a>
+                                            </li>
+                                            <li
+                                                [EXCEL]="{ param :params,screenName:'Mark Attendance',data : markAttendGrid.length,methodName : 'fnAttendanceListGet'  }">
+                                                <a class="dropdown-item" href="javascript:;">Download Excel</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    }
+
+                                    <div class="row">
+                                        <div class="col-md-12 col-12">
+                                            <button type="button" class="btn btn-dark"
+                                                (click)="onClearClick()">Clear</button>
+                                            <button type="submit" class="btn btn-primary"
+                                                (click)="onSubmitClick()">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (showFilter) {
+                    <div class="filter-box form-sm">
+                        <div class="row">
+                            <div class="col-md-11 col-12">
+                                <div class="row gx-2">
+                                    <div class="col-md-3 col-12">
+                                        <p-select [(ngModel)]="markAttenFilters().nominee_name" name="nominee_name"
+                                            [options]="nomineeList" [filter]="true" [showClear]="true"
+                                            (onClear)="onFilterClear(true)" class="form-control" />
+                                    </div>
+                                    <div class="col-md-2 col-12">
+                                        <p-select [(ngModel)]="markAttenFilters().employee_id" name="employee_id"
+                                            [options]="employeeIDList" [filter]="true" [showClear]="true"
+                                            (onClear)="onFilterClear(true)" class="form-control" />
+                                    </div>
+                                    <div class="col-md-2 col-12">
+                                        <p-select [(ngModel)]="markAttenFilters().role" name="role"
+                                            [options]="roleList" [filter]="true" [showClear]="true"
+                                            (onClear)="onFilterClear(true)" class="form-control" />
+                                    </div>
+                                    <!-- <div class="col-md-2 col-12">
+                                        <hqms-select [formName]="'MarkAttenGridFilters'" [labelName]="'By Status'"
+                                            [fieldName]="'status'" [(ngModel)]="markAttenFilters().status" name="status"
+                                            (statusChange)="onFieldStatusChange($event)" [selectOptions]="statusList"
+                                            [isDisabled]="false" (onClearEmit)="onFilterClear($event)"
+                                            [showClear]="true">
+                                        </hqms-select>
+                                    </div> -->
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-12 ps-0">
+                                <button class="btn btn-primary w-100" (click)="onFilterClick()">Filter</button>
+                                <button class="btn btn-dark" (click)="onFilterClear(null)">Clear</button>
+                            </div>
+                        </div>
+                    </div>
+                    }
+
+                    <div class="card-body table-style1 table-responsive radius-4">
+                        <div class="audit-info-cover">
+                            <div class="table-audit table-responsive">
+                                <table class="table table-bordered table-line mb-0">
+                                    <tr>
+                                        <th>Training Name</th>
+                                        <th>Mode of Training</th>
+                                        <th>Venue</th>
+                                        <th>Starting Date & Time</th>
+                                        <th>Ending Date & Time</th>
+                                        <th>Attendance</th>
+                                    </tr>
+                                    <tr>
+                                        <td>{{readOnlyMarkAttend().training_name}}</td>
+                                        <td>{{readOnlyMarkAttend().mode_of_training}}</td>
+                                        <td>{{readOnlyMarkAttend().venue}}</td>
+                                        <td>{{readOnlyMarkAttend().starting_date}}</td>
+                                        <td>{{readOnlyMarkAttend().ending_date}}</td>
+                                        <td> {{readOnlyMarkAttend().present_cnt
+                                            }} /{{readOnlyMarkAttend().attendees.length
+                                        }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <table class="table table-striped mt-2">
+                            <thead>
+                                <tr>
+                                    <th scope="col">S.No</th>
+                                    <th width="25%" scope="col" sortable="attendee_name" (sort)="onSort($event)">
+                                        Nominee Name
+                                        <i class="iconify pi pi-sort"></i>
+                                    </th>
+                                    <th scope="col" sortable="employee_code" (sort)="onSort($event)">
+                                        Employee ID
+                                        <i class="iconify pi pi-sort"></i>
+                                    </th>
+                                    <th scope="col" sortable="date_of_presence" (sort)="onSort($event)">
+                                        Date of Presence
+                                        <i class="iconify pi pi-sort"></i>
+                                    </th>
+                                    <th scope="col" sortable="role_name" (sort)="onSort($event)">
+                                        Role
+                                        <i class="iconify pi pi-sort"></i>
+                                    </th>
+                                    <th scope="col">
+                                        Status
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (markAttendanceTable of readOnlyMarkAttend().attendees; track $index) {
+                                <tr>
+                                    <td scope="row">{{ $index +1 }}</td>
+                                    <td>{{ markAttendanceTable.attendee_name }}</td>
+                                    <td>{{ markAttendanceTable.employee_code }}</td>
+                                    <td>{{ markAttendanceTable.date_of_presence }}</td>
+                                    <td>{{ markAttendanceTable.role_name }}</td>
+                                    <td>
+                                        <div class="radio-group mb-2">
+                                            @for (asLst of statusList; track asLst.ind) {
+                                            <p-radioButton [name]="asLst.value_code" [value]="asLst.value"
+                                                [(ngModel)]='markAttendanceTable.attendee_status_id'
+                                                [inputId]="'ing1'+asLst.value" [disabled]="pageMode=='VIEW'"
+                                                (onClick)="onTypeClick(asLst.value_code)" />
+                                            <label [for]="'ing1'+asLst.value"
+                                                style="margin-left:10px;margin-right:5px;">{{ asLst.label }}</label>
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

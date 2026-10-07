@@ -1,0 +1,85 @@
+<section class="wrapper-body">
+    <div class="container-fluid">
+        <section class="status-card">
+            <div class="heading-flex-2">
+                <h3 class="main-heading mb-0">My Workspace</h3>
+            </div>
+            <div class="row mt-3">
+                <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+                    <div class="card-grid-cover bg1 workspace-card">
+                        <div class="card-grid-header">
+                            <h5>Reporting Management Task</h5>
+                            <div class="icon">
+                                <span class="iconify pi pi-flag"></span>
+                            </div>
+                        </div>
+                        <div class="card-grid-body">
+                            <div class="workspace-list">
+                                <ul>
+                                    @for(rmt of _RmtInfo;track $index){
+                                    <li><span class="iconify bullet pi pi-chevron-circle-right"></span>
+                                        {{ rmt.label }}<label class="count">{{ rmt.value }}</label></li>
+                                    }@empty{
+                                    <li class="text-center">No Tasks Found</li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+                    <div class="card-grid-cover bg2 workspace-card">
+                        <div class="card-grid-header">
+                            <h5>Audit Management Task</h5>
+                            <div class="icon">
+                                <span class="iconify pi pi-verified"></span>
+                            </div>
+                        </div>
+                        <div class="card-grid-body">
+                            <div class="workspace-list">
+                                <ul>
+                                    @for(rmt of _AmtInfo;track $index){
+                                    <li><span class="iconify bullet pi pi-chevron-circle-right"></span>
+                                        {{ rmt.label }}<label class="count">{{ rmt.value }}</label></li>
+                                    }@empty{
+                                    <li class="text-center">No Tasks Found</li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+                    <div class="card-grid-cover bg3 workspace-card">
+                        <div class="card-grid-header">
+                            <h5>Miscellaneous Task</h5>
+                            <div class="icon">
+                                <span class="iconify pi pi-check"></span>
+                            </div>
+                        </div>
+                        <div class="card-grid-body">
+                            <div class="workspace-list">
+                                <ul>
+                                    @for(rmt of _MtInfo;track $index){
+                                    <li><span class="iconify bullet pi pi-chevron-circle-right"></span>
+                                        {{ rmt.label }}<label class="count">{{ rmt.value }}</label></li>
+                                    }@empty{
+                                    <li class="text-center">No Tasks Found</li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="workplace-calendar mt-3">
+            <div class="heading-flex-2">
+                <h3 class="main-heading mb-0">My Calendar</h3>
+            </div>
+            <app-workplace-calendar></app-workplace-calendar>
+        </section>
+
+    </div>
+</section>

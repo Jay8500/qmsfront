@@ -1,0 +1,171 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <h3>Survey Response</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-12">
+                                <!-- @if(scRspnse['sections'].length>0){ -->
+                                <div class="form-right">
+                                    <button type="button" class="btn btn-dark" [disabled]="false"
+                                        (click)="onClearClick()">Clear</button>
+                                    <button type="submit" class="btn btn-primary" [disabled]="false"
+                                        (click)="onSubmitClick()">Submit</button>
+                                </div>
+                                <!-- } -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="formbox-left ">
+                                    <div class="row">
+                                        <div class=" col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="ess_survey_id">Survey</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                <p-select id="ess_survey_id" [(ngModel)]="scRspnse.ess_survey_id"
+                                                    (onChange)="onSurveyChange()" name="ess_survey_id" (onBlur)="onGetErrMsg('ess_survey_id')"
+                                                    [options]="surveyList" [filter]="true" [showClear]="true"
+                                                    class="form-control" />
+                                                    <div style=" position: absolute;
+                                                    top: 0;
+                                                    right: 0;
+                                                    width: 0;
+                                                    height: 0;
+                                                    border-top: 12px solid red;
+                                                    border-left: 12px solid transparent;">
+                                                    </div>
+                                                </div>
+                                                @if(errMsg['ess_survey_id']!=''){
+                                                    <small class="error">{{ errMsg['ess_survey_id'] }}</small>
+                                                    }
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-primary" [disabled]="false"
+                                                (click)="onConductSurvey()">Survey</button>
+                                        </div>
+                                        <div class="col-12 mt-2">
+                                            @for(scrs of surveyScorsLst;track $index ){
+                                            <div style="margin: 6px;">
+                                                <span [ngClass]="{
+                                                    'verydisatisfied': scrs.label === '1',
+                                                    'dissatisfied': scrs.label === '2',
+                                                    'fair': scrs.label === '3',
+                                                    'satisfied': scrs.label === '4',
+                                                    'very-dissatisfied': scrs.label === '5',
+                                                }" style="padding: 5px;border-radius: 5px;">{{ scrs.label}}</span>
+                                                {{ scrs.value_code | titlecase}}
+                                            </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-9">
+                                @if(scRspnse.questions.length > 0){
+                                @for(qstn of scRspnse.questions;track $index;let j = $index){
+                                <table class="table table-bordered  mb-0">
+                                    <tr>
+                                        <td width="100%">
+                                            <div>
+                                                Q({{j+1}}) {{qstn.question_text }}
+                                                <div class="audit-check-group">
+                                                    <div class="audit-check">
+                                                        <ul>
+                                                            @for(scrs of
+                                                            surveyScorsLst;track $index
+                                                            ){
+                                                            <li style="margin: 6px;" (click)="selectAnswer(qstn, scrs)">
+
+                                                                <span [ngClass]="{
+                                                                                                            'verydisatisfied': scrs.label === '1',
+                                                                                                            'dissatisfied': scrs.label === '2',
+                                                                                                            'fair': scrs.label === '3',
+                                                                                                            'satisfied': scrs.label === '4',
+                                                                                                            'very-dissatisfied': scrs.label === '5',
+                                                                                                        }"
+                                                                    style="padding: 5px;border-radius: 5px;cursor: pointer">
+                                                                    <i class="iconify pi pi-check-circle"></i>
+                                                                    {{ scrs.label}}
+                                                                </span>
+                                                            </li>
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="audit-check-group">
+                                                    <span [ngClass]="{
+                                                                                        'verydisatisfied': qstn.score_code === 'Very Dissatisfied',
+                                                                                        'dissatisfied': qstn.score_code === 'Dissatisfied',
+                                                                                        'fair': qstn.score_code === 'Fair',
+                                                                                        'satisfied': qstn.score_code === 'Satisfied',
+                                                                                        'very-dissatisfied': qstn.score_code === 'Very Satisfied',
+                                                                                    }">
+                                                        {{ qstn.score_code| titlecase }}</span>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                </table>
+                                }
+                                <label>Remarks</label>
+                                <textarea pTextarea [(ngModel)]="scRspnse.remarks" rows="10" name="remarks"
+                                    class="form-control"></textarea>
+                                }@else{
+                                Survey questionnaire not found
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<style>
+    .yellow-class {
+        background-color: yellow !important;
+    }
+
+    .error {
+        color: red;
+        font-weight: bold;
+    }
+
+    textarea {
+        height: 100% !important;
+    }
+
+    .verydisatisfied {
+        background-color: red;
+    }
+
+    .dissatisfied {
+        background-color: orange;
+    }
+
+    .fair {
+        background-color: yellow;
+    }
+
+    .satisfied {
+        background-color: lightgreen;
+    }
+
+    .very-dissatisfied {
+        background-color: green;
+    }
+</style>

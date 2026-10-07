@@ -1,0 +1,92 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="qms-head">
+      <div class="d-flex align-items-center gap-2">
+        <a href="javascript:;" class="icon-btn-square" (click)="goBack()"><i class="iconify pi pi-arrow-left"></i></a>
+        <div>
+          <h3>{{ existing() ? 'Edit Risk ' + existing().risk_number : 'Report New Risk' }}
+            @if (existing()) { <span class="qms-chip ms-1" [attr.data-s]="existing().status">{{ existing().status }}</span> }</h3>
+          <p class="qms-sub">NABH IMS.5 - risks are identified, documented, assessed and mitigated proactively</p>
+        </div>
+      </div>
+      @if (canEdit()) {
+      <div class="qms-actions">
+        @if (!existing() || existing().status_code === 'DRAFT') {
+        <button class="btn btn-light" [disabled]="saving()" (click)="save('SAVE')"><i class="pi pi-save me-1"></i>Save Draft</button>
+        <button class="btn btn-primary" [disabled]="saving()" (click)="save('SUBMIT')"><i class="pi pi-send me-1"></i>Submit Final</button>
+        } @else {
+        <button class="btn btn-primary" [disabled]="saving()" (click)="save('SUBMIT')"><i class="pi pi-save me-1"></i>Save Changes</button>
+        }
+      </div>
+      }
+    </div>
+    @if (!canEdit()) { <div class="qms-note warn">This risk can no longer be edited here (status {{ existing()?.status }}).</div> }
+
+    <fieldset class="qms-form" [disabled]="!canEdit()">
+      <div class="qms-card">
+        <div class="qms-section-title">Risk</div>
+        <div class="row g-3">
+          <div class="col-lg-3 col-md-6 col-12">
+            <label>Date of Risk</label>
+            <div class="qms-req"><p-datepicker [(ngModel)]="m.date_of_risk" dateFormat="dd-mm-yy" [maxDate]="today" [showIcon]="true" [disabled]="!canEdit()" appendTo="body" /></div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-12">
+            <label>Risk Type</label>
+            <div class="qms-req"><p-select [options]="lists.RISK_TYPE" [(ngModel)]="m.risk_type_id" [filter]="true" placeholder="Select type" [disabled]="!canEdit()" appendTo="body" /></div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-12">
+            <label>Department</label>
+            <div class="qms-req"><p-select [options]="departmentList" [(ngModel)]="m.department_id" [filter]="true" placeholder="Select department" [disabled]="!canEdit()" appendTo="body" /></div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-12">
+            <label>Location</label>
+            <p-select [options]="lists.RISK_LOC" [(ngModel)]="m.location_id" [filter]="true" [showClear]="true" placeholder="Select location" [disabled]="!canEdit()" appendTo="body" />
+          </div>
+          <div class="col-12">
+            <label>Description of Risk <span class="qms-count" [class.bad]="len(m.description) < 100" [class.good]="len(m.description) >= 100">({{ len(m.description) }} / min 100)</span></label>
+            <div class="qms-req"><textarea pTextarea rows="4" class="form-control w-100" [(ngModel)]="m.description" placeholder="What was observed or reported - the scenario that could cause harm"></textarea></div>
+          </div>
+          <div class="col-lg-8 col-12">
+            <label>Impact for Risk</label>
+            <div class="qms-req"><textarea pTextarea rows="2" class="form-control w-100" [(ngModel)]="m.impact_description" placeholder="What could happen: patient harm, legal issue, financial loss, reputational damage ..."></textarea></div>
+          </div>
+          <div class="col-lg-4 col-12">
+            <label>Impact Type <small class="text-muted">(WHO)</small></label>
+            <div class="qms-req"><p-select [options]="lists.RISK_IMPACT_TYPE" [(ngModel)]="m.impact_type_id" placeholder="Select" [disabled]="!canEdit()" appendTo="body" /></div>
+          </div>
+          <div class="col-lg-6 col-12">
+            <label>Risk Scoring <small class="text-muted">(your view, 1 = very low ... 5 = very high)</small></label>
+            <div class="qms-req score-pills">
+              @for (s of scores; track s) {
+              <button type="button" [class.on]="m.reporter_score === s" [attr.data-v]="s" (click)="m.reporter_score = s" [disabled]="!canEdit()" [title]="scoreHint[s]">{{ s }}</button>
+              }
+            </div>
+          </div>
+          <div class="col-lg-6 col-12">
+            <label>Risk Owner(s)</label>
+            <div class="qms-req"><p-multiselect [options]="staffList" [(ngModel)]="m.owner_ids" [filter]="true" display="chip" placeholder="Select owner(s)" [disabled]="!canEdit()" appendTo="body" /></div>
+          </div>
+          <div class="col-12">
+            <label>Immediate Action Taken <small class="text-muted">(if any)</small></label>
+            <textarea pTextarea rows="2" class="form-control w-100" [(ngModel)]="m.immediate_action"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="qms-card">
+        <div class="qms-section-title">Supporting Documents <small>optional</small></div>
+        @if (existingFiles().length) {
+        <ul class="ex-files">
+          @for (f of existingFiles(); track f.file_id) {
+          <li><a [href]="f.fileOrImageUrl" target="_blank">{{ f.file_name }}</a>
+            @if (canEdit()) { <a href="javascript:;" class="ms-2" (click)="removeExisting(f)"><i class="pi pi-times-circle text-danger"></i></a> }</li>
+          }
+        </ul>
+        }
+        @if (canEdit() && maxNewFiles() > 0) {
+        <qms-file-picker #picker [max]="maxNewFiles()" accept=".pdf,.jpg,.jpeg,.png" hint="PDF, JPG, PNG up to 5 MB" label="Attach documents" />
+        }
+      </div>
+    </fieldset>
+  </div>
+</section>

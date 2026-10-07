@@ -1,0 +1,177 @@
+<section class="wrapper-body">
+    <div class="container-fluid">
+        <!-- <section class="status-card">
+            <div class="heading-flex-2">
+                <h3 class="main-heading mb-0"></h3>
+                <div class="main-heading-link flexblock">
+                    <h3 class="main-heading">Hello Admin!,</h3>
+                    <p>Good Morning</p>
+                </div>
+            </div>
+        </section> -->
+        <div class="card-tab mt-0">
+            <ul>
+                <li class="active">
+                    <a href="javascript:;" (click)="onPageRoute('management-dashboard')">Management Dashboard</a>
+                </li>
+                <li><a href="javascript:;" (click)="onPageRoute('hr-dashboard')">HR Dashboard</a></li>
+            </ul>
+        </div>
+        <section class="chart-section mt-3 mb-3">
+            <div class="containers">
+                <div class="row">
+                    <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+                        <div class="card-style1 style4 cardDepartment">
+                            <div class="card-header">
+                                <h5>Department Wise Audits</h5>
+                                <a href="javascript:;" class="btn btn-primary"
+                                    (click)="onPageRoute('audit-master-dashboard')">View
+                                    All</a>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-wrapper">
+                                    <app-department-audit-overall #incidentRpt></app-department-audit-overall>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+                        <div class="card-style1 style4 cardIncident">
+                            <div class="card-header">
+                                <h5>Department Wise Incidents</h5>
+                                <a href="javascript:;" class="btn btn-primary"
+                                    (click)="onPageRoute('incident-dashboard')">View
+                                    All</a>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-wrapper">
+                                    <app-locations-wise-incident #lctnWiseRpt></app-locations-wise-incident>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+                        <div class="card-style1 style4 cardRisk">
+                            <div class="card-header">
+                                <h5>Department Wise Risks</h5>
+                                <a href="javascript:;" class="btn btn-primary"
+                                    (click)="onPageRoute('risk-dashboard')">View All</a>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-wrapper">
+                                    <app-incident-happens #depRisRpt></app-incident-happens>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-8 col-lg-4 col-md-6 col-12">
+                        <div class="card-style1 style4 cardprem">
+                            <div class="card-header">
+                                <h5>PREM Feedback Reports</h5>
+                                <a href="javascript:;" class="btn btn-primary"
+                                    (click)="onPageRoute('prem-daily-feedbacks')">View
+                                    All</a>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-wrapper">
+                                    <div class="dropdown dropdown-style1 chart-filter1">
+                                        <button class="btn btn-light dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            {{ premText }} <span class="iconify"
+                                                data-icon="akar-icons:chevron-down"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            @for (option of premList; track option) {
+                                            <li>
+                                                <a class="dropdown-item" href="javascript:;"
+                                                    (click)="premChartInfo(option)">
+                                                    {{ option }}
+                                                </a>
+                                            </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                    <app-comparison-barchart #rCCRpt></app-comparison-barchart>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+                        <div class="card-style1 style4 cardComplaint">
+                            <div class="card-header">
+                                <h5>Complaint Reports</h5>
+                                <a href="javascript:;" class="btn btn-primary"
+                                    (click)="onPageRoute('grievance-dashboard')">View
+                                    All</a>
+                            </div>
+                            <div class="card-body">
+                                <div class="complaints-info">
+                                    <p>Complaints</p>
+                                    <h5>{{cmplntCnt}}</h5>
+                                </div>
+                                <div class="chart-wrapper">
+                                    <app-training-wise-reports #areaChart></app-training-wise-reports>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+                        <div class="card-style1 style4">
+                            <div class="card-header">
+                                <h5>Upcoming Renewals</h5>
+                                <a href="javascript:;" class="btn btn-primary"
+                                    (click)="onPageRoute('license-tracker-dashboard')">View All</a>
+                            </div>
+                            <div class="card-body">
+                                @for(upRnwls of upcmngRnwls; track $index;){
+                                <div class="grid-report">
+                                    <div class="icon">
+                                        <i class="iconify pi pi-clock primeicons-size"></i>
+                                    </div>
+                                    <div class="content">
+                                        <h5><a href="javascript:;">{{upRnwls.title}}</a></h5>
+                                        <p>Expiry On <span style="color: red">{{upRnwls.expiry_dt}}</span></p>
+                                        <p>Renewal On <span style="color: green">{{upRnwls.renewal_dt}}</span></p>
+                                    </div>
+                                </div>
+                                }@empty{
+                                <div style="text-align: center">No Renewals.</div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-8 col-lg-8 col-md-6 col-12">
+                        <div class="card-style1 style4 cardKpi">
+                            <div class="card-header">
+                                <h5>KPI Management Reports</h5>
+                                <a href="javascript:;" class="btn btn-primary"
+                                    (click)="onPageRoute('kpi-reports-dashboard')">View
+                                    All</a>
+                            </div>
+                            <div class="card-body">
+                                <div class="dropdown dropdown-style1 chart-filter1">
+                                    <button class="btn btn-light dropdown-toggle" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        {{ kpiText }} <span class="iconify" data-icon="akar-icons:chevron-down"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        @for (option of kpiList; track option) {
+                                        <li>
+                                            <a class="dropdown-item" href="javascript:;" (click)="kpiChartInfo(option)">
+                                                {{ option }}
+                                            </a>
+                                        </li>
+                                        }
+                                    </ul>
+                                </div>
+                                <div class="chart-wrapper">
+                                    <app-kpi-management-reports-overall #kpi></app-kpi-management-reports-overall>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>

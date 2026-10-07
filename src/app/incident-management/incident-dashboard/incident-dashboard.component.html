@@ -1,0 +1,119 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="qms-head">
+      <div>
+        <h3>Incident Management</h3>
+        <p class="qms-sub">Report, investigate, review and close incidents</p>
+      </div>
+      <div class="qms-actions">
+        <div class="qms-pills">
+          <button type="button" [class.on]="period() === 'MONTH'" (click)="setPeriod('MONTH')">This Month</button>
+          <button type="button" [class.on]="period() === 'YEAR'" (click)="setPeriod('YEAR')">This Year</button>
+        </div>
+        @if (access().access_add) {
+        <button class="btn btn-success" (click)="newIncident()"><i class="pi pi-plus-circle me-1"></i>Report Incident</button>
+        }
+      </div>
+    </div>
+
+    <!-- SRS 2.6 cards: click to filter the list -->
+    <div class="qms-tiles">
+      <div class="qms-tile t-yellow" [class.on]="filters.status === 'Reported'" (click)="cardFilter('Reported')">
+        <div class="qms-tile-num">{{ dash().cards?.opened || 0 }}</div>
+        <div class="qms-tile-label">Opened (to assign)</div>
+        <div class="qms-tile-foot">Updated {{ dash().cards?.opened_updated || '-' }}</div>
+      </div>
+      <div class="qms-tile t-teal" [class.on]="filters.status === 'Under Investigation'" (click)="cardFilter('Under Investigation')">
+        <div class="qms-tile-num">{{ dash().cards?.investigated || 0 }}</div>
+        <div class="qms-tile-label">Under Investigation</div>
+        <div class="qms-tile-foot">Updated {{ dash().cards?.investigated_updated || '-' }}</div>
+      </div>
+      <div class="qms-tile t-pink" [class.on]="filters.status === 'Pending Closure'" (click)="cardFilter('Pending Closure')">
+        <div class="qms-tile-num">{{ (dash().cards?.reviewed || 0) }}@if (dash().cards?.hod_review) {<small class="ms-2 text-muted fs-6">+{{ dash().cards?.hod_review }} at HOD</small>}</div>
+        <div class="qms-tile-label">Reviewed (pending closure)</div>
+        <div class="qms-tile-foot">Updated {{ dash().cards?.reviewed_updated || '-' }}</div>
+      </div>
+      <div class="qms-tile t-blue" [class.on]="filters.status === 'Closed'" (click)="cardFilter('Closed')">
+        <div class="qms-tile-num">{{ dash().cards?.closed || 0 }}</div>
+        <div class="qms-tile-label">Closed</div>
+        <div class="qms-tile-foot">Updated {{ dash().cards?.closed_updated || '-' }}</div>
+      </div>
+    </div>
+
+    <div class="row g-3 mb-1">
+      <div class="col-xl-3 col-md-6 col-12">
+        <div class="qms-card h-100">
+          <div class="qms-section-title">Incident Happened With</div>
+          <qms-bar-list [items]="dash().happened_with" color="#ec4899" />
+        </div>
+      </div>
+      <div class="col-xl-3 col-md-6 col-12">
+        <div class="qms-card h-100">
+          <div class="qms-section-title">Category Wise</div>
+          <qms-bar-list [items]="dash().by_type" color="#3b6fd8" />
+        </div>
+      </div>
+      <div class="col-xl-3 col-md-6 col-12">
+        <div class="qms-card h-100">
+          <div class="qms-section-title">Location Wise</div>
+          <qms-bar-list [items]="dash().by_location" color="#14b8a6" />
+        </div>
+      </div>
+      <div class="col-xl-3 col-md-6 col-12">
+        <div class="qms-card h-100">
+          <div class="qms-section-title">{{ period() === 'MONTH' ? 'This Month (by day)' : 'This Year (by month)' }}</div>
+          <div class="trend">
+            @for (t of dash().trend; track $index) {
+            <div class="trend-col" [title]="t.label + ': ' + t.count">
+              <span class="trend-bar" [style.height.%]="trendPct(t.count)"></span>
+              <span class="trend-lbl">{{ t.label }}</span>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="qms-card">
+      <div class="qms-section-title">
+        Incidents <small>{{ total() }} found</small>
+        <div class="qms-right d-flex gap-2">
+          <button class="btn btn-light btn-sm" (click)="showFilters = !showFilters"><i class="pi pi-filter me-1"></i>Filters</button>
+        </div>
+      </div>
+      <div class="qms-tabs">
+        <button class="btn btn-sm" [class.btn-primary]="!filters.queue" [class.btn-light]="filters.queue" (click)="setQueue(null)">All</button>
+        <button class="btn btn-sm" [class.btn-primary]="filters.queue === 'MINE'" [class.btn-light]="filters.queue !== 'MINE'" (click)="setQueue('MINE')">
+          <i class="pi pi-inbox me-1"></i>Waiting for me</button>
+      </div>
+      @if (showFilters) {
+      <div class="row g-2 mb-2 qms-form">
+        <div class="col-lg-3 col-md-6 col-12">
+          <input pInputText class="form-control" placeholder="Search code, type, name ..." [(ngModel)]="filters.search" (keyup.enter)="applyFilters()">
+        </div>
+        <div class="col-lg-2 col-md-6 col-12">
+          <p-select [options]="statusList" [(ngModel)]="filters.status" placeholder="Any status" [showClear]="true" appendTo="body" />
+        </div>
+        <div class="col-lg-3 col-md-6 col-12">
+          <p-select [options]="typeList" [(ngModel)]="filters.incident_type_id" placeholder="Any type" [filter]="true" [showClear]="true" appendTo="body" />
+        </div>
+        <div class="col-lg-2 col-md-6 col-12">
+          <p-select [options]="departmentList" [(ngModel)]="filters.department_id" placeholder="Any department" [filter]="true" [showClear]="true" appendTo="body" />
+        </div>
+        <div class="col-lg-2 col-12 d-flex gap-2">
+          <button class="btn btn-primary flex-fill" (click)="applyFilters()">Apply</button>
+          <button class="btn btn-light flex-fill" (click)="clearFilters()">Clear</button>
+        </div>
+      </div>
+      }
+      <app-incident-list [rows]="rows()" [loading]="loading()" (open)="openIncident($event)" />
+      @if (total() > pageSize) {
+      <div class="qms-pager">
+        <button class="btn btn-light btn-sm" [disabled]="page <= 1" (click)="goPage(page - 1)"><i class="pi pi-angle-left"></i></button>
+        <span>Page {{ page }} of {{ pages() }}</span>
+        <button class="btn btn-light btn-sm" [disabled]="page >= pages()" (click)="goPage(page + 1)"><i class="pi pi-angle-right"></i></button>
+      </div>
+      }
+    </div>
+  </div>
+</section>

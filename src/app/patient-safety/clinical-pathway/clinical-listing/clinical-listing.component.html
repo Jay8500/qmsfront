@@ -1,0 +1,169 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="row">
+      <div class="col-md-12 col-12">
+        <div class="card-style2">
+          <div class="card-header backoption table-search">
+            <div class="row">
+              <div class="col-md-5 col-12">
+                <div class="heading-left">
+                  <a href="javascript:;" class="icon-btn-square" (click)="goBack()"><span class="iconify" data-icon="famicons:arrow-back-outline"></span></a>
+                  <h3>Clinical Pathway History</h3>
+                </div>
+              </div>
+              <div class="col-md-7 col-12">
+                <div class="form-right">
+                  <div class="table-input-search">
+                    <input type="text" class="form-control" placeholder="Search records.." />
+                    <span class="iconify" data-icon="iconamoon:search-light"></span>
+                  </div>
+                  <a href="javascript:;" ngbTooltip="Filter" placement="top" class="icon-btn-square" (click)="filterToggle()"><span class="iconify" data-icon="mage:filter"></span></a>
+                  <div class="dropdown dropdown-style1 ms-2">
+                    <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Download Report <span class="iconify" data-icon="akar-icons:chevron-down"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                      <li><a class="dropdown-item" href="javascript:;">Download Word</a></li>
+                      <li><a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          @if (showFilter) {
+            <div class="filter-box form-sm">
+              <div class="row">
+                <div class="col-md-11 col-12">
+                  <div class="row gx-2">
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                        <input type="text" class="form-control" placeholder="By UHID">
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                        <select class="form-select">
+                          <option>By CP Type</option>
+                          <option>CABG</option>
+                          <option>TKR</option>
+                          <option>Dialysis</option>
+                          <option>Chemotherapy</option>
+                          <option>Stroke</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                        <select class="form-select">
+                          <option>By Consultant</option>
+                          <option>Dr. Mukesh Kumar(2856)</option>
+                          <option>Dr. Karthkeyan(2888)</option>
+                          <option>Dr. Vinoth(2832)</option>
+                          <option>Dr. Selva Kumar(2835)</option>
+                          <option>Dr. Kaviya (2845)</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                        <input type="text" class="form-control" placeholder="By DOA">
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                        <input type="text" class="form-control" placeholder="By DOS">
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                        <input type="text" class="form-control" placeholder="By DOD">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1 col-12 ps-0">
+                  <button class="btn btn-primary w-100">Filter</button>
+                </div>
+              </div>
+            </div>
+          }
+
+          <div class="card-body table-style1 table-responsive radius-4">
+            <div class="fixed-header-table">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">S.No</th>
+                    <th width="15%" scope="col" sortable="uhID" (sort)="onSort($event)">UHID <span class="iconify" data-icon="bxs:sort-alt"></span></th>
+                    <th width="15%" scope="col" sortable="cpType" (sort)="onSort($event)">CP type <span class="iconify" data-icon="bxs:sort-alt"></span></th>
+                    <th scope="col" sortable="consultant" (sort)="onSort($event)">Consultant  </th>
+                    <th scope="col" sortable="doa" (sort)="onSort($event)">DOA  </th>
+                    <th scope="col" sortable="dos" (sort)="onSort($event)">DOS </th>
+                    <th scope="col" sortable="dod" (sort)="onSort($event)">DOD </th>
+                    <th scope="col" sortable="compliance" (sort)="onSort($event)">Compliance </th>
+                    <th scope="col" sortable="status" (sort)="onSort($event)">Status </th>
+                    <th scope="col" class="text-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (auditTable of countries; track auditTable.uhID) {
+                    <tr>
+                      <td scope="row">{{ auditTable.id }}</td>
+                      <td>{{ auditTable.uhID }}</td>
+                      <td>{{ auditTable.cpType }}</td>
+                      <td>{{ auditTable.consultant }}</td>
+                      <td>{{ auditTable.doa }}</td>
+                      <td>{{ auditTable.dos }}</td>
+                      <td>{{ auditTable.dod }}</td>
+                      <td>{{ auditTable.compliance }}</td>
+                                            <td [ngClass]="{
+                                                'text-danger': auditTable.status === 'Draft',
+                                                'text-success': auditTable.status === 'Submitted',
+                                              }">
+                        {{ auditTable.status }}
+                      </td>
+                      <td>
+                        <div class="action-dropdown float-end">
+                          <ul>
+                            <li>
+                              <a href="javascript:;" routerLink="/clinical-details"><span class="iconify" data-icon="lets-icons:view-alt-fill"></span></a>
+                            </li>
+                            <li>
+                              <a href="javascript:;"><span class="iconify" data-icon="material-symbols:download-rounded"></span></a>
+                            </li>
+                          </ul>
+                        </div>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+            <nav aria-label="Page navigation pagination text-end">
+              <ul class="pagination d-flex justify-content-end">
+                <li class="page-item next">
+                  <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">...</a></li>
+                <li class="page-item"><a class="page-link" href="#">10</a></li>
+                <li class="page-item prev">
+                  <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

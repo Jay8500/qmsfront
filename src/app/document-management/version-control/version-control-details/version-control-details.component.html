@@ -1,0 +1,234 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-6 col-12">
+                                <div class="heading-left">
+                                    <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                                        <i class="iconify pi pi-arrow-left"></i>
+                                    </a>
+                                    <h3>{{ doc()?.document_name || 'Document' }}
+                                        @if(doc()?.current_version_no){ <small class="text-muted">v{{ doc()?.current_version_no }}</small> }
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-right">
+                                    @if(canEdit()){
+                                    <button class="btn btn-light" (click)="onEdit()"><i class="pi pi-pencil me-1"></i>Edit</button>
+                                    }
+                                    @if(canSubmit()){
+                                    <button class="btn btn-primary" [disabled]="saving()" (click)="onSubmitForApproval()">
+                                        <i class="pi pi-send me-1"></i>Submit for Approval</button>
+                                    }
+                                    @if(doc()?.can_approve){
+                                    <button class="btn btn-danger" [disabled]="saving()" (click)="openDecision('REJECT')">
+                                        <i class="pi pi-times me-1"></i>Reject</button>
+                                    <button class="btn btn-success" [disabled]="saving()" (click)="openDecision('APPROVE')">
+                                        <i class="pi pi-check me-1"></i>Approve (Level {{ doc()?.pending_level }})</button>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if(doc(); as d){
+                    <div class="card-body">
+                        <div class="audit-info-cover">
+                            <div class="audit-status">
+                                <div class="row">
+                                    <div class="col-md-6 col-12">
+                                        <div class="left-content">
+                                            <h5>{{ d.document_no || d.document_code }}</h5>
+                                            <p>Last Updated On <strong>{{ d.updated_at || d.created_at }}</strong></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="right-content text-end">
+                                            <p class="mb-1">Status</p>
+                                            <span [class]="statusClass(d.status)">{{ d.status }}</span>
+                                            @if(d.pending_level){
+                                            <p class="mb-0 mt-1"><small>Waiting for Level {{ d.pending_level }}: {{ d.pending_with }}</small></p>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @if(d.status == 'Rejected' && d.rejected_reason){
+                            <div class="vc-note vc-note-danger">Rejected: {{ d.rejected_reason }}</div>
+                            }
+                            <div class="table-audit table-responsive">
+                                <table class="table table-bordered table-line mb-0">
+                                    <tr>
+                                        <th>Document ID</th>
+                                        <th>Type</th>
+                                        <th>Department</th>
+                                        <th>Responsible Person</th>
+                                        <th>Approval Level</th>
+                                        <th>Review Date</th>
+                                        <th>Created On</th>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ d.document_no }}</td>
+                                        <td>{{ d.document_type }}</td>
+                                        <td>{{ d.department_name || '-' }}</td>
+                                        <td>{{ d.responsible_person || '-' }}</td>
+                                        <td>{{ d.approval_level_name || '-' }}</td>
+                                        <td>{{ (d.review_date | appDate:'date') || '-' }}</td>
+                                        <td>{{ d.created_at }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="row g-3 mt-1">
+                                <div class="col-md-4 col-12">
+                                    <div class="vc-text-box"><label>Purpose</label><p>{{ d.purpose || '-' }}</p></div>
+                                </div>
+                                <div class="col-md-8 col-12">
+                                    <div class="vc-text-box"><label>Description</label><p>{{ d.description || '-' }}</p></div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="vc-text-box">
+                                        <label>Change Summary @if(d.change_type){ <small>({{ d.change_type | titlecase }} change)</small> }</label>
+                                        <p>{{ d.change_summary || '-' }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6 col-12">
+                                <div class="audit-info-cover">
+                                    <div class="audit-status"><div class="left-content">
+                                        <h5>Files</h5><p>{{ activeFiles().length }} file(s)</p>
+                                    </div></div>
+                                    <ul class="vc-files">
+                                        @for(f of d.version_history; track f.file_id){
+                                        @if(f.version_status != 'Removed'){
+                                        <li>
+                                            <i class="pi pi-file me-1"></i>
+                                            <a class="link-blue" style="cursor:pointer" (click)="openFile(f)">{{ f.file_name }}</a>
+                                            <span class="vc-badge ms-2" [attr.data-status]="f.version_status">
+                                                {{ f.version_no == 'Draft' ? 'Draft' : 'v' + f.version_no + ' · ' + f.version_status }}</span>
+                                            <small class="text-muted ms-auto">{{ f.approved_at || f.uploaded_at }}</small>
+                                        </li>
+                                        }
+                                        } @empty {
+                                        <li class="text-muted">No files</li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-12">
+                                <div class="audit-info-cover">
+                                    <div class="audit-status"><div class="left-content">
+                                        <h5>Access Control</h5><p>Who can see this document in the Document Library</p>
+                                    </div></div>
+                                    <table class="table table-bordered table-sm mb-0">
+                                        <thead class="table-light">
+                                            <tr><th>Department</th><th>Role</th><th>Employee</th><th>View</th><th>Download</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            @for(ac of d.access_control; track ac.document_access_id){
+                                            <tr>
+                                                <td>{{ ac.department_name || 'Any' }}</td>
+                                                <td>{{ ac.role_name || 'Any' }}</td>
+                                                <td>{{ ac.employee_name || 'Any' }}</td>
+                                                <td>{{ ac.can_view ? 'Yes' : 'No' }}</td>
+                                                <td>{{ ac.can_download ? 'Yes' : 'No' }}</td>
+                                            </tr>
+                                            } @empty {
+                                            <tr><td colspan="5">No restriction - every user can view; download for Admin, Quality,
+                                                Compliance, Auditor and Management only.</td></tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="audit-info-cover">
+                            <div class="audit-status"><div class="left-content">
+                                <h5>Approval Trail</h5><p>Submissions and decisions, newest first</p>
+                            </div></div>
+                            <div class="table-audit tablehrz table-responsive">
+                                <table class="table table-bordered table-line mb-0">
+                                    <thead class="table-light">
+                                        <tr><th>Submitted</th><th>Level</th><th>Approver</th><th>Decision</th><th>Decided On</th><th>Comments</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        @for(a of d.approval_history; track $index){
+                                        <tr>
+                                            <td>{{ a.submitted_at }} <small class="text-muted">by {{ a.submitted_by }}</small></td>
+                                            <td>Level {{ a.approval_level }}</td>
+                                            <td>{{ a.approver }}</td>
+                                            <td><span class="vc-badge" [attr.data-status]="a.approve_status == 'Pending' ? 'Submitted' : (a.approve_status == 'Approved' ? 'Approved' : 'Rejected')">{{ a.approve_status }}</span></td>
+                                            <td>{{ a.action_at || '-' }}</td>
+                                            <td>{{ a.remarks || '' }}</td>
+                                        </tr>
+                                        } @empty {
+                                        <tr><td colspan="6">Not submitted yet</td></tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="audit-info-cover">
+                            <div class="audit-status"><div class="left-content">
+                                <h5>Version History</h5><p>v1.0 first approval; Minor +0.1; Major next whole number</p>
+                            </div></div>
+                            <div class="table-audit tablehrz table-responsive">
+                                <table class="table table-bordered table-line mb-0">
+                                    <thead class="table-light">
+                                        <tr><th>Version</th><th>File</th><th>Status</th><th>Change</th><th>Uploaded</th><th>Approved</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        @for(v of d.version_history; track v.file_id){
+                                        <tr>
+                                            <td>{{ v.version_no == 'Draft' ? 'Draft' : 'v' + v.version_no }}</td>
+                                            <td>{{ v.file_name }}</td>
+                                            <td>{{ v.version_status }}</td>
+                                            <td>{{ v.change_type | titlecase }}
+                                                @if(v.change_summary){ <small class="d-block text-muted vc-clip">{{ v.change_summary }}</small> }</td>
+                                            <td>{{ v.uploaded_at }} <small class="d-block text-muted">{{ v.uploaded_by }}</small></td>
+                                            <td>{{ v.approved_at || '-' }} <small class="d-block text-muted">{{ v.approved_by }}</small></td>
+                                        </tr>
+                                        } @empty {
+                                        <tr><td colspan="6">No versions</td></tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<p-dialog [header]="decision == 'APPROVE' ? 'Approve Document' : 'Reject Document'" [visible]="showDecision()"
+    (visibleChange)="showDecision.set($event)" [modal]="true" [style]="{ width: '520px' }"
+    [breakpoints]="{ '768px': '95vw' }" [draggable]="false">
+    <p class="mb-2"><small>{{ doc()?.document_name }} ({{ doc()?.document_no }}) - Level {{ doc()?.pending_level }}
+        @if(decision == 'APPROVE' && doc()?.pending_level == 1 && doc()?.approval_level_type == 'L1_L2'){
+        . After your approval it goes to Level 2 (COO / MD).
+        }
+        @if(decision == 'REJECT'){ . The owner corrects it and submits again. }
+    </small></p>
+    <label>Comments @if(decision == 'REJECT'){<span class="text-danger">*</span>}</label>
+    <textarea pTextarea [(ngModel)]="remarks" rows="3" maxlength="128" class="form-control w-full"
+        [placeholder]="decision == 'REJECT' ? 'Reason for rejection (required)' : 'Optional'"></textarea>
+    <ng-template #footer>
+        <button class="btn btn-light me-2" (click)="showDecision.set(false)">Close</button>
+        @if(decision == 'APPROVE'){
+        <button class="btn btn-success" [disabled]="saving()" (click)="onDecisionSave()">Approve</button>
+        } @else {
+        <button class="btn btn-danger" [disabled]="saving()" (click)="onDecisionSave()">Reject</button>
+        }
+    </ng-template>
+</p-dialog>

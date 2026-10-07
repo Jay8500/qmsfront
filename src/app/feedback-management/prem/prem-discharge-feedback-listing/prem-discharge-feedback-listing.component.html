@@ -1,0 +1,187 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="row">
+      <div class="col-md-12 col-12">
+        <div class="card-style2">
+          <div class="card-tab">
+            <ul>
+              <li><a href="javascript:;" routerLink="/prem-daily-feedback-listing">Daily Feedbacks</a></li>
+              <li class="active"><a href="javascript:;" routerLink="/prem-discharge-feedback-listing">Discharge Feedbacks</a></li>
+              <li><a href="javascript:;" routerLink="/prem-outpatint-feedback-listing">Out Patient Feedbacks</a></li>
+            </ul>
+          </div>
+          <div class="card-header backoption table-search">
+            <div class="row">
+              <div class="col-md-5 col-12">
+                <div class="heading-left">
+                  <a href="javascript:;" class="icon-btn-square" (click)="goBack()"><span class="iconify" data-icon="famicons:arrow-back-outline"></span></a>
+                  <h3>PREM Discharge Feedback History</h3>
+                </div>
+              </div>
+              <div class="col-md-7 col-12">
+                <div class="form-right">
+                  <div class="table-input-search">
+                    <input type="text" class="form-control" placeholder="Search records.." />
+                    <span class="iconify" data-icon="iconamoon:search-light"></span>
+                  </div>
+                  <a href="javascript:;" ngbTooltip="Filter" placement="top" class="icon-btn-square" (click)="filterToggle()"><span class="iconify" data-icon="mage:filter"></span></a>
+                  <div class="dropdown dropdown-style1 ms-2">
+                    <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Download Report <span class="iconify" data-icon="akar-icons:chevron-down"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                      <li><a class="dropdown-item" href="javascript:;">Download Word</a></li>
+                      <li><a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          @if (showFilter) {
+            <div class="filter-box form-sm">
+              <div class="row">
+                <div class="col-md-11 col-12">
+                  <div class="row gx-2">
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                        <input class="form-control" placeholder="Patient Name / ID" />
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                        <select class="form-select">
+                          <option>Department</option>
+                          <option>Option 2</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                        <select class="form-select">
+                          <option>By Time <Time></Time></option>
+                          <option>Option 2</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                        <input class="form-control" placeholder="By Date" />
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                        <select class="form-select">
+                          <option>Choose Status</option>
+                          <option>Option 2</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                        <select class="form-select">
+                          <option>Choose Status</option>
+                          <option>Option 2</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1 col-12 ps-0">
+                  <button class="btn btn-primary w-100">Filter</button>
+                </div>
+              </div>
+            </div>
+          }
+
+          <div class="card-body table-style1 table-responsive radius-4">
+            <div class="fixed-header-table">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">S.No</th>
+                    <th scope="col" sortable="auditID" (sort)="onSort($event)">UHID <span class="iconify" data-icon="bxs:sort-alt"></span></th>
+                    <th scope="col" sortable="department" (sort)="onSort($event)">Department <span class="iconify" data-icon="bxs:sort-alt"></span></th>
+                    <th width="20%" scope="col" sortable="suggestions" (sort)="onSort($event)">Suggestions <span class="iconify" data-icon="bxs:sort-alt"></span></th>
+                    <th width="20%" scope="col" sortable="compliance" (sort)="onSort($event)">Description  </th>
+                    <th scope="col" sortable="auditDate" (sort)="onSort($event)">Date & Time of Feedback </th>
+                    <th scope="col" sortable="status" (sort)="onSort($event)">Status</th>
+                    <th scope="col" class="text-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (auditTable of countries; track auditTable.auditID) {
+                    <tr>
+                      <td scope="row">{{ auditTable.id }}</td>
+                      <td>
+                        <p class="fwbold">Thangamani</p>
+                        <p>#7463736</p>
+                      </td>
+                      <td>{{ auditTable.department }} </td>
+                      <td>{{ auditTable.suggestions }}</td>
+                      <td>{{ auditTable.compliance }}</td>
+                      <td>{{ auditTable.auditDate }}</td>
+                                        <td [ngClass]="{
+                                            'text-success': auditTable.status === 'Resolved',
+                                            'text-warning': auditTable.status === 'Review'
+                                            }">
+                        {{ auditTable.status }}
+                      </td>
+                      <td>
+                        <div class="action-rowflex">
+                          <div class="action-dropdown float-end">
+                            <ul>
+                              <li>
+                                <a href="javascript:;" routerLink="/prem-discharge-feedback-details"><span class="iconify" data-icon="lets-icons:view-alt-fill"></span></a>
+                              </li>
+                            </ul>
+                          </div>
+                          <div class="actiondot-dropdown">
+                            <div class="btn-group ms-2">
+                              <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="iconify" data-icon="tabler:dots"></span>
+                              </button>
+                              <ul class="dropdown-menu">
+                                <li>
+                                  <a class="dropdown-item" href="javascript:;"><span class="iconify" data-icon="lucide:folder-down"></span> Option1</a>
+                                </li>
+                                <li>
+                                  <a class="dropdown-item" href="javascript:;"><span class="iconify" data-icon="lucide:folder-down"></span> Option2</a>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+            <nav aria-label="Page navigation pagination text-end">
+              <ul class="pagination d-flex justify-content-end">
+                <li class="page-item next">
+                  <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">...</a></li>
+                <li class="page-item"><a class="page-link" href="#">10</a></li>
+                <li class="page-item prev">
+                  <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,100 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="qms-head">
+      <div>
+        <h3>Evaluation &amp; Risk Scoring</h3>
+        <p class="qms-sub">Department evaluation: score the risk and plan the mitigation (Risk SRS 2.2)</p>
+      </div>
+    </div>
+
+    @if (risk(); as r) {
+    <div class="row g-3">
+      <div class="col-xl-4 col-12">
+        <div class="qms-card">
+          <div class="qms-section-title">{{ r.risk_number }} <span class="qms-chip" [attr.data-s]="r.status">{{ r.status }}</span>
+            <a href="javascript:;" class="qms-right small" (click)="openFull()">Full details</a></div>
+          <div class="qms-kv one">
+            <div><label>Type</label><span>{{ r.risk_type }}</span></div>
+            <div><label>Department / Location</label><span>{{ r.department }} · {{ r.location || '-' }}</span></div>
+            <div><label>Impact type · reporter score</label><span>{{ r.impact_type || '-' }} · {{ r.reporter_score || '-' }}/5</span></div>
+          </div>
+          <div class="qms-text-box mt-2"><label>Description</label><p class="qms-text">{{ r.description }}</p></div>
+          <div class="qms-text-box mt-2"><label>Impact for risk</label><p class="qms-text">{{ r.impact_description || '-' }}</p></div>
+          @if (r.status_code === 'REVISION_REQUIRED') {
+          <div class="qms-note danger mt-2">Revision requested by the Quality Team - see the history for the comments.</div>
+          }
+          @if (r.linked_incidents?.length) { <small class="text-muted d-block mt-2">{{ r.linked_incidents.length }} linked incident(s)</small> }
+        </div>
+      </div>
+      <div class="col-xl-8 col-12">
+        @if (!r.can_score) {
+        <div class="qms-note warn">This risk is not waiting for your department scoring (status {{ r.status }}).</div>
+        }
+        <fieldset class="qms-form" [disabled]="!r.can_score">
+          <div class="qms-card">
+            <div class="qms-section-title">Risk Scoring</div>
+            <div class="row g-3 align-items-end">
+              <div class="col-md-4 col-12">
+                <label>Impact Score (severity)</label>
+                <div class="qms-req"><p-select [options]="impacts" [(ngModel)]="m.impact_score" placeholder="1-5" [disabled]="!r.can_score" appendTo="body" /></div>
+              </div>
+              <div class="col-md-4 col-12">
+                <label>Probability Score (likelihood)</label>
+                <div class="qms-req"><p-select [options]="probs" [(ngModel)]="m.probability_score" placeholder="1-5" [disabled]="!r.can_score" appendTo="body" /></div>
+              </div>
+              <div class="col-md-4 col-12">
+                <div class="result" [attr.data-l]="level()">
+                  <span class="num">{{ score() || '-' }}</span>
+                  <span class="lbl">{{ levelName() }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="qms-card">
+            <div class="qms-section-title">Mitigation</div>
+            <div class="row g-3">
+              <div class="col-md-6 col-12">
+                <label>Mitigation Plan <small class="text-muted">(short and long term)</small></label>
+                <div class="qms-req"><textarea pTextarea rows="4" class="form-control w-100" [(ngModel)]="m.mitigation_plan"></textarea></div>
+              </div>
+              <div class="col-md-6 col-12">
+                <label>Action Taken <small class="text-muted">(already done)</small></label>
+                <div class="qms-req"><textarea pTextarea rows="4" class="form-control w-100" [(ngModel)]="m.action_taken"></textarea></div>
+              </div>
+              <div class="col-md-6 col-12">
+                <label>Mitigation needs</label>
+                <p-select [options]="actionTypes" [(ngModel)]="m.mitigation_action_type" placeholder="Select" [showClear]="true" [disabled]="!r.can_score" appendTo="body" />
+                @if (m.mitigation_action_type === 'TRAINING') { <small class="text-muted">A training request is linked and the Training Coordinator is notified.</small> }
+              </div>
+              <div class="col-md-6 col-12">
+                <label>Target completion date</label>
+                <p-datepicker [(ngModel)]="m.due_date" dateFormat="dd-mm-yy" [minDate]="today" [showIcon]="true" [disabled]="!r.can_score" appendTo="body" />
+              </div>
+              <div class="col-12">
+                <label>Comments @if (level() === 'HIGH') { <span class="text-danger">* required for High risk</span> }</label>
+                <div [class.qms-req]="level() === 'HIGH'"><textarea pTextarea rows="2" class="form-control w-100" [(ngModel)]="m.remarks"></textarea></div>
+              </div>
+              <div class="col-12">
+                <label>Evidence</label>
+                <qms-file-list [files]="r.dept_scoring?.files" [compact]="true" />
+                @if (r.can_score) { <qms-file-picker #picker [max]="3" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xlsx" label="Attach evidence" /> }
+              </div>
+            </div>
+          </div>
+          @if (r.can_score) {
+          <div class="d-flex justify-content-end gap-2 mb-3">
+            <button class="btn btn-light" (click)="risk.set(null)">Back to queue</button>
+            <button class="btn btn-primary" [disabled]="saving()" (click)="submit()"><i class="pi pi-send me-1"></i>Submit to Quality Team</button>
+          </div>
+          }
+        </fieldset>
+      </div>
+    </div>
+    }
+
+    <div class="qms-card">
+      <div class="qms-section-title">Waiting for department scoring <small>{{ queue().length }}</small></div>
+      <app-risk-list [rows]="queue()" [loading]="loading()" (open)="select($event.risk_id)" />
+    </div>
+  </div>
+</section>

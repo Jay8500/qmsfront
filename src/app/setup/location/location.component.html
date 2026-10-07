@@ -1,0 +1,407 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                                        <i class="iconify pi pi-arrow-left"></i>
+                                    </a>
+                                    <h3>Location</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-12">
+                                <div class="form-right">
+                                    <div class="row">
+                                        <div class="col-md-12 col-12">
+                                            <button type="button" class="btn btn-dark"
+                                                (click)="onClearClick()">Clear</button>
+                                            <button type="submit" class="btn btn-primary"
+                                                (click)="onSubmitClick()">Submit</button>
+                                        </div>
+                                    </div>
+                                    <!-- @if(false){
+                                        <div class="form-right">
+                                            <a href="javascript:;" class="icon-btn-square" (click)="filterToggle()"><span
+                                                    class="iconify" data-icon="mage:filter"></span></a>
+                                            <div class="dropdown dropdown-style1 ms-2">
+                                                <button class="btn btn-light dropdown-toggle" type="button"
+                                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Download Report <span class="iconify"
+                                                        data-icon="akar-icons:chevron-down"></span>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                                                    <li><a class="dropdown-item" href="javascript:;">Download Word</a></li>
+                                                    <li><a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        } -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mt-3">
+                            <div class="col-12 mb-4">
+                                <div class="formbox-left legends form-lg">
+                                    <div class="form-title">Location Details</div>
+                                    <div class="row">
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="location_name">Location Name</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="location_name" [(ngModel)]="locInfo.location_name"
+                                                        (blur)="onGetErrorMsgs('location_name')" placeholder="Location Name"
+                                                        [disabled]="pageMode=='VIEW'" name="location_name"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                </div>
+                                                @if(errorMsg['location_name']!=''){
+                                                <small class="error">{{ errorMsg['location_name']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="location_desc">Display Name</label>
+                                                <input pInputText id="location_desc" [(ngModel)]="locInfo.location_desc"
+                                                    placeholder="Display Name"
+                                                    [disabled]="pageMode=='VIEW'" name="location_desc"
+                                                    class="form-control" autocomplete="off" appNospaces>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="contact_person">Contact Person</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="contact_person" [(ngModel)]="locInfo.contact_person"
+                                                        (blur)="onGetErrorMsgs('contact_person')" placeholder="Contact Person"
+                                                        [disabled]="pageMode=='VIEW'" name="contact_person"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                </div>
+                                                @if(errorMsg['contact_person']!=''){
+                                                <small class="error">{{ errorMsg['contact_person']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="form-group">
+                                                <label>Photo</label>
+                                                <div class="upload-image">
+                                                    @if(locInfo.logo.length==0 ){
+                                                    <p-fileUpload mode="basic"
+                                                        (onSelect)="onCoverPageFileSelect(logo, $event)"
+                                                        chooseLabel="Upload" [multiple]="false" #logo
+                                                        accept="image/png, image/jpeg" [fileLimit]="1"
+                                                        [maxFileSize]="2097152" [auto]="true"
+                                                        [disabled]="pageMode=='VIEW'"
+                                                        invalidFileSizeMessageSummary="File too large"
+                                                        invalidFileSizeMessageDetail="Maximum upload size is 2MB">
+                                                    </p-fileUpload>
+                                                    }@else{
+                                                    <div class="flex gap-2 flex-wrap ">
+                                                        <div *ngFor="let mDoc of locInfo.logo; let imgIndex=index">
+                                                            <a class="time-icons time-remove ml-2"
+                                                                href="javascript:return false"><i
+                                                                    *ngIf="pageMode!='VIEW'" class="pi pi-times-circle"
+                                                                    (click)="removeCoverPageImage(mDoc, imgIndex)"></i></a>
+                                                            <div *ngIf="mDoc.is_active==true"
+                                                                style="border: 1px solid #cacaca;padding: 5px; border-radius: 7px;font-size: 11px;">
+                                                                @if(pageMode == 'NEW'){
+                                                                <div>
+                                                                    {{ mDoc['file_name'] }}
+                                                                </div>
+                                                                }@else{
+                                                                <div class="grid-photo">
+                                                                    <a [href]="mDoc.fileOrImageUrl"
+                                                                        data-fancybox="gallery">
+                                                                        <img [src]="mDoc.fileOrImageUrl"
+                                                                            alt="Evidence" />
+                                                                    </a>
+                                                                </div>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="col-md-4 col-12">
+                                            <hqms-date [formName]="FORM_NAME" [labelName]="'Date Format'"
+                                                [fieldName]="'valid_start_dt'" [isDisabled]="pageMode=='VIEW'"
+                                                [(ngModel)]="locInfo.valid_start_dt" name="valid_start_dt"
+                                                (statusChange)="onFieldStatusChange($event);">
+                                            </hqms-date>
+                                        </div> -->
+                                        <!-- <div class="col-md-4 col-12">
+                                            <hqms-text [formName]="FORM_NAME" [labelName]="'Email'"
+                                                [fieldName]="'email_id'" [isDisabled]="pageMode=='VIEW'"
+                                                [(ngModel)]="locInfo.email_id" name="email_id"
+                                                (statusChange)="onFieldStatusChange($event)">
+                                            </hqms-text>
+                                        </div> -->
+                                        <!-- <div class="col-md-4 col-12">
+                                            <hqms-text [formName]="FORM_NAME" [labelName]="'From Email'"
+                                                [fieldName]="'email_id'" [isDisabled]="pageMode=='VIEW'"
+                                                [(ngModel)]="locInfo.email_id" name="email_id"
+                                                (statusChange)="onFieldStatusChange($event)">
+                                            </hqms-text>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <hqms-text [formName]="FORM_NAME" [labelName]="'From Email (Display)'"
+                                                [fieldName]="'display_name'" [isDisabled]="pageMode=='VIEW'"
+                                                [(ngModel)]="locInfo.display_name" name="display_name"
+                                                (statusChange)="onFieldStatusChange($event)">
+                                            </hqms-text>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <hqms-text [formName]="FORM_NAME" [labelName]="'Info Email'"
+                                                [fieldName]="'email_id'" [isDisabled]="pageMode=='VIEW'"
+                                                [(ngModel)]="locInfo.email_id" name="email_id"
+                                                (statusChange)="onFieldStatusChange($event)">
+                                            </hqms-text>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <hqms-text [formName]="FORM_NAME" [labelName]="'Loc Patient Format'"
+                                                [fieldName]="'org_desc'" [isDisabled]="pageMode=='VIEW'"
+                                                [(ngModel)]="locInfo.org_desc" name="org_desc"
+                                                (statusChange)="onFieldStatusChange($event)">
+                                            </hqms-text>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <hqms-text [formName]="FORM_NAME" [labelName]="'About Us'"
+                                                [fieldName]="'about_us'" [isDisabled]="pageMode=='VIEW'"
+                                                [(ngModel)]="locInfo.about_us" name="about_us"
+                                                (statusChange)="onFieldStatusChange($event)">
+                                            </hqms-text>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <hqms-text [formName]="FORM_NAME" [labelName]="'Company URL'"
+                                                [fieldName]="'company_url'" [isDisabled]="pageMode=='VIEW'"
+                                                [(ngModel)]="locInfo.company_url" name="company_url"
+                                                (statusChange)="onFieldStatusChange($event)">
+                                            </hqms-text>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <hqms-text [formName]="FORM_NAME" [labelName]="'Privacy Policy URL'"
+                                                [fieldName]="'privacy_policy_url'" [isDisabled]="pageMode=='VIEW'"
+                                                [(ngModel)]="locInfo.privacy_policy_url" name="privacy_policy_url"
+                                                (statusChange)="onFieldStatusChange($event)">
+                                            </hqms-text>
+                                        </div>
+
+                                        <div class="col-md-4 col-12">
+                                            <hqms-text [formName]="FORM_NAME" [labelName]="'Terms of Usage URL'"
+                                                [fieldName]="'terms_of_usage_url'" [isDisabled]="pageMode=='VIEW'"
+                                                [(ngModel)]="locInfo.terms_of_usage_url" name="terms_of_usage_url"
+                                                (statusChange)="onFieldStatusChange($event)">
+                                            </hqms-text>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <hqms-text [formName]="FORM_NAME" [labelName]="'Copyright'"
+                                                [fieldName]="'copy_right'" [isDisabled]="pageMode=='VIEW'"
+                                                [(ngModel)]="locInfo.copy_right" name="copy_right"
+                                                (statusChange)="onFieldStatusChange($event)">
+                                            </hqms-text>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <hqms-text [formName]="FORM_NAME" [labelName]="'Practice Key'"
+                                                [fieldName]="'org_key'" [isDisabled]="pageMode=='VIEW'"
+                                                [(ngModel)]="locInfo.org_key" name="org_key"
+                                                (statusChange)="onFieldStatusChange($event)">
+                                            </hqms-text>
+                                        </div>
+
+                                        <div class="col-md-4 col-12">
+                                            <hqms-select [formName]="FORM_NAME" [labelName]="'Default Currency'"
+                                                [fieldName]="'default_currency_id'" [isDisabled]="pageMode=='VIEW'"
+                                                [(ngModel)]="locInfo.default_currency_id" name="default_currency_id"
+                                                [selectOptions]="crncyList"
+                                                (statusChange)="onFieldStatusChange($event)">
+                                            </hqms-select>
+                                        </div> -->
+                                        <!-- <div class="col-md-4 col-12">
+                                            <hqms-text [formName]="FORM_NAME" [labelName]="'Org Patient Format'"
+                                                [fieldName]="'org_patient_format'" [isDisabled]="pageMode=='VIEW'"
+                                                [(ngModel)]="locInfo.org_patient_format" name="org_patient_format"
+                                                (statusChange)="onFieldStatusChange($event)">
+                                            </hqms-text>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 mb-4">
+                                <div class="formbox-left legends form-lg">
+                                    <div class="form-title">Contact Details</div>
+                                    <div class="row">
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="email_id">Email ID</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="email_id" [(ngModel)]="locInfo.email_id"
+                                                        (blur)="onGetErrorMsgs('email_id')" placeholder="Email ID"
+                                                        [disabled]="pageMode=='VIEW'" name="email_id"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                </div>
+                                                @if(errorMsg['email_id']!=''){
+                                                <small class="error">{{ errorMsg['email_id']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="office_phone">Office Phone</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="office_phone" [(ngModel)]="locInfo.office_phone"
+                                                        (blur)="onGetErrorMsgs('office_phone')" placeholder="Office Phone"
+                                                        [disabled]="pageMode=='VIEW'" name="office_phone"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                </div>
+                                                @if(errorMsg['office_phone']!=''){
+                                                <small class="error">{{ errorMsg['office_phone']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="fax_number">Fax No.</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="fax_number" [(ngModel)]="locInfo.fax_number"
+                                                        (blur)="onGetErrorMsgs('fax_number')" placeholder="Fax No."
+                                                        [disabled]="pageMode=='VIEW'" name="fax_number"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                </div>
+                                                @if(errorMsg['fax_number']!=''){
+                                                <small class="error">{{ errorMsg['fax_number']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="mobile_phone">Mobile No.</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="mobile_phone" [(ngModel)]="locInfo.mobile_phone"
+                                                        (blur)="onGetErrorMsgs('mobile_phone')" placeholder="Mobile No."
+                                                        [disabled]="pageMode=='VIEW'" name="mobile_phone"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                </div>
+                                                @if(errorMsg['mobile_phone']!=''){
+                                                <small class="error">{{ errorMsg['mobile_phone']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="website_url">Website URL</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="website_url" [(ngModel)]="locInfo.website_url"
+                                                        (blur)="onGetErrorMsgs('website_url')" placeholder="Website URL"
+                                                        [disabled]="pageMode=='VIEW'" name="website_url"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                </div>
+                                                @if(errorMsg['website_url']!=''){
+                                                <small class="error">{{ errorMsg['website_url']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="address1">Address 1</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="address1" [(ngModel)]="locInfo.address1"
+                                                        (blur)="onGetErrorMsgs('address1')" placeholder="Address 1"
+                                                        [disabled]="pageMode=='VIEW'" name="address1"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                </div>
+                                                @if(errorMsg['address1']!=''){
+                                                <small class="error">{{ errorMsg['address1']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="address2">Address 2</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="address2" [(ngModel)]="locInfo.address2"
+                                                        (blur)="onGetErrorMsgs('address2')" placeholder="Address 2"
+                                                        [disabled]="pageMode=='VIEW'" name="address2"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                </div>
+                                                @if(errorMsg['address2']!=''){
+                                                <small class="error">{{ errorMsg['address2']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="form-group p-fluid">
+                                                <div>
+                                                    <label>Area</label>
+                                                </div>
+                                                <p-autoComplete [(ngModel)]="locInfo.area_name"
+                                                    [suggestions]="filterModules" [disabled]="pageMode=='VIEW'"
+                                                    (completeMethod)="filterGroupedModules($event)"
+                                                    placeholder="Search for Area" (onSelect)="onAreaSelect($event)"
+                                                    [showClear]="true" styleClass="p-autocomplete-input d-block">
+                                                    <ng-template let-group #group>
+                                                        <div> {{ group.label  }} </div>
+                                                    </ng-template>
+                                                </p-autoComplete>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="city_name">City</label>
+                                                <input pInputText id="city_name" [(ngModel)]="locInfo.city_name"
+                                                    [disabled]="true" name="city_name"
+                                                    class="form-control" autocomplete="off">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="state_name">State</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="state_name" [(ngModel)]="locInfo.state_name"
+                                                        (blur)="onGetErrorMsgs('state_name')" [disabled]="true" name="state_name"
+                                                        class=" form-control" autocomplete="off">
+                                                </div>
+                                                @if(errorMsg['state_name']!=''){
+                                                <small class="error">{{ errorMsg['state_name']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="country_name">Country</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="country_name" [(ngModel)]="locInfo.country_name"
+                                                        (blur)="onGetErrorMsgs('country_name')" [disabled]="true" name="country_name"
+                                                        class=" form-control" autocomplete="off">
+                                                </div>
+                                                @if(errorMsg['country_name']!=''){
+                                                <small class="error">{{ errorMsg['country_name']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    :host ::ng-deep .p-autocomplete-input .p-inputtext {
+        width: 100% !important;
+    }
+</style>

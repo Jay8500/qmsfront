@@ -1,0 +1,361 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-2 col-12">
+                                <div class="heading-left">
+                                    <h3>KPI Data capture</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div style="position: relative;display:inline-block;width:100%">
+                                            <p-select [(ngModel)]="selected_kpi" name="selected_kpi"
+                                                placeholder="KPI Name" (onChange)="onKpiSelect()" [options]="KpiList"
+                                                [filter]="true" (onBlur)="onGetErrorMsgs('selected_kpi')"
+                                                [showClear]="true" class="form-control" [appendTo]="'body'" />
+                                            <div style=" position: absolute;
+                                            top: 0;
+                                            right: 0;
+                                            width: 0;
+                                            height: 0;
+                                            border-top: 12px solid red;
+                                            border-left: 12px solid transparent;">
+                                            </div>
+                                        </div>
+                                        @if(errorMsg['selected_kpi']!=''){
+                                        <small class="error">{{ errorMsg['selected_kpi']}}</small>
+                                        }
+                                    </div>
+                                    <div class="col-4">
+                                        @if(selectedKpicode != 'Daily'){
+                                        <div class="flex flex-col gap-1">
+                                            <div style="position: relative;display:inline-block;width:100%">
+                                                <p-select [(ngModel)]="selected_dt" name="selected_dt"
+                                                    placeholder="Select a Month" (onChange)="onPeriodSelect()"
+                                                    (onBlur)="onPeriodSelect()" [disabled]="selected_kpi()==null"
+                                                    [options]="periodsList" [filter]="true" [showClear]="true"
+                                                    [appendTo]="'body'" class="form-control" />
+                                                <div style=" position: absolute;
+                                                top: 0;
+                                                right: 0;
+                                                width: 0;
+                                                height: 0;
+                                                border-top: 12px solid red;
+                                                border-left: 12px solid transparent;">
+                                                </div>
+                                            </div>
+                                            @if(errorMsg['selected_dt']!=''){
+                                            <small class="error">{{ errorMsg['selected_dt']}}</small>
+                                            }
+                                        </div>
+                                        }@else{
+                                        <div class="flex flex-col gap-1">
+                                            <div style="position: relative;display:inline-block;width:100%">
+                                                <input type="date" [(ngModel)]="selected_dt" name="selected_dt"
+                                                    (change)="onPeriodSelect()" class="form-control">
+                                                <div style=" position: absolute;
+                                                top: 0;
+                                                right: 0;
+                                                width: 0;
+                                                height: 0;
+                                                border-top: 12px solid red;
+                                                border-left: 12px solid transparent;">
+                                                </div>
+                                            </div>
+                                            @if(errorMsg['selected_dt']!=''){
+                                            <small class="error">{{ errorMsg['selected_dt']}}</small>
+                                            }
+                                        </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <div class="form-right">
+                                    @if( [null,'Draft'].includes(selectedDc.data_capture_status)){
+                                    @if(selected_kpi()!=null){
+                                    <div class="row">
+                                        <div class="col-md-12 col-12">
+                                            <button type="button" class="btn btn-dark"
+                                                (click)="onClearClick()">Clear</button>
+                                            <button type="submit" class="btn btn-primary"
+                                                (click)="onSubmitClick('Draft')">Draft</button>
+                                            <button type="submit" class="btn btn-primary"
+                                                (click)="onSubmitClick('Completed')">Submit</button>
+
+                                        </div>
+                                    </div>
+                                    }
+                                    }@else if( selectedDc.data_capture_status == 'Completed'){
+                                    <div class="right-content text-end">
+                                        <span class="badge-green "> Completed</span>
+                                    </div>
+                                    }
+                                    <!-- @if(false){
+                                        <div class="form-right">
+                                            <a href="javascript:;" class="icon-btn-square" (click)="filterToggle()"><span
+                                                    class="iconify" data-icon="mage:filter"></span></a>
+                                            <div class="dropdown dropdown-style1 ms-2">
+                                                <button class="btn btn-light dropdown-toggle" type="button"
+                                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Download Report <span class="iconify"
+                                                        data-icon="akar-icons:chevron-down"></span>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                                                    <li><a class="dropdown-item" href="javascript:;">Download Word</a></li>
+                                                    <li><a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        } -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mt-5">
+                            <div class="col-lg-3 col-md-3 col-12">
+                                <div class="formbox-left legends form-lg">
+                                    <div class="form-title">KPI Details</div>
+                                    <div class="form-section mb-1">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label for="kpi_code">KPI Code :-</label>
+                                                    <div>
+                                                        {{selectedDc.kpi_code }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label for="kpi_type_name">Indicator :-</label>
+                                                    <div>
+                                                        {{selectedDc.kpi_type_name }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label for="department_name">Department :-</label>
+                                                    <div>
+                                                        {{selectedDc.department_name }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label for="unit_of_measure_name">UOM :-</label>
+                                                    <div>
+                                                        {{selectedDc.unit_of_measure_name }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label for="unit_of_measure_name">Formulae :-</label>
+                                                    <div>
+                                                        {{selectedDc.kpi_formula }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-12">
+                                <div class="formbox-left legends form-lg">
+                                    <div class="form-title">
+                                        <label>Audit Context</label>
+                                    </div>
+                                    <div class="row">
+                                        @for(dc of selectedDc['custom_fields'];track $index; let dcIn=$index){
+                                        @if(dc.field_value == '3'){
+                                        <div class="col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label>{{dc.field_name}}</label>
+                                                <p-select [(ngModel)]="dc.answer_text" name="answer_text_{{dcIn}}"
+                                                    [disabled]="selectedDc.data_capture_status == 'Completed'"
+                                                    [options]="dc.options_json" [filter]="true" [showClear]="true"
+                                                    class="form-control" />
+                                            </div>
+                                        </div>
+                                        }
+                                        @if(dc.field_value == '1'){
+                                        <div class="col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label>{{dc.field_name}}</label>
+                                                <input pInputText [(ngModel)]="dc.answer_text"
+                                                    name="answer_text_{{dcIn}}"
+                                                    [disabled]="selectedDc.data_capture_status == 'Completed'"
+                                                    class="form-control" autocomplete="off" appNospaces>
+                                            </div>
+                                        </div>
+                                        }
+
+                                        @if(dc.field_value == '2'){
+                                        <div class="col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label>{{dc.field_name}}</label>
+                                                <input type="date" [(ngModel)]="dc.answer_text"
+                                                    name="answer_text_{{dcIn}}"
+                                                    [disabled]="selectedDc.data_capture_status == 'Completed'"
+                                                    class="form-control">
+                                            </div>
+                                        </div>
+                                        }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-12">
+                                <div class="formbox-left legends form-lg">
+                                    <div class="form-title">
+                                        <label>Staff Performance Metrics</label>
+                                    </div>
+                                    <table class="table ">
+                                        <thead>
+                                            <tr>
+                                                <th>S.No</th>
+                                                <th>
+                                                    Employee Code/ Name
+                                                </th>
+                                                <th>
+                                                    <!-- Numerator -->
+                                                    {{selectedDc.numerator_label}}
+                                                </th>
+                                                <th>
+                                                    <!-- Denominator -->
+                                                    {{selectedDc.denominator_label}}
+                                                </th>
+                                                <th>
+                                                    Score
+                                                </th>
+                                                <th>
+                                                    Status
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            @for (dcInfo of selectedDc['employees']; track $index;let dcEmpIn =
+                                            $index) {
+                                            @if(dcInfo.is_active){
+                                            <tr>
+                                                <td>{{dcEmpIn+1}}</td>
+                                                <td>
+                                                    <div>
+                                                        {{dcInfo.employee_code}}
+                                                    </div>
+                                                    <div>
+                                                        {{dcInfo.full_name}}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div style="position: relative;display:inline-block;width:100%">
+                                                        <input pInputText [(ngModel)]="dcInfo.numerator_value"
+                                                            placeholder="Numerator" (blur)="onNumeratorChange(dcInfo)"
+                                                            (change)="onNumeratorChange(dcInfo)"
+                                                            [disabled]="selectedDc.data_capture_status == 'Completed'"
+                                                            name="numerator_value_{{dcEmpIn}}" class=" form-control"
+                                                            autocomplete="off" appNospaces>
+                                                        <div style=" position: absolute;
+                                                            top: 0;
+                                                            right: 0;
+                                                            width: 0;
+                                                            height: 0;
+                                                            border-top: 12px solid red;
+                                                            border-left: 12px solid transparent;">
+                                                        </div>
+                                                    </div>
+                                                    @if(dcInfo['numerator_value_error']){
+                                                    <small class="error">{{ dcInfo['numerator_value_error']}}</small>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <div style="position: relative;display:inline-block;width:100%">
+                                                        <input pInputText [(ngModel)]="dcInfo.denominator_value"
+                                                            placeholder="Denominator"
+                                                            (blur)="onDenominatorChange(dcInfo)"
+                                                            (change)="onDenominatorChange(dcInfo)"
+                                                            [disabled]="dcInfo.is_deno_req||selectedDc.data_capture_status == 'Completed'"
+                                                            name="denominator_value_{{dcEmpIn}}" class=" form-control"
+                                                            autocomplete="off" appNospaces>
+                                                        <div style=" position: absolute;
+                                                            top: 0;
+                                                            right: 0;
+                                                            width: 0;
+                                                            height: 0;
+                                                            border-top: 12px solid red;
+                                                            border-left: 12px solid transparent;">
+                                                        </div>
+                                                    </div>
+                                                    @if(dcInfo['denominator_value_error']){
+                                                    <small class="error">{{ dcInfo['denominator_value_error']}}</small>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <div style="position: relative;display:inline-block;width:100%">
+                                                        <input pInputText [(ngModel)]="dcInfo.display_score"
+                                                            placeholder="Score"
+                                                            [disabled]="selectedDc.data_capture_status == 'Completed'"
+                                                            (blur)="onScoreChange(dcInfo)"
+                                                            name="display_score_{{dcEmpIn}}" class="form-control"
+                                                            autocomplete="off">
+                                                        <div style=" position: absolute;
+                                                            top: 0;
+                                                            right: 0;
+                                                            width: 0;
+                                                            height: 0;
+                                                            border-top: 12px solid red;
+                                                            border-left: 12px solid transparent;">
+                                                        </div>
+                                                    </div>
+                                                    @if(dcInfo['display_score']){
+                                                    <small class="error">{{ dcInfo['display_score']}}</small>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <div [ngClass]="{
+                                                        'compliant': dcInfo.status === 'Compliance',
+                                                        'partial': dcInfo.status === 'Partial Compliance',
+                                                        'noncomplaint': dcInfo.status === 'Non-Compliance'
+                                                    }">
+                                                        {{dcInfo.status}}
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+                                            }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .compliant {
+        color: #28a745;
+    }
+
+    .partial {
+        color: #FFC107;
+    }
+
+    .noncomplaint {
+        color: #DC3545;
+    }
+</style>

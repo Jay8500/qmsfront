@@ -1,0 +1,191 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                                        <i class="iconify pi pi-arrow-left"></i>
+                                    </a>
+                                    <h3>CAPA Write {{conducAudit().audit_name}} #{{conducAudit().audit_template_code  }}
+                                    </h3>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-5 col-12">
+                                <div class="form-right">
+                                    <div class="dropdown dropdown-style1 ms-2">
+                                        <button class="btn btn-light dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            Download
+                                            <span class="iconify" data-icon="akar-icons:chevron-down"></span>
+
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                                            <li><a class="dropdown-item" href="javascript:;">Download Word</a></li>
+                                            <li><a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="audit-info-cover">
+                            <div class="audit-status">
+                                <div class="row">
+                                    <div class="col-md-6 col-12">
+                                        <div class="left-content">
+                                            <h5>{{conducAudit().audit_name}} </h5>
+                                            <p>Last Updated On <strong>{{conducAudit().audit_date}}</strong></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="right-content text-end">
+                                            <p class="mb-1">Status</p>
+                                            @if(conducAudit().status == 'Inprogress' ){
+                                            <span class="badge-yellow"> {{conducAudit().status}}</span>
+                                            }@else{
+                                            <span class="badge-green">{{conducAudit().status}}</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-audit tablehrz">
+                                <table class="table table-bordered table-line mb-0">
+                                    <tr>
+                                        <th>Audit Title</th>
+                                        <th>Department</th>
+                                        <th>Location</th>
+                                        <!-- <th>CAPA Required</th> -->
+                                        <th>Auditor</th>
+                                        <th>Auditee</th>
+                                    </tr>
+                                    <tr>
+                                        <td>{{conducAudit().audit_title   }}</td>
+                                        <td>{{conducAudit().department_name   }}</td>
+                                        <td>{{conducAudit().audit_location_name   }}</td>
+                                        <!-- <td>{{  readOnlyAdt().capa_required  == true ? 'Yes' : 'No' }}</td> -->
+                                        <td>{{conducAudit().auditor_name   }} </td>
+                                        <td>{{conducAudit().auditee_name   }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="audit-info-cover mt-3">
+                            <div class="form-section p-0">
+                                <div class="row">
+                                    <div class="col-md-6 col-12">
+                                        <div class="audit-heading">
+                                            <h5>{{conducAudit().audit_name}} Report</h5>
+                                            <p>{{qstnCnt}} Questions</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="right-content text-end">
+                                            <p class="mb-1">Status</p>
+                                            <span class="badge-green">{{ conducAudit().audit_compliance}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="audit-table mt-1">
+                                    @for(condtAdt of conducAudit().sections;track $index;let scI = $index){
+                                    <div class="audit-heading mb-2">
+                                        <h5>{{condtAdt.section_name}}</h5>
+                                        <p class="light-text">{{condtAdt.section_description}}
+                                        </p>
+                                    </div>
+                                    <div class="table-audit table-responsive">
+                                        <table class="table table-bordered mb-0">
+                                            @for(qstn of condtAdt.questions;track $index;let j = $index){
+                                            <tr>
+                                                <td>{{qstn.question_text }}</td>
+                                                <td class="text-end text-success"> {{ qstn.answer_text}} </td>
+                                            </tr>
+                                            }
+                                        </table>
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-lg mt-3">
+                            <div class="row">
+                                <div class="col-md-4 col-12">
+                                    <div class="flex flex-col gap-1">
+                                        <label for="description">Write CAPA</label>
+                                        <textarea pTextarea id="description" [(ngModel)]="writeCapa['description']"
+                                            (blur)="onGetErrorMsgs('description')" name="description" rows="10"
+                                            class=" form-control" appNospaces></textarea>
+                                        @if(errorMsg['description']!=''){
+                                        <small class="error">{{ errorMsg['description']}}</small>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-12">
+                                    <div class="flex flex-col gap-1">
+                                        <label for="action_taken">Action Taken</label>
+                                        <textarea pTextarea id="action_taken" [(ngModel)]="writeCapa['action_taken']"
+                                            (blur)="onGetErrorMsgs('action_taken')" name="action_taken" rows="10"
+                                            class=" form-control" appNospaces></textarea>
+                                        @if(errorMsg['action_taken']!=''){
+                                        <small class="error">{{ errorMsg['action_taken']}}</small>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-12">
+                                    <div class="form-group">
+                                        <label> Supporting Documents or Evidence</label>
+                                        <div class="upload-image">
+                                            <p-fileUpload mode="basic"
+                                                (onSelect)="onCoverPageFileSelect(upCoverPage, $event,'CoverPage',writeCapa,null)"
+                                                chooseLabel="Upload Cover Image" [multiple]="false" #upCoverPage
+                                                accept="image/png, image/jpeg" [fileLimit]="1" [maxFileSize]="2097152"
+                                                [auto]="true" invalidFileSizeMessageSummary="File too large"
+                                                invalidFileSizeMessageDetail="Maximum upload size is 2MB">
+                                            </p-fileUpload>
+                                            <div *ngIf="writeCapa.evidence_documents.length>0"
+                                                class="flex gap-2 flex-wrap mt-2">
+                                                <div
+                                                    *ngFor="let mDoc of writeCapa.evidence_documents; let imgIndex=index">
+                                                    <div *ngIf="mDoc.is_active==true" class="reg-img-view"
+                                                        style="border: 1px solid #cacaca;padding: 5px; border-radius: 7px;font-size: 11px;">
+                                                        {{ mDoc['file_name'] }}
+                                                        <a class="time-icons time-remove ml-2"
+                                                            href="javascript:return false"><i *ngIf="pageMode!='VIEW'"
+                                                                class="pi pi-times-circle"
+                                                                (click)="removeCoverPageImage(mDoc, imgIndex)"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="button-group mt-4">
+                                <div class="row">
+                                    <div class="col-md-12 col-12">
+                                        <button type="button" class="btn btn-dark" (click)="onClear()">Clear</button>
+                                        <button type="button" class="btn btn-primary"
+                                            (click)="onSubmitClick()">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

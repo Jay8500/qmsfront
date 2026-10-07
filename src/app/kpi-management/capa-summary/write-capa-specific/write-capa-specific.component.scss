@@ -1,0 +1,16 @@
+@use '../../../../variables.scss';
+
+.report-card {    
+    .card-whitebox {
+        background: variables.$barbgBlue;
+        padding: 20px;
+        border-radius: 6px;
+        height: 340px;
+    }
+}
+
+.audit-status.selectflex {
+    .row {
+        align-items: center;
+    }
+}

@@ -1,0 +1,630 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="row">
+      <div class="col-md-12 col-12">
+        <div class="card-style2">
+          <div class="card-header backoption">
+            <div class="row">
+              <div class="col-md-7 col-12">
+                <div class="heading-left">
+                  <a
+                    href="javascript:;"
+                    class="icon-btn-square"
+                    (click)="goBack()"
+                  >
+                    <!-- <span class="iconify" data-icon="famicons:arrow-back-outline"></span> -->
+                    <i class="iconify pi pi-arrow-left"></i>
+                  </a>
+                  <h3>
+                    {{ _hqms.getPageModeContext(pageMode, "License Tracker") }}
+                  </h3>
+                </div>
+              </div>
+              <div class="col-md-5 col-12">
+                <div class="form-right">
+                  <button
+                    class="btn btn-dark"
+                    [disabled]="pageMode == 'VIEW'"
+                    (click)="onClearClick()"
+                  >
+                    Clear
+                  </button>
+                  <button
+                    class="btn btn-primary"
+                    [disabled]="pageMode == 'VIEW'"
+                    (click)="onSubmitClick()"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row mt-4">
+              <div class="col-lg-6 col-md-12 col-12">
+                <div class="formbox-left legends form-lg">
+                  <div class="form-title">License Details</div>
+                  <form>
+                    <div class="row">
+                      <div class="col-md-6 col-12">
+                        <div class="flex flex-col gap-1">
+                          <label for="license_master_id">License</label>
+                          <div
+                            style="
+                              position: relative;
+                              display: inline-block;
+                              width: 100%;
+                            "
+                          >
+                            <p-select
+                              id="license_master_id"
+                              placeholder="License"
+                              [(ngModel)]="
+                                createLicenseTracker().license_master_id
+                              "
+                              (onBlur)="onLicenseChange()"
+                              (onChange)="onLicenseChange()"
+                              [disabled]="pageMode == 'VIEW'"
+                              name="license_master_id"
+                              [options]="licenseNameList"
+                              [filter]="true"
+                              [showClear]="true"
+                              class="form-control"
+                            />
+                            <div
+                              style="
+                                position: absolute;
+                                top: 0;
+                                right: 0;
+                                width: 0;
+                                height: 0;
+                                border-top: 12px solid red;
+                                border-left: 12px solid transparent;
+                              "
+                            ></div>
+                          </div>
+                          @if (errorMsg["license_master_id"] != "") {
+                            <small class="error">{{
+                              errorMsg["license_master_id"]
+                            }}</small>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <div class="flex flex-col gap-1">
+                          <label for="license_no">License No</label>
+                          <div
+                            style="
+                              position: relative;
+                              display: inline-block;
+                              width: 100%;
+                            "
+                          >
+                            <input
+                              pInputText
+                              id="license_no"
+                              placeholder="License No"
+                              [(ngModel)]="createLicenseTracker().license_no"
+                              (blur)="onGetErrorMsgs('license_no')"
+                              [disabled]="pageMode == 'VIEW'"
+                              name="license_no"
+                              class="form-control"
+                              autocomplete="off"
+                              appNospaces
+                            />
+                            <div
+                              style="
+                                position: absolute;
+                                top: 0;
+                                right: 0;
+                                width: 0;
+                                height: 0;
+                                border-top: 12px solid red;
+                                border-left: 12px solid transparent;
+                              "
+                            ></div>
+                          </div>
+                          @if (errorMsg["license_no"] != "") {
+                            <small class="error">{{
+                              errorMsg["license_no"]
+                            }}</small>
+                          }
+                        </div>
+                      </div>
+
+                      <div class="col-md-6 col-6">
+                        <div class="flex flex-col gap-1">
+                          <label for="provider_id">Provider / Vendor</label>
+                          <div
+                            style="
+                              position: relative;
+                              display: inline-block;
+                              width: 100%;
+                            "
+                          >
+                            <p-select
+                              id="provider_id"
+                              [(ngModel)]="createLicenseTracker().provider_id"
+                              (onBlur)="onGetErrorMsgs('provider_id')"
+                              placeholder="Provider / Vendor"
+                              (onChange)="onGetErrorMsgs('provider_id')"
+                              [disabled]="pageMode == 'VIEW'"
+                              name="provider_id"
+                              [options]="providerList"
+                              [filter]="true"
+                              [showClear]="true"
+                              class="form-control"
+                            />
+                            <div
+                              style="
+                                position: absolute;
+                                top: 0;
+                                right: 0;
+                                width: 0;
+                                height: 0;
+                                border-top: 12px solid red;
+                                border-left: 12px solid transparent;
+                              "
+                            ></div>
+                          </div>
+                          @if (errorMsg["provider_id"] != "") {
+                            <small class="error">{{
+                              errorMsg["provider_id"]
+                            }}</small>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-6">
+                        <div class="flex flex-col gap-1">
+                          <label for="assigned_employee_id">Assigning To</label>
+                          <div
+                            style="
+                              position: relative;
+                              display: inline-block;
+                              width: 100%;
+                            "
+                          >
+                            <p-select
+                              id="assigned_employee_id"
+                              placeholder="Assigning To"
+                              [(ngModel)]="
+                                createLicenseTracker().assigned_employee_id
+                              "
+                              (onBlur)="onGetErrorMsgs('assigned_employee_id')"
+                              (onChange)="
+                                onGetErrorMsgs('assigned_employee_id')
+                              "
+                              [disabled]="pageMode == 'VIEW'"
+                              name="assigned_employee_id"
+                              [options]="assigningToList"
+                              [filter]="true"
+                              [showClear]="true"
+                              class="form-control"
+                            />
+                            <div
+                              style="
+                                position: absolute;
+                                top: 0;
+                                right: 0;
+                                width: 0;
+                                height: 0;
+                                border-top: 12px solid red;
+                                border-left: 12px solid transparent;
+                              "
+                            ></div>
+                          </div>
+                          @if (errorMsg["assigned_employee_id"] != "") {
+                            <small class="error">{{
+                              errorMsg["assigned_employee_id"]
+                            }}</small>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-md-4 col-4">
+                        <div class="flex flex-col gap-1">
+                          <label for="issue_date">Date of Issue</label>
+                          <div
+                            style="
+                              position: relative;
+                              display: inline-block;
+                              width: 100%;
+                            "
+                          >
+                            <p-datepicker
+                              [(ngModel)]="createLicenseTracker().issue_date"
+                              (onBlur)="onGetErrorMsgs('issue_date')"
+                              [disabled]="pageMode == 'VIEW'"
+                              placeholder="Date of Issue"
+                              id="issue_date"
+                              [minDate]="minDateSetter()"
+                              styleClass="form-control  w-full"
+                              (onSelect)="errorMsg['issue_date'] = ''"
+                            />
+                            <div
+                              style="
+                                position: absolute;
+                                top: 0;
+                                right: 0;
+                                width: 0;
+                                height: 0;
+                                border-top: 12px solid red;
+                                border-left: 12px solid transparent;
+                              "
+                            ></div>
+                          </div>
+                          @if (errorMsg["issue_date"] != "") {
+                            <small class="error">{{
+                              errorMsg["issue_date"]
+                            }}</small>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-md-4 col-4">
+                        <div class="flex flex-col gap-1">
+                          <label for="expiry_date">Date of Expiry</label>
+                          <div
+                            style="
+                              position: relative;
+                              display: inline-block;
+                              width: 100%;
+                            "
+                          >
+                            <p-datepicker
+                              [(ngModel)]="createLicenseTracker().expiry_date"
+                              (onBlur)="onGetErrorMsgs('expiry_date')"
+                              [disabled]="pageMode == 'VIEW'"
+                              placeholder="Date of Expiry"
+                              id="expiry_date"
+                              [minDate]="minDateSetter()"
+                              styleClass="form-control  w-full"
+                              [minDate]="createLicenseTracker().issue_date"
+                              [maxDate]="setExpryMaxDt"
+                              class="form-control"
+                              (onSelect)="errorMsg['expiry_date'] = ''"
+                            />
+                            <div
+                              style="
+                                position: absolute;
+                                top: 0;
+                                right: 0;
+                                width: 0;
+                                height: 0;
+                                border-top: 12px solid red;
+                                border-left: 12px solid transparent;
+                              "
+                            ></div>
+                          </div>
+                          @if (errorMsg["expiry_date"] != "") {
+                            <small class="error">{{
+                              errorMsg["expiry_date"]
+                            }}</small>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-md-4 col-4">
+                        <div class="flex flex-col gap-1">
+                          <label for="renewal_application_date"
+                            >Renewal Application Date</label
+                          >
+                          <div
+                            style="
+                              position: relative;
+                              display: inline-block;
+                              width: 100%;
+                            "
+                          >
+                            <p-datepicker
+                              id="renewal_application_date"
+                              placeholder="Renewal Application Date"
+                              [(ngModel)]="
+                                createLicenseTracker().renewal_application_date
+                              "
+                              (change)="
+                                onGetErrorMsgs('renewal_application_date')
+                              "
+                              [disabled]="
+                                pageMode == 'VIEW' ||
+                                createLicenseTracker().expiry_date == null
+                              "
+                              name="renewal_application_date"
+                              [minDate]="
+                                toDate(createLicenseTracker().issue_date)
+                              "
+                              [maxDate]="
+                                toDate(createLicenseTracker().expiry_date)
+                              "
+                              class="form-control"
+                            />
+                            <div
+                              style="
+                                position: absolute;
+                                top: 0;
+                                right: 0;
+                                width: 0;
+                                height: 0;
+                                border-top: 12px solid red;
+                                border-left: 12px solid transparent;
+                              "
+                            ></div>
+                          </div>
+                          @if (errorMsg["renewal_application_date"] != "") {
+                            <small class="error">{{
+                              errorMsg["renewal_application_date"]
+                            }}</small>
+                          }
+                        </div>
+                      </div>
+
+                      <div class="col-md-12 col-12">
+                        <div class="form-group">
+                          <label>Upload License</label>
+                          <div class="upload-image">
+                            <p-fileUpload
+                              mode="basic"
+                              (onSelect)="
+                                onFileSelect(
+                                  sprtngDocs,
+                                  $event,
+                                  'CoverPage',
+                                  createLicenseTracker(),
+                                  null
+                                )
+                              "
+                              chooseLabel="Upload License"
+                              [multiple]="true"
+                              [auto]="true"
+                              #sprtngDocs
+                              accept="application/pdf"
+                              [maxFileSize]="5242880"
+                              [disabled]="pageMode == 'VIEW'"
+                              invalidFileSizeMessageSummary="File too large"
+                              invalidFileSizeMessageDetail="Maximum upload size is 5MB"
+                            >
+                            </p-fileUpload>
+
+                            <div class="flex gap-2 flex-wrap mt-2">
+                              <div
+                                *ngFor="
+                                  let mDoc of createLicenseTracker()
+                                    .license_files;
+                                  let imgIndex = index
+                                "
+                              >
+                                <div
+                                  *ngIf="mDoc.is_active == true"
+                                  class="reg-img-view"
+                                  style="
+                                    border: 1px solid #cacaca;
+                                    padding: 5px;
+                                    border-radius: 7px;
+                                    font-size: 11px;
+                                  "
+                                >
+                                  {{ mDoc["file_name"] }}
+                                  <a
+                                    class="time-icons time-remove ml-2"
+                                    href="javascript:return false"
+                                    ><i
+                                      *ngIf="pageMode != 'VIEW'"
+                                      class="pi pi-times-circle"
+                                      (click)="removeImage(mDoc, imgIndex)"
+                                    ></i
+                                  ></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <label>Status</label>
+                        <div class="form-group">
+                          <p-toggleswitch
+                            [(ngModel)]="createLicenseTracker().is_active"
+                            name="status"
+                            [disabled]="pageMode == 'VIEW' || pageMode == 'NEW'"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-12 col-12">
+                <div class="formbox-left legends form-lg">
+                  <div class="form-title">Criteria Setup</div>
+                  <form>
+                    <div class="form-lg emplist-cover mt-3">
+                      <div class="audit-heading text-md mb-2">
+                        <h5>License Criteria Checklist</h5>
+                        <p>
+                          {{ getCompletedCount() }} /
+                          {{ getActiveCheckList().length }} Done
+                        </p>
+                      </div>
+                      <div class="row empfilter gx-2">
+                        <div class="col-md-9 col-12">
+                          <div
+                            style="
+                              position: relative;
+                              display: inline-block;
+                              width: 100%;
+                            "
+                          >
+                            <input
+                              pInputText
+                              [(ngModel)]="createLicenseTracker().criteriaText"
+                              (blur)="onGetErrorMsgs('criteriaText')"
+                              [disabled]="pageMode == 'VIEW'"
+                              name="criteriaText"
+                              placeholder="Criteria Name"
+                              class="form-control"
+                              autocomplete="off"
+                              appNospaces
+                            />
+                            <div
+                              style="
+                                position: absolute;
+                                top: 0;
+                                right: 0;
+                                width: 0;
+                                height: 0;
+                                border-top: 12px solid red;
+                                border-left: 12px solid transparent;
+                              "
+                            ></div>
+                          </div>
+                          @if (errorMsg["criteriaText"] == "") {
+                            <small class="error">{{
+                              errorMsg["criteriaText"]
+                            }}</small>
+                          }
+                        </div>
+                        <div class="col-md-3 col-12">
+                          <button
+                            class="btn btn-primary"
+                            (click)="onCriteriaAdd()"
+                            [disabled]="
+                              [null, ''].includes(
+                                createLicenseTracker().criteriaText
+                              ) || pageMode == 'VIEW'
+                            "
+                          >
+                            Add
+                          </button>
+                        </div>
+                      </div>
+                      <small class="d-block text-muted mb-2">
+                        The license shows as Active only when every item is
+                        ticked as done and at least one license file is
+                        uploaded; until then it is Incomplete.
+                      </small>
+                      <div
+                        class="employee-table table-style1 table-responsive tablemd1 criteria-table table-white"
+                      >
+                        <table class="table table-bordered table-white mb-0">
+                          <tbody>
+                            @for (
+                              licence of getActiveCheckList();
+                              track licence;
+                              let addIndex = $index
+                            ) {
+                              <tr>
+                                <td style="width: 10%" class="text-center">
+                                  <p-checkbox
+                                    [(ngModel)]="licence['is_completed']"
+                                    [binary]="true"
+                                    name="is_completed_{{ addIndex }}"
+                                    [disabled]="pageMode == 'VIEW'"
+                                    pTooltip="Mark as done"
+                                    tooltipPosition="top"
+                                  />
+                                </td>
+                                <td style="width: 75%">
+                                  @if (!licence.is_edit_click) {
+                                    {{ licence["criteria_name"] }}
+                                    @if (
+                                      licence["is_completed"] &&
+                                      licence["completed_by"]
+                                    ) {
+                                      <small class="d-block text-muted"
+                                        >Done by {{ licence["completed_by"] }}
+                                        {{ licence["completed_at"] }}</small
+                                      >
+                                    }
+                                  } @else {
+                                    <input
+                                      pInputText
+                                      [(ngModel)]="licence['criteria_name']"
+                                      [disabled]="pageMode == 'VIEW'"
+                                      name="criteria_name_{{ addIndex }}"
+                                      class="form-control"
+                                      autocomplete="off"
+                                      appNospaces
+                                    />
+                                  }
+                                </td>
+                                <td style="width: 15%">
+                                  @if (
+                                    pageMode == "NEW" || pageMode == "EDIT"
+                                  ) {
+                                    @if (!licence.isMapped) {
+                                      <a
+                                        href="javascript:;"
+                                        (click)="editItem(licence, addIndex)"
+                                      >
+                                        <!-- < span class="iconify" data-icon="ri:edit-line"></span> -->
+                                        <i
+                                          class="iconify pi pi-pencil"
+                                          [class.editing]="
+                                            licence.is_edit_click
+                                          "
+                                          [class.edited]="
+                                            !licence.is_edit_click
+                                          "
+                                        ></i>
+                                      </a>
+                                    }
+                                    <a
+                                      href="javascript:;"
+                                      (click)="
+                                        removeAddedItem(licence, addIndex)
+                                      "
+                                    >
+                                      <!-- <span class="iconify" data-icon="material-symbols:delete-outline"></span> -->
+                                      <i
+                                        class="iconify pi pi-trash"
+                                        style="color: red"
+                                      ></i>
+                                    </a>
+                                  }
+                                </td>
+                              </tr>
+                            }
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .editing {
+    color: yellow !important;
+  }
+
+  .edited {
+    color: green !important;
+  }
+
+  ::ng-deep .p-datepicker {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center;
+    padding: 0 !important;
+  }
+
+  ::ng-deep .p-datepicker .p-inputtext {
+    flex: 1;
+    width: 100% !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  ::ng-deep .p-datepicker.form-control,
+  ::ng-deep .p-datepicker .p-datepicker {
+    border: 1px solid var(--red-500, red);
+    border-radius: 4px;
+    padding: 0.375rem 0.75rem;
+  }
+</style>

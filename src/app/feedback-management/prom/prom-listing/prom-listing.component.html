@@ -1,0 +1,184 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="row">
+      <div class="col-md-12 col-12">
+        <div class="card-style2">
+          <div class="card-header backoption table-search">
+            <div class="row">
+              <div class="col-md-5 col-12">
+                <div class="heading-left">
+                  <a href="javascript:;" class="icon-btn-square" (click)="goBack()"><span class="iconify" data-icon="famicons:arrow-back-outline"></span></a>
+                  <h3>PROM Feedback History</h3>
+                </div>
+              </div>
+              <div class="col-md-7 col-12">
+                <div class="form-right">
+                  <div class="table-input-search">
+                    <input type="text" class="form-control" placeholder="Search records.." />
+                    <span class="iconify" data-icon="iconamoon:search-light"></span>
+                  </div>
+                  <a href="javascript:;" ngbTooltip="Filter" placement="top" class="icon-btn-square" (click)="filterToggle()"><span class="iconify" data-icon="mage:filter"></span></a>
+                  <div class="dropdown dropdown-style1 ms-2">
+                    <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Download Report <span class="iconify" data-icon="akar-icons:chevron-down"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                      <li><a class="dropdown-item" href="javascript:;">Download Word</a></li>
+                      <li><a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          @if (showFilter) {
+            <div class="filter-box form-sm">
+              <div class="row">
+                <div class="col-md-11 col-12">
+                  <div class="row gx-2">
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                        <input class="form-control" placeholder="By UHID" />
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                        <input type="text" class="form-control" placeholder="By Room">
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                        <select class="form-select">
+                          <option>By Unit</option>
+                          <option>Orthopedic</option>
+                          <option>Oncology</option>
+                          <option>Rehabilitation</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                        <select class="form-select">
+                          <option>By Diagnosis </option>
+                          <option>Leg Fracture</option>
+                          <option>Pacemaker </option>
+                          <option>Knee Displacement</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                        <input class="form-control" placeholder="By Date" />
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                        <select class="form-select">
+                          <option>By Type</option>
+                          <option>General</option>
+                          <option>Surgery</option>
+                          <option>Stroke</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1 col-12 ps-0">
+                  <button class="btn btn-primary w-100">Filter</button>
+                </div>
+              </div>
+            </div>
+          }
+
+          <div class="card-body table-style1 table-responsive radius-4">
+            <div class="fixed-header-table">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">S.No</th>
+                    <th width="15%" scope="col" sortable="auditID" (sort)="onSort($event)">UHID <span class="iconify" data-icon="bxs:sort-alt"></span></th>
+                    <th width="10%" scope="col" sortable="age" (sort)="onSort($event)">Age <span class="iconify" data-icon="bxs:sort-alt"></span></th>
+                    <th scope="col" sortable="room" (sort)="onSort($event)">Room No <span class="iconify" data-icon="bxs:sort-alt"></span></th>
+                    <th scope="col" sortable="unit" (sort)="onSort($event)">Admitted Unit  </th>
+                    <th scope="col" sortable="diagnosis" (sort)="onSort($event)">Diagnosis  </th>
+                    <th scope="col" sortable="period" (sort)="onSort($event)">Treatment Period  </th>
+                    <th scope="col" sortable="care" (sort)="onSort($event)">Care Continuity Status  </th>
+                    <th scope="col" sortable="type" (sort)="onSort($event)">Feedback Type  </th>
+                    <th scope="col" class="text-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (auditTable of countries; track auditTable.auditID) {
+                    <tr>
+                      <td scope="row">{{ auditTable.id }}</td>
+                      <td>
+                        <p>#7463736</p>
+                        <p class="fwbold">Thangamani</p>
+                        <p>+91 9876543210</p>
+                      </td>
+                      <td>{{ auditTable.age }}</td>
+                      <td>{{ auditTable.room }}</td>
+                      <td>{{ auditTable.unit }}</td>
+                      <td>{{ auditTable.diagnosis }}</td>
+                      <td>{{ auditTable.period }}</td>
+                      <td>{{ auditTable.care }}</td>
+                      <td>{{ auditTable.type }}</td>
+                      <td>
+                        <div class="action-rowflex">
+                          <div class="action-dropdown float-end">
+                            <ul>
+                              <li>
+                                <a href="javascript:;" routerLink="/prom-details"><span class="iconify" data-icon="lets-icons:view-alt-fill"></span></a>
+                              </li>
+                            </ul>
+                          </div>
+
+                          <div class="actiondot-dropdown">
+                            <div class="btn-group ms-2">
+                              <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="iconify" data-icon="tabler:dots"></span>
+                              </button>
+                              <ul class="dropdown-menu">
+                                <li>
+                                  <a class="dropdown-item" href="javascript:;"><span class="iconify" data-icon="lucide:folder-down"></span> Download</a>
+                                </li>
+                                <li>
+                                  <a class="dropdown-item" routerLink=""><span class="iconify" data-icon="lucide:folder-down"></span> Care Continuity</a>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+            <nav aria-label="Page navigation pagination text-end">
+              <ul class="pagination d-flex justify-content-end">
+                <li class="page-item next">
+                  <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">...</a></li>
+                <li class="page-item"><a class="page-link" href="#">10</a></li>
+                <li class="page-item prev">
+                  <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

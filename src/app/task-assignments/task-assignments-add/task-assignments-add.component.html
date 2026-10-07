@@ -1,0 +1,428 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="row">
+      <div class="col-md-12 col-12">
+        <div class="card-style2">
+          <div class="card-header backoption">
+            <div class="row">
+              <div class="col-md-7 col-12">
+                <div class="heading-left">
+                  <a
+                    href="javascript:;"
+                    class="icon-btn-square"
+                    (click)="goBack()"
+                  >
+                    <i class="iconify pi pi-arrow-left"></i>
+                  </a>
+                  <h3>{{ _hqms.getPageModeContext(pageMode, "Task") }}</h3>
+                </div>
+              </div>
+              <div class="col-md-5 col-12">
+                <div class="form-right">
+                  <button
+                    type="button"
+                    class="btn btn-dark"
+                    [disabled]="pageMode == 'VIEW'"
+                    (click)="onClearClick()"
+                  >
+                    Clear
+                  </button>
+                  <button
+                    type="submit"
+                    class="btn btn-primary"
+                    [disabled]="pageMode == 'VIEW'"
+                    (click)="onSubmitClick()"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row justify-content-center">
+              <div class="col-lg-7 col-md-12 col-12">
+                <div class="formbox-left form-lg">
+                  <form>
+                    <div class="row">
+                      <div class="col-md-12 col-12">
+                        <div class="flex flex-col gap-1">
+                          <label for="task_name">Task Name</label>
+                          <div
+                            style="
+                              position: relative;
+                              display: inline-block;
+                              width: 100%;
+                            "
+                          >
+                            <input
+                              pInputText
+                              id="task_name"
+                              [(ngModel)]="createTaskAssign().task_name"
+                              (blur)="onGetErrorMsgs('task_name')"
+                              placeholder="Task Name"
+                              [disabled]="pageMode == 'VIEW'"
+                              name="task_name"
+                              class="form-control"
+                              autocomplete="off"
+                              appNospaces
+                            />
+                            <div
+                              style="
+                                position: absolute;
+                                top: 0;
+                                right: 0;
+                                width: 0;
+                                height: 0;
+                                border-top: 12px solid red;
+                                border-left: 12px solid transparent;
+                              "
+                            ></div>
+                          </div>
+                          @if (errorMsg["task_name"] != "") {
+                            <small class="error">{{
+                              errorMsg["task_name"]
+                            }}</small>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <div class="flex flex-col gap-1">
+                          <label for="role_id">Role</label>
+                          <div
+                            style="
+                              position: relative;
+                              display: inline-block;
+                              width: 100%;
+                            "
+                          >
+                            <p-select
+                              id="role_id"
+                              [(ngModel)]="createTaskAssign().role_id"
+                              (onChange)="onGetErrorMsgs('role_id')"
+                              [appendTo]="'body'"
+                              [disabled]="pageMode == 'VIEW'"
+                              name="role_id"
+                              placeholder="Role"
+                              [options]="roleList"
+                              [filter]="true"
+                              [showClear]="true"
+                              class="form-control"
+                            />
+                            <div
+                              style="
+                                position: absolute;
+                                top: 0;
+                                right: 0;
+                                width: 0;
+                                height: 0;
+                                border-top: 12px solid red;
+                                border-left: 12px solid transparent;
+                              "
+                            ></div>
+                          </div>
+                          @if (errorMsg["role_id"] != "") {
+                            <small class="error">{{
+                              errorMsg["role_id"]
+                            }}</small>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <div class="flex flex-col gap-1">
+                          <label for="assigned_to_id">Assign to</label>
+                          <div
+                            style="
+                              position: relative;
+                              display: inline-block;
+                              width: 100%;
+                            "
+                          >
+                            <p-select
+                              id="assigned_to_id"
+                              [appendTo]="'body'"
+                              [(ngModel)]="createTaskAssign().assigned_to_id"
+                              (onChange)="onGetErrorMsgs('assigned_to_id')"
+                              placeholder="Assign to"
+                              [disabled]="pageMode == 'VIEW'"
+                              name="assigned_to_id"
+                              [options]="assignToList"
+                              [filter]="true"
+                              [showClear]="true"
+                              class="form-control"
+                            />
+                            <div
+                              style="
+                                position: absolute;
+                                top: 0;
+                                right: 0;
+                                width: 0;
+                                height: 0;
+                                border-top: 12px solid red;
+                                border-left: 12px solid transparent;
+                              "
+                            ></div>
+                          </div>
+                          @if (errorMsg["assigned_to_id"] != "") {
+                            <small class="error">{{
+                              errorMsg["assigned_to_id"]
+                            }}</small>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-6">
+                        <div class="flex flex-col gap-1">
+                          <label for="start_datetime"
+                            >From Date &amp; Time</label
+                          >
+                          <div
+                            style="
+                              position: relative;
+                              display: inline-block;
+                              width: 100%;
+                            "
+                          >
+                            <p-datePicker
+                              type="datetime-local"
+                              id="start_datetime"
+                              [showTime]="true"
+                              [hourFormat]="12"
+                              [(ngModel)]="createTaskAssign().start_datetime"
+                              [appendTo]="'body'"
+                              (onBlur)="onGetErrorMsgs('start_datetime')"
+                              placeholder="From Date &amp; Time"
+                              [disabled]="pageMode == 'VIEW'"
+                              name="start_datetime"
+                              [minDate]="minDateSetter()"
+                              class="form-control"
+                            />
+                            <div
+                              style="
+                                position: absolute;
+                                top: 0;
+                                right: 0;
+                                width: 0;
+                                height: 0;
+                                border-top: 12px solid red;
+                                border-left: 12px solid transparent;
+                              "
+                            ></div>
+                          </div>
+                          @if (errorMsg["start_datetime"] != "") {
+                            <small class="error">{{
+                              errorMsg["start_datetime"]
+                            }}</small>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-6">
+                        <div class="flex flex-col gap-1">
+                          <label for="end_datetime">To Date &amp; Time</label>
+                          <div
+                            style="
+                              position: relative;
+                              display: inline-block;
+                              width: 100%;
+                            "
+                          >
+                            <p-datePicker
+                              type="datetime-local"
+                              id="end_datetime"
+                              [showTime]="true"
+                              [hourFormat]="12"
+                              [(ngModel)]="createTaskAssign().end_datetime"
+                              [appendTo]="'body'"
+                              (onBlur)="onGetErrorMsgs('end_datetime')"
+                              placeholder="To Date &amp; Time"
+                              [disabled]="pageMode == 'VIEW'"
+                              name="end_datetime"
+                              [minDate]="createTaskAssign().start_datetime"
+                              class="form-control"
+                            />
+                            <div
+                              style="
+                                position: absolute;
+                                top: 0;
+                                right: 0;
+                                width: 0;
+                                height: 0;
+                                border-top: 12px solid red;
+                                border-left: 12px solid transparent;
+                              "
+                            ></div>
+                          </div>
+                          @if (errorMsg["end_datetime"] != "") {
+                            <small class="error">{{
+                              errorMsg["end_datetime"]
+                            }}</small>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-md-12 col-12">
+                        <div class="flex flex-col gap-1">
+                          <label for="task_description">Task Description</label>
+                          <div
+                            style="
+                              position: relative;
+                              display: inline-block;
+                              width: 100%;
+                            "
+                          >
+                            <textarea
+                              pTextarea
+                              id="task_description"
+                              placeholder="Task Description"
+                              [(ngModel)]="createTaskAssign().task_description"
+                              (blur)="onGetErrorMsgs('task_description')"
+                              rows="10"
+                              [disabled]="pageMode == 'VIEW'"
+                              name="task_description"
+                              class="form-control"
+                              appNospaces
+                            ></textarea>
+                            <div
+                              style="
+                                position: absolute;
+                                top: 0;
+                                right: 0;
+                                width: 0;
+                                height: 0;
+                                border-top: 12px solid red;
+                                border-left: 12px solid transparent;
+                              "
+                            ></div>
+                          </div>
+                          @if (errorMsg["task_description"] != "") {
+                            <small class="error">{{
+                              errorMsg["task_description"]
+                            }}</small>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <!-- <hqms-date [formName]="FORM_NAME" [labelName]="'Deadline (If any)'"
+                                                    [fieldName]="'deadline'" [isDisabled]="pageMode=='VIEW'"
+                                                    [(ngModel)]="createTaskAssign().deadline" name="deadline"
+                                                    (statusChange)="onFieldStatusChange($event)">
+                                                </hqms-date> -->
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <!-- <hqms-date [formName]="FORM_NAME" [labelName]="'Deadline (If any)'"
+                                                    [fieldName]="'deadline'" [isDisabled]="pageMode=='VIEW'"
+                                                    [(ngModel)]="createTaskAssign().deadline" name="deadline"
+                                                    (statusChange)="onFieldStatusChange($event)">
+                                                </hqms-date> -->
+                      </div>
+                      <div class="col-md-12 col-12">
+                        <div class="form-group">
+                          <label>Task Upload</label>
+                          <div class="upload-image">
+                            <p-fileUpload
+                              mode="basic"
+                              (onSelect)="
+                                onCoverPageFileSelect(
+                                  upCoverPage,
+                                  $event,
+                                  'Image',
+                                  createTaskAssign(),
+                                  null
+                                )
+                              "
+                              chooseLabel="Task Upload"
+                              [multiple]="false"
+                              #upCoverPage
+                              accept="image/png, image/jpeg"
+                              [fileLimit]="1"
+                              [maxFileSize]="2097152"
+                              [auto]="true"
+                              [disabled]="pageMode == 'VIEW'"
+                              invalidFileSizeMessageSummary="File too large"
+                              invalidFileSizeMessageDetail="Maximum upload size is 2MB"
+                            >
+                            </p-fileUpload>
+                            <div
+                              *ngIf="
+                                createTaskAssign().supporting_documents.length >
+                                0
+                              "
+                              class="flex gap-2 flex-wrap mt-2"
+                            >
+                              <div
+                                *ngFor="
+                                  let mDoc of createTaskAssign()
+                                    .supporting_documents;
+                                  let imgIndex = index
+                                "
+                              >
+                                <div
+                                  *ngIf="mDoc.is_active == true"
+                                  class="reg-img-view"
+                                  style="
+                                    border: 1px solid #cacaca;
+                                    padding: 5px;
+                                    border-radius: 7px;
+                                    font-size: 11px;
+                                  "
+                                >
+                                  {{ mDoc["file_name"] }}
+                                  <a
+                                    class="time-icons time-remove ml-2"
+                                    href="javascript:return false"
+                                    ><i
+                                      *ngIf="pageMode != 'VIEW'"
+                                      class="pi pi-times-circle"
+                                      (click)="
+                                        removeCoverPageImage(mDoc, imgIndex)
+                                      "
+                                    ></i
+                                  ></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12 col-12">
+                        <label>Status</label>
+                        <div class="form-group">
+                          <p-toggleswitch
+                            [(ngModel)]="createTaskAssign().is_active"
+                            name="is_active"
+                            [disabled]="pageMode == 'VIEW' || pageMode == 'NEW'"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  ::ng-deep .p-datepicker {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center;
+    padding: 0 !important;
+  }
+
+  ::ng-deep .p-datepicker .p-inputtext {
+    flex: 1;
+    width: 100% !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  ::ng-deep .p-datepicker.form-control,
+  ::ng-deep .p-datepicker .p-datepicker {
+    border: 1px solid var(--red-500, red);
+    border-radius: 4px;
+    padding: 0.375rem 0.75rem;
+  }
+</style>

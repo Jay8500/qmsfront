@@ -1,0 +1,597 @@
+<section class="wrapper-body audit-master-dashboard">
+  <div class="container-fluid">
+    <!-- Page header -->
+    <section class="status-card">
+      <div class="main-heading-link">
+        <h3 class="main-heading">Entity Master</h3>
+        <div class="hd-actions">
+          <!-- <p-select [options]="categoryOptions()" [ngModel]="categoryFilter()"
+                        (ngModelChange)="categoryFilter.set($event)" optionLabel="label" optionValue="value"
+                        [style]="{ minWidth: '190px' }" />
+                    <p-select [options]="statusOptions" [ngModel]="statusFilter()"
+                        (ngModelChange)="statusFilter.set($event)" optionLabel="label" optionValue="value"
+                        [style]="{ minWidth: '150px' }" /> -->
+          <p-button
+            label="New Entity"
+            icon="pi pi-plus"
+            (onClick)="openCreate()"
+          />
+        </div>
+      </div>
+    </section>
+    <!-- KPI cards -->
+    <div class="stats">
+      <div class="stat amber">
+        <div class="s-icon"><i class="pi pi-database"></i></div>
+        <div class="s-label">Total Entities</div>
+        <div class="s-num">{{ stats().totalEntities }}</div>
+        <div class="s-label">Last Updated</div>
+        <h5>{{ stats().total_cnt_last_updated || "N/A" }}</h5>
+      </div>
+      <div class="stat pink">
+        <div class="s-icon"><i class="pi pi-list"></i></div>
+        <div class="s-label">Total Values</div>
+        <div class="s-num">{{ stats().totalValues }}</div>
+        <div class="s-label">Last Updated</div>
+        <h5>{{ stats().inactive_cnt_last_updated || "N/A" }}</h5>
+      </div>
+      <div class="stat blue">
+        <div class="s-icon"><i class="pi pi-lock"></i></div>
+        <div class="s-label">System-Locked</div>
+        <div class="s-num">{{ stats().systemLocked }}</div>
+        <div class="s-label">Last Updated</div>
+        <h5>{{ stats().system_cnt_last_updated || "N/A" }}</h5>
+      </div>
+      <div class="stat teal">
+        <div class="s-icon"><i class="pi pi-check-circle"></i></div>
+        <div class="s-label">Active Values</div>
+        <div class="s-num">{{ stats().activeValues }}</div>
+        <div class="s-label">Last Updated</div>
+        <h5>{{ stats().active_cnt_last_updated || "N/A" }}</h5>
+      </div>
+    </div>
+
+    <!-- Section header -->
+    <div class="sect-hd">
+      <h2>Entities</h2>
+      <span class="sub">( {{ entityMasterGrid.length }})</span>
+      <!-- <div class="right">
+                <p-iconfield>
+                    <p-inputicon styleClass="pi pi-search" />
+                    <input pInputText [ngModel]="search()" (ngModelChange)="search.set($event)"
+                        placeholder="Search entities…" style="width:240px" />
+                </p-iconfield>
+            </div> -->
+    </div>
+    <div class="grid-card">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th style="width: 60px">S.No</th>
+            <th>Entity Name</th>
+            <th>Entity Code</th>
+            <th>Category</th>
+            <th style="width: 110px; text-align: center">Values</th>
+            <th style="width: 230px">Governance</th>
+            <th style="width: 120px; text-align: center">Status</th>
+            <th style="width: 140px; text-align: center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (entyParnt of entityMasterGrid; track entyParnt.entity_id) {
+            <tr>
+              <td scope="row">{{ entyParnt.id }}</td>
+              <td>{{ entyParnt.entity_name }}</td>
+              <td>{{ entyParnt.entity_code }}</td>
+              <td>{{ entyParnt.category_type_name }}</td>
+              <td style="text-align: center">
+                <p-tag
+                  [value]="entyParnt.values.length + ''"
+                  severity="success"
+                  [rounded]="true"
+                />
+              </td>
+              <td>
+                <div class="row-flags">
+                  @if (entyParnt.is_system) {
+                    <p-tag value="System" severity="info" />
+                  }
+                  @if (!entyParnt.is_editable) {
+                    <!-- <p-tag value="Locked" severity="danger" /> -->
+                    <i class="pi pi-lock" pTooltip="Locked"></i>
+                  }
+                  <!-- @if (entyParnt.values.length) {
+                                <p-tag value="Custom OK" severity="success" />
+                                } -->
+                  @if (entyParnt.is_editable && !entyParnt.is_system) {
+                    <p-tag value="Custom Ok" severity="secondary" />
+                  }
+                </div>
+              </td>
+              <td style="text-align: center">
+                <p-tag
+                  [value]="entyParnt.is_active ? 'Active' : 'Inactive'"
+                  [severity]="entyParnt.is_active ? 'success' : 'danger'"
+                />
+              </td>
+              <td>
+                @if (entyParnt.is_system == false) {
+                  <a href="javascript:;" (click)="onEditClickDoc(entyParnt)">
+                    <i class="iconify pi pi-pencil"></i>
+                  </a>
+                }
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td style="text-align: center" [attr.colspan]="8">
+                No Entities Found
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+      <nav aria-label="Page navigation pagination text-end">
+        <ul class="pagination d-flex justify-content-end">
+          <li
+            class="page-adtInfo next"
+            [class.disabled]="pageNators().pageNo === 1"
+          >
+            <a
+              class="page-link cursor"
+              aria-label="Previous"
+              (click)="changePage(pageNators().pageNo - 1)"
+            >
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          @for (p of pageNumbers(); track p) {
+            <li class="page-adtInfo" [class.active]="pageNators().pageNo === p">
+              <a class="page-link cursor" (click)="changePage(p)">{{ p }}</a>
+            </li>
+          }
+          <li
+            class="page-adtInfo prev"
+            [class.disabled]="pageNators().pageNo === pageNumbers().length"
+          >
+            <a
+              class="page-link cursor"
+              aria-label="Next"
+              (click)="changePage(pageNators().pageNo + 1)"
+            >
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</section>
+
+<p-dialog
+  [header]="pageMode == 'NEW' ? 'New Entity' : _text"
+  [modal]="true"
+  [(visible)]="visible"
+  [style]="{ width: '100vw', height: '100vh' }"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+  [focusOnShow]="false"
+  [maximizable]="false"
+  (onShow)="resetForm()"
+  (onHide)="resetForm()"
+>
+  <div class="row">
+    <div class="col-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="flex flex-col gap-1">
+            <label for="entity_code">Entity Code</label>
+            <div style="position: relative; display: inline-block; width: 100%">
+              <input
+                pInputText
+                id="entity_code"
+                [(ngModel)]="entity_json['entity_code']"
+                (blur)="onGetErrorMsgs('entity_code', null)"
+                placeholder="Entity Code"
+                autocomplete="off"
+                class="form-control"
+                appNospaces
+              />
+              <div
+                style="
+                  position: absolute;
+                  top: 0;
+                  right: 0;
+                  width: 0;
+                  height: 0;
+                  border-top: 12px solid red;
+                  border-left: 12px solid transparent;
+                "
+              ></div>
+            </div>
+            @if (errorMsg["entity_code"] != "") {
+              <small class="error">{{ errorMsg["entity_code"] }}</small>
+            }
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="flex flex-col gap-1">
+            <label for="entity_name">Entity Name</label>
+            <div style="position: relative; display: inline-block; width: 100%">
+              <input
+                pInputText
+                id="entity_name"
+                [(ngModel)]="entity_json['entity_name']"
+                (blur)="onGetErrorMsgs('entity_name', null)"
+                placeholder="Entity Name"
+                autocomplete="off"
+                class="form-control"
+                appNospaces
+              />
+              <div
+                style="
+                  position: absolute;
+                  top: 0;
+                  right: 0;
+                  width: 0;
+                  height: 0;
+                  border-top: 12px solid red;
+                  border-left: 12px solid transparent;
+                "
+              ></div>
+            </div>
+            @if (errorMsg["entity_name"] != "") {
+              <small class="error">{{ errorMsg["entity_name"] }}</small>
+            }
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="flex flex-col gap-1">
+            <label for="category_type">Category Type</label>
+            <div style="position: relative; display: inline-block; width: 100%">
+              <p-select
+                id="category_type"
+                [(ngModel)]="entity_json['category_type']"
+                (onBlur)="onGetErrorMsgs('category_type', null)"
+                (onChange)="onGetErrorMsgs('category_type', null)"
+                placeholder="Category Type"
+                [options]="categoryTypeList"
+                class="form-control"
+              />
+              <div
+                style="
+                  position: absolute;
+                  top: 0;
+                  right: 0;
+                  width: 0;
+                  height: 0;
+                  border-top: 12px solid red;
+                  border-left: 12px solid transparent;
+                "
+              ></div>
+            </div>
+            @if (errorMsg["category_type"] != "") {
+              <small class="error">{{ errorMsg["category_type"] }}</small>
+            }
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="flex flex-col gap-1">
+            <label for="scm">Display Order</label>
+            <div style="position: relative; display: inline-block; width: 100%">
+              <input
+                pInputText
+                placeholder="Display Order"
+                name="scm"
+                type="number"
+                [(ngModel)]="entity_json['display_order']"
+                (blur)="onGetErrorMsgs('display_order', null)"
+                autocomplete="off"
+                class="form-control"
+                appNospaces
+                min="0"
+              />
+              <div
+                style="
+                  position: absolute;
+                  top: 0;
+                  right: 0;
+                  width: 0;
+                  height: 0;
+                  border-top: 12px solid red;
+                  border-left: 12px solid transparent;
+                "
+              ></div>
+            </div>
+            @if (errorMsg["display_order"] != "") {
+              <small class="error">{{ errorMsg["display_order"] }}</small>
+            }
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="flex flex-col gap-1">
+            <label for="description">Description</label>
+            <div style="position: relative; display: inline-block; width: 100%">
+              <textarea
+                pTextarea
+                placeholder="Description"
+                name="Description"
+                autocomplete="off"
+                class="form-control"
+                [(ngModel)]="entity_json['description']"
+                (blur)="onGetErrorMsgs('description', null)"
+                appNospaces
+              ></textarea>
+              <div
+                style="
+                  position: absolute;
+                  top: 0;
+                  right: 0;
+                  width: 0;
+                  height: 0;
+                  border-top: 12px solid red;
+                  border-left: 12px solid transparent;
+                "
+              ></div>
+            </div>
+            @if (errorMsg["description"] != "") {
+              <small class="error">{{ errorMsg["description"] }}</small>
+            }
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="switch-row">
+            <div class="lbl" style="cursor: pointer">Editable</div>
+            <p-toggleswitch
+              class="sp"
+              [(ngModel)]="entity_json.is_editable"
+              name="is_editable"
+              [disabled]="false"
+            />
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="switch-row">
+            <div class="lbl" style="cursor: pointer">System entity</div>
+            <p-toggleswitch
+              class="sp"
+              [(ngModel)]="entity_json.is_system"
+              name="is_system"
+              [disabled]="false"
+              [disabled]="true"
+            />
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="switch-row">
+            <div class="lbl" style="cursor: pointer">Active</div>
+            <p-toggleswitch
+              class="sp"
+              [(ngModel)]="entity_json.is_active"
+              name="is_active"
+              [disabled]="pageMode == 'NEW'"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-8">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">S.NO</th>
+            <th scope="col">Value Code</th>
+            <th scope="col">Short Name</th>
+            <th scope="col">Display Value</th>
+            <th scope="col">Display Order</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (
+            entyVls of entity_json.values;
+            track $index;
+            let sclOptnsIndex = $index
+          ) {
+            @if (entyVls.is_active) {
+              <tr>
+                <td>
+                  {{ sclOptnsIndex + 1 }}
+                </td>
+                <td>
+                  <div
+                    style="
+                      position: relative;
+                      display: inline-block;
+                      width: 100%;
+                    "
+                  >
+                    <input
+                      pInputText
+                      id="value_code"
+                      [(ngModel)]="entyVls['value_code']"
+                      autocomplete="off"
+                      (blur)="onGetErrorMsgs('value_code', sclOptnsIndex)"
+                      placeholder="Value Code"
+                      appNospaces
+                    />
+                    <div
+                      style="
+                        position: absolute;
+                        top: 0;
+                        right: 1px;
+                        width: 0;
+                        height: 0;
+                        border-top: 12px solid red;
+                        border-left: 12px solid transparent;
+                      "
+                    ></div>
+                  </div>
+                  @if (errorMsg["values"][sclOptnsIndex]["value_code"] != "") {
+                    <small class="error">{{
+                      errorMsg["values"][sclOptnsIndex]["value_code"]
+                    }}</small>
+                  }
+                </td>
+                <td>
+                  <div
+                    style="
+                      position: relative;
+                      display: inline-block;
+                      width: 100%;
+                    "
+                  >
+                    <input
+                      pInputText
+                      id="short_name"
+                      [(ngModel)]="entyVls['short_name']"
+                      autocomplete="off"
+                      (blur)="onGetErrorMsgs('short_name', sclOptnsIndex)"
+                      placeholder="Short Name"
+                      appNospaces
+                    />
+                    <div
+                      style="
+                        position: absolute;
+                        top: 0;
+                        right: 1px;
+                        width: 0;
+                        height: 0;
+                        border-top: 12px solid red;
+                        border-left: 12px solid transparent;
+                      "
+                    ></div>
+                  </div>
+                  @if (errorMsg["values"][sclOptnsIndex]["short_name"] != "") {
+                    <small class="error">{{
+                      errorMsg["values"][sclOptnsIndex]["short_name"]
+                    }}</small>
+                  }
+                </td>
+                <td>
+                  <div
+                    style="
+                      position: relative;
+                      display: inline-block;
+                      width: 100%;
+                    "
+                  >
+                    <input
+                      pInputText
+                      id="display_value"
+                      [(ngModel)]="entyVls['display_value']"
+                      autocomplete="off"
+                      (blur)="onGetErrorMsgs('display_value', sclOptnsIndex)"
+                      placeholder="Display Value"
+                      appNospaces
+                    />
+                    <div
+                      style="
+                        position: absolute;
+                        top: 0;
+                        right: 1px;
+                        width: 0;
+                        height: 0;
+                        border-top: 12px solid red;
+                        border-left: 12px solid transparent;
+                      "
+                    ></div>
+                  </div>
+                  @if (
+                    errorMsg["values"][sclOptnsIndex]["display_value"] != ""
+                  ) {
+                    <small class="error">{{
+                      errorMsg["values"][sclOptnsIndex]["display_value"]
+                    }}</small>
+                  }
+                </td>
+                <td>
+                  <div
+                    style="
+                      position: relative;
+                      display: inline-block;
+                      width: 100%;
+                    "
+                  >
+                    <input
+                      pInputText
+                      placeholder="Type"
+                      name="scm"
+                      [(ngModel)]="entyVls['display_order']"
+                      autocomplete="off"
+                      (blur)="onGetErrorMsgs('display_order2', sclOptnsIndex)"
+                      placeholder="Display Order"
+                      appNospaces
+                      type="number"
+                    />
+                    <div
+                      style="
+                        position: absolute;
+                        top: 0;
+                        right: 1px;
+                        width: 0;
+                        height: 0;
+                        border-top: 12px solid red;
+                        border-left: 12px solid transparent;
+                      "
+                    ></div>
+                  </div>
+                  @if (
+                    errorMsg["values"][sclOptnsIndex]["display_order"] != ""
+                  ) {
+                    <small class="error">{{
+                      errorMsg["values"][sclOptnsIndex]["display_order"]
+                    }}</small>
+                  }
+                </td>
+
+                <td>
+                  @if (sclOptnsIndex == entity_json.values.length - 1) {
+                    <i
+                      class="iconify pi pi-plus-circle"
+                      style="color: green"
+                      (click)="onAccAdd(entyVls, entity_json)"
+                    ></i>
+                  }
+                  @if (
+                    sclOptnsIndex !== 0 ||
+                    (sclOptnsIndex == 0 && entity_json.values.length > 1)
+                  ) {
+                    <i
+                      class="iconify pi pi-trash"
+                      style="color: red"
+                      (click)="onEntityValueRemove(entyVls, sclOptnsIndex)"
+                    ></i>
+                  }
+                </td>
+              </tr>
+            }
+          } @empty {
+            <tr>
+              <td [attr.colspan]="8" style="text-align: center">
+                <button
+                  class="btn btn-primary"
+                  (click)="addAccessControl(entity_json)"
+                  [disabled]="false"
+                >
+                  Add option
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <ng-template #footer>
+    <p-button label="Clear" (onClick)="resetForm()" />
+    <p-button label="Submit" (onClick)="onSubmit()" />
+  </ng-template>
+</p-dialog>
+
+<style>
+  .error {
+    color: red;
+    font-weight: bold;
+    font-size: 12px;
+  }
+</style>

@@ -1,0 +1,188 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                                        <i class="iconify pi pi-arrow-left"></i>
+                                    </a>
+                                    <h3>Clinical Pathway Audits</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-12">
+                                @if(false){
+                                <div class="form-right">
+                                    <div class="dropdown dropdown-style1 ms-2">
+                                        <button class="btn btn-light dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            Download <span class="iconify" data-icon="akar-icons:chevron-down"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                                            <li><a class="dropdown-item" href="javascript:;">Download Word</a></li>
+                                            <li><a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="audit-info-cover">
+                            <div class="audit-status">
+                                <div class="row">
+                                    <div class="col-md-6 col-12">
+                                        <div class="left-content">
+                                            <h5>{{ createCPAudits.patient_name  }} </h5>
+                                            <!-- <p>Last Updated On <strong>March 27, 2025 16:30</strong></p> -->
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="right-content text-end">
+                                            <p class="mb-1">Status</p>
+                                            <span class="badge-green">{{ createCPAudits.status | uppercase}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-audit tablehrz">
+                                <table class="table table-bordered table-line mb-0">
+                                    <tr>
+                                        <th>CP Type</th>
+                                        <th>Date of Admission</th>
+                                        <th>Date of Surgery</th>
+                                        <th>Date of Discharge</th>
+                                        <th>Consultant</th>
+                                        <!-- <th>Auditee Name</th> -->
+                                    </tr>
+                                    <tr>
+                                        <td>{{  createCPAudits.cp_type_name }}</td>
+                                        <td>{{  createCPAudits.doa_name }}</td>
+                                        <td>{{  createCPAudits.dos_name }} </td>
+                                        <td>{{  createCPAudits.dod_name }}</td>
+                                        <td>{{  createCPAudits.consultant_name }}</td>
+                                        <!-- <td>{{  createCPAudits.cp_type_name }}</td> -->
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="audit-info-cover">
+                            <div class="audit-status">
+                                <div class="row">
+                                    <div class="col-md-6 col-12">
+                                        <div class="left-content">
+                                            <h5>Clinical Pathway Feedbacks</h5>
+                                            <p>{{ createCPAudits.sections.length  }} Questionairre</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="right-content text-end">
+                                            <p class="mb-1">Overall Score</p>
+                                            <span
+                                                [ngClass]="getComplianceClass(createCPAudits.displayCol)">{{ createCPAudits.compliance  }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-audit-row">
+                                @for(pathwayAdt of createCPAudits.sections;track $index;let scI = $index){
+                                <h5>{{pathwayAdt.section_name}}</h5>
+                                <div class="table-audit">
+                                    <table class="table table-bordered">
+                                        @for(qstn of pathwayAdt.questions;track $index;let j = $index){
+                                        <tr>
+                                            <td width="90%">{{qstn.question_text }} </td>
+                                            <td class="text-center text-success">{{qstn.answer_text}}</td>
+                                        </tr>
+                                        }
+                                    </table>
+                                </div>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="audit-info-cover">
+                            <div class="audit-status">
+                                <div class="row">
+                                    <div class="col-md-12 col-12">
+                                        <div class="left-content">
+                                            <h5>Uploaded Discharge Form</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="gallery-grid">
+                                @for(dcFrm of createCPAudits.discharge_form;track $index){
+                                @if(dcFrm.fileOrImageUrl){
+                                <div class="grid-photo">
+                                    <a [href]="dcFrm.fileOrImageUrl" data-fancybox="gallery">
+                                        <img [src]="dcFrm.fileOrImageUrl" alt="Evidence" />
+                                    </a>
+                                </div>
+                                }@else{
+                                <div>No Discharge Form Uploaded</div>
+                                }
+                                }@empty{
+                                <div>No Discharge Form Uploaded</div>
+                                }
+                            </div>
+                        </div>
+
+
+                        <div class="audit-info-cover">
+                            <div class="audit-status">
+                                <div class="row">
+                                    <div class="col-md-12 col-12">
+                                        <div class="left-content">
+                                            <h5>CAPA Summary</h5>
+                                            <p>Non Compliance Analysis</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="table-audit tablehrz mt-3">
+                                @for(wCpa of createCPAudits.capa_details;track $index){
+                                <table class="table table-bordered table-line">
+                                    <thead>
+                                        <tr>
+                                            <th>Written CAPA</th>
+                                            <th>Action Taken</th>
+                                            <th>Evidences</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{{ wCpa.description}}</td>
+                                            <td>{{ wCpa.action_taken}}</td>
+                                            <td>
+                                                @for(dcFrm of wCpa.evidence_files;track $index){
+                                                <div class="grid-photo">
+                                                    <a [href]="dcFrm.fileOrImageUrl" data-fancybox="gallery">
+                                                        <img [src]="dcFrm.fileOrImageUrl" alt="Evidence" />
+                                                    </a>
+                                                </div>
+                                                }
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                }@empty{
+                                No Summary Found
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

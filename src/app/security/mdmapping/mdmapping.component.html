@@ -1,0 +1,195 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <!-- <a href="javascript:;" class="icon-btn-square" (click)="goBack()"><span
+                                                        class="iconify" data-icon="famicons:arrow-back-outline"></span></a> -->
+                                    <h3>Module Document Mapping</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-12">
+                                <div class="form-right">
+                                    <div class="row">
+                                        <div class="col-md-12 col-12">
+                                            <button type="button" class="btn btn-dark"
+                                                (click)="onClearClick()">Clear</button>
+                                            <button type="submit" class="btn btn-primary"
+                                                appAccess="access_mod" (click)="onSubmitClick()">Submit</button>
+                                        </div>
+                                    </div>
+                                    <!-- @if(false){
+                                            <div class="form-right">
+                                                <a href="javascript:;" class="icon-btn-square" (click)="filterToggle()"><span
+                                                        class="iconify" data-icon="mage:filter"></span></a>
+                                                <div class="dropdown dropdown-style1 ms-2" appAccess="access_exp">
+                                                    <button class="btn btn-light dropdown-toggle" type="button"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Download Report <span class="iconify"
+                                                            data-icon="akar-icons:chevron-down"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                                                        <li><a class="dropdown-item" href="javascript:;">Download Word</a></li>
+                                                        <li><a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            } -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mt-2">
+                            <div class="col-lg-3 col-md-3 col-12">
+                                <!-- <p-listbox [options]="modulesList" [(ngModel)]="selectedModuleId"
+                                    optionLabel="moduleName" optionValue="moduleId" [filter]="true"
+                                    (onChange)="onModuleClick($event)" styleClass='moddoc-list-wrapper' /> -->
+                                <p-table [value]="modulesList" [(selection)]="selectedModuleId" selectionMode="single"
+                                    (onRowSelect)="onModuleClick($event)" [scrollable]="true"
+                                    [globalFilterFields]="['moduleName']" #dtModules scrollHeight="450px"
+                                    [tableStyle]="{ 'min-width':'20rem' }"
+                                    styleClass="p-datatable-sm p-datatable-striped">
+                                    <ng-template pTemplate="caption">
+                                        <div class="flex itemsd-center justify-between">
+                                            <span>Hqms
+                                                Modules
+                                                <p-tag [value]="modulesList.length" /></span>
+                                        </div>
+                                        <div class="p-input-icon-left w-full">
+                                            <input pInputText type="text"
+                                                (input)="dtModules.filterGlobal($any($event.target).value,'contains')"
+                                                placeholder="Search by module" class="w-full p-inputtext-sm" />
+                                            <!-- <i class="pi pi-search"></i> -->
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-module>
+                                        <tr [pSelectableRow]="module">
+                                            <td> <i [class]="module['module_icon']"></i> {{ module.moduleName  }}</td>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="emptymessage">
+                                        <tr>
+                                            <td style="text-align: center;padding:15px;color:#888">
+                                                No data found
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                            <div class="col-lg-9 col-md-9 col-12">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p-table [value]="unmappedDocuments" [scrollable]="true" #dtAva
+                                            styleClass="p-datatable-sm p-datatable-striped"
+                                            [globalFilterFields]="['document_name']" scrollHeight="450px"
+                                            [tableStyle]="{ 'min-width':'20rem' }">
+                                            <ng-template pTemplate="caption">
+                                                <div class="flex itemsd-center justify-between">
+                                                    <span>Hqms Documents    
+                                                        <p-tag [value]="unmappedDocuments.length" severity="warn" />
+                                                    </span>
+                                                </div>
+                                                <div class="p-input-icon-left w-full">
+                                                    <!-- <i class="pi pi-search"></i> -->
+                                                    <input pInputText type="text"
+                                                        (input)="dtAva.filterGlobal($any($event.target).value,'contains')"
+                                                        placeholder="Search by document"
+                                                        class="w-full p-inputtext-sm" />
+                                                </div>
+                                            </ng-template>
+                                            <ng-template pTemplate="body" let-doc let-rowIndex="rowIndex">
+                                                <tr>
+                                                    <td>
+                                                        <div
+                                                            style="display: flex;align-items:center;justify-content:space-between;width:100%">
+                                                            <div style="display: flex;align-items: center;gap: 8px;">
+                                                                <span>
+                                                                    {{ rowIndex + 1 }}
+                                                                    {{ doc.document_name  }}
+                                                                </span>
+                                                            </div>
+                                                            <i class="pi pi-arrow-right cursor"
+                                                                pTooltip="Assign documents"
+                                                                style="color: #6e6cf0;font-size:12px;"
+                                                                (click)="doc['is_active']=true;targetDocumments.push(doc);unmappedDocuments.splice(rowIndex,1)"></i>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="emptymessage">
+                                                <tr>
+                                                    <td style="text-align: center;padding:15px;color:#888">
+                                                        No data found
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                        </p-table>
+                                    </div>
+                                    <div class="col-6">
+                                        <p-table [value]="targetDocumments" [scrollable]="true"
+                                            [(selection)]="targetDocumments" [globalFilterFields]="['document_name']"
+                                            #dtSelected styleClass="p-datatable-sm p-datatable-striped"
+                                            scrollHeight="450px" [tableStyle]="{ 'min-width':'20rem' }" cdkDropList
+                                            [cdkDropListData]="targetDocumments"
+                                            (cdkDropListDropped)="dropTarget($event)">
+                                            <ng-template pTemplate="caption">
+                                                <div class="flex itemsd-center justify-between">
+                                                    <span> <i [class]="selectedModule['icon']"></i>
+                                                        {{selectedModule['mdName']}}
+                                                        Documents
+                                                        <p-tag [value]="targetDocumments.length" severity="info" />
+                                                    </span>
+                                                </div>
+                                                <div class="p-input-icon-left w-full">
+                                                    <!-- <i class="pi pi-search"></i> -->
+                                                    <input pInputText type="text"
+                                                        (input)="dtSelected.filterGlobal($any($event.target).value,'contains')"
+                                                        placeholder="Search by document"
+                                                        class="w-full p-inputtext-sm" />
+                                                </div>
+                                            </ng-template>
+                                            <ng-template pTemplate="body" let-doc let-slctdIndex="rowIndex">
+                                                <tr cdkDrag>
+                                                    <td>
+                                                        <div
+                                                            style="display: flex;align-items:center;justify-content:space-between;width:100%">
+                                                            <div style="display: flex;align-items: center;gap: 8px;">
+                                                                <span class="drag-icon sub-drag "
+                                                                    cdkDragHandle>::</span>
+                                                                <span>
+                                                                    {{slctdIndex+1}}
+                                                                    {{ doc.document_name  }}
+                                                                </span>
+                                                            </div>
+                                                            <i class="pi pi-times error cursor"
+                                                                style="color: #e74c3c;font-size:12px;"
+                                                                (click)="doc['is_active']=false;unmappedDocuments.push(doc);targetDocumments.splice(slctdIndex,1)"></i>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="emptymessage">
+                                                <tr>
+                                                    <td style="text-align: center;padding:15px;color:#888">
+                                                        No data found
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                        </p-table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

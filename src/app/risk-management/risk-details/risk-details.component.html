@@ -1,0 +1,189 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    @if (risk(); as r) {
+    <div class="qms-head">
+      <div class="d-flex align-items-center gap-2">
+        <a href="javascript:;" class="icon-btn-square" (click)="goBack()"><i class="iconify pi pi-arrow-left"></i></a>
+        <div>
+          <h3>{{ r.risk_number }} <span class="qms-chip ms-1" [attr.data-s]="r.status">{{ r.status }}</span>
+            @if (r.risk_level) { <span class="qms-chip ms-1" [attr.data-l]="r.risk_level">{{ r.risk_level }}</span> }</h3>
+          <p class="qms-sub">{{ r.risk_type }} · {{ r.department }} · reported by {{ r.reported_by }} on {{ r.reported_on }}@if (r.version_no > 1) { · version {{ r.version_no }} }</p>
+        </div>
+      </div>
+      <div class="qms-actions">
+        @if (r.can_edit_report) { <button class="btn btn-light" (click)="edit()"><i class="pi pi-pencil me-1"></i>{{ r.can_submit ? 'Edit / Submit' : 'Edit' }}</button> }
+        @if (r.can_score) { <button class="btn btn-primary" (click)="score()"><i class="pi pi-calculator me-1"></i>Department Scoring</button> }
+        @if (r.can_review) { <button class="btn btn-primary" (click)="review()"><i class="pi pi-check-square me-1"></i>Quality Review</button> }
+        @if (r.can_link) { <button class="btn btn-light" (click)="openDlg('LINK')"><i class="pi pi-link me-1"></i>Link Item</button> }
+        @if (r.can_reopen) { <button class="btn btn-outline-danger" (click)="openDlg('REOPEN')"><i class="pi pi-replay me-1"></i>Reopen</button> }
+        @if (r.can_amend) { <button class="btn btn-light" (click)="openDlg('AMEND')"><i class="pi pi-file-edit me-1"></i>Amend</button> }
+      </div>
+    </div>
+
+    <div class="steps qms-card">
+      @for (s of steps(); track s.name) {
+      <div class="step" [class.done]="s.done" [class.current]="s.current"><span class="n"><i class="pi" [class.pi-check]="s.done"></i></span><span>{{ s.name }}</span></div>
+      }
+      @if (r.status_code === 'REVISION_REQUIRED') { <div class="step bad"><span class="n"><i class="pi pi-undo"></i></span><span>Revision required</span></div> }
+    </div>
+    @if (r.source === 'INCIDENT_RULE') {
+    <div class="qms-note danger"><i class="pi pi-replay me-1"></i>Auto-created via Incident Recurrence@if (r.rule) {: {{ r.rule.threshold_count }}+ "{{ r.rule.incident_type }}" incidents in {{ r.rule.window_days }} days ({{ r.rule.department }}) }.
+      @if (r.qt_due_date) { QT review due {{ r.qt_due_date | appDate:'date' }} (NABH: high risks within 7 days). }</div>
+    }
+    @if (r.status_code === 'PERIODIC_REVIEW') { <div class="qms-note">Periodic review {{ r.review_frequency | titlecase }} - next {{ r.next_review_date | appDate:'date' }}</div> }
+
+    <div class="row g-3">
+      <div class="col-xl-8 col-12">
+        <div class="qms-card">
+          <div class="qms-section-title">Risk Report</div>
+          <div class="score-row">
+            <div class="score-box"><label>Reporter score</label>@if (r.reporter_score) { <span>{{ r.reporter_score }}<small>/5</small></span> } @else { <em>Not given</em> }</div>
+            <div class="score-box"><label>Department score</label>@if (r.initial_score) { <span>{{ r.initial_score }}<small>/25</small></span> } @else { <em>Not scored</em> }</div>
+            <div class="score-box" [attr.data-l]="r.risk_level"><label>Final score</label>@if (r.final_score) { <span>{{ r.final_score }}<small>/25</small></span> } @else { <em>Not scored</em> }</div>
+          </div>
+          <div class="qms-kv mb-3">
+            <div><label>Date of risk</label><span>{{ r.date_of_risk | appDate:'date' }}</span></div>
+            <div><label>Department</label><span>{{ r.department }}</span></div>
+            <div><label>Location</label><span>{{ r.location || '-' }}</span></div>
+            <div><label>Impact type</label><span>{{ r.impact_type || '-' }}</span></div>
+            <div><label>Owners</label><span>@for (o of r.owners; track o.user_id; let last = $last) { {{ o.name }}@if (!last) {, } } @empty { - }</span></div>
+            <div><label>Mitigation due</label><span>{{ (r.due_date | appDate:'date') || '-' }}</span></div>
+          </div>
+          <div class="row g-2">
+            <div class="col-12"><div class="qms-text-box"><label>Description</label><p class="qms-text">{{ r.description }}</p></div></div>
+            <div class="col-md-6 col-12"><div class="qms-text-box"><label>Impact for risk</label><p class="qms-text">{{ r.impact_description || '-' }}</p></div></div>
+            <div class="col-md-6 col-12"><div class="qms-text-box"><label>Immediate action</label><p class="qms-text">{{ r.immediate_action || '-' }}</p></div></div>
+          </div>
+        </div>
+
+        <div class="qms-card">
+          <div class="qms-section-title">Department Evaluation &amp; Mitigation
+            @if (r.dept_scoring) { <small>{{ r.dept_scoring.scored_by }} · {{ r.dept_scoring.scored_on }}</small> }</div>
+          @if (r.dept_scoring) {
+          <div class="qms-kv mb-2">
+            <div><label>Impact × Probability</label><span>{{ r.dept_scoring.impact_score }} × {{ r.dept_scoring.probability_score }} = <strong>{{ r.dept_scoring.risk_score }}</strong>
+              <span class="qms-chip ms-1" [attr.data-l]="r.dept_scoring.risk_level">{{ r.dept_scoring.risk_level }}</span></span></div>
+            <div><label>Action type</label><span>{{ typeName(r.mitigation_action_type) || '-' }}</span></div>
+            <div><label>Target date</label><span>{{ (r.dept_scoring.due_date | appDate:'date') || '-' }}</span></div>
+          </div>
+          <div class="row g-2">
+            <div class="col-md-6 col-12"><div class="qms-text-box"><label>Mitigation plan (preventive)</label><p class="qms-text">{{ r.dept_scoring.mitigation_plan }}</p></div></div>
+            <div class="col-md-6 col-12"><div class="qms-text-box"><label>Action taken (corrective)</label><p class="qms-text">{{ r.dept_scoring.action_taken }}</p></div></div>
+          </div>
+          <qms-file-list [files]="r.dept_scoring.files" [compact]="true" />
+          } @else {
+          <div class="qms-empty">Not scored yet - the department head scores the risk and plans the mitigation.</div>
+          }
+        </div>
+
+        <div class="qms-card">
+          <div class="qms-section-title">Quality Team Reviews</div>
+          @for (q of r.reviews; track $index) {
+          <div class="review-row">
+            <span class="qms-chip" [attr.data-l]="q.risk_level">{{ q.impact_score }} × {{ q.probability_score }} = {{ q.risk_score }}</span>
+            <strong>{{ q.decision }}</strong>@if (q.review_plan) { <span class="text-muted">({{ q.review_plan }})</span> }
+            <small class="text-muted ms-auto">{{ q.reviewed_by }} · {{ q.reviewed_on }}</small>
+          </div>
+          } @empty {
+          <div class="text-muted small">No review yet</div>
+          }
+          @if (r.capa) {
+          <div class="qms-text-box mt-2">
+            <label>CAPA <span class="qms-chip chip-muted ms-1">{{ r.capa.capa_code }} · {{ r.capa.capa_status }}</span></label>
+            <div class="small"><strong>Corrective:</strong> {{ r.capa.corrective_action }}</div>
+            <div class="small"><strong>Preventive:</strong> {{ r.capa.preventive_action }}</div>
+          </div>
+          }
+        </div>
+
+        <div class="qms-card">
+          <div class="qms-section-title">Linked Items <small>Training, policy update, committee action, document revision</small></div>
+          @for (li of r.linked_items; track li.risk_linked_item_id) {
+          <div class="review-row">
+            <span class="qms-chip chip-muted">{{ typeName(li.item_type) }}</span>
+            <span>{{ li.title }}@if (li.reference_no) { <small class="text-muted"> ({{ li.reference_no }})</small> }</span>
+            <small class="text-muted">@if (li.owner) { {{ li.owner }} } @if (li.due_date) { · due {{ li.due_date | appDate:'date' }} }</small>
+            <span class="ms-auto">
+              @if (r.can_link) {
+              <p-select [options]="itemStatuses" [ngModel]="li.item_status" (onChange)="setItemStatus(li, $event.value)" styleClass="status-sel" appendTo="body" />
+              } @else { <span class="qms-chip">{{ li.item_status }}</span> }
+            </span>
+          </div>
+          } @empty {
+          <div class="text-muted small">No linked items</div>
+          }
+        </div>
+      </div>
+
+      <div class="col-xl-4 col-12">
+        <div class="qms-card">
+          <div class="qms-section-title">Evidence</div>
+          <qms-file-list [files]="r.evidence" emptyText="No documents" />
+        </div>
+        <div class="qms-card">
+          <div class="qms-section-title">Linked Incidents</div>
+          @for (i of r.linked_incidents; track i.incident_id) {
+          <a href="javascript:;" class="inc-link" (click)="openIncident(i)">
+            <strong>{{ i.incident_code }}</strong><span>{{ i.incident_type }}</span>
+            <small class="text-muted ms-auto">{{ i.incident_date | appDate }} · {{ i.status }}</small>
+          </a>
+          } @empty {
+          <div class="text-muted small">None</div>
+          }
+        </div>
+        @if (r.versions?.length) {
+        <div class="qms-card">
+          <div class="qms-section-title">Versions (Amend)</div>
+          @for (v of r.versions; track v.version_no) {
+          <div class="small mb-1"><strong>v{{ v.version_no }}</strong> - {{ v.reason }} <span class="text-muted">({{ v.by }}, {{ v.on }})</span></div>
+          }
+        </div>
+        }
+        <div class="qms-card">
+          <div class="qms-section-title">History</div>
+          <qms-timeline [items]="r.timeline" />
+        </div>
+      </div>
+    </div>
+    } @else {
+    <div class="qms-empty mt-4">{{ loading() ? 'Loading ...' : 'Risk not found' }}</div>
+    }
+  </div>
+</section>
+
+<p-dialog [header]="dlg() === 'REOPEN' ? 'Reopen Risk' : dlg() === 'AMEND' ? 'Amend Closed Risk' : 'Link Item'" [visible]="!!dlg()"
+  (visibleChange)="!$event && dlg.set(null)" [modal]="true" [style]="{ width: '560px' }" [breakpoints]="{ '768px': '95vw' }" [draggable]="false">
+  <div class="qms-form">
+    @if (dlg() === 'REOPEN') {
+    <div class="qms-note warn">The risk goes back to Quality Team review and counts as re-opened.</div>
+    }
+    @if (dlg() === 'AMEND') {
+    <div class="qms-note">A snapshot of the current record is kept (version history) before the change.</div>
+    <label>Description</label>
+    <textarea pTextarea rows="3" class="form-control w-100 mb-2" [(ngModel)]="dm.description"></textarea>
+    <label>Impact for risk</label>
+    <textarea pTextarea rows="2" class="form-control w-100 mb-2" [(ngModel)]="dm.impact_description"></textarea>
+    <div class="row g-2 mb-2">
+      <div class="col-6"><label>Final impact</label><p-select [options]="scores" [(ngModel)]="dm.impact_score" placeholder="unchanged" [showClear]="true" appendTo="body" /></div>
+      <div class="col-6"><label>Final probability</label><p-select [options]="scores" [(ngModel)]="dm.probability_score" placeholder="unchanged" [showClear]="true" appendTo="body" /></div>
+    </div>
+    }
+    @if (dlg() === 'LINK') {
+    <label>Type</label>
+    <div class="mb-2"><p-select [options]="itemTypes" [(ngModel)]="dm.item_type" appendTo="body" /></div>
+    <label>Title</label>
+    <div class="qms-req mb-2"><input pInputText class="form-control" maxlength="300" [(ngModel)]="dm.title" placeholder="e.g. Fire drill training for ICU nurses"></div>
+    <div class="row g-2 mb-2">
+      <div class="col-md-6 col-12"><label>Reference no.</label><input pInputText class="form-control" maxlength="64" [(ngModel)]="dm.reference_no" placeholder="Training / SOP / meeting no."></div>
+      <div class="col-md-6 col-12"><label>Due date</label><p-datepicker [(ngModel)]="dm.due_date" dateFormat="dd-mm-yy" [showIcon]="true" appendTo="body" /></div>
+      <div class="col-12"><label>Owner</label><p-select [options]="staffList" [(ngModel)]="dm.owner_id" [filter]="true" [showClear]="true" placeholder="Select" appendTo="body" /></div>
+    </div>
+    }
+    <label>{{ dlg() === 'LINK' ? 'Remarks' : 'Reason' }}@if (dlg() !== 'LINK') { <span class="text-danger">*</span> }</label>
+    <textarea pTextarea rows="2" maxlength="500" class="form-control w-100" [(ngModel)]="dm.remarks"></textarea>
+  </div>
+  <ng-template #footer>
+    <button class="btn btn-light me-2" (click)="dlg.set(null)">Cancel</button>
+    <button class="btn btn-primary" [disabled]="saving()" (click)="submitDlg()">Save</button>
+  </ng-template>
+</p-dialog>

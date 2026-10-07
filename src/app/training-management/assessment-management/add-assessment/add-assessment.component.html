@@ -1,0 +1,459 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                                        <i class="iconify pi pi-arrow-left"></i>
+                                    </a>
+                                    <h3>{{_hqms.getPageModeContext(pageMode, 'Assessment') }} </h3>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-12">
+                                <div class="form-right">
+                                    <button class="btn btn-dark" [disabled]="pageMode=='VIEW'"
+                                        (click)="onClearClick()">Clear</button>
+                                    <button class="btn btn-primary" [disabled]="pageMode=='VIEW'"
+                                        (click)="onSubmitClick()">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row mt-5">
+                            <div class="col-lg-3 col-md-4 col-12">
+                                <div class="formbox-left legends form-lg">
+                                    <div class="form-title">Assessment Details</div>
+                                    <form>
+                                        <div class="row">
+                                            <div class="col-md-12 col-12">
+                                                @if(pageMode== 'NEW'){
+                                                <label for="training_id">Training Name</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                <p-select id="training_id" [(ngModel)]="createAssessment().training_id"
+                                                    (onBlur)="onGetErrorMsgs('training_id')" placeholder="Training Name"
+                                                    (onChange)="onGetErrorMsgs('training_id')" name="training_id"
+                                                    [disabled]="pageMode=='VIEW'||pageMode=='EDIT'"
+                                                    [options]="trainingNameList" [filter]="true"
+                                                    class=" form-control" />
+                                                    <div style=" position: absolute;
+                                                        top: 0;
+                                                        right: 0;
+                                                        width: 0;
+                                                        height: 0;
+                                                        border-top: 12px solid red;
+                                                        border-left: 12px solid transparent;">
+                                                    </div>
+                                                </div>
+                                                @if(errorMsg['training_id']!=''){
+                                                <small class="error">{{ errorMsg['training_id'] }}</small>
+                                                }
+                                                }
+                                                @else{
+                                                <div class="form-group">
+                                                    <label for="mode_of_training_name">Training Name :-</label>
+                                                    <div>
+                                                        {{createAssessment().training_name}}
+                                                    </div>
+                                                </div>
+                                                }
+                                            </div>
+                                            <div class="col-md-12 col-12">
+                                                <label for="total_score">Set Total Score</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                <input type="number" id="total_score" class=" form-control"
+                                                    [(ngModel)]="createAssessment().total_score"
+                                                    (blur)="onGetErrorMsgs('total_score')" placeholder="Set Total Score"
+                                                    [disabled]="pageMode=='VIEW'" name="total_score" />
+                                                    <div style=" position: absolute;
+                                                    top: 0;
+                                                    right: 0;
+                                                    width: 0;
+                                                    height: 0;
+                                                    border-top: 12px solid red;
+                                                    border-left: 12px solid transparent;">
+                                                </div>
+                                                </div>
+                                                @if(errorMsg['total_score']!=''){
+                                                <small class="error">{{ errorMsg['total_score'] }}</small>
+                                                }
+                                            </div>
+                                            <div class="col-md-12 col-12">
+                                                <label for="pass_mark">Set Pass Mark</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                <input type="number" id="pass_mark" class=" form-control"
+                                                    [(ngModel)]="createAssessment().pass_mark"
+                                                    (blur)="onGetErrorMsgs('pass_mark')" placeholder="Set Pass Mark"
+                                                    [disabled]="pageMode=='VIEW'" name="pass_mark" />
+                                                    <div style=" position: absolute;
+                                                    top: 0;
+                                                    right: 0;
+                                                    width: 0;
+                                                    height: 0;
+                                                    border-top: 12px solid red;
+                                                    border-left: 12px solid transparent;">
+                                                </div>
+                                                </div>
+                                                @if(errorMsg['pass_mark']!=''){
+                                                <small class="error">{{ errorMsg['pass_mark'] }}</small>
+                                                }
+                                            </div>
+                                            <div class="col-md-12 col-12">
+                                                <label>Status</label>
+                                                <div class="form-group">
+                                                    <p-toggleswitch [(ngModel)]="createAssessment().is_active"
+                                                        name="status"
+                                                        [disabled]="pageMode=='VIEW' || pageMode=='NEW'" />
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-lg-9 col-md-8 col-12">
+                                <div class="formbox-left legends form-lg">
+                                    <div class="form-title">
+                                        <label>Pre/ Post/ Both Assessment</label>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 col-12">
+                                            <div class="radio-group mb-2">
+                                                <label>Assessment Type</label>
+                                                @for (asLst of assessmentTypesList; track asLst.label) {
+                                                <p-radioButton [name]="asLst.value_code" [value]="asLst.value"
+                                                    [(ngModel)]='createAssessment().assessment_type_id'
+                                                    [inputId]="'ing1'+asLst.value"
+                                                    [disabled]="pageMode=='VIEW'||pageMode=='EDIT'"
+                                                    (click)="onAssessTypeClick(asLst.value_code,createAssessment())" />
+                                                <label [for]="'ing1'+asLst.value">{{ asLst.label }}</label>
+                                                }
+
+                                            </div>
+                                        </div>
+                                        @if(['BOTH','PRE ASSESSMENT' ].includes( isAssessMentType)){
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <div class="label-flex-link">
+                                                    <label>Upload Pre - Assessment Questions</label>
+                                                    <a (click)="_hqms.onDownloadClick('sample_templates/training_preassessment_questions.xlsx')"
+                                                        style="cursor: pointer;"><span class="iconify"
+                                                            data-icon="material-symbols:download"></span>
+                                                        Template</a>
+                                                </div>
+                                                <div class="upload-image">
+                                                    <p-fileUpload mode="basic"
+                                                        (onSelect)="onPreAssessFileSelect(preAssess, $event,'CoverPage',createAssessment(),null)"
+                                                        chooseLabel="Upload Pre - Assessment Questions"
+                                                        [multiple]="false" #preAssess [fileLimit]="1"
+                                                        [maxFileSize]="2097152" [auto]="true"
+                                                        [disabled]="pageMode=='VIEW'||pageMode=='EDIT'" accept=".xlsx"
+                                                        invalidFileSizeMessageSummary="File too large"
+                                                        invalidFileSizeMessageDetail="Maximum upload size is 5MB">
+                                                    </p-fileUpload>
+                                                    <div *ngIf="createAssessment().pre_assessment_files.length>0"
+                                                        class="flex gap-2 flex-wrap mt-2">
+                                                        <div
+                                                            *ngFor="let mDoc of createAssessment().pre_assessment_files; let imgIndex=index">
+                                                            <div *ngIf="mDoc.is_active==true" class="reg-img-view"
+                                                                style="border: 1px solid #cacaca;padding: 5px; border-radius: 7px;font-size: 11px;">
+                                                                {{ mDoc['file_name'] }}
+                                                                <a class="time-icons time-remove ml-2"
+                                                                    href="javascript:return false"><i
+                                                                        *ngIf="pageMode=='NEW'"
+                                                                        class="pi pi-times-circle"
+                                                                        (click)="onRemovePreAssessFileSelect(mDoc, imgIndex)"></i>
+
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-section mt-1 mb-1">
+                                                    <div class="row">
+                                                        <div class="col-md-12 col-12">
+                                                            <div class="form-group">
+                                                                <label>Question
+                                                                    <!-- <span class="info-icon" placement="top"
+                                                                            ngbTooltip="lorem ipsum dummy">
+                                                                            <span class="iconify"
+                                                                                data-icon="material-symbols:info-rounded"></span>
+                                                                        </span> -->
+                                                                </label>
+                                                                <input pInputText id="question"
+                                                                    [(ngModel)]="manual_pre().question_text"
+                                                                    [disabled]="pageMode=='VIEW'" name="question"
+                                                                    class="form-control" autocomplete="off">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-8 col-12">
+                                                            <p-select id="question_type"
+                                                                [(ngModel)]="manual_pre().question_type"
+                                                                name="question_type" [disabled]="pageMode=='VIEW'"
+                                                                [options]="questionType" [filter]="true"
+                                                                class="form-control" />
+                                                        </div>
+                                                        @if(manual_pre().question_type != 'FREE_TEXT'){
+                                                        <div class="col-md-12 col-12">
+                                                            <label for="Options">Question Type Options</label>
+                                                            <p-autocomplete [(ngModel)]="manual_pre().options_json"
+                                                                [inputId]="$index" multiple fluid [typeahead]=false
+                                                                [addOnBlur]="true" [addOnTab]="true" separator=","
+                                                                placeholder="Options" [disabled]="pageMode=='VIEW'" />
+                                                        </div>
+                                                        }
+                                                        <div class="col-md-12 col-12">
+                                                            <div class="form-group">
+                                                                <button
+                                                                    class="btn btn-primary btn-big-icon btn-lg w-100"
+                                                                    (click)="onPreAdd()"
+                                                                    [disabled]="pageMode=='VIEW'||
+                                                                         [null,''].includes(manual_pre().question_type)">
+                                                                    <i class="iconify pi pi-plus-circle">
+                                                                    </i>
+                                                                    Add
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-section">
+                                                    <div class="audit-heading">
+                                                        <h5>Question</h5>
+                                                    </div>
+                                                    <div class="audit-table">
+                                                        <div class="table-audit table-responsive">
+                                                            <table class="table table-bordered mb-0" cdkDropList
+                                                                (cdkDropListDropped)="predrop($event)">
+                                                                @for(qstns of createAssessment().pre_questions;track
+                                                                $index;let
+                                                                qstnIn=$index){
+                                                                @if(qstns.is_active!==false){
+                                                                <tr cdkDrag [cdkDragData]="qstns">
+                                                                    <td>
+                                                                        @if(qstns.is_edit_click){
+                                                                        <textarea pTextarea
+                                                                            [(ngModel)]="qstns.question_text" rows="6"
+                                                                            [disabled]="!qstns.is_edit_click"
+                                                                            name="pre_question_text_{{qstnIn}}"
+                                                                            class="form-control"></textarea>
+                                                                        }@else{
+                                                                        {{qstns.question_text}}
+                                                                        }
+                                                                    </td>
+                                                                    <td class="text-end">
+                                                                        @if(pageMode == 'NEW' || pageMode == 'EDIT'){
+                                                                        <div class="action-edit">
+                                                                            <ul class="s-flex">
+                                                                                <li>
+                                                                                    <a href="javascript:;"
+                                                                                        (click)="preeditQstn(qstns,qstnIn)">
+                                                                                        <!-- < span class="iconify" data-icon="ri:edit-line"></span> -->
+                                                                                        <i class="iconify pi pi-pencil"
+                                                                                            [class.editing]="qstns.is_edit_click"
+                                                                                            [class.edited]="!qstns.is_edit_click"></i>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a href="javascript:;"
+                                                                                        (click)="pretrashQstn(qstns)">
+                                                                                        <!-- <span class="iconify" data-icon="material-symbols:delete-outline"></span> -->
+                                                                                        <i
+                                                                                            class="iconify pi pi-trash"></i>
+                                                                                    </a>
+                                                                                </li>
+
+                                                                                <li>
+                                                                                    <div class="s-flex" cdkDragHandle>
+                                                                                        <a href="javascript:;">
+                                                                                            <!-- < span class="iconify" data-icon="ri:edit-line"></span> -->
+                                                                                            <i class="iconify pi pi-bars"
+                                                                                                pTooltip="Drag & Drop"
+                                                                                                tooltipPosition="left"></i>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                        }
+                                                                    </td>
+                                                                </tr>
+                                                                }
+                                                                }
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        }
+                                        @if(['BOTH','POST ASSESSMENT' ].includes( isAssessMentType)){
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <div class="label-flex-link">
+                                                    <label>Upload Post - Assessment Questions</label>
+                                                    <a (click)="_hqms.onDownloadClick('sample_templates/training_postassessment_questions.xlsx')"
+                                                        style="cursor: pointer;"><span class="iconify"
+                                                            data-icon="material-symbols:download"></span>
+                                                        Template</a>
+                                                </div>
+                                                <div class="upload-image">
+                                                    <p-fileUpload mode="basic"
+                                                        (onSelect)="onPostAssessFileSelect(postAss, $event,'CoverPage',createAssessment(),null)"
+                                                        chooseLabel="Upload Post - Assessment Questions"
+                                                        [multiple]="false" #postAss [fileLimit]="1"
+                                                        [maxFileSize]="2097152" [auto]="true"
+                                                        [disabled]="pageMode=='VIEW'||pageMode=='EDIT'" accept=".xlsx"
+                                                        invalidFileSizeMessageSummary="File too large"
+                                                        invalidFileSizeMessageDetail="Maximum upload size is 5MB">
+                                                    </p-fileUpload>
+                                                    @if(createAssessment().post_assessment_files.length>0){
+                                                    <div class="flex gap-2 flex-wrap mt-2">
+                                                        <div
+                                                            *ngFor="let mDoc of createAssessment().post_assessment_files; let imgIndex=index">
+                                                            <div *ngIf="mDoc.is_active==true" class="reg-img-view"
+                                                                style="border: 1px solid #cacaca;padding: 5px; border-radius: 7px;font-size: 11px;">
+                                                                {{ mDoc['file_name'] }}
+                                                                <a class="time-icons time-remove ml-2"
+                                                                    href="javascript:return false"><i
+                                                                        *ngIf="pageMode=='NEW'"
+                                                                        class="pi pi-times-circle"
+                                                                        (click)="onRemovePreAssessFileSelect(mDoc, imgIndex)"></i></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    }
+                                                </div>
+                                                <div class="form-section mt-1 mb-1">
+                                                    <div class="row">
+                                                        <div class="col-md-12 col-12">
+                                                            <div class="form-group">
+                                                                <label>Question
+                                                                    <!-- <span class="info-icon" placement="top"
+                                                                            ngbTooltip="lorem ipsum dummy">
+                                                                            <span class="iconify"
+                                                                                data-icon="material-symbols:info-rounded"></span>
+                                                                        </span> -->
+                                                                </label>
+                                                                <input pInputText id="question"
+                                                                    [(ngModel)]="manual_post().question_text"
+                                                                    [disabled]="pageMode=='VIEW'" name="question"
+                                                                    class="form-control" autocomplete="off">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-8 col-12">
+                                                            <p-select id="question_type"
+                                                                [(ngModel)]="manual_post().question_type"
+                                                                name="question_type" [disabled]="pageMode=='VIEW'"
+                                                                [options]="questionType" [filter]="true"
+                                                                class="form-control" />
+                                                        </div>
+                                                        @if(manual_post().question_type != 'FREE_TEXT'){
+                                                        <div class="col-md-12 col-12">
+                                                            <label for="Options">Question Type Options</label>
+                                                            <p-autocomplete [(ngModel)]="manual_post().options_json"
+                                                                [inputId]="$index" multiple fluid [typeahead]=false
+                                                                [addOnBlur]="true" [addOnTab]="true" separator=","
+                                                                placeholder="Options" [disabled]="pageMode=='VIEW'" />
+                                                        </div>
+                                                        }
+                                                        <div class="col-md-12 col-12">
+                                                            <div class="form-group">
+                                                                <button
+                                                                    class="btn btn-primary btn-big-icon btn-lg w-100"
+                                                                    (click)="onPostAdd()"
+                                                                    [disabled]="pageMode=='VIEW'||
+                                                                         [null,''].includes(manual_post().question_type)">
+                                                                    <i class="iconify pi pi-plus-circle">
+                                                                    </i>
+                                                                    Add
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-section">
+                                                    <div class="audit-heading">
+                                                        <h5>Question</h5>
+                                                    </div>
+                                                    <div class="audit-table">
+                                                        <div class="table-audit table-responsive">
+                                                            <table class="table table-bordered mb-0" cdkDropList
+                                                                (cdkDropListDropped)="postdrop($event)">
+                                                                @for(qstns of createAssessment().post_questions;track
+                                                                $index;let
+                                                                qstnIn=$index){
+                                                                @if(qstns.is_active!==false){
+                                                                <tr cdkDrag [cdkDragData]="qstns">
+                                                                    <td>
+                                                                        @if(qstns.is_edit_click){
+                                                                        <textarea pTextarea
+                                                                            [(ngModel)]="qstns.question_text" rows="6"
+                                                                            [disabled]="!qstns.is_edit_click"
+                                                                            name="post_question_text_{{qstnIn}}"
+                                                                            class="form-control"></textarea>
+                                                                        }@else{
+                                                                        {{qstns.question_text}}
+                                                                        }
+                                                                    </td>
+                                                                    <td class="text-end">
+                                                                        @if(pageMode == 'NEW' || pageMode == 'EDIT'){
+                                                                        <div class="action-edit">
+                                                                            <ul class="s-flex">
+                                                                                <li>
+                                                                                    <a href="javascript:;"
+                                                                                        (click)="posteditQstn(qstns,qstnIn)">
+                                                                                        <!-- < span class="iconify" data-icon="ri:edit-line"></span> -->
+                                                                                        <i class="iconify pi pi-pencil"
+                                                                                            [class.editing]="qstns.is_edit_click"
+                                                                                            [class.edited]="!qstns.is_edit_click"></i>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a href="javascript:;"
+                                                                                        (click)="posttrashQstn(qstns)">
+                                                                                        <!-- <span class="iconify" data-icon="material-symbols:delete-outline"></span> -->
+                                                                                        <i
+                                                                                            class="iconify pi pi-trash"></i>
+                                                                                    </a>
+                                                                                </li>
+
+                                                                                <li>
+                                                                                    <div class="s-flex" cdkDragHandle>
+                                                                                        <a href="javascript:;">
+                                                                                            <!-- < span class="iconify" data-icon="ri:edit-line"></span> -->
+                                                                                            <i class="iconify pi pi-bars"
+                                                                                                pTooltip="Drag & Drop"
+                                                                                                tooltipPosition="left"></i>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                        }
+                                                                    </td>
+                                                                </tr>
+                                                                }
+                                                                }
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,32 @@
+.trend {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 150px;
+  padding-top: 6px;
+}
+
+.trend-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  min-width: 0;
+}
+
+.trend-bar {
+  width: 70%;
+  max-width: 22px;
+  background: #3b6fd8;
+  border-radius: 3px 3px 0 0;
+  min-height: 2px;
+}
+
+.trend-lbl {
+  font-size: 9px;
+  color: #8c959f;
+  margin-top: 3px;
+  white-space: nowrap;
+}

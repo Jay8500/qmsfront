@@ -1,0 +1,13 @@
+<div id="chart">
+  @if(chartOptions.series && chartOptions.series[0]?.data?.length > 0){
+  <apx-chart #chart [series]="chartOptions.series" [chart]="chartOptions.chart" [labels]="chartOptions.labels"
+    [responsive]="chartOptions.responsive" [colors]="chartOptions.colors" [legend]="chartOptions.legend"
+    [fill]="chartOptions.fill" [stroke]="chartOptions.stroke" [dataLabels]="chartOptions.dataLabels"
+    [plotOptions]="chartOptions.plotOptions" [yaxis]="chartOptions.yaxis" [xaxis]="chartOptions.xaxis"
+    [tooltip]="chartOptions.tooltip" [noData]="chartOptions.noData!"></apx-chart>
+  }@else{
+  <div class="no-data-msg" style="text-align: center;">
+    No data found
+  </div>
+  }
+</div>

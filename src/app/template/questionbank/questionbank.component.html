@@ -1,0 +1,381 @@
+<section class="wrapper-body audit-master-dashboard">
+  <div class="container-fluid">
+    <!-- Page header -->
+    <section class="status-card">
+      <div class="main-heading-link">
+        <h3 class="main-heading">Question Bank</h3>
+        <div class="hd-actions">
+          <!-- <p-select [options]="categoryOptions()" [ngModel]="categoryFilter()"
+                        (ngModelChange)="categoryFilter.set($event)" optionLabel="label" optionValue="value"
+                        [style]="{ minWidth: '190px' }" />
+                    <p-select [options]="statusOptions" [ngModel]="statusFilter()"
+                        (ngModelChange)="statusFilter.set($event)" optionLabel="label" optionValue="value"
+                        [style]="{ minWidth: '150px' }" /> -->
+          <p-button
+            label="New Question"
+            icon="pi pi-plus"
+            (onClick)="pageMode = 'NEW'; visible = true"
+          />
+        </div>
+      </div>
+    </section>
+    <!-- KPI cards -->
+    <div class="stats">
+      <div class="stat amber">
+        <div class="s-icon"><i class="pi pi-database"></i></div>
+        <div class="s-label">Total Questions</div>
+        <div class="s-num">{{ stats().totalQstns }}</div>
+      </div>
+      <!-- <div class="stat pink">
+                <div class="s-icon"><i class="pi pi-list"></i></div>
+                <div class="s-label">Categories</div>
+                <div class="s-num">{{ stats().totalCategories }}</div>
+            </div> -->
+      <div class="stat blue">
+        <div class="s-icon"><i class="pi pi-lock"></i></div>
+        <div class="s-label">Mandatory</div>
+        <div class="s-num">{{ stats().mandatoryCnt }}</div>
+      </div>
+      <div class="stat teal">
+        <div class="s-icon"><i class="pi pi-check-circle"></i></div>
+        <div class="s-label">Evidence Required</div>
+        <div class="s-num">{{ stats().evidencesCnt }}</div>
+      </div>
+    </div>
+
+    <!-- Section header -->
+    <div class="sect-hd">
+      <h2>Questions</h2>
+      <span class="sub">( {{ qstnsBnksInfo.length }})</span>
+      <!-- <div class="right">
+                <p-iconfield>
+                    <p-inputicon styleClass="pi pi-search" />
+                    <input pInputText [ngModel]="search()" (ngModelChange)="search.set($event)"
+                        placeholder="Search entities…" style="width:240px" />
+                </p-iconfield>
+            </div> -->
+    </div>
+    <div class="grid-card">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th style="width: 60px">S.No</th>
+            <th>QUESTIONS</th>
+            <th>CODE</th>
+            <th>Input Type</th>
+            <th style="width: 110px; text-align: center">Response Scale</th>
+
+            <th style="width: 120px; text-align: center">Status</th>
+            <th style="width: 140px; text-align: center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (qstn of qstnsBnksInfo; track qstn.id) {
+            <tr>
+              <td scope="row">{{ qstn.id }}</td>
+              <td>
+                <div>
+                  {{ qstn.question_text }}
+                </div>
+                <div>
+                  @if (qstn.is_mandatory) {
+                    <p-tag value="Mandatory" severity="info" />
+                  }
+                </div>
+              </td>
+              <td>{{ qstn.question_code }}</td>
+              <td>{{ qstn.input_type }}</td>
+              <td>{{ qstn.response_scale_name }}</td>
+              <td style="text-align: center">
+                <p-tag
+                  [value]="qstn.is_active ? 'Active' : 'Inactive'"
+                  [severity]="qstn.is_active ? 'success' : 'danger'"
+                />
+              </td>
+              <td>
+                <a href="javascript:;" (click)="onEditClicQstn(qstn)">
+                  <i class="iconify pi pi-pencil"></i>
+                </a>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td style="text-align: center" [attr.colspan]="7">
+                No Questions Found
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+      <nav aria-label="Page navigation pagination text-end">
+        <ul class="pagination d-flex justify-content-end">
+          <li
+            class="page-adtInfo next"
+            [class.disabled]="pageNators().pageNo === 1"
+          >
+            <a
+              class="page-link cursor"
+              aria-label="Previous"
+              (click)="changePage(pageNators().pageNo - 1)"
+            >
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          @for (p of pageNumbers(); track p) {
+            <li class="page-adtInfo" [class.active]="pageNators().pageNo === p">
+              <a class="page-link cursor" (click)="changePage(p)">{{ p }}</a>
+            </li>
+          }
+          <li
+            class="page-adtInfo prev"
+            [class.disabled]="pageNators().pageNo === pageNumbers().length"
+          >
+            <a
+              class="page-link cursor"
+              aria-label="Next"
+              (click)="changePage(pageNators().pageNo + 1)"
+            >
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <p-dialog
+      [header]="pageMode == 'NEW' ? 'New Question' : _text"
+      [modal]="true"
+      [(visible)]="visible"
+      [style]="{ width: '65rem', height: '100vh' }"
+      [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+      [focusOnShow]="false"
+      [maximizable]="false"
+      (onShow)="resetForm()"
+      (onHide)="resetForm()"
+    >
+      <div class="row">
+        <div class="col-12">
+          <div class="flex flex-col gap-1">
+            <label for="question_text">Question Text</label>
+            <div style="position: relative; display: inline-block; width: 100%">
+              <textarea
+                pTextarea
+                placeholder="Question Text"
+                name="question_text"
+                class="form-control"
+                [(ngModel)]="question['question_text']"
+                (blur)="onGetErrorMsgs('question_text', null)"
+                appNospaces
+              ></textarea>
+              <div
+                style="
+                  position: absolute;
+
+                  top: 0;
+                  right: 0;
+                  width: 0;
+                  height: 0;
+                  border-top: 12px solid red;
+                  border-left: 12px solid transparent;
+                "
+              ></div>
+            </div>
+            @if (errorMsg["description"] != "") {
+              <small class="error">{{ errorMsg["question_text"] }}</small>
+            }
+          </div>
+        </div>
+
+        <div class="col-3">
+          <div class="flex flex-col gap-1">
+            <label for="scale_name">Question Code</label>
+            <div style="position: relative; display: inline-block; width: 100%">
+              <input
+                pInputText
+                id="Question Code"
+                [(ngModel)]="question['question_code']"
+                (blur)="onGetErrorMsgs('question_code', null)"
+                placeholder="Question Code"
+                class="form-control"
+                appNospaces
+              />
+              <div
+                style="
+                  position: absolute;
+                  top: 0;
+                  right: 0;
+                  width: 0;
+                  height: 0;
+                  border-top: 12px solid red;
+                  border-left: 12px solid transparent;
+                "
+              ></div>
+            </div>
+            @if (errorMsg["question_code"] != "") {
+              <small class="error">{{ errorMsg["question_code"] }}</small>
+            }
+          </div>
+        </div>
+        <!-- <div class="col-3">
+                    <div class="flex flex-col gap-1">
+                        <label for="question_category_id">Category</label>
+                        <div style="position: relative;display:inline-block;width:100%">
+                            <p-select id="question_category_id" [(ngModel)]="question['question_category_id']"
+                                (onBlur)="onGetErrorMsgs('question_category_id')"
+                                (onChange)="onGetErrorMsgs('question_category_id',null)" placeholder="Category"
+                                [options]="typeList" class=" form-control" [filter]="true" />
+                            <div style=" position: absolute;
+                            top: 0;
+                            right: 0;
+                            width: 0;
+                            height: 0;
+                            border-top: 12px solid red;
+                            border-left: 12px solid transparent;"></div>
+                        </div>
+                        @if(errorMsg['question_category_id']!=''){
+                        <small class="error">{{ errorMsg['question_category_id']}}</small>
+                        }
+                    </div>
+                </div> -->
+        <div class="col-3">
+          <div class="flex flex-col gap-1">
+            <label for="type">Input Type</label>
+            <div style="position: relative; display: inline-block; width: 100%">
+              <p-select
+                id="input_type_id"
+                [(ngModel)]="question['input_type_id']"
+                (onBlur)="onGetErrorMsgs('input_type_id')"
+                (onChange)="onGetErrorMsgs('input_type_id', null)"
+                placeholder="Input Type"
+                [filter]="true"
+                [options]="inputList"
+                [appendTo]="'body'"
+                class="form-control"
+              />
+              <div
+                style="
+                  position: absolute;
+                  top: 0;
+                  right: 0;
+                  width: 0;
+                  height: 0;
+                  border-top: 12px solid red;
+                  border-left: 12px solid transparent;
+                "
+              ></div>
+            </div>
+            @if (errorMsg["input_type_id"] != "") {
+              <small class="error">{{ errorMsg["input_type_id"] }}</small>
+            }
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="flex flex-col gap-1">
+            <label for="response_scale_id">Response Scale</label>
+            <div style="position: relative; display: inline-block; width: 100%">
+              <p-select
+                id="response_scale_id"
+                [(ngModel)]="question['response_scale_id']"
+                (onBlur)="onGetErrorMsgs('response_scale_id')"
+                [appendTo]="'body'"
+                (onChange)="onGetErrorMsgs('response_scale_id', null)"
+                placeholder="Response Scale"
+                [options]="responseScaleList"
+                [filter]="true"
+                class="form-control"
+              />
+              <div
+                style="
+                  position: absolute;
+                  top: 0;
+                  right: 0;
+                  width: 0;
+                  height: 0;
+                  border-top: 12px solid red;
+                  border-left: 12px solid transparent;
+                "
+              ></div>
+            </div>
+            @if (errorMsg["response_scale_id"] != "") {
+              <small class="error">{{ errorMsg["response_scale_id"] }}</small>
+            }
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="flex flex-col gap-1">
+            <label for="help_text">Help Text</label>
+            <div style="position: relative; display: inline-block; width: 100%">
+              <textarea
+                pTextarea
+                placeholder="Help Text"
+                name="help_text"
+                class="form-control"
+                [(ngModel)]="question['help_text']"
+                (blur)="onGetErrorMsgs('help_text', null)"
+                appNospaces
+              ></textarea>
+              <div
+                style="
+                  position: absolute;
+                  top: 0;
+                  right: 0;
+                  width: 0;
+                  height: 0;
+                  border-top: 12px solid red;
+                  border-left: 12px solid transparent;
+                "
+              ></div>
+            </div>
+            @if (errorMsg["help_text"] != "") {
+              <small class="error">{{ errorMsg["help_text"] }}</small>
+            }
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="switch-row">
+            <div class="lbl" style="cursor: pointer">Mandatory</div>
+            <p-toggleswitch
+              class="sp"
+              [(ngModel)]="question.is_mandatory"
+              name="is_mandatory"
+              [disabled]="false"
+            />
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="switch-row">
+            <div class="lbl" style="cursor: pointer">Require Evidence</div>
+            <p-toggleswitch
+              class="sp"
+              [(ngModel)]="question.requires_evidence"
+              name="requires_evidence"
+              [disabled]="false"
+            />
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="switch-row">
+            <div class="lbl" style="cursor: pointer">Active</div>
+            <p-toggleswitch
+              class="sp"
+              [(ngModel)]="question.is_active"
+              name="is_active"
+              [disabled]="pageMode == 'NEW'"
+            />
+          </div>
+        </div>
+      </div>
+      <ng-template #footer>
+        <p-button label="Clear" (onClick)="resetForm()" />
+        <p-button label="Submit" (onClick)="onSubmit()" />
+      </ng-template>
+    </p-dialog>
+    <style>
+      .error {
+        color: red;
+        font-weight: bold;
+        font-size: 12px;
+      }
+    </style>
+  </div>
+</section>

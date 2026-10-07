@@ -1,0 +1,64 @@
+<section class="wrapper-body">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main-heading-link">
+                    <h3 class="main-heading">Notifications</h3>
+                    <div class="dropdown dropdown-style1 filterDropdown">
+                        <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="iconify icon-calc pi pi-calendar"></i>
+                            {{ selectedRange }}
+                            <i class="iconify pi pi-angle-down"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 7 days')">Last 7
+                                    days</a>
+                            </li>
+                            <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 30 days')">Last 30
+                                    days</a>
+                            </li>
+                            <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last Month')">Last
+                                    Month</a></li>
+                            <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 6 Months')">Last 6
+                                    Months</a>
+                            </li>
+                            <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last Year')">Last
+                                    Year</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="notifications-cover">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="notification-row">
+                        <ul>
+                            @for(ntfn of ntfctnsInfo;track $index){
+                            <li [class.read]="ntfn.isMsgRead">
+                                <div class="notificationbox">
+                                    <div class="icon">
+                                        <i class="pi pi-bell iconify"></i>
+                                    </div>
+                                    <div class="content">
+                                        <h5>{{ntfn['text']}}
+                                        </h5>
+                                        <p>{{ntfn['scheduleddt']}}</p>
+                                    </div>
+                                    <div class="times" (click)="onDeleteNtfcn(ntfn)">
+                                        <i class="pi pi-times iconify "></i>
+                                    </div>
+                                </div>
+                            </li>
+                            }@empty{
+                            <li>No Notifications</li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

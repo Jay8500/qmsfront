@@ -1,0 +1,97 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="qms-head">
+      <div>
+        <h3>Quality Review of Risk</h3>
+        <p class="qms-sub">Review the mitigation, give the final score and decide closure (Risk SRS 2.3)</p>
+      </div>
+    </div>
+
+    @if (risk(); as r) {
+    <div class="row g-3">
+      <div class="col-xl-5 col-12">
+        <div class="qms-card">
+          <div class="qms-section-title">{{ r.risk_number }} <span class="qms-chip" [attr.data-s]="r.status">{{ r.status }}</span>
+            <a href="javascript:;" class="qms-right small" (click)="openFull()">Full details</a></div>
+          <div class="qms-kv one">
+            <div><label>Type · department</label><span>{{ r.risk_type }} · {{ r.department }}</span></div>
+            <div><label>Impact type</label><span>{{ r.impact_type || '-' }}</span></div>
+          </div>
+          <div class="qms-text-box mt-2"><label>Description</label><p class="qms-text">{{ r.description }}</p></div>
+          @if (r.qt_due_date) { <div class="qms-note warn mt-2">High risk - QT review due {{ r.qt_due_date | appDate:'date' }} (NABH PSQ.5: within 7 days)</div> }
+        </div>
+        <div class="qms-card">
+          <div class="qms-section-title">Department Evaluation</div>
+          @if (r.dept_scoring; as s) {
+          <div class="mb-2">Score <strong>{{ s.impact_score }} × {{ s.probability_score }} = {{ s.risk_score }}</strong>
+            <span class="qms-chip ms-1" [attr.data-l]="s.risk_level">{{ s.risk_level }}</span>
+            <small class="text-muted d-block">{{ s.scored_by }} · {{ s.scored_on }}</small></div>
+          <div class="qms-text-box mb-2"><label>Mitigation plan</label><p class="qms-text">{{ s.mitigation_plan }}</p></div>
+          <div class="qms-text-box mb-2"><label>Action taken</label><p class="qms-text">{{ s.action_taken }}</p></div>
+          <qms-file-list [files]="s.files" emptyText="No evidence" />
+          } @else {
+          <div class="qms-note warn">The department has not scored this risk yet.</div>
+          }
+          @if (r.linked_items?.length) {
+          <div class="small mt-2"><strong>Linked:</strong> @for (li of r.linked_items; track li.risk_linked_item_id) { {{ li.title }} ({{ li.item_status }}); }</div>
+          }
+        </div>
+      </div>
+      <div class="col-xl-7 col-12">
+        @if (!r.can_review) { <div class="qms-note warn">This risk is not waiting for Quality Team review (status {{ r.status }}).</div> }
+        <fieldset class="qms-form" [disabled]="!r.can_review">
+          <div class="qms-card">
+            <div class="qms-section-title">Final Scoring</div>
+            <div class="row g-3 align-items-end">
+              <div class="col-md-4 col-12">
+                <label>Final Impact (1-5)</label>
+                <div class="qms-req"><p-select [options]="impacts" [(ngModel)]="m.impact_score" placeholder="1-5" [disabled]="!r.can_review" appendTo="body" /></div>
+              </div>
+              <div class="col-md-4 col-12">
+                <label>Final Probability (1-5)</label>
+                <div class="qms-req"><p-select [options]="probs" [(ngModel)]="m.probability_score" placeholder="1-5" [disabled]="!r.can_review" appendTo="body" /></div>
+              </div>
+              <div class="col-md-4 col-12">
+                <div class="result" [attr.data-l]="level()"><span class="num">{{ score() || '-' }}</span><span class="lbl">{{ levelName() }}</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="qms-card">
+            <div class="qms-section-title">Finalization &amp; Risk Closure</div>
+            <div class="decisions">
+              @for (d of decisions; track d.v) {
+              <button type="button" class="decision" [class.on]="m.decision === d.v" [attr.data-v]="d.v" (click)="m.decision = d.v" [disabled]="!r.can_review">
+                <strong>{{ d.l }}</strong><small>{{ d.d }}</small>
+              </button>
+              }
+            </div>
+            @if (m.decision === 'PERIODIC_REVIEW') {
+            <div class="mt-3">
+              <label>Review frequency</label>
+              <div class="qms-pills">
+                @for (f of freqs; track f.value) {
+                <button type="button" [class.on]="m.review_frequency === f.value" (click)="m.review_frequency = f.value" [disabled]="!r.can_review">{{ f.label }}</button>
+                }
+              </div>
+            </div>
+            }
+            <label class="mt-3">Comments @if (commentsRequired()) { <span class="text-danger">* required</span> }</label>
+            <div [class.qms-req]="commentsRequired()"><textarea pTextarea rows="3" class="form-control w-100" [(ngModel)]="m.remarks"></textarea></div>
+          </div>
+          @if (r.can_review) {
+          <div class="d-flex justify-content-end gap-2 mb-3">
+            <button class="btn btn-light" (click)="risk.set(null)">Back to queue</button>
+            <button class="btn btn-primary" [disabled]="saving()" (click)="submit()"><i class="pi pi-check me-1"></i>Save Review</button>
+          </div>
+          }
+        </fieldset>
+      </div>
+    </div>
+    }
+
+    <div class="qms-card">
+      <div class="qms-section-title">Waiting for Quality Team review <small>{{ queue().length }}</small></div>
+      <app-risk-list [rows]="queue()" [loading]="loading()" (open)="select($event.risk_id)" />
+    </div>
+  </div>
+</section>

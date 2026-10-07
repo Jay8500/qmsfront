@@ -1,0 +1,171 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                                        <i class="iconify pi pi-arrow-left"></i>
+                                    </a>
+                                    <h3>Scheduled Meeting View</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-12">
+                                @if(false){
+                                <div class="form-right">
+                                    <div class="dropdown dropdown-style1 ms-2">
+                                        <button class="btn btn-light dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            Download Report
+                                            <i class="iconify pi pi-angle-down"></i>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                                            <li><a class="dropdown-item" href="javascript:;">Download Word</a></li>
+                                            <li><a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="audit-info-cover">
+                            <div class="audit-status mb-1">
+                                <div class="row">
+                                    <div class="col-md-6 col-12">
+                                        <div class="left-content">
+                                            <p>Meeting ID </p>
+                                            <h5 class="mb-0">{{scmCtrl.meeting_code }}</h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="right-content text-end">
+                                            <p class="mb-1">Status</p>
+                                            <span [ngClass]="{
+                                                'text-success': scmCtrl.status === 'Completed', 
+                                                'text-primary': scmCtrl.status === 'Scheduled',
+                                                'text-warning': scmCtrl.status === 'Cancelled',
+                                                'text-purple': scmCtrl.status === 'Inprogress'||scmCtrl.status === 'ReScheduled',
+                                              }">
+                                                {{ scmCtrl.status }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-audit tablehrz mt-0">
+                                <table class="table table-bordered table-line mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Meeting Name</th>
+                                            <th>Committee Name</th>
+                                            <th>Committee Type</th>
+                                            <th>Chair Person</th>
+                                            <th>Co-Chair Person</th>
+                                            <th>Co-Ordinator</th>
+                                            <th>Venue</th>
+                                            <th>Total Attendees</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{{scmCtrl.meeting_name}}</td>
+                                            <td>{{scmCtrl.committee_name}}</td>
+                                            <td>{{scmCtrl.committee_type_name}}</td>
+                                            <td>{{scmCtrl.chair_person_name}}</td>
+                                            <td>{{scmCtrl.co_chair_person_name}}</td>
+                                            <td>{{scmCtrl.co_ordinator_name}}</td>
+                                            <td>{{scmCtrl.venue_name}}</td>
+                                            <td>{{scmCtrl.total_attendees}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <table class="table table-bordered table-line mb-0">
+                                    <tr>
+                                        <th>Meeting Date</th>
+                                        <td>{{scmCtrl.meeting_date}}</td>
+                                        <th>Meeting Period</th>
+                                        <td>{{scmCtrl.meeting_period}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="audit-info-cover">
+                            <div class="audit-status">
+                                <div class="row">
+                                    <div class="col-md-12 col-12">
+                                        <div class="left-content">
+                                            <h5>Meeting Agenda's</h5>
+                                            <p>Approved/Edited By {{scmCtrl.updated_by}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-audit tablehrz">
+                                <table class="table table-bordered table-line mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Meeting Agenda</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{{scmCtrl.meeting_agenda}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="audit-info-cover">
+                            <div class="audit-status">
+                                <div class="row">
+                                    <div class="col-md-12 col-12">
+                                        <div class="left-content">
+                                            <h5>Committee Meeting Members</h5>
+                                            <p>{{ scmCtrl.meeting_participants.length  }} Members</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-audit tablehrz">
+                                <table class="table table-bordered table-line mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Employee ID</th>
+                                            <th>Employee Name</th>
+                                            <th>Member Type</th>
+                                            <th>Attendance</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for( lgHst of scmCtrl.meeting_participants ;track $index){
+                                        <tr>
+                                            <td>{{lgHst.employee_code}}</td>
+                                            <td>{{lgHst.meeting_user_name}}</td>
+                                            <td>{{lgHst.member_type}}</td>
+                                            <td [ngClass]="{
+                                                'text-success': lgHst.attendance_status === 'Present', 
+                                                'text-danger': lgHst.attendance_status === 'Absent',
+                                              }">
+                                                {{ lgHst.attendance_status }}
+                                            </td>
+                                        </tr>
+                                        }@empty{
+                                        <td>No data found</td>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

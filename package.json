@@ -1,0 +1,56 @@
+{
+  "name": "qms-ui",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development"
+  },
+  "dependencies": {
+    "@angular/animations": "~21.2.0",
+    "@angular/cdk": "~21.2.0",
+    "@angular/common": "~21.2.0",
+    "@angular/compiler": "~21.2.0",
+    "@angular/core": "~21.2.0",
+    "@angular/forms": "~21.2.0",
+    "@angular/localize": "~21.2.0",
+    "@angular/platform-browser": "~21.2.0",
+    "@angular/router": "~21.2.0",
+    "@fancyapps/ui": "^5.0.36",
+    "@fullcalendar/angular": "^6.1.21",
+    "@fullcalendar/core": "^6.1.21",
+    "@fullcalendar/daygrid": "^6.1.21",
+    "@fullcalendar/interaction": "^6.1.21",
+    "@fullcalendar/list": "^6.1.21",
+    "@fullcalendar/timegrid": "^6.1.21",
+    "@ng-bootstrap/ng-bootstrap": "^20.0.0",
+    "@popperjs/core": "^2.11.8",
+    "@primeuix/themes": "^2.0.3",
+    "apexcharts": "^4.7.0",
+    "bootstrap": "^5.3.8",
+    "crypto-js": "^4.2.0",
+    "kind-of": "^6.0.3",
+    "lodash": "^4.17.21",
+    "ng-apexcharts": "~2.2.0",
+    "ngx-extended-pdf-viewer": "^25.0.0",
+    "primeicons": "^7.0.0",
+    "primeng": "~21.1.10",
+    "rxjs": "~7.8.2",
+    "tslib": "^2.8.1",
+    "xlsx": "^0.18.5",
+    "zone.js": "~0.15.1"
+  },
+  "devDependencies": {
+    "@angular/build": "~21.2.0",
+    "@angular/cli": "~21.2.0",
+    "@angular/compiler-cli": "~21.2.0",
+    "typescript": "~5.9.3"
+  },
+  "overrides": {
+    "ng-apexcharts": {
+      "apexcharts": "$apexcharts"
+    }
+  }
+}

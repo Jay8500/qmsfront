@@ -1,0 +1,112 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="qms-head">
+      <div>
+        <h3>Risk Management</h3>
+        <p class="qms-sub">Risk register: report, department scoring, Quality Team review, periodic review</p>
+      </div>
+      <div class="qms-actions">
+        <div class="qms-pills">
+          @for (p of periods; track p.k) { <button type="button" [class.on]="period() === p.k" (click)="setPeriod(p.k)">{{ p.l }}</button> }
+        </div>
+        @if (access().access_add) {
+        <button class="btn btn-success" (click)="newRisk()"><i class="pi pi-plus-circle me-1"></i>Report New Risk</button>
+        }
+      </div>
+    </div>
+
+    <div class="qms-tiles">
+      <div class="qms-tile t-yellow" (click)="cardFilter('ALL')">
+        <div class="qms-tile-num">{{ dash().cards?.overall_reported || 0 }}</div>
+        <div class="qms-tile-label">Overall Risks Reported</div>
+        <div class="qms-tile-foot">{{ dash().cards?.open || 0 }} open · {{ dash().cards?.awaiting_qt || 0 }} awaiting QT · Updated {{ dash().cards?.overall_updated || '-' }}</div>
+      </div>
+      <div class="qms-tile t-red" [class.on]="filters.risk_level === 'HIGH'" (click)="cardFilter('HIGH')">
+        <div class="qms-tile-num">{{ dash().cards?.high_impact || 0 }}</div>
+        <div class="qms-tile-label">High Impact Risks (16-25)</div>
+        <div class="qms-tile-foot">Updated {{ dash().cards?.high_updated || '-' }}</div>
+      </div>
+      <div class="qms-tile t-pink" [class.on]="filters.status === 'UNDER_QT_REVIEW'" (click)="cardFilter('REOPENED')">
+        <div class="qms-tile-num">{{ dash().cards?.reopened || 0 }}</div>
+        <div class="qms-tile-label">Re-Opened Risks</div>
+        <div class="qms-tile-foot">Updated {{ dash().cards?.reopened_updated || '-' }}</div>
+      </div>
+      <div class="qms-tile t-teal" [class.on]="filters.status === 'CLOSED'" (click)="cardFilter('CLOSED')">
+        <div class="qms-tile-num">{{ dash().cards?.closed || 0 }}</div>
+        <div class="qms-tile-label">Closed Risk Reports</div>
+        <div class="qms-tile-foot">@if (dash().cards?.overdue) { <span class="text-danger">{{ dash().cards?.overdue }} overdue</span> · } Updated {{ dash().cards?.closed_updated || '-' }}</div>
+      </div>
+    </div>
+
+    <div class="row g-3 mb-1">
+      <div class="col-xl-4 col-lg-6 col-12">
+        <div class="qms-card h-100">
+          <div class="qms-section-title">Risk Heat Map <small>impact × probability</small></div>
+          <div class="heat">
+            <div class="heat-y">Impact</div>
+            <div class="heat-grid">
+              @for (row of heatRows(); track row.impact) {
+              <div class="heat-lbl" [title]="impactNames[row.impact]">{{ row.impact }}</div>
+              @for (c of row.cells; track c.probability) {
+              <div class="heat-cell" [attr.data-l]="levelOf(c.score)" [class.has]="c.count > 0"
+                [title]="'Impact ' + c.impact + ' × Probability ' + c.probability + ' = ' + c.score + ': ' + c.count + ' risk(s)'">
+                {{ c.count || '' }}
+              </div>
+              }
+              }
+              <div></div>
+              @for (p of [1,2,3,4,5]; track p) { <div class="heat-lbl" [title]="probNames[p]">{{ p }}</div> }
+            </div>
+            <div class="heat-x">Probability</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-lg-6 col-12">
+        <div class="qms-card h-100">
+          <div class="qms-section-title">Impact Wise (level)</div>
+          <qms-bar-list [items]="levelItems()" />
+          <div class="qms-section-title mt-3">Type Wise</div>
+          <qms-bar-list [items]="dash().by_type" color="#3b6fd8" [limit]="6" />
+        </div>
+      </div>
+      <div class="col-xl-4 col-12">
+        <div class="qms-card h-100">
+          <div class="qms-section-title">Department Wise</div>
+          <qms-bar-list [items]="dash().by_department" color="#14b8a6" [limit]="10" />
+        </div>
+      </div>
+    </div>
+
+    <div class="qms-card">
+      <div class="qms-section-title">
+        Risk Register <small>{{ total() }} found</small>
+        <div class="qms-right"><button class="btn btn-light btn-sm" (click)="showFilters = !showFilters"><i class="pi pi-filter me-1"></i>Filters</button></div>
+      </div>
+      <div class="qms-tabs">
+        <button class="btn btn-sm" [class.btn-primary]="!filters.queue" [class.btn-light]="filters.queue" (click)="setQueue(null)">All</button>
+        <button class="btn btn-sm" [class.btn-primary]="filters.queue === 'MINE'" [class.btn-light]="filters.queue !== 'MINE'" (click)="setQueue('MINE')"><i class="pi pi-inbox me-1"></i>Waiting for me</button>
+      </div>
+      @if (showFilters) {
+      <div class="row g-2 mb-2 qms-form">
+        <div class="col-lg-3 col-md-6 col-12"><input pInputText class="form-control" placeholder="Search number, type, description ..." [(ngModel)]="filters.search" (keyup.enter)="applyFilters()"></div>
+        <div class="col-lg-2 col-md-6 col-12"><p-select [options]="statusList" [(ngModel)]="filters.status" placeholder="Any status" [showClear]="true" appendTo="body" /></div>
+        <div class="col-lg-2 col-md-6 col-12"><p-select [options]="typeList" [(ngModel)]="filters.risk_type_id" placeholder="Any type" [filter]="true" [showClear]="true" appendTo="body" /></div>
+        <div class="col-lg-2 col-md-6 col-12"><p-select [options]="departmentList" [(ngModel)]="filters.department_id" placeholder="Any department" [filter]="true" [showClear]="true" appendTo="body" /></div>
+        <div class="col-lg-1 col-md-6 col-12"><p-select [options]="levelList" [(ngModel)]="filters.risk_level" placeholder="Level" [showClear]="true" appendTo="body" /></div>
+        <div class="col-lg-2 col-12 d-flex gap-2">
+          <button class="btn btn-primary flex-fill" (click)="applyFilters()">Apply</button>
+          <button class="btn btn-light flex-fill" (click)="clearFilters()">Clear</button>
+        </div>
+      </div>
+      }
+      <app-risk-list [rows]="rows()" [loading]="loading()" (open)="openRisk($event)" />
+      @if (total() > pageSize) {
+      <div class="qms-pager">
+        <button class="btn btn-light btn-sm" [disabled]="page <= 1" (click)="goPage(page - 1)"><i class="pi pi-angle-left"></i></button>
+        <span>Page {{ page }} of {{ pages() }}</span>
+        <button class="btn btn-light btn-sm" [disabled]="page >= pages()" (click)="goPage(page + 1)"><i class="pi pi-angle-right"></i></button>
+      </div>
+      }
+    </div>
+  </div>
+</section>

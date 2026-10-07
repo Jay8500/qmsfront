@@ -1,0 +1,206 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    @if (inc(); as d) {
+    <div class="qms-head">
+      <div class="d-flex align-items-center gap-2">
+        <a href="javascript:;" class="icon-btn-square" (click)="goBack()"><i class="iconify pi pi-arrow-left"></i></a>
+        <div>
+          <h3>{{ d.incident_code }} <span class="qms-chip ms-1" [attr.data-s]="d.status">{{ d.status }}</span></h3>
+          <p class="qms-sub">{{ d.incident_type }} · {{ formName(d.report_form) }} · reported by {{ d.reported_by }} on {{ d.reported_on }}</p>
+        </div>
+      </div>
+      <div class="qms-actions">
+        @if (d.can_assign) { <button class="btn btn-primary" (click)="openAction('ASSIGN')"><i class="pi pi-user-plus me-1"></i>Assign Officer</button> }
+        @if (d.can_investigate) { <button class="btn btn-primary" (click)="investigate()"><i class="pi pi-search me-1"></i>Investigate</button> }
+        @if (d.can_hod_review) { <button class="btn btn-primary" (click)="openAction('HOD_REVIEW')"><i class="pi pi-check-square me-1"></i>HOD Review</button> }
+        @if (d.can_close) { <button class="btn btn-success" (click)="openAction('CLOSE')"><i class="pi pi-lock me-1"></i>Close Incident</button> }
+        @if (d.can_reassign) { <button class="btn btn-light" (click)="openAction('REASSIGN')"><i class="pi pi-replay me-1"></i>Reassign</button> }
+        @if (d.can_escalate) { <button class="btn btn-outline-danger" (click)="openAction('ESCALATE')"><i class="pi pi-arrow-up-right me-1"></i>Escalate to Risk</button> }
+        @if (d.can_comment) { <button class="btn btn-light" (click)="openAction('COMMENT')"><i class="pi pi-comment me-1"></i>Comment</button> }
+      </div>
+    </div>
+
+    <!-- workflow progress -->
+    <div class="steps qms-card">
+      @for (s of steps(); track s.name) {
+      <div class="step" [class.done]="s.done" [class.current]="s.current"><span class="n"><i class="pi" [class.pi-check]="s.done"></i></span><span>{{ s.name }}</span></div>
+      }
+      @if (d.status === 'Rejected') { <div class="step rejected"><span class="n"><i class="pi pi-times"></i></span><span>Rejected</span></div> }
+    </div>
+    @if (d.status === 'Rejected' && d.rejected_reason) { <div class="qms-note danger">Rejected by the Investigation Officer: {{ d.rejected_reason }}</div> }
+
+    <div class="row g-3">
+      <div class="col-xl-8 col-12">
+        <div class="qms-card">
+          <div class="qms-section-title">Incident</div>
+          <div class="qms-kv mb-3">
+            <div><label>Incident date &amp; time</label><span>{{ d.incident_date | appDate }}</span></div>
+            <div><label>Type</label><span>{{ d.incident_type }}</span></div>
+            <div><label>Happened to</label><span>{{ d.happened_to }}@if (d.happened_to_name) { - {{ d.happened_to_name }} }</span></div>
+            <div><label>Department</label><span>{{ d.department || '-' }}</span></div>
+            <div><label>Location</label><span>{{ d.location || '-' }}</span></div>
+            <div><label>Reported by</label><span>{{ d.reported_by }}</span></div>
+            @if (d.patient_uhid || d.patient_name) {
+            <div><label>Patient</label><span>{{ d.patient_name }} ({{ d.patient_uhid }})@if (d.patient_age) { · {{ d.patient_age }} y } @if (d.patient_gender) { · {{ d.patient_gender }} }</span></div>
+            }
+          </div>
+          <div class="row g-2">
+            <div class="col-12"><div class="qms-text-box"><label>Description</label><p class="qms-text">{{ d.incident_description }}</p></div></div>
+            <div class="col-md-6 col-12"><div class="qms-text-box"><label>Reason</label><p class="qms-text">{{ d.reason_for_incident }}</p></div></div>
+            <div class="col-md-6 col-12"><div class="qms-text-box"><label>Immediate action taken</label><p class="qms-text">{{ d.immediate_action_taken }}</p></div></div>
+          </div>
+        </div>
+
+        @if (d.report_form === 'BLOOD_TRANSFUSION') {
+        <div class="qms-card">
+          <div class="qms-section-title">Blood Transfusion Reaction</div>
+          <div class="qms-kv">
+            <div><label>Consultant</label><span>{{ d.form_details.consultant || '-' }}</span></div>
+            <div><label>Components</label><span>{{ (d.form_details.components || []).join(', ') || '-' }}</span></div>
+            <div><label>Doctor</label><span>{{ d.form_details.doctor || '-' }}</span></div>
+            <div><label>Pre vitals (T / P / BP)</label><span>{{ d.form_details.pre_vitals?.temp || '-' }} / {{ d.form_details.pre_vitals?.pulse || '-' }} / {{ d.form_details.pre_vitals?.bp || '-' }}</span></div>
+            <div><label>Post vitals (T / P / BP)</label><span>{{ d.form_details.post_vitals?.temp || '-' }} / {{ d.form_details.post_vitals?.pulse || '-' }} / {{ d.form_details.post_vitals?.bp || '-' }}</span></div>
+            <div><label>Symptoms</label><span>{{ (d.form_details.symptoms || []).join(', ') || '-' }}</span></div>
+          </div>
+          @if (d.form_details.reaction_notes) { <div class="qms-text-box mt-2"><label>Reaction notes</label><p class="qms-text">{{ d.form_details.reaction_notes }}</p></div> }
+        </div>
+        }
+        @if (d.report_form === 'ADR') {
+        <div class="qms-card">
+          <div class="qms-section-title">Adverse Drug Reaction</div>
+          <div class="qms-kv mb-2">
+            <div><label>Reaction time</label><span>{{ d.form_details.event_time || '-' }}</span></div>
+            <div><label>Action</label><span>{{ d.form_details.action || '-' }}</span></div>
+            <div><label>Outcome</label><span>{{ d.form_details.outcome || '-' }}</span></div>
+            <div><label>Severity / causality</label><span>{{ (d.form_details.severity || []).join(', ') || '-' }}</span></div>
+            <div><label>Reporter contact</label><span>{{ d.form_details.reporter_contact || '-' }}</span></div>
+          </div>
+          <div class="table-responsive">
+            <table class="qms-table">
+              <thead><tr><th>Drug</th><th>Batch</th><th>Dose</th><th>Route</th><th>Frequency</th></tr></thead>
+              <tbody>
+                @for (md of medicines(); track $index) {
+                <tr><td>{{ md.drug }}</td><td>{{ md.batch }}</td><td>{{ md.dose }}</td><td>{{ md.route }}</td><td>{{ md.frequency }}</td></tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+        }
+        @if (d.report_form === 'MEDICAL_ERROR') {
+        <div class="qms-card">
+          <div class="qms-section-title">Medical Error</div>
+          <div class="qms-kv">
+            <div><label>Error type</label><span>{{ d.form_details.error_type || '-' }}</span></div>
+            <div><label>Stage</label><span>{{ d.form_details.error_stage || '-' }}</span></div>
+            <div><label>Outcome</label><span>{{ d.form_details.outcome || '-' }}</span></div>
+            <div><label>Contributing factors</label><span>{{ (d.form_details.factors || []).join(', ') || '-' }}</span></div>
+          </div>
+        </div>
+        }
+
+        <!-- investigation -->
+        <div class="qms-card">
+          <div class="qms-section-title">Investigation &amp; RCA
+            @if (d.investigation?.investigation_officer) { <small>Officer: {{ d.investigation.investigation_officer }} (assigned {{ d.investigation.assigned_on }} by {{ d.investigation.assigned_by }})</small> }
+          </div>
+          @if (!d.investigation) {
+          <div class="qms-empty">Not assigned yet</div>
+          } @else if (!d.investigation.findings && !d.investigation.decision) {
+          <div class="qms-note">Investigation in progress@if (d.investigation.assign_remarks) { - {{ d.investigation.assign_remarks }} }</div>
+          } @else {
+          <div class="row g-2">
+            <div class="col-12"><div class="qms-text-box"><label>Findings</label><p class="qms-text">{{ d.investigation.findings || '-' }}</p></div></div>
+            <div class="col-md-6 col-12">
+              <div class="qms-text-box">
+                <label>Root Cause Analysis - {{ d.investigation.rca_method === 'FISHBONE' ? 'Fishbone' : '5 Whys' }}@if (d.investigation.rca_category) { · {{ d.investigation.rca_category }} }</label>
+                @if (d.investigation.rca_method === 'FISHBONE') {
+                @for (f of fishbone(); track f.k) { <div class="small"><strong class="text-capitalize">{{ f.k }}:</strong> {{ f.v }}</div> }
+                } @else {
+                <ol class="whys">@for (w of whyList(); track $index) { <li>{{ w }}</li> }</ol>
+                }
+                @if (d.investigation.rca_detail?.root_cause) { <div class="mt-1"><strong>Root cause:</strong> {{ d.investigation.rca_detail.root_cause }}</div> }
+              </div>
+            </div>
+            <div class="col-md-6 col-12">
+              <div class="qms-text-box">
+                <label>CAPA @if (d.capa) { <span class="qms-chip chip-muted ms-1">{{ d.capa.capa_code }} · {{ d.capa.capa_status }}</span> }</label>
+                <div class="small mb-1"><strong>Corrective Action:</strong> {{ d.investigation.corrective_action || '-' }}</div>
+                <div class="small"><strong>Preventive Action:</strong> {{ d.investigation.preventive_action || '-' }}</div>
+              </div>
+            </div>
+            @if (d.investigation.io_evidence?.length) { <div class="col-12"><label class="small text-muted">Investigation evidence</label><qms-file-list [files]="d.investigation.io_evidence" /></div> }
+          </div>
+          }
+          @if (d.investigation?.hod_comments) {
+          <div class="qms-text-box mt-2">
+            <label>HOD review - {{ d.investigation.hod_by }} · {{ d.investigation.hod_on }}</label>
+            <p class="qms-text">{{ d.investigation.hod_comments }}</p>
+            <qms-file-list [files]="d.investigation.hod_evidence" [compact]="true" />
+          </div>
+          }
+          @if (d.investigation?.closure_remarks || d.closed_on) {
+          <div class="qms-note ok mt-2">Closed {{ d.closed_on }} by {{ d.closed_by }}@if (d.investigation?.closure_remarks) { - {{ d.investigation.closure_remarks }} }</div>
+          }
+        </div>
+      </div>
+
+      <div class="col-xl-4 col-12">
+        <div class="qms-card">
+          <div class="qms-section-title">Evidence <small>{{ d.evidence?.length || 0 }} file(s)</small></div>
+          <qms-file-list [files]="d.evidence" emptyText="No evidence attached" />
+        </div>
+        <div class="qms-card">
+          <div class="qms-section-title">Linked Risks</div>
+          @for (r of d.linked_risks; track r.risk_id) {
+          <a href="javascript:;" class="risk-link" (click)="openRisk(r)">
+            <strong>{{ r.risk_number }}</strong>
+            <span class="qms-chip" [attr.data-s]="r.status">{{ r.status }}</span>
+            @if (r.risk_level) { <span class="qms-chip" [attr.data-l]="r.risk_level">{{ r.risk_level }}</span> }
+            <small class="text-muted ms-auto">{{ r.link_type === 'AUTO' ? 'auto (recurrence)' : 'escalated' }}</small>
+          </a>
+          } @empty {
+          <div class="text-muted small">Not linked to a risk</div>
+          }
+        </div>
+        <div class="qms-card">
+          <div class="qms-section-title">History</div>
+          <qms-timeline [items]="d.timeline" />
+        </div>
+      </div>
+    </div>
+    } @else {
+    <div class="qms-empty mt-4">{{ loading() ? 'Loading ...' : 'Incident not found' }}</div>
+    }
+  </div>
+</section>
+
+<p-dialog [header]="title(dlg())" [visible]="!!dlg()" (visibleChange)="!$event && dlg.set(null)" [modal]="true"
+  [style]="{ width: '560px' }" [breakpoints]="{ '768px': '95vw' }" [draggable]="false">
+  <div class="qms-form">
+    @if (dlg() === 'ASSIGN' || dlg() === 'REASSIGN') {
+    <label>Investigation Officer</label>
+    <div class="qms-req mb-2"><p-select [options]="officers" [(ngModel)]="dlgModel.investigation_officer_id" [filter]="true" placeholder="Select officer" appendTo="body" /></div>
+    <small class="text-muted d-block mb-2">The person who reported the incident is not listed (SRS: officer cannot be the reporter).</small>
+    }
+    @if (dlg() === 'ESCALATE') {
+    <div class="qms-note">A Risk is created from this incident (status Reported) and linked to it. The department head scores it.</div>
+    @if (!inc()?.department_id) {
+    <label>Department for the risk</label>
+    <div class="qms-req mb-2"><p-select [options]="departmentList" [(ngModel)]="dlgModel.department_id" [filter]="true" placeholder="Select department" appendTo="body" /></div>
+    }
+    }
+    @if (dlg() === 'CLOSE') {
+    <div class="qms-note">Closing confirms all corrective / preventive actions are done. The incident and its CAPA become read-only.</div>
+    }
+    <label>{{ dlg() === 'HOD_REVIEW' ? 'HOD comments' : 'Remarks' }}@if (dlg() === 'HOD_REVIEW') { <span class="text-danger">*</span> }</label>
+    <textarea pTextarea rows="3" class="form-control w-100 mb-2" [(ngModel)]="dlgModel.remarks"></textarea>
+    @if (dlg() === 'HOD_REVIEW' || dlg() === 'COMMENT' || dlg() === 'CLOSE') {
+    <qms-file-picker #picker [max]="5" label="Attach evidence" />
+    }
+  </div>
+  <ng-template #footer>
+    <button class="btn btn-light me-2" (click)="dlg.set(null)">Cancel</button>
+    <button class="btn btn-primary" [disabled]="saving()" (click)="submitAction()">Save</button>
+  </ng-template>
+</p-dialog>

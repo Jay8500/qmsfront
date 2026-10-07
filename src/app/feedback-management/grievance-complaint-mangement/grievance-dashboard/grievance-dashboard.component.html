@@ -1,0 +1,343 @@
+<section class="wrapper-body">
+  <div class="container-fluid">
+    <section class="status-card">
+      <div class="main-heading-link">
+        <h3 class="main-heading">Grievance & Complaint Management</h3>
+        <div class="btn-group-row">
+          <div class="dropdown dropdown-style1 filterDropdown">
+            <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="iconify icon-calc pi pi-calendar"></i>
+              {{ selectedRange }}
+              <i class="iconify pi pi-angle-down"></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 7 days')">Last 7 days</a></li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 30 days')">Last 30 days</a></li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last Month')">Last Month</a></li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 6 Months')">Last 6 Months</a>
+              </li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last Year')">Last Year</a></li>
+            </ul>
+          </div>
+          <a href="javascript:;" class="btn btn-success" (click)="onPageRoute('NEW',null)">
+            <span class="iconfiy"> <i class=" pi pi-plus-circle" style="margin-right: 2px;"></i></span>
+            Raise a Complaint
+          </a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg1">
+            <div class="card-grid-header">
+              <h5>Total <br />Employees</h5>
+              <h3>{{stats().total_emp_cnt}}</h3>
+              <div class="icon">
+                <i class="iconify pi pi-copy primeicons-size"></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{stats().total_emp_last_updated || 'N/A'}}</h5>
+                </div>
+                <div class="col-md-5 text-end col-5">
+                  <button class="btn btn-light">View Report</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg2">
+            <div class="card-grid-header">
+              <h5>Overall <br />Complaints</h5>
+              <h3>{{stats().overall_complaints_cnt}}</h3>
+              <div class="icon">
+                <i class="iconify pi pi-search-plus primeicons-size"></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{stats().overall_complaints_last_updated || 'N/A'}}</h5>
+                </div>
+                <div class="col-md-5 col-5 text-end">
+                  <button class="btn btn-light">View Report</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg3">
+            <div class="card-grid-header">
+              <h5>Closed <br /> Complaints </h5>
+              <h3>{{stats().closed_compliants_cnt}}</h3>
+              <div class="icon">
+                <i class="iconify pi pi-calendar-clock primeicons-size"></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{stats().closed_compliants_last_updated || 'N/A'}}</h5>
+                </div>
+                <div class="col-md-5 col-5 text-end">
+                  <button class="btn btn-light">View Report</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg4">
+            <div class="card-grid-header">
+              <h5>Active <br /> Complaints</h5>
+              <h3>{{stats().active_compliants_cnt}}</h3>
+              <div class="icon">
+                <i class="iconify pi pi-verified "></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{stats().active_compliants_last_updated || 'N/A'}}</h5>
+                </div>
+                <div class="col-md-5 col-5 text-end">
+                  <button class="btn btn-light">View Report</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="chart-section mt-3 mb-3">
+      <div class="row">
+        <div class="col-xl-4 col-lg-6 col-md-6 col-12">
+          <div class="card-style1 piechart departmentpiechartComplaint">
+            <div class="card-header">
+              Department Wise Complaints
+            </div>
+            <div class="card-body">
+              <div class="chart-wrapper">
+                <app-score-wise-reports #scoreWiseRpts></app-score-wise-reports>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-6 col-md-6 col-12">
+          <div class="card-style1 barchart">
+            <div class="card-header">
+              Number of Complaints
+            </div>
+            <div class="card-body">
+              <app-training-wise-reports #areaChart></app-training-wise-reports>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-6 col-md-12 col-12">
+          <div class="card-style1 barchart">
+            <div class="card-header">
+              Types of Complaints
+            </div>
+            <div class="card-body">
+              <app-grievance-complaint-type #complaintType></app-grievance-complaint-type>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="report-table mt-3 mb-3">
+      <div class="row">
+        <div class="col-md-12 col-12">
+          <div class="card-style2">
+            <div class="card-header backoption table-search">
+              <div class="row">
+                <div class="col-md-5 col-12">
+                  <div class="heading-left">
+                    <h3>Complaints List</h3>
+                  </div>
+                </div>
+                <div class="col-md-7 col-12">
+                  <div class="form-right">
+                    <a href="javascript:;" ngbTooltip="Filter" placement="top" class="icon-btn-square"
+                      (click)="filterToggle()">
+                      <i class="iconify pi pi-sliders-h"></i>
+                    </a>
+                    <div class="dropdown dropdown-style1 ms-2">
+                      <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Download Report
+                        <i class="iconify pi pi-angle-down"></i>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li
+                          [DCSV]="{ param :params,screenName:'Grievance & Complaints',data : grievanceGrid.length,methodName : 'fnComplaintApi' }">
+                          <a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                        <li
+                          [PDF]="{ param :params,screenName:'Grievance & Complaints',data : grievanceGrid.length,methodName : 'fnComplaintApi' }">
+                          <a class="dropdown-item" href="javascript:;">Download Pdf</a></li>
+                        <li
+                          [EXCEL]="{ param :params,screenName:'Grievance & Complaints',data : grievanceGrid.length,methodName : 'fnComplaintApi'  }">
+                          <a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            @if (showFilter) {
+            <div class="filter-box form-sm">
+              <div class="row">
+                <div class="col-md-11 col-12">
+                  <div class="row gx-2">
+                    <div class="col-md-3 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="full_name">By Employee ID / Name</label>
+                        <p-select id="full_name" [(ngModel)]="grievanceFilters().full_name" name="full_name"
+                          [options]="empProfileList" [filter]="true" [showClear]="true"
+                          (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="role_name">By Role</label>
+                        <p-select id="role_name" [(ngModel)]="grievanceFilters().role_name" name="role_name"
+                          [options]="roleList" [filter]="true" [showClear]="true" (onClear)="onFilterClear(true)"
+                          class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="complaint_type_name">By Complaint Type</label>
+                        <p-select id="complaint_type_name" [(ngModel)]="grievanceFilters().complaint_type_name"
+                          name="complaint_type_name" [options]="compliantTypeList" [filter]="true" [showClear]="true"
+                          (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="status">By Status</label>
+                        <p-select id="status" [(ngModel)]="grievanceFilters().status" name="status"
+                          [options]="statusList" [filter]="true" [showClear]="true" (onClear)="onFilterClear(true)"
+                          class="form-control" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1 col-12 ps-0">
+                  <button class="btn btn-primary w-100" (click)="onFilterClick()">Filter</button>
+                  <button class="btn btn-dark" (click)="onFilterClear(null)">Clear</button>
+                </div>
+              </div>
+            </div>
+            }
+            <div class="card-body table-style1 table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">S.No</th>
+                    <th width="15%" scope="col" sortable="full_name" (sort)="onSort($event)">
+                      Employee Profile
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th width="15%" scope="col" sortable="role_name" (sort)="onSort($event)">
+                      Role
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th width="15%" scope="col" sortable="complaint_type_name" (sort)="onSort($event)">
+                      Type of Complaint  
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th width="30%" scope="col" sortable="description" (sort)="onSort($event)">
+                      Complaint Description
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="happened_on" (sort)="onSort($event)">
+                      Happened On 
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="created_by" (sort)="onSort($event)">
+                      Created By
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="created_at" (sort)="onSort($event)">
+                      Created on
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="updated_by" (sort)="onSort($event)">
+                      Modified By
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="updated_at" (sort)="onSort($event)">
+                      Last Modified
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="status" (sort)="onSort($event)">
+                      Status
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" class="text-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (grievanceTable of grievanceGrid; track grievanceTable.full_name) {
+                  <tr>
+                    <td scope="row">{{ grievanceTable.id }}</td>
+                    <td>{{ grievanceTable.full_name }}</td>
+                    <td>{{ grievanceTable.role_name }}</td>
+                    <td>{{ grievanceTable.complaint_type_name }}</td>
+                    <td>{{ grievanceTable.description }}</td>
+                    <td>{{ grievanceTable.happened_on }}</td>
+                    <td>{{ grievanceTable.created_by }}</td>
+                    <td>{{ grievanceTable.created_at }}</td>
+                    <td>{{ grievanceTable.updated_by }}</td>
+                    <td>{{ grievanceTable.updated_at }}</td>
+                    <td [ngClass]="{
+                                                'text-danger': grievanceTable.status === 'Opened',
+                                                'text-success': grievanceTable.status === 'Closed',
+                                                'text-warning': grievanceTable.status === 'Reopened',
+                                              }">
+                      {{ grievanceTable.status }}
+                    </td>
+                    <td>
+                      <div class="actiondot-dropdown float-end">
+                        <div class="btn-group ms-2">
+                          <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="iconify pi pi-ellipsis-h"></i>
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" (click)="onPageRoute('VIEW',essTable)">
+                                View
+                              </a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" (click)="onPageRoute('WRITECAPA',essTable)">
+                                Write CAPA
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>

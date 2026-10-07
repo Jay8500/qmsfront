@@ -1,0 +1,131 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="row">
+      <div class="col-md-12 col-12">
+        <div class="card-style2">
+          <div class="card-header backoption">
+            <div class="row">
+              <div class="col-md-12 col-12">
+                <div class="heading-left">
+                  <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                    <i class="iconify pi pi-arrow-left"></i>
+                  </a>
+                  <h3>{{_hqms.getPageModeContext(pageMode, 'Faculty') }}</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row d-flex justify-content-center">
+              <div class="col-md-6 col-12">
+                <div class="formbox-left form-lg">
+                  <form>
+                    <div class="row">
+                      <div class="col-md-12 col-12">
+                        <label for="faculty_type_id">Faculty Type</label>
+                        <p-select id="faculty_type_id" [(ngModel)]="createFaculty().faculty_type_id"
+                          (onBlur)="onFacultyTypeChange()" (onChange)="onFacultyTypeChange()" name="faculty_type_id"
+                          [disabled]="pageMode=='VIEW' || pageMode == 'EDIT'" [options]="facultyTypeList"
+                          [filter]="true" class=" form-control" />
+                        @if(errorMsg['faculty_type_id']!=''){
+                        <small class="error">{{ errorMsg['faculty_type_id'] }}</small>
+                        }
+                      </div>
+                      <!--INTERNAL DROPDOWN ---->
+                      @if(pageMode == 'NEW'){
+                      <div class="col-md-12 col-12" *ngIf="selectedFcltyType() == 'INTERNAL'">
+                        <label for="faculty_id">Faculty</label>
+                        <p-select id="faculty_id" [(ngModel)]="createFaculty().faculty_id" name="faculty_id"
+                          (onBlur)="onFacultyChange()" (onChange)="onFacultyChange()" [disabled]="pageMode=='VIEW'"
+                          [options]="facultyNameList" [filter]="true" class=" form-control" />
+                        @if(errorMsg['faculty_id']!=''){
+                        <small class="error">{{ errorMsg['faculty_id'] }}</small>
+                        }
+                      </div>
+                      }
+                      <!--INTERNAL VIEW / EDIT TEXT BOX  ---->
+                      @if(pageMode == 'VIEW'||pageMode == 'EDIT'){
+                      <div class="col-md-12 col-12" *ngIf="selectedFcltyType() == 'INTERNAL'">
+                        <label for="faculty_name">Faculty Name</label>
+                        <input pInputText id="faculty_name" [(ngModel)]="createFaculty().faculty_name"
+                          (blur)="onGetErrorMsgs('faculty_name')" [disabled]="true" name="faculty_name"
+                          class=" form-control" autocomplete="off">
+                        @if(errorMsg['faculty_name']!=''){
+                        <small class="error">{{ errorMsg['faculty_name'] }}</small>
+                        }
+                      </div>
+                      }
+                      <div class="col-md-12 col-12" *ngIf="selectedFcltyType() == 'INTERNAL'">
+                        <label for="designation_name">Faculty Designation</label>
+                        <input pInputText id="designation_name" [(ngModel)]="createFaculty().designation_name"
+                          [disabled]="true" name="designation_name" class="form-control" autocomplete="off">
+                      </div>
+
+                      <!----external fields-->
+                      <div class="col-md-12 col-12" *ngIf="selectedFcltyType() == 'EXTERNAL'">
+                        <label for="faculty_name">Faculty Name</label>
+                        <input pInputText id="faculty_name" [(ngModel)]="createFaculty().faculty_name"
+                          (blur)="onGetErrorMsgs('faculty_name')" [disabled]="pageMode=='VIEW'" name="faculty_name"
+                          class=" form-control" autocomplete="off">
+                        @if(errorMsg['faculty_name']!=''){
+                        <small class="error">{{ errorMsg['faculty_name'] }}</small>
+                        }
+                      </div>
+                      <div class="col-md-12 col-12" *ngIf="selectedFcltyType() == 'EXTERNAL'">
+                        <label for="designation_name">Faculty Designation</label>
+                        <input pInputText id="designation_name" [(ngModel)]="createFaculty().designation_name"
+                          [disabled]="pageMode=='VIEW'" name="designation_name" class="form-control" autocomplete="off">
+                      </div>
+                      <div class="col-md-12 col-12">
+                        <div class="form-group">
+                          <label>Upload Signature</label>
+                          <div class="upload-image">
+                            <p-fileUpload mode="basic"
+                              (onSelect)="onCoverPageFileSelect(upCoverPage, $event,'CoverPage',createFaculty(),null)"
+                              chooseLabel="Upload Signature" [multiple]="false" #upCoverPage
+                              accept="image/png, image/jpeg" [fileLimit]="1" [maxFileSize]="2097152" [auto]="true"
+                              [disabled]="pageMode=='VIEW'" invalidFileSizeMessageSummary="File too large"
+                              invalidFileSizeMessageDetail="Maximum upload size is 2MB">
+                            </p-fileUpload>
+                            <div *ngIf="createFaculty().signature_file.length>0" class="flex gap-2 flex-wrap mt-2">
+                              <div *ngFor="let mDoc of createFaculty().signature_file; let imgIndex=index">
+                                <div *ngIf="mDoc.is_active==true" class="reg-img-view"
+                                  style="border: 1px solid #cacaca;padding: 5px; border-radius: 7px;font-size: 11px;">
+                                  {{ mDoc['file_name'] }}
+                                  <a class="time-icons time-remove ml-2" href="javascript:return false"><i
+                                      *ngIf="pageMode!='VIEW'" class="pi pi-times-circle"
+                                      (click)="removeCoverPageImage(mDoc, imgIndex)"></i></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12 col-12">
+                        <label>Status</label>
+                        <div class="form-group">
+                          <p-toggleswitch [(ngModel)]="createFaculty().is_active" name="status"
+                            [disabled]="pageMode=='VIEW' || pageMode=='NEW'" />
+                        </div>
+                      </div>
+                      <div class="button-group mt-4">
+                        <div class="row">
+                          <div class="col-md-12 col-12">
+                            <button type="button" class="btn btn-dark" (click)="onClearClick()"
+                              [disabled]="pageMode=='VIEW'">Clear</button>
+                            <button type="submit" class="btn btn-primary" (click)="onSubmitClick()"
+                              [disabled]="pageMode=='VIEW'">Submit</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

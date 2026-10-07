@@ -1,0 +1,193 @@
+<p-dialog
+      [header]="editing() ? 'Edit Value' : 'New Value'"
+      [(visible)]="visible"
+      [modal]="true"
+      [draggable]="false"
+      [style]="{ width: '760px', maxWidth: '96vw' }"
+      (onShow)="reset()"
+    >
+      <div class="mono" style="margin:-6px 0 12px">{{ subtitle() }}</div>
+
+      <div class="form-grid">
+        <div class="fg">
+          <label>Value Code <span class="req">*</span></label>
+          <input
+            pInputText
+            [ngModel]="form.valueCode"
+            (ngModelChange)="updateField('valueCode', $event)"
+            placeholder="e.g. M — letters, numbers, _ only, max 40 chars"
+            style="text-transform:uppercase"
+            (blur)="onBlur('valueCode')"
+          />
+          <span class="hint">Unique within this entity.</span>
+          @if (touched().valueCode && errors().valueCode) {
+            <span class="err">{{ errors().valueCode }}</span>
+          }
+        </div>
+        <div class="fg">
+          <label>Display Value <span class="req">*</span></label>
+          <input
+            pInputText
+            [ngModel]="form.displayValue"
+            (ngModelChange)="updateField('displayValue', $event)"
+            placeholder="e.g. Male — max 100 characters"
+            (blur)="onBlur('displayValue')"
+          />
+          @if (touched().displayValue && errors().displayValue) {
+            <span class="err">{{ errors().displayValue }}</span>
+          }
+        </div>
+        <div class="fg">
+          <label>Short Name</label>
+          <input
+            pInputText
+            [ngModel]="form.shortName"
+            (ngModelChange)="updateField('shortName', $event)"
+            placeholder="Optional — e.g. M, max 20 characters"
+            (blur)="onBlur('shortName')"
+          />
+          @if (touched().shortName && errors().shortName) {
+            <span class="err">{{ errors().shortName }}</span>
+          }
+        </div>
+        <div class="fg">
+          <label>Value Type</label>
+          <p-select
+            [options]="valueTypes"
+            [ngModel]="form.valueType"
+            (ngModelChange)="onValueTypeChange($event)"
+            placeholder="Select a value type"
+            appendTo="body"
+          />
+        </div>
+
+        @if (form.valueType === "COLOR") {
+          <div class="fg">
+            <label>Colour <span class="req">*</span></label>
+            <input
+              type="color"
+              [ngModel]="form.colorHex"
+              (ngModelChange)="updateField('colorHex', $event)"
+              style="height:38px;width:100%;border-radius:9px;border:1px solid var(--hqms-line)"
+              (blur)="onBlur('colorHex')"
+            />
+            @if (touched().colorHex && errors().colorHex) {
+              <span class="err">{{ errors().colorHex }}</span>
+            }
+          </div>
+        }
+
+        <div class="fg">
+          <label>Display Order <span class="req">*</span></label>
+          <p-inputnumber
+            [ngModel]="form.display_order"
+            (ngModelChange)="updateField('display_order', $event)"
+            [min]="1"
+            [showButtons]="true"
+            placeholder="1 or higher"
+            (onBlur)="onBlur('display_order')"
+          />
+          @if (touched().display_order && errors().display_order) {
+            <span class="err">{{ errors().display_order }}</span>
+          }
+        </div>
+        <div class="fg">
+          <label
+            >Parent Value
+            <span class="hint" style="font-weight:400"
+              >(hierarchies)</span
+            ></label
+          >
+          <p-select
+            [options]="parentOptions()"
+            [(ngModel)]="form.parentEntityValueId"
+            optionLabel="label"
+            optionValue="value"
+            [showClear]="true"
+            placeholder="— None — pick a parent value if this is nested"
+            appendTo="body"
+          />
+        </div>
+        <div class="fg full">
+          <label>Description</label>
+          <textarea
+            pTextarea
+            [ngModel]="form.description"
+            (ngModelChange)="updateField('description', $event)"
+            rows="2"
+            placeholder="Optional — notes or clinical definition (max 300 characters)…"
+            (blur)="onBlur('description')"
+          ></textarea>
+          @if (touched().description && errors().description) {
+            <span class="err">{{ errors().description }}</span>
+          }
+        </div>
+
+        <div class="section-lbl">Effective Period</div>
+        <div class="fg">
+          <label>Effective From</label>
+          <p-datepicker
+            [ngModel]="form.effectiveFrom"
+            (ngModelChange)="onEffectiveFromChange($event)"
+            dateFormat="yy-mm-dd"
+            placeholder="YYYY-MM-DD — optional"
+            [showIcon]="true"
+            appendTo="body"
+          />
+        </div>
+        <div class="fg">
+          <label>Effective To</label>
+          <p-datepicker
+            [ngModel]="form.effectiveTo"
+            (ngModelChange)="updateField('effectiveTo', $event)"
+            dateFormat="yy-mm-dd"
+            placeholder="YYYY-MM-DD — optional, must be after Effective From"
+            [showIcon]="true"
+            appendTo="body"
+            (onBlur)="onBlur('effectiveTo')"
+          />
+          @if (touched().effectiveTo && errors().effectiveTo) {
+            <span class="err">{{ errors().effectiveTo }}</span>
+          }
+        </div>
+
+        <div class="section-lbl">Flags</div>
+        <div class="fg">
+          <div class="switch-row">
+            <div class="lbl">Default<small>Pre-selected value</small></div>
+            <p-toggleswitch class="sp" [(ngModel)]="form.isDefault" />
+          </div>
+        </div>
+        <div class="fg">
+          <div class="switch-row">
+            <div class="lbl">Visible<small>Shown in dropdowns</small></div>
+            <p-toggleswitch class="sp" [(ngModel)]="form.isVisible" />
+          </div>
+        </div>
+        <div class="fg">
+          <div class="switch-row">
+            <div class="lbl">Editable<small>Can be modified</small></div>
+            <p-toggleswitch class="sp" [(ngModel)]="form.is_editable" />
+          </div>
+        </div>
+        <div class="fg">
+          <div class="switch-row">
+            <div class="lbl">Active<small>Available for selection</small></div>
+            <p-toggleswitch class="sp" [(ngModel)]="form.is_active" />
+          </div>
+        </div>
+      </div>
+
+      <ng-template pTemplate="footer">
+        <span class="mono" style="margin-right:auto;font-size:11px"
+          >Maps to public.entity_value</span
+        >
+        <p-button
+          label="Cancel"
+          severity="secondary"
+          [text]="true"
+          (onClick)="visible.set(false)"
+        />
+        <p-button label="Save Value" icon="pi pi-check" (onClick)="submit()" />
+      </ng-template>
+    </p-dialog>

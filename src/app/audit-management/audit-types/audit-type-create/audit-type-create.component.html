@@ -1,0 +1,207 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                                        <!-- <span class="iconify" data-icon="famicons:arrow-back-outline"></span> -->
+                                        <i class="iconify pi pi-arrow-left"></i>
+                                    </a>
+                                    <h3>Conduct Audit</h3>
+                                </div>
+                            </div>
+
+                            <div class="col-md-5 col-12">
+                                <div class="form-right">
+                                    <!-- routerLink="/audit-type-dashboard" -->
+                                    <button type="button" class="btn btn-dark" (click)="onClear()">
+                                        Clear</button>
+                                    <button type="button" class="btn btn-danger" (click)="onSubmitClick('Draft')">
+                                        Save as Draft</button>
+                                    <!-- routerLink="/audit-type-dashboard" -->
+                                    <button type="button" class="btn btn-primary" (click)="onSubmitClick('Completed')">
+                                        Complete Audit</button>
+                                </div>
+                            </div>
+
+                            <!-- <div class="col-md-5 col-12">
+                                <div class="form-right">
+                                    <div class="dropdown dropdown-style1 ms-2">
+                                        <button class="btn btn-light dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            Download
+                                            <span class="iconify" data-icon="akar-icons:chevron-down"></span>
+
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                                            <li><a class="dropdown-item" href="javascript:;">Download Word</a></li>
+                                            <li><a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="audit-info-cover">
+                            <div class="audit-status">
+                                <div class="row">
+                                    <div class="col-md-6 col-12">
+                                        <div class="left-content">
+                                            <!-- <h5>{{conducAudit().audit_name}} </h5> -->
+                                            <p>Audit On {{conducAudit().audit_date   }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="right-content text-end">
+                                            <p class="mb-1">Status</p>
+                                            <span class="badge-green orange"> {{conducAudit().status   }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-audit tablehrz">
+                                <table class="table table-bordered table-line mb-0">
+                                    <tr>
+                                        <th>Audit Title </th>
+                                        <th>Department</th>
+                                        <th>Location</th>
+                                        <th>Auditor</th>
+                                        <th>Auditee</th>
+                                    </tr>
+                                    <tr>
+                                        <td>{{conducAudit().audit_title   }}</td>
+                                        <td>{{conducAudit().department_name   }}</td>
+                                        <td>{{conducAudit().audit_location_name   }}</td>
+                                        <td>{{conducAudit().auditor_name   }} </td>
+                                        <td>{{conducAudit().auditee_name   }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="audit-info-cover">
+                            <div class="accordion custom-accordion1 accordion2" id="accordionExample">
+                                @for(condtAdt of conducAudit().sections;track $index;let scI = $index){
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                            [attr.data-bs-target]="'#collapseOne'+scI" aria-expanded="true"
+                                            [attr.aria-controls]="'collapseOne'+scI">
+                                            <h5>{{condtAdt.section_name}}</h5>
+                                            <!-- <p>{{condtAdt.section_description}}</p> -->
+                                        </button>
+                                    </h2>
+                                    @for(qstn of condtAdt.questions;track $index;let j = $index){
+                                    <div [id]="'collapseOne'+scI" class="accordion-collapse collapse show"
+                                        data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            <div class="table-audit table-responsive">
+                                                <table class="table table-bordered mb-0">
+                                                    <tr>
+                                                        <td width="100%">
+                                                            <div>
+
+                                                                {{qstn.question_text }}
+                                                                <div class="audit-check-group">
+                                                                    <div class="audit-check">
+                                                                        <ul>
+                                                                            <li>
+                                                                                <a (click)="selectAnswer(qstn,'YES')"
+                                                                                    [ngClass]="qstn.answer_text === 'YES'?'green':''"
+                                                                                    style="cursor: pointer">
+                                                                                    <!-- <span class="iconify"
+                                                                                                data-icon="ri:checkbox-circle-line">
+                                                                                            </span> -->
+                                                                                    <i
+                                                                                        class="iconify pi pi-check-circle"></i>
+                                                                                    Yes</a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a (click)="selectAnswer(qstn,'NO')"
+                                                                                    [ngClass]="qstn.answer_text === 'NO'?'red':''"
+                                                                                    style="cursor: pointer">
+                                                                                    <!-- <span class="iconify"
+                                                                                                data-icon="mynaui:circle">
+                                                                                            </span> -->
+                                                                                    <i
+                                                                                        class="iconify pi pi-check-circle"></i>
+                                                                                    No</a>
+                                                                            </li>
+                                                                            @if(qstn.is_not_applicable){
+                                                                            <li>
+                                                                                <a (click)="selectAnswer(qstn,'NA')"
+                                                                                    [ngClass]="qstn.answer_text === 'NA'?'yellow-class':''"
+                                                                                    style="cursor: pointer">
+                                                                                    <!-- <span class="iconify"
+                                                                                                data-icon="mynaui:circle">
+                                                                                            </span> -->
+                                                                                    <i
+                                                                                        class="iconify pi pi-check-circle"></i>
+                                                                                    NA</a>
+                                                                            </li>
+                                                                            }
+                                                                        </ul>
+                                                                    </div>
+
+
+                                                                    <!-- <input type="text" class="form-control"
+                                                                                placeholder="Enter Remarks" [id]="j"
+                                                                                [(ngModel)]="qstn.remarks" /> -->
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                <div class="flex flex-col gap-1">
+                                                                    <label>Remarks</label>
+                                                                    <textarea pTextarea [(ngModel)]="qstn.remarks" rows="10"
+                                                                        name="remarks_{{scI}}_{{j}}" class="form-control" appNospaces></textarea>
+                                                                </div>
+
+                                                            </div>
+                                                        </td>
+
+                                                    </tr>
+                                                </table>
+                                                @if(qstn.is_required){
+                                                <div class="error">
+                                                    Response Required
+                                                </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    }
+                                </div>
+                                }
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .yellow-class {
+        background-color: yellow !important;
+    }
+
+    .error {
+        color: red;
+        font-weight: bold;
+    }
+
+    textarea {
+        height: 100% !important;
+    }
+</style>

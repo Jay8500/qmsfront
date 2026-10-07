@@ -1,0 +1,514 @@
+<section class="wrapper-body">
+    <div class="container-fluid">
+        <p-tabs [value]="activeTab">
+            <p-tablist>
+                <p-tab value="tab1" (click)="activeTab='tab1'">
+                    <div class="display:flex;flex-direction:column;gap:8px:width:100%">
+                        <div style="display: flex;align-items:cente;justify-content:space-between;gap:12px;width:100%">
+                            <span style="font-weight: 600">
+                                Module
+                            </span>
+                            @if(activeTab === 'tab1'){
+                            <div style="display: flex;align-items:center;gap:6px">
+                                <!-- <a href="javascript:;" ngbTooltip="Filter" placement="top" class="icon-btn-square"
+                                    (click)="filterToggle()">
+                                    <i class="iconify pi pi-sliders-h"></i>
+                                </a> -->
+                                <div class="dropdown dropdown-style1" appAccess="access_exp">
+                                    <button class="btn btn-light dropdown-toggle" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        Report
+                                        <i class="iconify pi pi-angle-down"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li
+                                            [DCSV]="{ param :params,screenName:'Modules',data : mdsbGrid.length,methodName : 'fnModuleApi'}">
+                                            <a class="dropdown-item" href="javascript:;">Download
+                                                CSV</a></li>
+                                        <li
+                                            appAccess="access_print" [PDF]="{ param :params,screenName:'Modules',data : mdsbGrid.length,methodName : 'fnModuleApi'}">
+                                            <a class="dropdown-item" href="javascript:;">Download
+                                                Pdf</a> </li>
+                                        <li
+                                            [EXCEL]="{ param :params,screenName:'Modules',data : mdsbGrid.length,methodName : 'fnModuleApi'}">
+                                            <a class="dropdown-item" href="javascript:;">Download
+                                                Excel</a></li>
+                                    </ul>
+                                </div>
+                                <a href="javascript:;" class="btn btn-success"
+                                    appAccess="access_add" (click)="isEnableMdle=true;_tabText='Module'">
+                                    <span class="iconfiy"> <i class=" pi pi-plus-circle"
+                                            style="margin-right: 2px;"></i></span>
+
+                                </a>
+                            </div>
+                            }
+                        </div>
+                    </div>
+                    <!-- @if (showFilter) {
+                    <div class="filter-box form-sm">
+                        <div class="row">
+                            <div class="col-md-11 col-12">
+                                <div class="row gx-2">
+                                    <div class="col-md-3 col-12">
+                                        <div class="flex flex-col gap-1">
+                                            <label for="module_name">By Module Name</label>
+                                            <div style="display:inline-block;width:100%">
+                                                <p-select id="module_name" [(ngModel)]="moduleFilters().module_name"
+                                                    name="module_name" [options]="moduleNameList" [filter]="true"
+                                                    [showClear]="true" placeholder="Module"
+                                                    (onClear)="onFilterClear(true)" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 col-12">
+                                        <div class="flex flex-col gap-1">
+                                            <label for="status">By Status</label>
+                                            <div style="display:inline-block;width:100%">
+                                                <p-select id="status" [(ngModel)]="moduleFilters().status" name="status"
+                                                    [options]="statusList" [filter]="true" placeholder="By Status"
+                                                    [showClear]="true" (onClear)="onFilterClear(true)"
+                                                    class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-12 ps-0">
+                                <button class="btn btn-primary w-100" (click)="onFilterClick()">Filter</button>
+                                <button class="btn btn-dark" (click)="onFilterClear(null)">Clear</button>
+                            </div>
+                        </div>
+                    </div>
+                    } -->
+                </p-tab>
+                <p-tab value="tab2" (click)="activeTab='tab2'">
+                    <div class="display:flex;flex-direction:column;gap:8px:width:100%">
+                        <div style="display: flex;align-items:cente;justify-content:space-between;gap:12px;width:100%">
+                            <span style="font-weight: 600">
+                                Document
+                            </span>
+                            @if(activeTab === 'tab2'){
+                            <div style="display: flex;align-items:center;gap:6px">
+                                <!-- <a href="javascript:;" ngbTooltip="Filter" placement="top" class="icon-btn-square"
+                                    (click)="filterToggle()">
+                                    <i class="iconify pi pi-sliders-h"></i>
+                                </a> -->
+                                <div class="dropdown dropdown-style1" appAccess="access_exp">
+                                    <button class="btn btn-light dropdown-toggle" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        Download Report
+                                        <i class="iconify pi pi-angle-down"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li
+                                            [DCSV]="{ param :params,screenName:'Document',data : docGrid.length,methodName : 'fnDocApi'}">
+                                            <a class="dropdown-item" href="javascript:;">Download
+                                                CSV</a></li>
+                                        <li
+                                            appAccess="access_print" [PDF]="{ param :params,screenName:'Document',data : docGrid.length,methodName : 'fnDocApi'}">
+                                            <a class="dropdown-item" href="javascript:;">Download
+                                                Pdf</a> </li>
+                                        <li
+                                            [EXCEL]="{ param :params,screenName:'Document',data : docGrid.length,methodName : 'fnDocApi'}">
+                                            <a class="dropdown-item" href="javascript:;">Download
+                                                Excel</a></li>
+                                    </ul>
+                                </div>
+                                <a href="javascript:;" class="btn btn-success"
+                                    appAccess="access_add" (click)="isEnableMdle=true;_tabText='Document'">
+                                    <span class="iconfiy"> <i class=" pi pi-plus-circle"
+                                            style="margin-right: 2px;"></i></span>
+
+                                </a>
+                            </div>
+                            }
+                            <!-- @if (showFilter) {
+                            <div class="filter-box form-sm">
+                                <div class="row">
+                                    <div class="col-md-11 col-12">
+                                        <div class="row gx-2">
+                                            <div class="col-md-3 col-12">
+                                                <div class="flex flex-col gap-1">
+                                                    <label for="document_name">By Document Name</label>
+                                                    <div style="display:inline-block;width:100%">
+                                                        <p-select id="document_name"
+                                                            [(ngModel)]="documentFilters().document_name"
+                                                            name="document_name" [options]="docNameList" [filter]="true"
+                                                            [showClear]="true" placeholder="By Document Name"
+                                                            (onClear)="onFilterClear1(true)" class="form-control" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 col-12">
+                                                <div class="flex flex-col gap-1">
+                                                    <label for="doc_status">By Status</label>
+                                                    <div style="display:inline-block;width:100%">
+                                                        <p-select id="doc_status" [(ngModel)]="documentFilters().status"
+                                                            name="doc_status" [options]="statusDocList" [filter]="true"
+                                                            placeholder="By Status" [showClear]="true"
+                                                            (onClear)="onFilterClear1(true)" class="form-control" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1 col-12 ps-0">
+                                        <button class="btn btn-primary w-100" (click)="onFilterClick1()">Filter</button>
+                                        <button class="btn btn-dark" (click)="onFilterClear1(null)">Clear</button>
+                                    </div>
+                                </div>
+                            </div>
+                            } -->
+                        </div>
+                    </div>
+                </p-tab>
+            </p-tablist>
+            <p-tabpanels>
+                <p-tabpanel value="tab1">
+                    <section class="report-table mt-3 mb-3">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-12">
+                                <div class="card-style2">
+
+                                    <div class="card-body table-style1 table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">S.No</th>
+                                                    <th width="25%" scope="col" sortable="module_name"
+                                                        (sort)="onSort($event)">
+                                                        Module Name
+                                                        <i class="iconify pi pi-sort"></i>
+                                                    </th>
+                                                    <th width="25%" scope="col" sortable="module_route"
+                                                        (sort)="onSort($event)">
+                                                        Route
+                                                        <i class="iconify pi pi-sort"></i>
+                                                    </th>
+                                                    <th width="25%" scope="col" sortable="module_icon"
+                                                        (sort)="onSort($event)">
+                                                        Icon
+                                                        <i class="iconify pi pi-sort"></i>
+                                                    </th>
+                                                    <th swidth="25%" cope="col" sortable="status"
+                                                        (sort)="onSort($event)">
+                                                        Status
+                                                        <i class="iconify pi pi-sort"></i>
+                                                    </th>
+                                                    <th scope="col" class="text-end">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody cdkDropList [cdkDropListData]="mdsbGrid"
+                                                (cdkDropListDropped)="dropMdle($event)">
+                                                @for (mdle of mdsbGrid; track $index) {
+                                                @if(mdle.is_active){
+                                                <tr cdkDrag>
+                                                    <td scope="row">
+                                                        {{ $index + 1 }}
+                                                        @if(mdle.status != 'Inactive'){
+                                                        <!-- <a href="javascript:;" cdkDragHandle>
+
+                                                            <i class="iconify pi pi-bars" pTooltip="Module Drag & Drop"
+                                                                tooltipPosition="right"></i>
+                                                        </a> -->
+                                                        <span class="drag-icon sub-drag " cdkDragHandle>::</span>
+                                                        }
+                                                    </td>
+                                                    <td>
+
+                                                        {{ mdle.module_name }}
+                                                    </td>
+                                                    <td>
+
+                                                        {{ mdle.module_route }}
+                                                    </td>
+                                                    <td>
+
+                                                        {{ mdle.module_icon }}
+                                                    </td>
+                                                    <td [ngClass]="{
+                                                                            'text-danger': mdle.status === 'Inactive',
+                                                                            'text-warning': mdle.status === 'Expiring Soon',
+                                                                            'text-success': mdle.status === 'Active',
+                                                                          }">
+                                                        {{ mdle.status }}
+                                                    </td>
+                                                    <td class="text-end">
+                                                        @if(mdle.status != 'Inactive'){
+                                                        <a href="javascript:;" appAccess="access_mod" (click)="onEditClick(mdle)">
+                                                            <!-- < span class="iconify" data-icon="ri:edit-line"></span> -->
+                                                            <i class="iconify pi pi-pencil"
+                                                                [class.editing]="mdle.is_edit_click"
+                                                                [class.edited]="!mdle.is_edit_click"></i>
+                                                        </a>
+                                                        <a href="javascript:;" appAccess="access_del" (click)="trashMdle(mdle)">
+                                                            <!-- <span class="iconify" data-icon="material-symbols:delete-outline"></span> -->
+                                                            <i class="iconify pi pi-trash"></i>
+                                                        </a>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                                }
+                                                }@empty{
+                                                <tr>
+                                                    <td [attr.colspan]="6">
+                                                        No Modules Found
+                                                    </td>
+                                                </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                        <!-- <nav aria-label="Page navigation pagination text-end">
+                                                    <ul class="pagination d-flex justify-content-end">
+                                                        <li class="page-adtInfo next" [class.disabled]="pageNators().pageNo === 1">
+                                                            <a class="page-link cursor" aria-label="Previous"
+                                                                (click)="changePage(pageNators().pageNo-1)">
+                                                                <span aria-hidden="true">&laquo;</span>
+                                                            </a>
+                                                        </li>
+                                                        @for(p of pageNumbers();track p){
+                                                        <li class="page-adtInfo" [class.active]="pageNators().pageNo === p">
+                                                            <a class="page-link cursor" (click)="changePage(p)">{{p}}</a>
+                                                        </li>
+                                                        }
+                                                        <li class="page-adtInfo prev"
+                                                            [class.disabled]="pageNators().pageNo === pageNators().totalPages">
+                                                            <a class="page-link cursor" aria-label="Next"
+                                                                (click)="changePage(pageNators().pageNo+1)">
+                                                                <span aria-hidden="true">&raquo;</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </nav> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </p-tabpanel>
+                <p-tabpanel value="tab2">
+                    <section class="report-table mt-3 mb-3">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-12">
+                                <div class="card-style2">
+                                    <div class="card-body table-style1 table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">S.No</th>
+                                                    <th width="25%" scope="col" sortable="document_name"
+                                                        (sort)="onSort1($event)">
+                                                        Document Name
+                                                        <i class="iconify pi pi-sort"></i>
+                                                    </th>
+                                                    <th width="25%" scope="col" sortable="primary_url"
+                                                        (sort)="onSort1($event)">
+                                                        Primary Url
+                                                        <i class="iconify pi pi-sort"></i>
+                                                    </th>
+                                                    <th width="25%" scope="col" sortable="description"
+                                                        (sort)="onSort1($event)">
+                                                        Description
+                                                        <i class="iconify pi pi-sort"></i>
+                                                    </th>
+                                                    <th swidth="25%" cope="col" sortable="status"
+                                                        (sort)="onSort1($event)">
+                                                        Status
+                                                        <i class="iconify pi pi-sort"></i>
+                                                    </th>
+                                                    <th scope="col" class="text-end">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @for (doc of docGrid; track $index) {
+                                                @if(doc.is_active){
+                                                <tr>
+                                                    <td scope="row">{{ $index + 1 }}
+
+                                                    </td>
+                                                    <td>
+
+                                                        {{ doc.document_name }}
+                                                    </td>
+                                                    <td>
+
+                                                        {{ doc.primary_url }}
+                                                    </td>
+                                                    <td>
+
+                                                        {{ doc.description }}
+                                                    </td>
+                                                    <td [ngClass]="{
+                                                        'text-danger': doc.status === 'Inactive',
+                                                        'text-warning': doc.status === 'Expiring Soon',
+                                                        'text-success': doc.status === 'Active',
+                                                      }">
+                                                        {{ doc.status }}
+                                                    </td>
+
+                                                    <td class="text-end">
+                                                        @if(doc.status != 'Inactive'){
+                                                        <a href="javascript:;" appAccess="access_mod" (click)="onEditClickDoc(doc)">
+                                                            <i class="iconify pi pi-pencil"></i>
+                                                        </a>
+                                                        <a href="javascript:;" appAccess="access_del" (click)="trashDoc(doc)">
+                                                            <!-- <span class="iconify" data-icon="material-symbols:delete-outline"></span> -->
+                                                            <i class="iconify pi pi-trash"></i>
+                                                        </a>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                                }
+                                                }@empty{
+                                                <tr>
+                                                    <td [attr.colspan]="5">
+                                                        No Documents Found
+                                                    </td>
+                                                </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                        <!-- <nav aria-label="Page navigation pagination text-end">
+                                                            <ul class="pagination d-flex justify-content-end">
+                                                                <li class="page-adtInfo next" [class.disabled]="pageNators().pageNo === 1">
+                                                                    <a class="page-link cursor" aria-label="Previous"
+                                                                        (click)="changePage(pageNators().pageNo-1)">
+                                                                        <span aria-hidden="true">&laquo;</span>
+                                                                    </a>
+                                                                </li>
+                                                                @for(p of pageNumbers();track p){
+                                                                <li class="page-adtInfo" [class.active]="pageNators().pageNo === p">
+                                                                    <a class="page-link cursor" (click)="changePage(p)">{{p}}</a>
+                                                                </li>
+                                                                }
+                                                                <li class="page-adtInfo prev"
+                                                                    [class.disabled]="pageNators().pageNo === pageNators().totalPages">
+                                                                    <a class="page-link cursor" aria-label="Next"
+                                                                        (click)="changePage(pageNators().pageNo+1)">
+                                                                        <span aria-hidden="true">&raquo;</span>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </nav> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </p-tabpanel>
+            </p-tabpanels>
+        </p-tabs>
+    </div>
+</section>
+
+<p-dialog [header]="_tabText" [(visible)]="isEnableMdle" [modal]="true" [dismissableMask]="true"
+    [breakpoints]="{'425px' : '99vw'}" [style]="{width: '300px', height: 'auto'}" [closeOnEscape]='true'
+    [closable]='true' [resizable]="false" [baseZIndex]="999999999" (onHide)="onCloseCP();onCloseCPDoc()">
+    <div class="modal-body form-lg">
+        @if(_tabText == 'Module'){
+        <div class="form-group">
+            <div style="position: relative;display:inline-block;width:100%">
+                <label for="module_name">Module Name</label>
+                <input pInputText id="module_name" [(ngModel)]="createMdle.module_name" name="module_name" (blur)="onGetErrMsg1('module_name')"
+                    placeholder="Module Name" class="form-control" autocomplete="off" appNospaces>
+                <div style=" position: absolute;
+                top: 26px;
+                right: 0;
+                width: 0;
+                height: 0;
+                border-top: 12px solid red;
+                border-left: 12px solid transparent;">
+                </div>
+            </div>
+            @if(errMsg1['module_name']!=''){
+            <small class="error">{{ errMsg1['module_name']}}</small>
+            }
+        </div>
+        <div class="form-group">
+            <label for="module_route">Route</label>
+            <div style="position: relative;display:inline-block;width:100%">
+                <input pInputText id="module_route" [(ngModel)]="createMdle.module_route" name="module_route" (blur)="onGetErrMsg1('module_route')"
+                    placeholder="Route" class="form-control" autocomplete="off" appNospaces>
+                <div style=" position: absolute;
+                top: 0;
+                right: 0;
+                width: 0;
+                height: 0;
+                border-top: 12px solid red;
+                border-left: 12px solid transparent;">
+                </div>
+            </div>
+            @if(errMsg1['module_route']!=''){
+            <small class="error">{{ errMsg1['module_route']}}</small>
+            }
+        </div>
+        }@else{
+        <div class="form-group">
+            <label for="document_name">Document Name</label>
+            <div style="position: relative;display:inline-block;width:100%">
+            <input pInputText id="document_name" [(ngModel)]="createDoc.document_name" name="document_name" (blur)="onGetErrMsg2('document_name')"
+                placeholder="Document Name" class="form-control" autocomplete="off" appNospaces>
+           <div style=" position: absolute;
+                top: 0;
+                right: 0;
+                width: 0;
+                height: 0;
+                border-top: 12px solid red;
+                border-left: 12px solid transparent;">
+            </div>
+            </div>
+                @if(errMsg2['document_name']!=''){
+                    <small class="error">{{ errMsg2['document_name']}}</small>
+                } 
+        </div>
+
+        <div class="form-group">
+            <label for="primary_url">Primary Url</label>
+            <div style="position: relative;display:inline-block;width:100%">
+            <input pInputText id="primary_url" [(ngModel)]="createDoc.primary_url" name="primary_url"  (blur)="onGetErrMsg2('primary_url')"
+                placeholder="Primary Url" class="form-control" autocomplete="off" appNospaces>
+            <div style=" position: absolute;
+                                            top: 0;
+                                            right: 0;
+                                            width: 0;
+                                            height: 0;
+                                            border-top: 12px solid red;
+                                            border-left: 12px solid transparent;">
+                            </div>
+        </div>
+        @if(errMsg2['primary_url']!=''){
+            <small class="error">{{ errMsg2['primary_url']}}</small>
+                }
+        </div>
+        }
+    </div>
+    <ng-template #footer>
+        @if(_tabText == 'Module'){
+        <button class="btn btn-dark" (click)="onClear()">Clear</button>
+        <button class="btn btn-primary" (click)="onSave()">Save</button>
+        }@else{
+        <button class="btn btn-dark" (click)=" onClear1()">Clear</button>
+        <button class="btn btn-primary" (click)="onSaveDoc()">Save</button>
+        }
+    </ng-template>
+</p-dialog>
+
+<style>
+    .drag-icon {
+        cursor: grab;
+        color: #cbd5e1;
+        font-weight: 700;
+        font-size: 1.1rem;
+        line-height: 1;
+        user-select: none;
+    }
+
+    .drag-icon:active {
+        cursor: grabbing;
+    }
+
+    .drag-icon.sub-drag {
+        margin-top: 2px;
+    }
+</style>

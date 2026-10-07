@@ -1,0 +1,68 @@
+<p-dialog [modal]="true" [visible]="visible" (visibleChange)="!$event && close()" [style]="{width:'760px'}"
+    [breakpoints]="{'800px':'95vw'}" header="Vaccination Policy / SOP">
+    <div class="vacc-form form-lg">
+        <div class="table-responsive mb-3">
+            <table class="table mb-0">
+                <thead><tr><th>Version</th><th>Title</th><th>Effective from</th><th>Uploaded</th><th>File</th><th></th></tr></thead>
+                <tbody>
+                    @for(row of policy.versions(); track row.vaccination_policy_id){
+                    <tr>
+                        <td class="fw-semibold">v{{ row.version }} @if(row.is_current){ <span class="badge-green">Current</span> }</td>
+                        <td>{{ row.title }}</td>
+                        <td>{{ row.effective_from }}</td>
+                        <td>{{ row.uploaded_at }}<br><small class="hint">{{ row.uploaded_by }}</small></td>
+                        <td>
+                            @for(f of row.files; track f.file_id){
+                            @if(f.fileOrImageUrl){ <a [href]="f.fileOrImageUrl" target="_blank" class="small"><i class="pi pi-file-pdf"></i> {{ f.file_name }}</a> }
+                            @else { <small class="hint">{{ f.file_name }}</small> }
+                            }
+                        </td>
+                        <td class="text-end">
+                            @if(canEdit){ <a href="javascript:;" (click)="onRemove(row)" title="Remove"><i class="pi pi-trash text-danger"></i></a> }
+                        </td>
+                    </tr>
+                    } @empty {
+                    <tr><td colspan="6" class="text-center hint py-3">No policy uploaded yet.</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        @if(canEdit){
+        <h6>Upload a new version</h6>
+        <div class="row g-2">
+            <div class="col-md-6 col-12">
+                <label for="pol_title">Title</label>
+                <div class="req"><input pInputText id="pol_title" class="form-control" maxlength="150" [(ngModel)]="form.title" name="pol_title"></div>
+                @if(err.title){ <small class="error">{{ err.title }}</small> }
+            </div>
+            <div class="col-md-3 col-6">
+                <label for="pol_version">Version</label>
+                <div class="req"><input pInputText id="pol_version" class="form-control" maxlength="20" [(ngModel)]="form.version" name="pol_version" placeholder="e.g. 2.0"></div>
+                @if(err.version){ <small class="error">{{ err.version }}</small> }
+            </div>
+            <div class="col-md-3 col-6">
+                <label for="pol_from">Effective from</label>
+                <div class="req"><input type="date" id="pol_from" class="form-control" [(ngModel)]="form.effective_from" name="pol_from"></div>
+                @if(err.effective_from){ <small class="error">{{ err.effective_from }}</small> }
+            </div>
+            <div class="col-md-8 col-12">
+                <label for="pol_notes">What changed (optional)</label>
+                <input pInputText id="pol_notes" class="form-control" maxlength="500" [(ngModel)]="form.notes" name="pol_notes">
+            </div>
+            <div class="col-md-4 col-12">
+                <label>Policy PDF</label>
+                <div class="d-flex align-items-center gap-2">
+                    <label class="btn btn-sm btn-light mb-0" for="pol_file"><i class="pi pi-paperclip"></i> Choose PDF</label>
+                    <input type="file" id="pol_file" class="d-none" accept=".pdf" (change)="onFile($event)">
+                    @if(file){ <small class="hint text-truncate">{{ file.name }}</small> }
+                </div>
+                @if(err.file){ <small class="error">{{ err.file }}</small> }
+            </div>
+        </div>
+        }
+    </div>
+    <ng-template #footer>
+        <button type="button" class="btn btn-dark" (click)="close()">Close</button>
+        @if(canEdit){ <button type="button" class="btn btn-primary" (click)="onUpload()">Upload version</button> }
+    </ng-template>
+</p-dialog>

@@ -1,0 +1,566 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                                        <i class="iconify pi pi-arrow-left"></i>
+                                    </a>
+                                    <h3>{{ _hqms.getPageModeContext(pageMode, 'KPI Master') }}</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-12">
+                                <div class="form-right">
+                                    <button type="button" class="btn btn-dark" [disabled]="pageMode=='VIEW'"
+                                        (click)="onClearClick()">Clear</button>
+                                    <button type="submit" class="btn btn-primary" [disabled]="pageMode=='VIEW'"
+                                        (click)="onSubmitClick()">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mt-4">
+                            <div class="col-lg-12 col-md-12 col-12">
+                                <div class="formbox-left legends form-lg mb-4">
+                                    <div class="form-title">General Details</div>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="kpi_name">KPI Name</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="kpi_name"
+                                                        [(ngModel)]="createKpiMaster().kpi_name"
+                                                        (blur)="onGetErrorMsgs('kpi_name')"
+                                                        [disabled]="pageMode=='VIEW'" name="kpi_name"
+                                                        class=" form-control" placeholder="KPI Name" autocomplete="off"
+                                                        appNospaces>
+                                                    <div style=" position: absolute;
+                                                        top: 0;
+                                                        right: 0;
+                                                        width: 0;
+                                                        height: 0;
+                                                        border-top: 12px solid red;
+                                                        border-left: 12px solid transparent;">
+                                                    </div>
+                                                </div>
+                                                @if(errorMsg['kpi_name']!=''){
+                                                <small class="error">{{ errorMsg['kpi_name']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="kpi_category_id">Catgeory</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <p-select id="kpi_category_id"
+                                                        [(ngModel)]="createKpiMaster().kpi_category_id"
+                                                        [appendTo]="'body'"
+                                                        (onChange)="onGetErrorMsgs('kpi_category_id')"
+                                                        [disabled]="pageMode=='VIEW'"
+                                                        (onBlur)="onGetErrorMsgs('kpi_category_id')"
+                                                        placeholder="Catgeory" name="kpi_category_id"
+                                                        [options]="kpiCategoryList" [filter]="true" [showClear]="true"
+                                                        class="form-control" />
+                                                    <div style=" position: absolute;
+                                                    top: 0;
+                                                    right: 0;
+                                                    width: 0;
+                                                    height: 0;
+                                                    border-top: 12px solid red;
+                                                    border-left: 12px solid transparent;">
+                                                    </div>
+                                                </div>
+                                                @if(errorMsg['kpi_category_id']!=''){
+                                                <small class="error">{{ errorMsg['kpi_category_id']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="kpi_type_id">Indicator</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <p-select id="kpi_type_id"
+                                                        [(ngModel)]="createKpiMaster().kpi_type_id" [appendTo]="'body'"
+                                                        (onChange)="onGetErrorMsgs('kpi_type_id')"
+                                                        (onBlur)="onGetErrorMsgs('kpi_type_id')"
+                                                        [disabled]="pageMode=='VIEW'" name="kpi_type_id"
+                                                        [options]="kpiTypeList" [filter]="true" placeholder="Indicator"
+                                                        [showClear]="true" class="form-control" />
+                                                    <div style=" position: absolute;
+                                                    top: 0;
+                                                    right: 0;
+                                                    width: 0;
+                                                    height: 0;
+                                                    border-top: 12px solid red;
+                                                    border-left: 12px solid transparent;">
+                                                    </div>
+                                                </div>
+                                                @if(errorMsg['kpi_type_id']!=''){
+                                                <small class="error">{{ errorMsg['kpi_type_id']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="frequency_id">Frequency</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <p-select id="frequency_id"
+                                                        [(ngModel)]="createKpiMaster().frequency_id" [appendTo]="'body'"
+                                                        (onChange)="onGetErrorMsgs('frequency_id')"
+                                                        (onBlur)="onGetErrorMsgs('frequency_id')"
+                                                        [disabled]="pageMode=='VIEW'" name="frequency_id"
+                                                        [options]="monitoringFrequencyList" [filter]="true"
+                                                        placeholder="Frequency" [showClear]="true"
+                                                        class="form-control" />
+                                                    <div style=" position: absolute;
+                                                    top: 0;
+                                                    right: 0;
+                                                    width: 0;
+                                                    height: 0;
+                                                    border-top: 12px solid red;
+                                                    border-left: 12px solid transparent;">
+                                                    </div>
+                                                </div>
+                                                @if(errorMsg['frequency_id']!=''){
+                                                <small class="error">{{ errorMsg['frequency_id']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="department_id">Department</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <p-select id="department_id"
+                                                        [(ngModel)]="createKpiMaster().department_id"
+                                                        [appendTo]="'body'" (onChange)="onGetErrorMsgs('department_id')"
+                                                        (onBlur)="onGetErrorMsgs('department_id')"
+                                                        [disabled]="pageMode=='VIEW'" name="department_id"
+                                                        [options]="departmentList" [filter]="true"
+                                                        placeholder="Department" [showClear]="true"
+                                                        class="form-control" />
+                                                    <div style=" position: absolute;
+                                                    top: 0;
+                                                    right: 0;
+                                                    width: 0;
+                                                    height: 0;
+                                                    border-top: 12px solid red;
+                                                    border-left: 12px solid transparent;">
+                                                    </div>
+                                                </div>
+                                                @if(errorMsg['department_id']!=''){
+                                                <small class="error">{{ errorMsg['department_id']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <label>Status</label>
+                                            <div class="form-group">
+                                                <p-toggleswitch [(ngModel)]="createKpiMaster().is_active" name="status"
+                                                    [disabled]="pageMode=='VIEW' || pageMode=='NEW'" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-12">
+                                <div class="formbox-left legends form-lg mb-4">
+                                    <div class="form-title">Formula Builder</div>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="unit_of_measure_id">Unit of Measure</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <p-select id="unit_of_measure_id"
+                                                        [(ngModel)]="createKpiMaster().unit_of_measure_id"
+                                                        (onChange)="onGetErrorMsgs('unit_of_measure_id')"
+                                                        [disabled]="pageMode=='VIEW'" [appendTo]="'body'"
+                                                        name="unit_of_measure_id" [options]="unitofMeasureList"
+                                                        [filter]="true" placeholder="Unit of Measure" [showClear]="true"
+                                                        class="form-control" />
+                                                    <div style=" position: absolute;
+                                                    top: 0;
+                                                    right: 0;
+                                                    width: 0;
+                                                    height: 0;
+                                                    border-top: 12px solid red;
+                                                    border-left: 12px solid transparent;">
+                                                    </div>
+                                                </div>
+                                                @if(errorMsg['unit_of_measure_id']!=''){
+                                                <small class="error">{{ errorMsg['unit_of_measure_id']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="numerator_label">Numerator Name</label>
+
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="numerator_label"
+                                                        [(ngModel)]="createKpiMaster().numerator_label"
+                                                        (blur)="onGetErrorMsgs('numerator_label')"
+                                                        [disabled]="pageMode=='VIEW'" placeholder="Numerator Name"
+                                                        name="numerator_label" class=" form-control" autocomplete="off"
+                                                        appNospaces>
+                                                    <div style=" position: absolute;
+                                                        top: 0;
+                                                        right: 0;
+                                                        width: 0;
+                                                        height: 0;
+                                                        border-top: 12px solid red;
+                                                        border-left: 12px solid transparent;">
+                                                    </div>
+                                                </div>
+                                                @if(errorMsg['numerator_label']!=''){
+                                                <small class="error">{{ errorMsg['numerator_label']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="denominator_label">Denominator Name</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="denominator_label"
+                                                        [(ngModel)]="createKpiMaster().denominator_label"
+                                                        (blur)="onGetErrorMsgs('denominator_label')"
+                                                        [disabled]="pageMode=='VIEW'" placeholder="Denominator Name"
+                                                        name="denominator_label" class=" form-control"
+                                                        autocomplete="off" appNospaces>
+                                                    <div style=" position: absolute;
+                                                        top: 0;
+                                                        right: 0;
+                                                        width: 0;
+                                                        height: 0;
+                                                        border-top: 12px solid red;
+                                                        border-left: 12px solid transparent;">
+                                                    </div>
+                                                </div>
+                                                @if(errorMsg['denominator_label']!=''){
+                                                <small class="error">{{ errorMsg['denominator_label']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="kpi_formula">Formula</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <textarea pTextarea id="kpi_formula"
+                                                        [(ngModel)]="createKpiMaster().kpi_formula"
+                                                        (blur)="onGetErrorMsgs('kpi_formula')" rows="10"
+                                                        placeholder="Formula" [disabled]="pageMode=='VIEW'"
+                                                        name="kpi_formula" class=" form-control" appNospaces></textarea>
+                                                    <div style=" position: absolute;
+                                                    top: 0;
+                                                    right: 0;
+                                                    width: 0;
+                                                    height: 0;
+                                                    border-top: 12px solid red;
+                                                    border-left: 12px solid transparent;">
+                                                    </div>
+                                                </div>
+                                                @if(errorMsg['kpi_formula']!=''){
+                                                <small class="error">{{ errorMsg['kpi_formula']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12 col-12">
+                                <div class="formbox-left legends form-lg mb-4">
+                                    <div class="form-title">Custom Fields</div>
+                                    <table class="table ">
+                                        <thead>
+                                            <tr>
+                                                <th>S.No</th>
+                                                <th>
+                                                    Label
+                                                </th>
+                                                <th>
+                                                    Type
+                                                </th>
+                                                <th>Options</th>
+                                                <th class="text-end">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (cf of createKpiMaster()['custom_fields']; track $index;let cfIn =
+                                            $index) {
+                                            @if(cf.is_active){
+                                            <tr>
+                                                <td>{{cfIn+1}}</td>
+                                                <td>
+                                                    <div style="position: relative;display:inline-block;width:100%">
+                                                        <input pInputText [(ngModel)]="cf.field_name"
+                                                            placeholder="Label Name"
+                                                            (blur)="onGetErrorMsgs('field_name', cf)"
+                                                            [disabled]="pageMode=='VIEW'" name="field_name_{{cfIn}}"
+                                                            class=" form-control" autocomplete="off" appNospaces>
+                                                        <div style=" position: absolute;
+                                                            top: 0;
+                                                            right: 0;
+                                                            width: 0;
+                                                            height: 0;
+                                                            border-top: 12px solid red;
+                                                            border-left: 12px solid transparent;">
+                                                        </div>
+
+                                                    </div>
+                                                    @if(cf['field_name_error']){
+                                                    <small class="error">{{ cf['field_name_error']}}</small>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <div style="position: relative;display:inline-block;width:100%">
+                                                        <p-select [(ngModel)]="cf.field_value" placeholder="Type"
+                                                            (onChange)="onGetErrorMsgs('field_value', cf)"
+                                                            [appendTo]="'body'" [disabled]="pageMode=='VIEW'"
+                                                            name="field_value_{{cfIn}}" [options]="fieldTypeList"
+                                                            [filter]="true" class="form-control" />
+                                                        <div style=" position: absolute;
+                                                        top: 0;
+                                                        right: 0;
+                                                        width: 0;
+                                                        height: 0;
+                                                        border-top: 12px solid red;
+                                                        border-left: 12px solid transparent;">
+                                                        </div>
+                                                    </div>
+                                                    @if(cf['field_value_error']){
+                                                    <small class="error">{{ cf['field_value_error']}}</small>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @if(cf.field_value != null){
+                                                    @if(cf.field_value == '3'){
+                                                    <p-autocomplete [(ngModel)]="cf.options_json" multiple
+                                                        [typeahead]=false [addOnBlur]="true" [addOnTab]="true"
+                                                        separator="," placeholder="Type options"
+                                                        [isDisabled]="pageMode=='VIEW'" />
+                                                    }
+                                                    }
+                                                </td>
+                                                <td class=" text-end">
+                                                    @if(['NEW','EDIT'].includes(pageMode) ){
+                                                    @if(isLastActiveVisible($cfIn)){
+                                                    <a href="javascript:;" (click)="onAddField(cf)"
+                                                        pTooltip="Add a Field" tooltipPosition="left">
+                                                        <i class="iconify pi pi-plus-circle"
+                                                            style="cursor: pointer"></i>
+                                                    </a>
+                                                    }
+                                                    @if(cfIn > 0){
+                                                    <a href="javascript:;" (click)="onDeleteField(cf,cfIn)"
+                                                        pTooltip="Remove a Field" tooltipPosition="left">
+                                                        <i class="iconify pi pi-trash" style="cursor: pointer"></i>
+                                                    </a>
+                                                    }
+                                                    }
+                                                </td>
+                                            </tr>
+                                            }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12 col-12">
+                                <div class="formbox-left legends form-lg mb-4">
+                                    <div class="form-title">Benchmarking & Alerts</div>
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="target_benchmark">Target</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="target_benchmark"
+                                                        [(ngModel)]="createKpiMaster().benchmark[0].target_benchmark"
+                                                        (blur)="onGetBenchmarkErrorMsgs('target_benchmark')"
+                                                        [disabled]="pageMode=='VIEW'" placeholder="Target"
+                                                        name="target_benchmark" class=" form-control" autocomplete="off"
+                                                        appNospaces>
+                                                    <div style=" position: absolute;
+                                                        top: 0;
+                                                        right: 0;
+                                                        width: 0;
+                                                        height: 0;
+                                                        border-top: 12px solid red;
+                                                        border-left: 12px solid transparent;">
+                                                    </div>
+                                                </div>
+                                                @if(errorMsg['target_benchmark']!=''){
+                                                <small class="error">{{ errorMsg['target_benchmark']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <!-- green -->
+                                            <div class="flex flex-col gap-1">
+                                                <label for="complaint_benchmark">Complaince</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="complaint_benchmark"
+                                                        [(ngModel)]="createKpiMaster().benchmark[0].complaint_benchmark"
+                                                        (blur)="onGetBenchmarkErrorMsgs('complaint_benchmark', 'target_benchmark')"
+                                                        [disabled]="pageMode=='VIEW'||createKpiMaster().benchmark[0].target_benchmark ==null "
+                                                        placeholder="Complaince" name="complaint_benchmark"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                    <div style=" position: absolute;
+                                                        top: 0;
+                                                        right: 0;
+                                                        width: 0;
+                                                        height: 0;
+                                                        border-top: 12px solid red;
+                                                        border-left: 12px solid transparent;">
+                                                    </div>
+                                                </div>
+                                                @if(errorMsg['complaint_benchmark']!=''){
+                                                <small class="error">{{ errorMsg['complaint_benchmark']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <!-- amber -->
+                                            <div class="flex flex-col gap-1">
+                                                <label for="partial_complaint_benchmark">Partial-Complaince</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="partial_complaint_benchmark"
+                                                        [(ngModel)]="createKpiMaster().benchmark[0].partial_complaint_benchmark"
+                                                        (blur)="onGetBenchmarkErrorMsgs('partial_complaint_benchmark', 'complaint_benchmark')"
+                                                        placeholder="Partial-Complaince"
+                                                        [disabled]="pageMode=='VIEW'||createKpiMaster().benchmark[0].complaint_benchmark==null"
+                                                        name="partial_complaint_benchmark" class=" form-control"
+                                                        autocomplete="off" appNospaces>
+                                                    <div style=" position: absolute;
+                                                        top: 0;
+                                                        right: 0;
+                                                        width: 0;
+                                                        height: 0;
+                                                        border-top: 12px solid red;
+                                                        border-left: 12px solid transparent;">
+                                                    </div>
+                                                </div>
+                                                @if(errorMsg['partial_complaint_benchmark']!=''){
+                                                <small
+                                                    class="error">{{ errorMsg['partial_complaint_benchmark']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="non_complaint_benchark">Non-Complaince</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="non_complaint_benchark"
+                                                        [(ngModel)]="createKpiMaster().benchmark[0].non_complaint_benchark"
+                                                        (blur)="onGetBenchmarkErrorMsgs('non_complaint_benchark', 'partial_complaint_benchmark')"
+                                                        [disabled]="pageMode=='VIEW'||createKpiMaster().benchmark[0].partial_complaint_benchmark==null"
+                                                        placeholder="Non-Complaince" name="non_complaint_benchark"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                    <div style=" position: absolute;
+                                                        top: 0;
+                                                        right: 0;
+                                                        width: 0;
+                                                        height: 0;
+                                                        border-top: 12px solid red;
+                                                        border-left: 12px solid transparent;">
+                                                    </div>
+                                                </div>
+                                                @if(errorMsg['non_complaint_benchark']!=''){
+                                                <small class="error">{{ errorMsg['non_complaint_benchark']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <!-- <div class="col-3">
+                                            <hqms-multiselect [formName]="FORM_NAME" [labelName]="'Deviation Reason'"
+                                                [fieldName]="'deviation_id'"
+                                                [(ngModel)]="createKpiMaster().benchmark[0].deviation_id"
+                                                name="deviation_id" [isDisabled]="pageMode=='VIEW'"
+                                                (statusChange)="onFieldStatusChange($event)"
+                                                [selectOptions]="deviationReasonsList">
+                                            </hqms-multiselect>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12 col-12">
+                                <div class="formbox-left legends form-lg mb-4">
+                                    <div class="form-title">Instructions & Documentation</div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="kpi_definition">KPI Definition</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <textarea pTextarea id="kpi_definition"
+                                                        [(ngModel)]="createKpiMaster().kpi_definition"
+                                                        (blur)="onGetErrorMsgs('kpi_definition')" rows="10"
+                                                        placeholder="KPI Definition" [disabled]="pageMode=='VIEW'"
+                                                        name="kpi_definition" class=" form-control"
+                                                        appNospaces></textarea>
+                                                    <div style=" position: absolute;
+                                                    top: 0;
+                                                    right: 0;
+                                                    width: 0;
+                                                    height: 0;
+                                                    border-top: 12px solid red;
+                                                    border-left: 12px solid transparent;">
+                                                    </div>
+                                                </div>
+                                                @if(errorMsg['kpi_definition']!=''){
+                                                <small class="error">{{ errorMsg['kpi_definition']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="exclusion_criteria">Exclusion Criteria</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <textarea pTextarea id="exclusion_criteria"
+                                                        [(ngModel)]="createKpiMaster().exclusion_criteria"
+                                                        (blur)="onGetErrorMsgs('exclusion_criteria')" rows="10"
+                                                        placeholder="Exclusion Criteria" [disabled]="pageMode=='VIEW'"
+                                                        name="exclusion_criteria" class=" form-control"
+                                                        appNospaces></textarea>
+                                                    <div style=" position: absolute;
+                                                    top: 0;
+                                                    right: 0;
+                                                    width: 0;
+                                                    height: 0;
+                                                    border-top: 12px solid red;
+                                                    border-left: 12px solid transparent;">
+                                                    </div>
+                                                </div>
+                                                @if(errorMsg['exclusion_criteria']!=''){
+                                                <small class="error">{{ errorMsg['exclusion_criteria']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-12">
+                                            <label>QR Barcode Track</label>
+                                            <div class="form-group">
+                                                <p-toggleswitch [(ngModel)]="createKpiMaster().qr_barcode_track"
+                                                    name="qr_barcode_track" [disabled]="pageMode=='VIEW'" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-12">
+                                            <label>Evidence Mandatory</label>
+                                            <div class="form-group">
+                                                <p-toggleswitch [(ngModel)]="createKpiMaster().evidence_mandatory"
+                                                    name="evidence_mandatory" [disabled]="pageMode=='VIEW'" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

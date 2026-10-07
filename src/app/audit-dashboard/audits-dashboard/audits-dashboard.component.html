@@ -1,0 +1,245 @@
+<section class="wrapper-body">
+    <div class="container-fluid">
+        <section class="status-card">
+            <div class="main-heading-link">
+                <h3 class="main-heading">Hand Hygiene Audit</h3>
+                <div class="btn-groups">
+                    <div class="dropdown dropdown-style1 filterDropdown">
+                        <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="iconify icon-calc" data-icon="solar:calendar-linear"></span> last 30 days <span class="iconify" data-icon="akar-icons:chevron-down"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="javascript:;">last 7 days </a></li>
+                        <li><a class="dropdown-item" href="javascript:;">last 30 days</a></li>
+                        <li><a class="dropdown-item" href="javascript:;">last Month</a></li>
+                        <li><a class="dropdown-item" href="javascript:;">last 6 Months</a></li>
+                        <li><a class="dropdown-item" href="javascript:;">last Year</a></li>
+                        </ul>
+                    </div>
+                </div>   
+            </div>
+            
+            <div class="row">
+                <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+                    <div class="card-grid-cover bg1">
+                        <div class="card-grid-header">
+                            <h5>Overall <br/> Compliance</h5>
+                            <h3>45%</h3>
+                            <div class="icon">
+                                <span class="iconify" data-icon="fluent:document-multiple-percent-20-filled"></span>
+                            </div>
+                        </div>
+                        <div class="card-grid-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-7 col-7">
+                                    <p>Last Updated</p>
+                                    <h5>April 11, 2025 10:23:00</h5>
+                                </div>
+                                <div class="col-md-5 text-end col-5">
+                                    <button class="btn btn-light">View Report</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+                    <div class="card-grid-cover bg2">
+                        <div class="card-grid-header">
+                            <h5>Compliance <br/> By 5 Moments</h5>
+                            <h3>55%</h3>
+                            <div class="icon">
+                                <span class="iconify" data-icon="hugeicons:legal-01"></span>
+                            </div>
+                        </div>
+                        <div class="card-grid-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-7 col-7">
+                                    <p>Last Updated</p>
+                                    <h5>April 11, 2025 10:23:00</h5>
+                                </div>
+                                <div class="col-md-5 col-5 text-end">
+                                    <button class="btn btn-light">View Report</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+                    <div class="card-grid-cover bg3">
+                        <div class="card-grid-header">
+                            <h5>Total <br/> Audits</h5>
+                            <h3>6584</h3>
+                            <div class="icon">
+                                <span class="iconify" data-icon="hugeicons:audit-02"></span>
+                            </div>
+                        </div>
+                        <div class="card-grid-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-7 col-7">
+                                    <p>Last Updated</p>
+                                    <h5>April 11, 2025 10:23:00</h5>
+                                </div>
+                                <div class="col-md-5 col-5 text-end">
+                                    <button class="btn btn-light">View Report</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+                    <div class="card-grid-cover bg4">
+                        <div class="card-grid-header">
+                            <h5>Total <br/> Auditors</h5>
+                            <h3>69</h3>
+                            <div class="icon">
+                                <span class="iconify" data-icon="hugeicons:ai-user"></span>
+                            </div>
+                        </div>
+                        <div class="card-grid-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-7 col-7">
+                                    <p>Last Updated</p>
+                                    <h5>April 11, 2025 10:23:00</h5>
+                                </div>
+                                <div class="col-md-5 col-5 text-end">
+                                    <button class="btn btn-light">View Report</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="chart-section mt-3 mb-3">
+            <div class="row">
+                <div class="col-xl-4 col-lg-6 col-md-6 col-12">
+                    <div class="card-style1 piechart departmentReport1">
+                        <div class="card-header">
+                            Department Wise Report
+                        </div>
+                        <div class="card-body"> 
+                            <div class="chart-wrapper">
+                                <app-report-piechart></app-report-piechart>                             
+                            </div>                              
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-6 col-md-6 col-12">
+                    <div class="card-style1 barchart">
+                        <div class="card-header">
+                            Recent Compliance Comparison 
+                        </div>
+                        <div class="card-body">
+                            <app-comparison-barchart></app-comparison-barchart>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-12 col-md-12 col-12">
+                    <div class="card-style1 report">
+                        <div class="card-header">
+                            Staff Category Wise Report
+                        </div>
+                        <div class="card-body">
+                            <div class="grid-report">
+                                <div class="icon">
+                                    <span class="iconify" data-icon="iconoir:user-crown"></span>
+                                </div>
+                                <div class="content">
+                                    <h5><a href="javascript:;">Staff Category 01</a></h5>
+                                    <p>Last Updated <strong>April 11, 2025 10:23:00</strong></p>
+                                </div>
+                            </div>
+                            <div class="grid-report">
+                                <div class="icon">
+                                    <span class="iconify" data-icon="iconoir:user-crown"></span>
+                                </div>
+                                <div class="content">
+                                    <h5><a href="javascript:;">Staff Category 02</a></h5>
+                                    <p>Last Updated <strong>April 11, 2025 10:23:00</strong></p>
+                                </div>
+                            </div>
+                            <div class="grid-report">
+                                <div class="icon">
+                                    <span class="iconify" data-icon="iconoir:user-crown"></span>
+                                </div>
+                                <div class="content">
+                                    <h5><a href="javascript:;">Staff Category 03</a></h5>
+                                    <p>Last Updated <strong>April 11, 2025 10:23:00</strong></p>
+                                </div>
+                            </div>
+                            <div class="grid-report">
+                                <div class="icon">
+                                    <span class="iconify" data-icon="iconoir:user-crown"></span>
+                                </div>
+                                <div class="content">
+                                    <h5><a href="javascript:;">Staff Category 04</a></h5>
+                                    <p>Last Updated <strong>April 11, 2025 10:23:00</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="report-table mt-3 mb-3">
+            <div class="row">
+                <div class="col-md-12 col-12">
+                    <div class="card-style2">
+                        <div class="card-header">
+                           <h3>Recently Audits</h3>
+                           <a href="javascript:;" class="btn btn-primary" routerLink="/audits-listing">View All Audits <span class="iconify" data-icon="mynaui:chevron-right"></span></a>
+                        </div>
+                        <div class="card-body table-style1 table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">S.No</th>
+                                        <th scope="col" sortable="auditID" (sort)="onSort($event)">Audit ID <span class="iconify" data-icon="bxs:sort-alt"></span></th>
+                                        <th scope="col" sortable="department" (sort)="onSort($event)">Department <span class="iconify" data-icon="bxs:sort-alt"></span></th>
+                                        <th scope="col" sortable="auditor" (sort)="onSort($event)">Auditor <span class="iconify" data-icon="bxs:sort-alt"></span></th>
+                                        <th scope="col" sortable="auditee" (sort)="onSort($event)">Auditee <span class="iconify" data-icon="bxs:sort-alt"></span></th>
+                                        <th scope="col" sortable="auditDate" (sort)="onSort($event)">Audit Date & Time </th>
+                                        <th scope="col" sortable="compliance" (sort)="onSort($event)">Compliance (%)</th>
+                                        <th scope="col" sortable="status" (sort)="onSort($event)">Status</th>
+                                        <th scope="col" class="text-end">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (auditTable of countries; track auditTable.auditID) {
+                                        <tr>
+                                            <td scope="row">{{ auditTable.id }}</td>
+                                            <td>{{ auditTable.auditID }} </td>
+                                            <td>{{ auditTable.department }}</td>
+                                            <td>{{ auditTable.auditor }}</td>
+                                            <td>{{ auditTable.auditee }}</td>
+                                            <td>{{ auditTable.auditDate }}</td>
+                                            <td>{{ auditTable.compliance }}</td>
+                                            <td [ngClass]="{'text-danger': auditTable.status === 'Draft', 'text-success': auditTable.status === 'Submitted'}">
+                                                {{ auditTable.status }}
+                                              </td>                                          
+                                            <td>
+                                                <div class="action-dropdown float-end">
+                                                    <ul>
+                                                        <li>
+                                                            <a href="javascript:;" routerLink="/audits-details"><span class="iconify" data-icon="lets-icons:view-alt-fill"></span></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:;"><span class="iconify" data-icon="material-symbols:download-rounded"></span></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table> 
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>

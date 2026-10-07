@@ -1,0 +1,198 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                                        <i class="iconify pi pi-arrow-left"></i>
+                                    </a>
+                                    <h3>Clinical Pathway Audits</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-12">
+                                @if(false){
+                                <div class="form-right">
+                                    <div class="dropdown dropdown-style1 ms-2">
+                                        <button class="btn btn-light dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            Download <span class="iconify" data-icon="akar-icons:chevron-down"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                                            <li><a class="dropdown-item" href="javascript:;">Download Word</a></li>
+                                            <li><a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                }
+                                <div class="button-group ">
+                                    <div class="row">
+                                        <div class="col-md-12 col-12">
+                                            <!-- <button type="button" class="btn btn-dark"
+                                                (click)="onClearClick()">Clear</button> -->
+                                            <button type="button" class="btn btn-primary"
+                                                (click)="onSubmitClick()">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="audit-info-cover">
+                            <div class="audit-status">
+                                <div class="row">
+                                    <div class="col-md-6 col-12">
+                                        <div class="left-content">
+                                            <h5>{{ createCPAudits.patient_name  }} </h5>
+                                            <!-- <p>Last Updated On <strong>March 27, 2025 16:30</strong></p> -->
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="right-content text-end">
+                                            <p class="mb-1">Status</p>
+                                            <span class="badge-green">{{ createCPAudits.status | uppercase}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-audit tablehrz">
+                                <table class="table table-bordered table-line mb-0">
+                                    <tr>
+                                        <th>CP Type</th>
+                                        <th>Date of Admission</th>
+                                        <th>Date of Surgery</th>
+                                        <th>Date of Discharge</th>
+                                        <th>Consultant</th>
+                                        <!-- <th>Auditee Name</th> -->
+                                    </tr>
+                                    <tr>
+                                        <td>{{  createCPAudits.cp_type_name }}</td>
+                                        <td>{{  createCPAudits.doa_name }}</td>
+                                        <td>{{  createCPAudits.dos_name }} </td>
+                                        <td>{{  createCPAudits.dod_name }}</td>
+                                        <td>{{  createCPAudits.consultant_name }}</td>
+                                        <!-- <td>{{  createCPAudits.cp_type_name }}</td> -->
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="audit-info-cover">
+                            <div class="audit-status">
+                                <div class="row">
+                                    <div class="col-md-6 col-12">
+                                        <div class="left-content">
+                                            <h5>Clinical Pathway Feedbacks</h5>
+                                            <p>{{ createCPAudits.sections.length  }} Questionairre</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="right-content text-end">
+                                            <p class="mb-1">Overall Score</p>
+                                            <span
+                                                [ngClass]="getComplianceClass(createCPAudits.displayCol)">{{ createCPAudits.compliance  }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-audit-row">
+                                @for(pathwayAdt of createCPAudits.sections;track $index;let scI = $index){
+                                <h5>{{pathwayAdt.section_name}}</h5>
+                                <div class="table-audit">
+                                    <table class="table table-bordered">
+                                        @for(qstn of pathwayAdt.questions;track $index;let j = $index){
+                                        <tr>
+                                            <td width="90%">{{qstn.question_text }} </td>
+                                            <td class="text-center text-success">{{qstn.answer_text}}</td>
+                                        </tr>
+                                        }
+                                    </table>
+                                </div>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="audit-info-cover">
+                            <div class="audit-status">
+                                <div class="row">
+                                    <div class="col-md-12 col-12">
+                                        <div class="left-content">
+                                            <h5>Uploaded Discharge Form</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="gallery-grid">
+                                @for(dcFrm of createCPAudits.discharge_form;track $index){
+                                <div class="grid-photo">
+                                    <a [href]="dcFrm.fileOrImageUrl" data-fancybox="gallery">
+                                        <img [src]="dcFrm.fileOrImageUrl" alt="Evidence" />
+                                    </a>
+                                </div>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="form-lg mt-3">
+                            <div class="row">
+                                <div class="col-md-4 col-12">
+                                    <label for="write_capa">Write CAPA</label>
+                                    <textarea pTextarea id="write_capa" [(ngModel)]="createCPAudits.write_capa"
+                                        (blur)="onGetErrorMsgs('write_capa')" rows="2" name="write_capa"
+                                        class=" form-control"></textarea>
+                                    @if(errorMsg['write_capa']!=''){
+                                    <small class="error">{{ errorMsg['write_capa'] }}</small>
+                                    }
+                                </div>
+                                <div class="col-md-4 col-12">
+                                    <label for="action_taken">Action Taken</label>
+                                    <textarea pTextarea id="action_taken" [(ngModel)]="createCPAudits.action_taken"
+                                        (blur)="onGetErrorMsgs('action_taken')" rows="2" name="action_taken"
+                                        class=" form-control"></textarea>
+                                    @if(errorMsg['action_taken']!=''){
+                                    <small class="error">{{ errorMsg['action_taken'] }}</small>
+                                    }
+                                </div>
+                                <div class="col-md-4 col-12">
+                                    <div class="form-group">
+                                        <label>Supporting Documents or Evidence.</label>
+                                        <div class="upload-image">
+                                            <p-fileUpload mode="basic"
+                                                (onSelect)="onCoverPageFileSelect(upCoverPage, $event,'Discharge Form',createCPAudits,null)"
+                                                chooseLabel="Discharge Form" [multiple]="false" [auto]="true"
+                                                #upCoverPage accept="image/png, image/jpeg" [maxFileSize]="2097152"
+                                                [fileLimit]="1" [disabled]="false"
+                                                invalidFileSizeMessageSummary="File too large"
+                                                invalidFileSizeMessageDetail="Maximum upload size is 2MB">
+                                            </p-fileUpload>
+                                            <div *ngIf="createCPAudits.evidences.length>0"
+                                                class="flex gap-2 flex-wrap mt-2">
+                                                <div *ngFor="let mDoc of createCPAudits.evidences; let imgIndex=index">
+                                                    <div *ngIf="mDoc.is_active==true" class="reg-img-view"
+                                                        style="border: 1px solid #cacaca;padding: 5px; border-radius: 7px;font-size: 11px;">
+                                                        {{ mDoc['file_name'] }}
+                                                        <a class="time-icons time-remove ml-2"
+                                                            href="javascript:return false"><i *ngIf="pageMode!='VIEW'"
+                                                                class="pi pi-times-circle"
+                                                                (click)="removeImage(mDoc, imgIndex)"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

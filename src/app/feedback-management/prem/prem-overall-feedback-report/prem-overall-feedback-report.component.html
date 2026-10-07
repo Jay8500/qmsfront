@@ -1,0 +1,289 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <a href="javascript:;" class="icon-btn-square" (click)="goBack()"><span class="iconify" data-icon="famicons:arrow-back-outline"></span></a>
+                                    <h3>PREM Report </h3>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-12">
+                                <div class="form-right">                                    
+                                    <div class="dropdown dropdown-style1 ms-2">
+                                        <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                          Download Report <span class="iconify" data-icon="akar-icons:chevron-down"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                          <li><a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                                          <li><a class="dropdown-item" href="javascript:;">Download Word</a></li>
+                                          <li><a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                                        </ul>
+                                      </div>
+                                </div>
+                            </div>
+                        </div>                      
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row form-sm gx-2">
+                            <div class="col-lg-2 col-md-3 col-12">
+                                <div class="form-group">
+                                    <label>PREM Type</label>
+                                    <select class="form-select fieldColor">
+                                        <option>Discharge Feedbacks</option>
+                                        <option>Daily Feedbacks</option>                                        
+                                        <option>Out Patient Feedbacks</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-12">
+                                <div class="form-group">
+                                    <label>Department</label>
+                                    <select class="form-select fieldColor">
+                                        <option>ICU</option>
+                                        <option>Laboratory</option>
+                                        <option>Causality</option>
+                                        <option>Emergency</option>
+                                        <option>Radiology</option>
+                                        <option>General Surgery</option>
+                                        <option>Cardiology</option>
+                                        <option>Orthopedics</option>
+                                        <option>Gastroenterology</option>
+                                        <option>Pulmonology</option>
+                                        <option>Psychiatry</option>
+                                        <option>Pharmacy</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-12">
+                                <div class="form-group">
+                                    <label>From Date</label>
+                                    <input type="date" class="form-control fieldColor" placeholder="From Date" />
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-12">
+                                <div class="form-group">
+                                    <label>To Date</label>
+                                    <input type="date" class="form-control fieldColor" placeholder="To Date" />
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-12">
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <button class="btn btn-primary w-100">Generate Report</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="audit-info-cover">
+                            <div class="audit-status mb-2">
+                                <div class="row">
+                                    <div class="col-md-6 col-12">
+                                        <div class="left-content">
+                                            <h5>Discharge Feedback </h5>
+                                            <p>Department: ICU</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="right-content text-end">
+                                            <p class="mb-1">Overall Score</p>
+                                            <span class="badge-green">92%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-audit table-responsive table-score1">
+                                <table class="table table-bordered table-line table-lines-sm">
+                                    <tr>
+                                         <th width="45%">Questions</th>
+                                         <th class="text-center">Very Poor</th>
+                                         <th class="text-center">Poor</th>
+                                         <th class="text-center">Neutral</th>
+                                         <th class="text-center">Good</th>
+                                         <th class="text-center">Excellent</th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6"><strong>Hospital Facilities & Environment</strong></td>
+                                    </tr>
+                                    <tr>
+                                         <td>How would you rate the cleanliness of your hospital room?</td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">1</td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">52</td>
+                                         <td class="text-center">0</td>
+                                    </tr>
+                                    <tr>
+                                         <td>How satisfied are you with the hospital's overall hygiene and sanitation?</td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">1</td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">52</td>
+                                         <td class="text-center">0</td>
+                                    </tr>
+                                    <tr class="tr-blue">
+                                         <td class="text-end">Total </td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">1</td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">52</td>
+                                         <td class="text-center">0</td>
+                                    </tr>
+                                    <tr class="tr-blue">
+                                         <td class="text-end">Score % </td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">1</td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">52</td>
+                                         <td class="text-center">0</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="6"><strong>Communication & Information</strong></td>
+                                    </tr>
+                                    <tr>
+                                         <td>How would you rate the quality of food services provided?  </td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">1</td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">52</td>
+                                         <td class="text-center">0</td>
+                                    </tr>
+                                    <tr>
+                                         <td>How would you rate the ease of locating different hospital departments?</td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">1</td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">52</td>
+                                         <td class="text-center">0</td>
+                                    </tr>
+                                    <tr class="tr-blue">
+                                         <td class="text-end">Total </td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">1</td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">52</td>
+                                         <td class="text-center">0</td>
+                                    </tr>
+                                    <tr class="tr-blue">
+                                         <td class="text-end">Score % </td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">1</td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">52</td>
+                                         <td class="text-center">0</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="6"><strong>Staff Behavior & Courtesy</strong></td>
+                                    </tr>
+                                    <tr>
+                                         <td>Have you experienced any side effects or new symptoms since discharge?</td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">1</td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">52</td>
+                                         <td class="text-center">0</td>
+                                    </tr>
+                                    <tr>
+                                         <td>Has your primary health concern improved, stayed the same, or worsened?</td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">1</td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">52</td>
+                                         <td class="text-center">0</td>
+                                    </tr>
+                                    <tr class="tr-blue">
+                                         <td class="text-end">Total </td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">1</td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">52</td>
+                                         <td class="text-center">0</td>
+                                    </tr>
+                                    <tr class="tr-blue">
+                                         <td class="text-end">Score % </td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">1</td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">52</td>
+                                         <td class="text-center">0</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="6"><strong>Treatment & Experience</strong></td>
+                                    </tr>
+                                    <tr>
+                                         <td>How do you feel emotionally or mentally after discharge?</td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">1</td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">52</td>
+                                         <td class="text-center">0</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6"><strong>Overall Impression</strong></td>
+                                    </tr>
+                                    <tr>
+                                         <td>How do you feel emotionally or mentally after discharge?</td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">1</td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">52</td>
+                                         <td class="text-center">0</td>
+                                    </tr>
+                                    <tr class="tr-blue">
+                                         <td class="text-end">Total </td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">1</td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">52</td>
+                                         <td class="text-center">0</td>
+                                    </tr>
+                                    <tr class="tr-blue">
+                                         <td class="text-end">Score % </td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">1</td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">52</td>
+                                         <td class="text-center">0</td>
+                                    </tr>
+
+                                    <tr class="tr-dark-gray border">
+                                         <td class="text-end">Grand Total </td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">1</td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">52</td>
+                                         <td class="text-center">0</td>
+                                    </tr>
+                                    <tr class="tr-dark-gray border">
+                                         <td class="text-end">Grand Score Value </td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">1</td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">52</td>
+                                         <td class="text-center">0</td>
+                                    </tr>
+                                    <tr class="tr-dark-gray border">
+                                         <td class="text-end">Grand Score % </td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">1</td>
+                                         <td class="text-center">0</td>
+                                         <td class="text-center">52</td>
+                                         <td class="text-center">0</td>
+                                    </tr>
+                                 </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

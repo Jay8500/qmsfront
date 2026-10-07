@@ -1,0 +1,274 @@
+<section class="wrapper-body">
+  <div class="container-fluid">
+    <section class="status-card">
+      <div class="main-heading-link">
+        <h3 class="main-heading">Compliance Documentation</h3>
+        <div class="btn-group-row">
+          <div class="dropdown dropdown-style1 filterDropdown">
+            <button
+              class="btn btn-light dropdown-toggle"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              >
+              <span class="iconify icon-calc" data-icon="solar:calendar-linear"></span>
+              {{ selectedRange }}
+              <span class="iconify" data-icon="akar-icons:chevron-down"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 7 days')">Last 7 days</a></li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 30 days')">Last 30 days</a></li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last Month')">Last Month</a></li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 6 Months')">Last 6 Months</a></li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last Year')">Last Year</a></li>
+            </ul>
+          </div>
+          <a href="javascript:;" class="btn btn-success" routerLink="/compliance-add"><span class="iconify" data-icon="icons8:plus"></span> New Compliance Register </a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg3">
+            <div class="card-grid-header">
+              <h5>Overall <br/> Compliance</h5>
+              <h3>36</h3>
+              <div class="icon">
+                <span class="iconify" data-icon="hugeicons:audit-02"></span>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>April 11, 2025 10:23:00</h5>
+                </div>
+                <div class="col-md-5 text-end col-5">
+                  <button class="btn btn-light">View All</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg2">
+            <div class="card-grid-header">
+              <h5>Total <br/>
+              Provider</h5>
+              <h3>30</h3>
+              <div class="icon">
+                <span class="iconify" data-icon="ph:handshake"></span>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>April 11, 2025 10:23:00</h5>
+                </div>
+                <div class="col-md-5 col-5 text-end">
+                  <button class="btn btn-light">View Report</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg1">
+            <div class="card-grid-header">
+              <h5>Active <br/>
+              Policies</h5>
+              <h3>67</h3>
+              <div class="icon">
+                <span class="iconify" data-icon="hugeicons:note-done"></span>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>April 11, 2025 10:23:00</h5>
+                </div>
+                <div class="col-md-5 col-5 text-end">
+                  <button class="btn btn-light">View Report</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg4">
+            <div class="card-grid-header">
+              <h5>Expired  <br/>
+              Policy </h5>
+              <h3>10</h3>
+              <div class="icon">
+                <span class="iconify" data-icon="hugeicons:note-remove"></span>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>April 11, 2025 10:23:00</h5>
+                </div>
+                <div class="col-md-5 col-5 text-end">
+                  <button class="btn btn-light">View All</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="report-table mt-3 mb-3">
+      <div class="row">
+        <div class="col-md-12 col-12">
+          <div class="card-style2">
+            <div class="card-header backoption">
+              <div class="row">
+                <div class="col-md-5 col-12">
+                  <div class="heading-left">
+                    <h3>Compliance Documentation List</h3>
+                  </div>
+                </div>
+                <div class="col-md-7 col-12">
+                  <div class="form-right">
+                    <div class="table-input-search">
+                      <input type="text" class="form-control" placeholder="Search records.." />
+                      <span class="iconify" data-icon="iconamoon:search-light"></span>
+                    </div>
+                    <a href="javascript:;" ngbTooltip="Filter" placement="top" class="icon-btn-square" (click)="filterToggle()"><span class="iconify" data-icon="mage:filter"></span></a>
+                    <div class="dropdown dropdown-style1 ms-2">
+                      <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Download Report <span class="iconify" data-icon="akar-icons:chevron-down"></span>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                        <li><a class="dropdown-item" href="javascript:;">Download Word</a></li>
+                        <li><a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            @if (showFilter) {
+              <div class="filter-box form-sm">
+                <div class="row">
+                  <div class="col-md-11 col-12">
+                    <div class="row gx-2">
+                      <div class="col-md-3 col-12">
+                        <div class="form-group">
+                          <select class="form-select">
+                            <option>By Compliance Name</option>
+                            <option>Hand Hygiene</option>
+                            <option>Operational</option>
+                            <option>Technical</option>
+                            <option>Regulatory</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-12">
+                        <div class="form-group">
+                          <select class="form-select">
+                            <option>By Provider</option>
+                            <option>WHO</option>
+                            <option>NABH</option>
+                            <option>HIPAA</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-12">
+                        <div class="form-group">
+                          <select class="form-select">
+                            <option>By Department</option>
+                            <option>ICU</option>
+                            <option>Laboratory</option>
+                            <option>Causality</option>
+                            <option>Emergency</option>
+                            <option>Radiology</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-12">
+                        <div class="form-group">
+                          <select class="form-select">
+                            <option>By Status</option>
+                            <option>Active</option>
+                            <option>Expired</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-1 col-12 ps-0">
+                    <button class="btn btn-primary w-100">Filter</button>
+                  </div>
+                </div>
+              </div>
+            }
+            <div class="card-body table-style1 table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">S.No</th>
+                    <th width="15%" scope="col" sortable="compliance" (sort)="onSort($event)">Compliance Name <span class="iconify" data-icon="bxs:sort-alt"></span></th>
+                    <th scope="col" sortable="provider" (sort)="onSort($event)">Issuing Authority  </th>
+                    <th scope="col" sortable="department" (sort)="onSort($event)">Department</th>
+                    <th scope="col" sortable="createdOn" (sort)="onSort($event)">Created On</th>
+                    <th scope="col" sortable="lastModified" (sort)="onSort($event)">Last Modified</th>
+                    <th scope="col" sortable="status" (sort)="onSort($event)">Status </th>
+                    <th scope="col" class="text-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (auditTable of countries; track auditTable.compliance) {
+                    <tr>
+                      <td scope="row">{{ auditTable.id }}</td>
+                      <td>{{ auditTable.compliance }}</td>
+                      <td>{{ auditTable.provider }}</td>
+                      <td>{{ auditTable.department }}</td>
+                      <td>{{ auditTable.createdOn }}</td>
+                      <td>{{ auditTable.lastModified }}</td>
+                                            <td [ngClass]="{
+                                                'text-danger': auditTable.status === 'Expired',
+                                                'text-success': auditTable.status === 'Active'
+                                              }">
+                        {{ auditTable.status }}
+                      </td>
+                      <td class="text-end">
+                        <div class="actiondot-dropdown">
+                          <div class="btn-group ms-2">
+                            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                              <span class="iconify" data-icon="tabler:dots"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                              <li>
+                                <a class="dropdown-item" href="javascript:;" routerLink="/compliance-details">View </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item" href="javascript:;">Edit</a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item" href="javascript:;">Delete</a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item" href="javascript:;">Download</a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>

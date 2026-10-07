@@ -1,0 +1,1302 @@
+{
+    "displayCMFerror": "Please check highlighted errors",
+    "displayUPRerror": "Unable to process your request, please try again!",
+    "displayAccessPermission": "You do not have Access Permissions, Please have permissions to move on.",
+    "displayLogOut": "As you have signed out, you have to relogin to access",
+    "tokenSecretKey": "wonderfullife~!@#$%^&*()_+",
+    "refresh": {
+        "getEndPoint": "refresh",
+        "postEndPoint": "",
+        "params": {}
+    },
+    "logout": {
+        "getEndPoint": "logout",
+        "postEndPoint": "",
+        "params": {}
+    },
+    "gethqmsApiTest": {
+        "getEndPoint": "hqms-api-test",
+        "postEndPoint": "",
+        "params": {}
+    },
+    "getHrDatabaseServerTimeApi": {
+        "getEndPoint": "getHrDatabaseServerTime",
+        "postEndPoint": "",
+        "params": {
+            "parSessionId": null
+        }
+    },
+    "loginSignOutApi": {
+        "postEndPoint": "createHrSessionOut"
+    },
+    "committeeListApi": {
+        "getEndPoint": "api/committee-module/get-committee-list",
+        "postEndPoint": "api/committee-module/committee-save",
+        "params": {
+            "parSessionId": null
+        }
+    },
+    "employeeListApi": {
+        "getEndPoint": "api/employee-list/get-employee-list",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "trainingWriteApi": {
+        "getEndPoint": "fnTrainingMasterListGet",
+        "postEndPoint": "fnTrainingWriteCreate",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "trainingDashboardStats": {
+        "getEndPoint": "fnTrainingDashboardStatsGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "facultyWriteApi": {
+        "getEndPoint": "fnFacultyMasterListGet",
+        "postEndPoint": "fnTacultyWriteCreate",
+        "params": {
+            "par_session_id ": null
+        }
+    },
+    "facultyDashboardStats": {
+        "getEndPoint": "fnFacultyDashboardStatsGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnAssessmentDashboardStatsGet": {
+        "getEndPoint": "fnAssessmentDashboardStatsGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnTrainingScheduleDashboardStatsGet": {
+        "getEndPoint": "fnTrainingScheduleDashboardStatsGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "allEntityValuesGetApi": {
+        "getEndPoint": "fnEntityValueGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id ": null
+        }
+    },
+    "assessmentWriteApi": {
+        "getEndPoint": "fnEntityValueGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id ": null
+        }
+    },
+    "assessmentDashboardStats": {
+        "getEndPoint": "fnEntityValueGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id ": null
+        }
+    },
+    "mouTrackerApi": {
+        "getEndPoint": "fnTrainingWriteCreate",
+        "postEndPoint": "fnTrainingWriteCreate",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnTrainingFacultyDropdownGetApi": {
+        "getEndPoint": "fnTrainingFacultyDropdownGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnFacultyGetApi": {
+        "getEndPoint": "fnFacultyGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnAuditTemplateApi": {
+        "getEndPoint": "fnAuditTemplateGet",
+        "postEndPoint": "fnAuditTemplateWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnAuditDashboardStats": {
+        "getEndPoint": "fnAuditDashboardStats",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnAuditScheduleApi": {
+        "getEndPoint": "fnAuditScheduleGet",
+        "postEndPoint": "fnAuditScheduleWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnScheduleAuditDashboardStatsGetApi": {
+        "getEndPoint": "fnScheduleAuditDashboardStatsGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnAuditReportGetApi": {
+        "getEndPoint": "fnAuditReportGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnHandHygieneAuditStatsGetApi": {
+        "getEndPoint": "fnHandHygieneAuditStatsGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnHandHygieneAuditGridApi": {
+        "getEndPoint": "fnHandHygieneAuditGrid",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnDepartmentWiseAuditReportGetApi": {
+        "getEndPoint": "fnDepartmentWiseAuditReportGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnRecentComplianceComparisonGetApi": {
+        "getEndPoint": "fnRecentComplianceComparisonGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnNonComplianceAuditsGetApi": {
+        "getEndPoint": "fnNonComplianceAuditsGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "assessmentApi": {
+        "getEndPoint": "fnAssessmentTemplateList",
+        "postEndPoint": "fnAssessmentTemplateWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "assessmentStatApi": {
+        "getEndPoint": "fnAssessmentDashboardStats",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnTemplateListGet": {
+        "getEndPoint": "fnTemplateListGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "scheduleWriteApi": {
+        "getEndPoint": "fnTrainingScheduleListGet",
+        "postEndPoint": "fnTrainingScheduleWriteSave",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnScheduleGetApi": {
+        "getEndPoint": "fnScheduleGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "serveDateApi": {
+        "getEndPoint": "fnserveDateGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnAttendanceListGet": {
+        "getEndPoint": "fnAttendanceListGet",
+        "postEndPoint": "fnTrainingAttendanceWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnTrainingAttendanceDashboardStats": {
+        "getEndPoint": "fnTrainingAttendanceDashboardStats",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnAttendanceWriteApi": {
+        "getEndPoint": "fnAttendanceWriteSave",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnTrainingEmployeeReportGet": {
+        "getEndPoint": "fnTrainingEmployeeReportGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnTrainingWiseReportGet": {
+        "getEndPoint": "fnTrainingWiseReportGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnTrainingReportsDashboardStats": {
+        "getEndPoint": "fnTrainingReportsDashboardStats",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnTrainingScoreWiseReport": {
+        "getEndPoint": "fnTrainingScoreWiseReport",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnTrainingFacultyWiseReport": {
+        "getEndPoint": "fnTrainingFacultyWiseReport",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnTrainingTrendReport": {
+        "getEndPoint": "fnTrainingTrendReport",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnTrainingFeedbackApi": {
+        "getEndPoint": "fnTrainingFeedbackList",
+        "postEndPoint": "fnTrainingFeedbackWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnTrainingCertificateIssue": {
+        "getEndPoint": "fnTrainingCertificateIssueList",
+        "postEndPoint": "fnTrainingCertificateIssue",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnTrainingCompetencyApi": {
+        "getEndPoint": "",
+        "postEndPoint": "fnTrainingCompetencyWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnLicenseApi": {
+        "getEndPoint": "fnLicenseGetDetailGet",
+        "postEndPoint": "fnLicenseWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnLicenseDashboardApi": {
+        "getEndPoint": "fnLicenseDashboardSummaryGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnMouGetDetailApi": {
+        "getEndPoint": "fnMouGetDetailGet",
+        "postEndPoint": "fnMouWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnMouDashboardApi": {
+        "getEndPoint": "fnMouDashboardSummaryGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnDocumentApi": {
+        "getEndPoint": "fnDocumentGetDetail",
+        "postEndPoint": "fnDocumentWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnDocumentDashboardApi": {
+        "getEndPoint": "fnDocumentDashboardSummary",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "documentApprovalApi": {
+        "getEndPoint": "",
+        "postEndPoint": "fnDocumentApprovalWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "documentLibraryApi": {
+        "getEndPoint": "fnDocumentLibraryGet",
+        "postEndPoint": "fnDocumentViewLogWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "documentWorklistApi": {
+        "getEndPoint": "fnDocumentWorklistGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "docAlertSettingApi": {
+        "getEndPoint": "fnDocAlertSettingGet",
+        "postEndPoint": "fnDocAlertSettingWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "licenseRenewalApi": {
+        "getEndPoint": "fnLicenseRenewalHistoryGet",
+        "postEndPoint": "fnLicenseRenewalWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnTrainingReportApi": {
+        "getEndPoint": "fnTrainingReport",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnAuditScheduleReportApi": {
+        "getEndPoint": "fnAuditScheduleReport",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnRiskDashboardStatsApi": {
+        "getEndPoint": "fnRiskDashboardStats",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnRiskReportApi": {
+        "getEndPoint": "fnRiskReport",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnRiskGetByIdApi": {
+        "getEndPoint": "fnRiskGetById",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "riskReportApi": {
+        "getEndPoint": "fnRiskListGet",
+        "postEndPoint": "fnRiskReportWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "riskWorkflowApi": {
+        "getEndPoint": "fnRiskDetailGet",
+        "postEndPoint": "fnRiskWorkflowWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "riskDashboardApi": {
+        "getEndPoint": "fnRiskDashboardGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "incidentReportApi": {
+        "getEndPoint": "fnIncidentListGet",
+        "postEndPoint": "fnIncidentReportWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "incidentWorkflowApi": {
+        "getEndPoint": "fnIncidentDetailGet",
+        "postEndPoint": "fnIncidentWorkflowWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "incidentDashboardApi": {
+        "getEndPoint": "fnIncidentDashboardGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "incidentRuleApi": {
+        "getEndPoint": "fnIncidentRuleGet",
+        "postEndPoint": "fnIncidentRuleWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "incidentOfficerListApi": {
+        "getEndPoint": "fnIncidentOfficerListGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnRiskGetListApi": {
+        "getEndPoint": "fnRiskGetList",
+        "postEndPoint": "fnRiskWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnRiskScoringWriteApi": {
+        "getEndPoint": "fnRiskGetList",
+        "postEndPoint": "fnRiskScoringWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnIncidentDropDownListApi": {
+        "getEndPoint": "fnIncidentDropDownList",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnIncidentApi": {
+        "getEndPoint": "fnIncidentGetGrid",
+        "postEndPoint": "fnIncidentWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnCapaActionApi": {
+        "getEndPoint": "",
+        "postEndPoint": "fnCpAuditWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnIncidentDashboardStats": {
+        "getEndPoint": "fnIncidentDashboardStats",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnTaskApi": {
+        "getEndPoint": "fnTaskGetList",
+        "postEndPoint": "fnTaskWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnTaskDashboardStats": {
+        "getEndPoint": "fnTaskDashboardStats",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnIncidentChartsApi": {
+        "getEndPoint": "fnIncidentCharts",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnConductAuditGetApi": {
+        "getEndPoint": "fnConductAuditGet",
+        "postEndPoint": "fnConductAuditWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnProviderApi": {
+        "getEndPoint": "fnProviderGet",
+        "postEndPoint": "fnProviderWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnLicenseMasterApi": {
+        "getEndPoint": "fnLicenseMasterGet",
+        "postEndPoint": "fnLicenseMasterWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnTrainingAssessmentApi": {
+        "getEndPoint": "fnTrainingAssessmentGet",
+        "postEndPoint": "fnTrainingAttendeeResponseWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnTrainingAttendeeFeedbackApi": {
+        "getEndPoint": "fnTrainingFeedbackGet",
+        "postEndPoint": "fnTrainingFeedbackResponseWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnTrainingFeedbackListApi": {
+        "getEndPoint": "fnTrainingFeedbackLists",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnTrainingFeedbackDashboardStats": {
+        "getEndPoint": "fnTrainingFeedbackDashboardStats",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnTrainingFeedbackCharts": {
+        "getEndPoint": "fnTrainingFeedbackCharts",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnCommitteeApi": {
+        "getEndPoint": "fnCommitteeGetGrid",
+        "postEndPoint": "fnCommitteeWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnCommitteeDashboardStats": {
+        "getEndPoint": "fnCommitteeDashboardStats",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnMeetingApi": {
+        "getEndPoint": "fnMeetingGetGrid",
+        "postEndPoint": "fnMeetingWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnMeetingDashboardStatsGet": {
+        "getEndPoint": "fnMeetingDashboardStatsGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnMomApi": {
+        "getEndPoint": "fnMomGetGrid",
+        "postEndPoint": "fnMomWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnManageMeetingMomDashboardStats": {
+        "getEndPoint": "fnManageMeetingMomDashboardStats",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnCommitteeReportsApi": {
+        "getEndPoint": "fnCommitteeReportsGetGrid",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "vaccineMasterApi": {
+        "getEndPoint": "fnVaccineMasterGrid",
+        "postEndPoint": "fnVaccineMasterWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "vaccnationDashboardStats": {
+        "getEndPoint": "fnVaccineMasterDashboardStats",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnMeetingAttendaceApi": {
+        "getEndPoint": "",
+        "postEndPoint": "fnMeetingAttendaceWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnCapaSummaryApi": {
+        "getEndPoint": "fnCapaSummaryGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnKpiCategoryApi": {
+        "getEndPoint": "fnKpiCategoryGrid",
+        "postEndPoint": "fnKpiCategory",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnKpiMstrApi": {
+        "getEndPoint": "fnKpiListGet",
+        "postEndPoint": "fnKpiWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnKpiDCApi": {
+        "getEndPoint": "fnKpiDataCaptureGet",
+        "postEndPoint": "fnKpiWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnKpiDashboardStats": {
+        "getEndPoint": "fnKpiDashboardStats",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnKpiCapaSummaryList": {
+        "getEndPoint": "fnKpiCapaSummaryList",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnKpiChartsApi": {
+        "getEndPoint": "fnKpiCharts",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnKpiWriteApi": {
+        "getEndPoint": "",
+        "postEndPoint": "fnKpiWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "schVaccine": {
+        "getEndPoint": "fnVaccinationScheduleGet",
+        "postEndPoint": "fnVaccinationCampaignWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "schVaccineStats": {
+        "getEndPoint": "fnVaccinationScheduleStats",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnVaccineAdministrationApi": {
+        "getEndPoint": "fnVaccineAdministrationGet",
+        "postEndPoint": "fnVaccineAdministrationWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "sessionStatusApi": {
+        "getEndPoint": "sessionStatus",
+        "postEndPoint": "",
+        "params": {}
+    },
+    "vaccineMasterBulkApi": {
+        "getEndPoint": "",
+        "postEndPoint": "fnVaccineMasterBulkWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnVaccinationDetailsUploadApi": {
+        "getEndPoint": "",
+        "postEndPoint": "fnVaccinationDetailsUpload",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "vaccinationCertificateApi": {
+        "getEndPoint": "fnVaccinationCertificateGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "vaccinationCertificateVerifyApi": {
+        "getEndPoint": "fnVaccinationCertificateVerify",
+        "postEndPoint": "",
+        "params": {}
+    },
+    "vaccinationAefiApi": {
+        "getEndPoint": "fnVaccinationAefiGet",
+        "postEndPoint": "fnVaccinationAefiWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "vaccinationHistoryApi": {
+        "getEndPoint": "fnVaccinationHistoryGet",
+        "postEndPoint": "fnVaccinationHistoryWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "vaccinationCorrectionApi": {
+        "getEndPoint": "",
+        "postEndPoint": "fnVaccinationCorrectionWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "vaccinationPolicyApi": {
+        "getEndPoint": "fnVaccinationPolicyGet",
+        "postEndPoint": "fnVaccinationPolicyWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "vaccinationStaffListApi": {
+        "getEndPoint": "fnVaccinationStaffListGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnTrainingCertificateApi": {
+        "getEndPoint": "fnTrainingCertificateGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnVaccinationDetailsCharts": {
+        "getEndPoint": "fnVaccinationDetailsCharts",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnVaccinationDetailsGet": {
+        "getEndPoint": "fnVaccinationDetailsGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnCpMasterWrite": {
+        "getEndPoint": "fnCpMasterGet",
+        "postEndPoint": "fnCpMasterWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnCpAuditApi": {
+        "getEndPoint": "fnCpAuditGrid",
+        "postEndPoint": "fnCpAuditWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnCpDashboardStats": {
+        "getEndPoint": "fnCpDashboardStats",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnCpDashboardApi": {
+        "getEndPoint": "fnCpDashboardCharts",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnIpsgDashboardStats": {
+        "getEndPoint": "fnIpsgDashboardStats",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnIpsgCharts": {
+        "getEndPoint": "fnIpsgDashboardCharts",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnIpsgAuditGrid": {
+        "getEndPoint": "fnIpsgAuditGrid",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnIpsgMaster": {
+        "getEndPoint": "fnIpsgMasterGet",
+        "postEndPoint": "fnIpsgMasterWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnSurveyCatagoryApi": {
+        "getEndPoint": "fnSurveyCatagoryMasterGet",
+        "postEndPoint": "fnSurveyCatagoryMasterWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnSafetyCultureSurveyApi": {
+        "getEndPoint": "fnSafetyCultureSurveyGet",
+        "postEndPoint": "fnSafetyCultureSurveyWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnSafetyCultureDashboardStats": {
+        "getEndPoint": "fnSafetyCultureDashboardStats",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnSafetyCultureChrtsApi": {
+        "getEndPoint": "fnSafetyCultureDashboardCharts",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnIpsgAuditApi": {
+        "getEndPoint": "fnIpsgAuditGet",
+        "postEndPoint": "fnIpsgAuditWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnPremTemplateApi": {
+        "getEndPoint": "fnPremTemplateGet",
+        "postEndPoint": "fnPremTemplateWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnPremFeedbckApi": {
+        "getEndPoint": "fnPremTemplateGet",
+        "postEndPoint": "fnPremFeedbackWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnSCresponseApi": {
+        "getEndPoint": "fnSurveyCatagoryMasterGet",
+        "postEndPoint": "fnSafetyCultureSurveyResponseWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnEssSurveyApi": {
+        "getEndPoint": "fnEssSurveyGet",
+        "postEndPoint": "fnEssSurveyWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnEssSurveyDashboardGet": {
+        "getEndPoint": "fnEssSurveyDashboardGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnFbEssCharts": {
+        "getEndPoint": "fnFbEssCharts",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnEssSurveyResponseApi": {
+        "getEndPoint": "",
+        "postEndPoint": "fnEssSurveyResponseWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnSCviewCapaApi": {
+        "getEndPoint": "fnSafetyCultureSurveyReport",
+        "postEndPoint": "fnSafetyCultureSurveyResponseWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnEssSRViewCapaReviewApi": {
+        "getEndPoint": "fnEssSurveyReport",
+        "postEndPoint": "fnEssSurveyResponseWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnPromMasterApi": {
+        "getEndPoint": "fnPromTemplateGet",
+        "postEndPoint": "fnPromTemplateWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnPromApi": {
+        "getEndPoint": "fnPromFeedbackGet",
+        "postEndPoint": "fnPromFeedbackWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnPromStats": {
+        "getEndPoint": "fnPromDashboardStats",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnComplaintApi": {
+        "getEndPoint": "fnComplaintGet",
+        "postEndPoint": "fnComplaintWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnFbComplaintDashboardStats": {
+        "getEndPoint": "fnFbComplaintDashboardStats",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnFbComplaintCharts": {
+        "getEndPoint": "fnFbComplaintCharts",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnCCMasterApi": {
+        "getEndPoint": "fnPromCcTemplateGet",
+        "postEndPoint": "fnPromCcTemplateWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnCareContinuityApi": {
+        "getEndPoint": "fnCareContinuityGet",
+        "postEndPoint": "fnCareContinuityWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnPremFeedbackApi": {
+        "getEndPoint": "fnPremFeedbackGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnPremDashboardStats": {
+        "getEndPoint": "fnPremDashboardStats",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnPremPromCharts": {
+        "getEndPoint": "fnFbPromCharts",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnRoleApi": {
+        "getEndPoint": "fnRoleGet",
+        "postEndPoint": "fnRoleWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnOrgApi": {
+        "getEndPoint": "fnOrganizationDetails",
+        "postEndPoint": "fnOrganizationWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnSlugIdentifierApi": {
+        "getEndPoint": "fnOrganizationDetails",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnScdrpdwnApi": {
+        "getEndPoint": "fnSecurityDropdownGet",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnOrgAppApi": {
+        "getEndPoint": "",
+        "postEndPoint": "fnOrgApprovalWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnModuleApi": {
+        "getEndPoint": "fnModuleList",
+        "postEndPoint": "fnModuleWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnLocApi": {
+        "getEndPoint": "fnLocationDetails",
+        "postEndPoint": "fnLocationWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnDocApi": {
+        "getEndPoint": "fnDocumentMasterList",
+        "postEndPoint": "fnDocumentMasterWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnModDocApi": {
+        "getEndPoint": "fnModuleDocumentMapList",
+        "postEndPoint": "fnModuleDocumentMapWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnUserApi": {
+        "getEndPoint": "fnUserGet",
+        "postEndPoint": "fnUserWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnAccessRoleApi": {
+        "getEndPoint": "fnRoleDocAccessList",
+        "postEndPoint": "fnRoleDocAccessWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnPwdPlcyApi": {
+        "getEndPoint": "fnPasswordPolicyList",
+        "postEndPoint": "fnPasswordPolicyWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnAccessUserApi": {
+        "getEndPoint": "fnUserDocAccessList",
+        "postEndPoint": "fnUserDocAccessWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnGetLogin": {
+        "getEndPoint": "fnGetLoginUser",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnSidebarGet": {
+        "getEndPoint": "fnUserPermissionsList",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnUserSessionWrite": {
+        "getEndPoint": "fnUserSessionWrite",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnAppWkflApi": {
+        "getEndPoint": "fnApprovalWorkflowConfigList",
+        "postEndPoint": "fnApprovalWorkflowConfigWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnMywWorkspaceApi": {
+        "getEndPoint": "fn_my_workspace_listApi",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnMyWorkspaceCalendarApi": {
+        "getEndPoint": "fn_my_workspace_calendarApi",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnDashboardChartsApi": {
+        "getEndPoint": "fnDashboardChartsApi",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnHrDashboardChartsApi": {
+        "getEndPoint": "fnHrDashboardChartsApi",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnFbPremDfChartsApi": {
+        "getEndPoint": "fnFbPremDfCharts",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnFbPremDSfCharts": {
+        "getEndPoint": "fnFbPremDSfCharts",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnFbPremOPfChartsaPI": {
+        "getEndPoint": "fnFbPremOPfCharts",
+        "postEndPoint": "",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnNtfcnList": {
+        "getEndPoint": "fnNtfcnListApi",
+        "postEndPoint": "fnNtfcnWriteApi",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnSettingsApi": {
+        "getEndPoint": "fnSettingListApi",
+        "postEndPoint": "fnSettingWriteApi",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "fnEntityApi": {
+        "getEndPoint": "fnEntityGrid",
+        "postEndPoint": "fnEntityMasterWrite",
+        "params": {
+            "par_session_id": null
+        }
+    },
+    "commanEntityValuesGetApi": {
+        "getEndPoint": "entityCacheGet",
+        "postEndPoint": "",
+        "params": {}
+    },
+    "fnResponseScaleApi": {
+        "getEndPoint": "fnResponseScaleGet",
+        "postEndPoint": "fnResponseScaleWrite",
+        "params": {}
+    },
+    "fnQuestionMasterApi": {
+        "getEndPoint": "fnQuestionMasterGet",
+        "postEndPoint": "fnQuestionMasterWrite",
+        "params": {}
+    },
+    "fnTemplateBuilderApi": {
+        "getEndPoint": "fnTemplateGet",
+        "postEndPoint": "fnTemplatewrite",
+        "params": {}
+    },
+    "fnSchedulesApi": {
+        "getEndPoint": "fnScheduleGet",
+        "postEndPoint": "fnScheduleWrite",
+        "params": {}
+    },
+    "fnAppStngsApi": {
+        "getEndPoint": "fnAppStngGet",
+        "postEndPoint": "fnAppStngWrite",
+        "params": {}
+    },
+    "fnHqmsUserMobileEmailOtpWriteApi": {
+        "getEndPoint": "",
+        "postEndPoint": "fnHqmsUserMobileEmailOtpWrite",
+        "params": {}
+    }
+}

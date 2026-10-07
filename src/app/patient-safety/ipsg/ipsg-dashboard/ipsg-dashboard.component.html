@@ -1,0 +1,407 @@
+<section class="wrapper-body">
+  <div class="container-fluid">
+    <section class="status-card">
+      <div class="main-heading-link">
+        <h3 class="main-heading">IPSG Measures</h3>
+        <div class="btn-group-row">
+          <div class="dropdown dropdown-style1 filterDropdown">
+            <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="iconify icon-calc pi pi-calendar"></i>
+              {{ selectedRange }}
+              <i class="iconify pi pi-angle-down"></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 7 days')">Last 7 days</a></li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 30 days')">Last 30 days</a></li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last Month')">Last Month</a></li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 6 Months')">Last 6 Months</a>
+              </li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last Year')">Last Year</a></li>
+            </ul>
+          </div>
+          <a href="javascript:;" class="btn btn-success" (click)="onPageRoute('NEW',null)">
+            <span class="iconfiy"> <i class=" pi pi-plus-circle" style="margin-right: 2px;"></i></span>
+            IPSG Audit </a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg1">
+            <div class="card-grid-header">
+              <h5>IPSG <br />Audits</h5>
+              <h3>{{ stats().ipsg_audits_count }}</h3>
+              <div class="icon">
+                <!-- <span class="iconify" data-icon="hugeicons:audit-01"></span> -->
+                <i class="iconify pi pi-copy primeicons-size"></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{ stats().ipsg_audits_last_updated || 'N/A' }}</h5>
+                </div>
+                <div class="col-md-5 text-end col-5">
+                  <button class="btn btn-light">View Report</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg3">
+            <div class="card-grid-header">
+              <h5>Completed <br /> IPSG </h5>
+              <h3>{{ stats().completed_ipsg_count }}</h3>
+              <div class="icon">
+                <!-- <span class="iconify" data-icon="hugeicons:audit-02"></span> -->
+                <i class="iconify pi pi-search-plus primeicons-size"></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{ stats().completed_ipsg_last_updated || 'N/A' }}</h5>
+                </div>
+                <div class="col-md-5 col-5 text-end">
+                  <button class="btn btn-light">View All</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg4">
+            <div class="card-grid-header">
+              <h5>Compliance <br /> Rate %</h5>
+              <h3>{{ stats().compliance_rate_percentage }}</h3>
+              <div class="icon">
+                <i class="iconify pi pi-calendar-clock primeicons-size"></i>
+                <!-- <span class="iconify" data-icon="hugeicons:legal-01"></span> -->
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{ stats().compliance_rate_last_updated || 'N/A' }}</h5>
+                </div>
+                <div class="col-md-5 col-5 text-end">
+                  <button class="btn btn-light">View Report</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg2">
+            <div class="card-grid-header">
+              <h5>Total <br /> Auditors</h5>
+              <h3>{{ stats().total_auditors_count }}</h3>
+              <div class="icon">
+                <i class="iconify pi pi-verified "></i>
+                <!-- <span class="iconify" data-icon="hugeicons:ai-user"></span> -->
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{ stats().total_auditors_last_updated || 'N/A' }}</h5>
+                </div>
+                <div class="col-md-5 col-5 text-end">
+                  <button class="btn btn-light">View All</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="chart-section mt-3 mb-3">
+      <div class="row">
+        <div class="col-xl-4 col-lg-6 col-md-6 col-12">
+          <div class="card-style1 piechart departmentReport1">
+            <div class="card-header">
+              Goal Wise Report
+            </div>
+            <div class="card-body">
+              <div class="chart-wrapper">
+                <app-locations-wise-incident #lctnWiseRpt></app-locations-wise-incident>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-4 col-lg-6 col-md-6 col-12">
+          <div class="card-style1 barchart">
+            <div class="card-header">
+              Recent Compliance Comparison
+            </div>
+            <div class="card-body">
+              <app-comparison-barchart #rCCRpt></app-comparison-barchart>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-12 col-md-12 col-12">
+          <div class="card-style1 barchart kpireportCard">
+            <div class="card-header">
+              Non Compliance Audits
+            </div>
+            <div class="card-body">
+              <div class="card-style1 report">
+                <div class="card-body">
+                  @for(nonCaudts of nonComplianceAudits; track $index;){
+                  <div class="grid-report">
+                    <div class="icon">
+                      <i class="iconify pi pi-check-square primeicons-size"></i>
+                    </div>
+                    <div class="content">
+                      <h5><a href="javascript:;">{{nonCaudts.audit_title}}</a></h5>
+                      <p>Audited On <span class="text-blue">{{nonCaudts.audit_date|date:'dd MM yyyy'}}</span></p>
+                    </div>
+                    <div class="icon count">
+                      {{nonCaudts.compliance_percentage}}
+                    </div>
+                  </div>
+                  }@empty{
+                  <div style="text-align: center">No Non Compliance Audits.</div>
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="report-table mt-3 mb-3">
+      <div class="row">
+        <div class="col-md-12 col-12">
+          <div class="card-style2">
+            <div class="card-header backoption">
+              <div class="row">
+                <div class="col-md-6 col-12">
+                  <div class="heading-left">
+                    <h3>IPSG Measures List</h3>
+                  </div>
+                </div>
+                <div class="col-md-6 col-12">
+                  <div class="form-right">
+                    <a href="javascript:;" ngbTooltip="Filter" placement="top" class="icon-btn-square"
+                      (click)="filterToggle()">
+                      <i class="iconify pi pi-sliders-h"></i>
+                    </a>
+                    <div class="dropdown dropdown-style1">
+                      <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Download Report
+                        <i class="iconify pi pi-angle-down"></i>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li
+                          [DCSV]="{ param :params,screenName:'IPSG Measures List',data : ipsgMsrsList.length,methodName : 'fnIpsgAuditGrid' }">
+                          <a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                        <li
+                          [PDF]="{ param :params,screenName:'IPSG Measures List',data : ipsgMsrsList.length,methodName : 'fnIpsgAuditGrid' }">
+                          <a class="dropdown-item" href="javascript:;">Download Pdf</a></li>
+                        <li
+                          [EXCEL]="{ param :params,screenName:'IPSG Measures List',data : ipsgMsrsList.length,methodName : 'fnIpsgAuditGrid'  }">
+                          <a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            @if (showFilter) {
+            <div class="filter-box form-sm">
+              <div class="row">
+                <div class="col-md-11 col-12">
+                  <div class="row gx-2">
+                    <div class="col-md-2 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="auditTitle">By IPSG ID</label>
+                        <p-select id="auditTitle" [(ngModel)]="adtFilters().auditTitle" name="auditTitle"
+                          [options]="ipsgIDList" [filter]="true" [showClear]="true"
+                          (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="department">By Department</label>
+                        <p-select id="department" [(ngModel)]="adtFilters().department" name="department"
+                          [options]="departmentList" [filter]="true" [showClear]="true"
+                          (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="location">By Auditor</label>
+                        <p-select id="location" [(ngModel)]="adtFilters().location" name="location"
+                          [options]="auditorList" [filter]="true" [showClear]="true"
+                          (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+
+                    <div class="col-md-2 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="auditor">By Compliance</label>
+                        <p-select id="auditor" [(ngModel)]="adtFilters().auditor" name="auditor"
+                          [options]="complainceList" [filter]="true" [showClear]="true"
+                          (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="status">By Status</label>
+                        <p-select id="status" [(ngModel)]="adtFilters().status" name="status"
+                          [options]="statusList" [filter]="true" [showClear]="true"
+                          (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1 col-12">
+                  <button class="btn btn-primary w-100 " (click)="onFilterClick()">Filter</button>
+                  <button class="btn btn-dark w-100" (click)="onFilterClear(null)">Clear</button>
+                </div>
+              </div>
+            </div>
+            }
+            <div class="card-body table-style1 table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">S.No</th>
+                    <th scope="col" sortable="auditTitle" (sort)="onSort($event)">IPSG ID
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="department" (sort)="onSort($event)">Department
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="department" (sort)="onSort($event)">Auditor
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="auditor" (sort)="onSort($event)"> Audit Date
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="compliance" (sort)="onSort($event)">Compliance</th>
+                    <th scope="col" sortable="compliance" (sort)="onSort($event)">Completed Goals</th>
+                    <th scope="col" sortable="created_by" (sort)="onSort($event)">
+                      Created By
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="created_at" (sort)="onSort($event)">
+                      Created on
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="updated_by" (sort)="onSort($event)">
+                      Modified By
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="updated_at" (sort)="onSort($event)">
+                      Last Modified
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="status" (sort)="onSort($event)">Status</th>
+                    <th scope="col" class="text-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (ipsgPrp of ipsgMsrsList; track ipsgPrp.id) {
+                  <tr>
+                    <td scope="row">{{ ipsgPrp.id }}</td>
+                    <td>{{ ipsgPrp.ipsg_id }} </td>
+                    <td>{{ ipsgPrp.department_name }} </td>
+                    <td>{{ ipsgPrp.auditor_name }} </td>
+                    <td>{{ ipsgPrp.audit_date }}</td>
+                    <td [ngClass]="getComplianceClass(ipsgPrp.displayCol)">
+                      {{ ipsgPrp.compliance_name }}
+                    </td>
+                    <td>{{ ipsgPrp.completed_goals_name }} </td>
+                    <td>{{ ipsgPrp.created_by }}</td>
+                    <td>{{ ipsgPrp.created_at }}</td>
+                    <td>{{ ipsgPrp.updated_by }}</td>
+                    <td>{{ ipsgPrp.updated_at }}</td>
+                    <td [ngClass]="{
+                      'text-success': ipsgPrp.status === 'submitted',
+                      'text-danger': ipsgPrp.status === 'draft',
+                      }">
+                      {{ ipsgPrp.status | titlecase }}
+                    </td>
+                    <td>
+                      <div class="actiondot-dropdown float-end">
+                        <div class="btn-group ms-2">
+                          <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="iconify pi pi-ellipsis-h"></i>
+                          </button>
+                          <ul class="dropdown-menu">
+                            <!-- <li>
+                              <a class="dropdown-item" href="javascript:;"
+                                (click)="onPageRoute('/ipsg-details','IPSG_VIEW',ipsgPrp)">
+                                View
+                              </a>
+                            </li> -->
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" (click)="onPageRoute('VIEW',ipsgPrp)">View
+                              </a>
+                            </li>
+                            @if(ipsgPrp.status == 'draft'){
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" (click)="onPageRoute('EDIT',ipsgPrp)">
+                                Edit
+                              </a>
+                            </li>
+                            }
+                            @if(ipsgPrp.status == 'submitted'){
+                            <li>
+                              <a class="dropdown-item" href="javascript:;"
+                                (click)="onPageRoute('WRITECAPA',ipsgPrp)">Write CAPA
+                              </a>
+                            </li>
+                            }
+                            @if(ipsgPrp.status == 'Inprogress'){
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" (click)="onPageRoute('REVIEWCAPA',ipsgPrp)">
+                                Review CAPA
+                              </a>
+                            </li>
+                            }
+                          </ul>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  }
+                </tbody>
+              </table>
+              <nav aria-label="Page navigation pagination text-end">
+                <ul class="pagination d-flex justify-content-end">
+                  <li class="page-item next cursor" [class.disabled]="pageNators().pageNo === 1">
+                    <a class="page-link " aria-label="Previous" (click)="changePage(pageNators().pageNo-1)">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                  @for(p of pageNumbers();track p){
+                  <li class="page-item" [class.active]="pageNators().pageNo === p">
+                    <a class="page-link cursor" (click)="changePage(p)">{{p}}</a>
+                  </li>
+                  }
+                  <li class="page-item prev cursor" [class.disabled]="pageNators().pageNo === pageNators().totalPages">
+                    <a class="page-link " aria-label="Next" (click)="changePage(pageNators().pageNo+1)">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>

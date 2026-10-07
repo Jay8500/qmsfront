@@ -1,0 +1,215 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                                        <span class="iconify" data-icon="famicons:arrow-back-outline"></span>
+                                    </a>
+                                    <h3>Staff Competency View</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-12">
+                                <div class="form-right">
+                                    <div class="dropdown dropdown-style1">
+                                        <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" (click)="downloadReport()">
+                                            Download Report <span class="iconify" data-icon="akar-icons:chevron-down"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                                            <li><a class="dropdown-item" href="javascript:;">Download Word</a></li>
+                                            <li><a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                      
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 col-12">
+                                <div class="card-body table-style1 table-responsive radius-4">   
+                                    <div class="audit-info-cover">
+                                        <div class="table-audit table-responsive">
+                                            <table class="table table-bordered table-line mb-0">
+                                                <tr>
+                                                    <th>Employee ID / Name</th>
+                                                    <th>Department</th>
+                                                    <th>Role</th>
+                                                    <th>Unit</th>
+                                                    <th>Date of Competency</th>
+                                                    <th>Next Competency</th>         
+                                                    <th>Self | Reviewer Rating</th>               
+                                                </tr>
+                                                <tr>
+                                                    <td>Yashna (41633)</td>
+                                                    <td>Cardiology - OP</td>
+                                                    <td>Nurse</td>
+                                                    <td>Home Care</td>
+                                                    <td>08-05-2025</td>
+                                                    <td>15-05-2025</td>
+                                                    <td><span class="text-success">Expert</span> | <span class="text-warning">Proficient</span></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="audit-info-cover table-white">
+                                        <div class="audit-status">
+                                            <div class="row">
+                                                <div class="col-md-12 col-12">
+                                                    <div class="left-content">
+                                                        <h5>Assessment Details - 1st Assessment Frequency</h5>
+                                                        <p>10 Questions</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="table-audit-row">
+                                            <div class="table-audit table-responsive">
+                                                <table class="table table-bordered table-white">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Questions</th>
+                                                            <th>Self</th>
+                                                            <th>Reviewer 1</th>
+                                                            <th>Reviewer 2</th>
+                                                            <th>Reviewer 3</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>How well-equipped do you feel with the tools, equipment, and resources needed to perform your duties?</td>
+                                                            <td class="text-center">5</td>
+                                                            <td class="text-center">4</td>
+                                                            <td class="text-center">4</td>
+                                                            <td class="text-center">5</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>How satisfied are you with the clarity and frequency of communication from hospital management?</td>
+                                                            <td class="text-center">4</td>
+                                                            <td class="text-center">3</td>
+                                                            <td class="text-center">4</td>
+                                                            <td class="text-center">4</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>How comfortable are you in providing feedback to your supervisor or department head?</td>
+                                                            <td class="text-center">5</td>
+                                                            <td class="text-center">4</td>
+                                                            <td class="text-center">3</td>
+                                                            <td class="text-center">4</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>How confident are you in handling emergency situations in your department?</td>
+                                                            <td class="text-center">5</td>
+                                                            <td class="text-center">4</td>
+                                                            <td class="text-center">4</td>
+                                                            <td class="text-center">5</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>How well do you understand the hospital's safety protocols and procedures?</td>
+                                                            <td class="text-center">4</td>
+                                                            <td class="text-center">4</td>
+                                                            <td class="text-center">3</td>
+                                                            <td class="text-center">4</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>How satisfied are you with the training and development opportunities provided?</td>
+                                                            <td class="text-center">5</td>
+                                                            <td class="text-center">4</td>
+                                                            <td class="text-center">4</td>
+                                                            <td class="text-center">4</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>How well do you collaborate with other departments and team members?</td>
+                                                            <td class="text-center">4</td>
+                                                            <td class="text-center">3</td>
+                                                            <td class="text-center">4</td>
+                                                            <td class="text-center">4</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>How confident are you in using the hospital's information systems and technology?</td>
+                                                            <td class="text-center">5</td>
+                                                            <td class="text-center">4</td>
+                                                            <td class="text-center">4</td>
+                                                            <td class="text-center">5</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>How well do you maintain patient confidentiality and privacy standards?</td>
+                                                            <td class="text-center">5</td>
+                                                            <td class="text-center">4</td>
+                                                            <td class="text-center">4</td>
+                                                            <td class="text-center">4</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>How satisfied are you with the work-life balance in your current role?</td>
+                                                            <td class="text-center">4</td>
+                                                            <td class="text-center">3</td>
+                                                            <td class="text-center">3</td>
+                                                            <td class="text-center">4</td>
+                                                        </tr>
+                                                        <tr class="assessment-summary">
+                                                            <td><strong>Assessment Score (in %)</strong></td>
+                                                            <td class="text-center"><strong>98%</strong></td>
+                                                            <td class="text-center"><strong>86%</strong></td>
+                                                            <td class="text-center"><strong>88%</strong></td>
+                                                            <td class="text-center"><strong>92%</strong></td>
+                                                        </tr>
+                                                        <tr class="assessment-summary">
+                                                            <td><strong>Assessment Score</strong></td>
+                                                            <td class="text-center"><span class="text-success">Expert</span></td>
+                                                            <td class="text-center">-</td>
+                                                            <td class="text-center"><span class="text-warning">Proficient</span></td>
+                                                            <td class="text-center">-</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>                                           
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Reviewer Comments Card -->
+                                <div class="audit-info-cover">
+                                        <div class="table-audit table-responsive">
+                                            <table class="table table-bordered mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Reviewer</th>
+                                                        <th>Name</th>
+                                                        <th>Comments</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>01</td>
+                                                        <td>Ganapathy (35266)</td>
+                                                        <td>The Candidate is well and good got knowledge in basics as well as practice knowledge</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>02</td>
+                                                        <td>Radha Madhav (23653)</td>
+                                                        <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>03</td>
+                                                        <td>Radha (15616)</td>
+                                                        <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

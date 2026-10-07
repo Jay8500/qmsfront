@@ -1,0 +1,401 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="row">
+      <div class="col-md-12 col-12">
+        <div class="card-style2">
+          <div class="card-header backoption">
+            <div class="row">
+              <div class="col-md-7 col-12">
+                <div class="heading-left">
+                  <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                    <i class="iconify pi pi-arrow-left"></i></a>
+                  <h3> {{_hqms.getPageModeContext(pageMode, 'Vaccine') }}</h3>
+                </div>
+              </div>
+              <div class="col-md-5 col-12">
+                <div class="form-right">
+                  @if(canSave()){
+                  <button type="button" class="btn btn-dark" (click)="onClearClick()">Clear</button>
+                  <button type="submit" class="btn btn-primary" (click)="onSubmitClick()">Submit</button>
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body vacc-form">
+            <div class="row">
+              <div class="col-12">
+                <div class="formbox-left form-lg" style="margin: 5px;">
+                  <form>
+                    <div class="row">
+                      <div class="col-lg-5 col-md-6 col-12">
+                        <div class="flex flex-col gap-1">
+                          <label for="vaccine_name">Vaccine Name</label>
+                          <div style="position: relative;display:inline-block;width:100%">
+                            <input pInputText id="vaccine_name" [(ngModel)]="createVaccine.vaccine_name"
+                              (blur)="onGetErrorMsgs('vaccine_name')" [disabled]="pageMode=='VIEW'"
+                              placeholder="Vaccine Name" name="vaccine_name" class=" form-control" autocomplete="off"
+                              appNospaces>
+                            <div style=" position: absolute;
+                              top: 0;
+                              right: 0;
+                              width: 0;
+                              height: 0;
+                              border-top: 12px solid red;
+                              border-left: 12px solid transparent;">
+                            </div>
+                          </div>
+                          @if(errorMsg['vaccine_name']!=''){
+                          <small class="error">{{ errorMsg['vaccine_name'] }}</small>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-lg-5 col-md-6 col-12">
+                        <div class="flex flex-col gap-1">
+                          <label for="manufacture_name">Manufacturer Name</label>
+                          <div style="position: relative;display:inline-block;width:100%">
+                            <input pInputText id="manufacture_name" [(ngModel)]="createVaccine.manufacture_name"
+                              (blur)="onGetErrorMsgs('manufacture_name')" [disabled]="pageMode=='VIEW'"
+                              placeholder="Manufacturer Name" name="manufacture_name" class=" form-control"
+                              autocomplete="off" appNospaces>
+                            <div style=" position: absolute;
+                              top: 0;
+                              right: 0;
+                              width: 0;
+                              height: 0;
+                              border-top: 12px solid red;
+                              border-left: 12px solid transparent;">
+                            </div>
+                          </div>
+                          @if(errorMsg['manufacture_name']!=''){
+                          <small class="error">{{ errorMsg['manufacture_name'] }}</small>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-lg-2 col-md-6 col-12">
+                        <div class="flex flex-col">
+                          <label>&nbsp;</label>
+                          <div class="toggle-row">
+                            <label for="vaccine_status">{{ createVaccine.is_active ? 'Active' : 'Inactive' }}</label>
+                            <p-toggleswitch [(ngModel)]="createVaccine.is_active" name="status" inputId="vaccine_status"
+                              [disabled]="pageMode=='VIEW' || pageMode=='NEW'" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div class="col-12">
+                @for(doses of createVaccine['configurations'];track doses.dosage_sequence; let doseIdx = $index){
+                @if(doses.is_active){
+                <div class="formbox-left form-lg " style="position:relative !important;margin: 5px;">
+                  <div class="badge-green">
+                    {{ doses.dosage_label === 'Booster' ? '' : 'Dosage' }} {{doses.dosage_label}}
+                  </div>
+                  <div class="row">
+                    <div class="col-xl-8 col-12">
+                      <div class="row">
+                        <div class="col-lg-4 col-sm-6 col-12">
+                          <div class="flex flex-col gap-1">
+                            <label for="batch_no_{{doseIdx}}">Batch No</label>
+                            <div style="position: relative;display:inline-block;width:100%">
+                              <input pInputText id="batch_no_{{doseIdx}}" [(ngModel)]="doses.batch_no"
+                                placeholder="Batch No" (blur)="onGetErrorMsgs('batch_no', doses)"
+                                [disabled]="pageMode=='VIEW'" name="batch_no_{{doseIdx}}" class=" form-control"
+                                autocomplete="off" appNospaces>
+                              <div style=" position: absolute;
+                              top: 0;
+                              right: 0;
+                              width: 0;
+                              height: 0;
+                              border-top: 12px solid red;
+                              border-left: 12px solid transparent;">
+                              </div>
+                            </div>
+                            @if(doses['batch_no_error']){
+                            <small class="error">{{ doses['batch_no_error'] }}</small>
+                            }
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-12">
+                          <div class="flex flex-col gap-1">
+                            <label for="route_id_{{doseIdx}}">Route</label>
+                            <div style="position: relative;display:inline-block;width:100%">
+                              <p-select id="route_id_{{doseIdx}}" [(ngModel)]="doses.route_id" appendTo="body"
+                                (onBlur)="onGetErrorMsgs('route_id', doses)" placeholder="Select"
+                                (onChange)="onGetErrorMsgs('route_id', doses)" [options]="routeList" [filter]="true"
+                                [showClear]="true" [disabled]="pageMode=='VIEW'" name="route_id_{{doseIdx}}"
+                                class=" form-control" />
+                              <div style=" position: absolute;
+                              top: 0;
+                              right: 0;
+                              width: 0;
+                              height: 0;
+                              border-top: 12px solid red;
+                              border-left: 12px solid transparent;">
+                              </div>
+                            </div>
+                            @if(doses['route_id_error']){
+                            <small class="error">{{ doses['route_id_error'] }}</small>
+                            }
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-12">
+                          <div class="flex flex-col gap-1">
+                            <label for="dosage_value_{{doseIdx}}">Dosage Value</label>
+                            <div style="position: relative;display:inline-block;width:100%">
+                              <p-select id="dosage_value_{{doseIdx}}" [(ngModel)]="doses.dosage_value" appendTo="body"
+                                (onBlur)="onGetErrorMsgs('dosage_value', doses)" placeholder="Select"
+                                (onChange)="onGetErrorMsgs('dosage_value', doses)" [options]="dosageList"
+                                [filter]="true" [showClear]="true" [disabled]="pageMode=='VIEW'"
+                                name="dosage_value_{{doseIdx}}" class=" form-control" />
+                              <div style=" position: absolute;
+                              top: 0;
+                              right: 0;
+                              width: 0;
+                              height: 0;
+                              border-top: 12px solid red;
+                              border-left: 12px solid transparent;">
+                              </div>
+                            </div>
+                            @if(doses['dosage_value_error']){
+                            <small class="error">{{ doses['dosage_value_error'] }}</small>
+                            }
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-12">
+                          <div class="flex flex-col gap-1">
+                            <label for="dosage_unit_{{doseIdx}}">Dosage Unit</label>
+                            <div style="position: relative;display:inline-block;width:100%">
+                              <p-select id="dosage_unit_{{doseIdx}}" [(ngModel)]="doses.dosage_unit" appendTo="body"
+                                (onBlur)="onGetErrorMsgs('dosage_unit', doses)" placeholder="Select"
+                                (onChange)="onGetErrorMsgs('dosage_unit', doses)" [options]="dosageUnitList"
+                                [filter]="true" [showClear]="true" [disabled]="pageMode=='VIEW'"
+                                name="dosage_unit_{{doseIdx}}" class=" form-control" />
+                              <div style=" position: absolute;
+                                top: 0;
+                                right: 0;
+                                width: 0;
+                                height: 0;
+                                border-top: 12px solid red;
+                                border-left: 12px solid transparent;">
+                              </div>
+                            </div>
+                            @if(doses['dosage_unit_error']){
+                            <small class="error">{{ doses['dosage_unit_error'] }}</small>
+                            }
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-12">
+                          <div class="flex flex-col gap-1">
+                            <label for="recurrence_interval_{{doseIdx}}">Recurrence</label>
+                            <div style="position: relative;display:inline-block;width:100%">
+                              <p-select id="recurrence_interval_{{doseIdx}}" [(ngModel)]="doses.recurrence_interval"
+                                appendTo="body" (onBlur)="onGetErrorMsgs('recurrence_interval', doses)"
+                                placeholder="Select" (onChange)="onGetErrorMsgs('recurrence_interval', doses)"
+                                [options]="recurrenceList" [filter]="true" [showClear]="true"
+                                [disabled]="pageMode=='VIEW'" name="recurrence_interval_{{doseIdx}}"
+                                class=" form-control" />
+                              <div style=" position: absolute;
+                                top: 0;
+                                right: 0;
+                                width: 0;
+                                height: 0;
+                                border-top: 12px solid red;
+                                border-left: 12px solid transparent;">
+                              </div>
+                            </div>
+                            @if(doses['recurrence_interval_error']){
+                            <small class="error">{{ doses['recurrence_interval_error'] }}</small>
+                            }
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-12">
+                          <div class="flex flex-col gap-1">
+                            <label for="gap_days_{{doseIdx}}">Gap Days</label>
+                            <div style="position: relative;display:inline-block;width:100%">
+                              <p-select id="gap_days_{{doseIdx}}" [(ngModel)]="doses.gap_days"
+                                (onBlur)="onGetErrorMsgs('gap_days', doses)" placeholder="Select"
+                                (onChange)="onGetErrorMsgs('gap_days', doses)" appendTo="body"
+                                [options]="getFilteredGapsList(doseIdx)" [filter]="true" [showClear]="true"
+                                [disabled]="pageMode=='VIEW'||doseIdx==0" name="gap_days_{{doseIdx}}"
+                                class=" form-control" />
+                              <div style=" position: absolute;
+                                top: 0;
+                                right: 0;
+                                width: 0;
+                                height: 0;
+                                border-top: 12px solid red;
+                                border-left: 12px solid transparent;">
+                              </div>
+                            </div>
+                            @if(doses['gap_days_error']){
+                            <small class="error">{{ doses['gap_days_error'] }}</small>
+                            }
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-12">
+                          <div class="flex flex-col gap-1">
+                            <label for="age_group_id_{{doseIdx}}">Age Group</label>
+                            <div style="position: relative;display:inline-block;width:100%">
+                              <p-select id="age_group_id_{{doseIdx}}" [(ngModel)]="doses.age_group_id"
+                                placeholder="Select" (onBlur)="onGetErrorMsgs('age_group_id', doses)"
+                                appendTo="body" (onChange)="onGetErrorMsgs('age_group_id', doses)"
+                                [options]="ageGrpList" [filter]="true" [showClear]="true"
+                                [disabled]="pageMode=='VIEW'" name="age_group_id_{{doseIdx}}" class=" form-control" />
+                              <div style=" position: absolute;
+                                top: 0;
+                                right: 0;
+                                width: 0;
+                                height: 0;
+                                border-top: 12px solid red;
+                                border-left: 12px solid transparent;">
+                              </div>
+                            </div>
+                            @if(doses['age_group_id_error']){
+                            <small class="error">{{ doses['age_group_id_error'] }}</small>
+                            }
+                          </div>
+                        </div>
+
+                        <div class="col-lg-4 col-sm-6 col-12">
+                          <div class="flex flex-col gap-1">
+                            <label for="reminder_days_{{doseIdx}}" title="Days before the due date">Reminder (days)</label>
+                            <div style="position: relative;display:inline-block;width:100%">
+                              <input type="number" min="0" id="reminder_days_{{doseIdx}}"
+                                [(ngModel)]="doses.reminder_days" (blur)="onGetErrorMsgs('reminder_days', doses)"
+                                [disabled]="pageMode=='VIEW'" placeholder="Days" name="reminder_days_{{doseIdx}}"
+                                class="form-control">
+                              <div style=" position: absolute;
+                                top: 0;
+                                right: 0;
+                                width: 0;
+                                height: 0;
+                                border-top: 12px solid red;
+                                border-left: 12px solid transparent;">
+                              </div>
+                            </div>
+                            @if(doses['reminder_days_error']){
+                            <small class="error">{{ doses['reminder_days_error'] }}</small>
+                            }
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xl-4 col-12">
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="section-title">Targeting &amp; Compliance</div>
+                        </div>
+
+                        <div class="col-md-12 col-12">
+                          <label>Schedule Source</label>
+                          <div class="req"><div class="toggle-row justify-content-start">
+                            @for (asLst of depOrRolesList; track asLst.ind) {
+                            <p-radioButton [name]="'target_' + doseIdx" [value]="asLst.value"
+                              [(ngModel)]='doses.target_id' [inputId]="'trg_' + doseIdx + '_' + asLst.value"
+                              [disabled]="pageMode=='VIEW'" (onClick)="onTargetChange(doses)" />
+                            <label [for]="'trg_' + doseIdx + '_' + asLst.value"
+                              style="margin-left:10px;margin-right:5px;">{{ asLst.label }}</label>
+                            }
+                          </div></div>
+                          @if(doses['target_id_error']){
+                          <small class="error">{{ doses['target_id_error'] }}</small>
+                          }
+                        </div>
+
+                        @if(targetCode(doses) === 'DEPARTMENT'){
+                        <div class="col-md-12 col-12">
+                          <div class="flex flex-col gap-1">
+                            <label for="department_{{doseIdx}}">Department</label>
+                            <div style="position: relative;display:inline-block;width:100%">
+                              <p-multiselect id="department_{{doseIdx}}" [(ngModel)]="doses.target_source_id"
+                                appendTo="body" [selectionLimit]="1" (onBlur)="onGetErrorMsgs('department', doses)"
+                                placeholder="Select department" (onChange)="onGetErrorMsgs('department', doses)"
+                                [options]="departmentList" [filter]="true" [showClear]="true"
+                                [disabled]="pageMode=='VIEW'" name="target_source_id_{{doseIdx}}"
+                                class=" form-control" />
+                              <div style=" position: absolute;
+                                top: 0;
+                                right: 0;
+                                width: 0;
+                                height: 0;
+                                border-top: 12px solid red;
+                                border-left: 12px solid transparent;">
+                              </div>
+                            </div>
+                            @if(doses['department_error']){
+                            <small class="error">{{ doses['department_error'] }}</small>
+                            }
+                          </div>
+                        </div>
+                        }
+
+                        @if(targetCode(doses) === 'ROLE'){
+                        <div class="col-md-12 col-12">
+                          <div class="flex flex-col gap-1">
+                            <label for="role_{{doseIdx}}">Role</label>
+                            <div style="position: relative;display:inline-block;width:100%">
+                              <p-multiselect id="role_{{doseIdx}}" [(ngModel)]="doses.target_source_id"
+                                appendTo="body" (onBlur)="onGetErrorMsgs('role', doses)"
+                                (onChange)="onGetErrorMsgs('role', doses)" [options]="roleList" [filter]="true"
+                                [showClear]="true" placeholder="Select roles" [disabled]="pageMode=='VIEW'"
+                                name="target_source_id_{{doseIdx}}" class=" form-control" />
+                              <div style=" position: absolute;
+                                top: 0;
+                                right: 0;
+                                width: 0;
+                                height: 0;
+                                border-top: 12px solid red;
+                                border-left: 12px solid transparent;">
+                              </div>
+                            </div>
+                            @if(doses['role_error']){
+                            <small class="error">{{ doses['role_error'] }}</small>
+                            }
+                          </div>
+                        </div>
+                        }
+                        <div class="col-12">
+                          <div class="toggle-row">
+                            <label [for]="'mand_' + doseIdx">Vaccination Mandatory</label>
+                            <p-toggleswitch [(ngModel)]="doses.is_mandatory" name="is_mandatory_{{doseIdx}}"
+                              [inputId]="'mand_' + doseIdx" [disabled]="pageMode=='VIEW'||doses.target_id==null" />
+                          </div>
+                          <div class="toggle-row">
+                            <label [for]="'dec_' + doseIdx">Allow Decision (employee may decline)</label>
+                            <p-toggleswitch [(ngModel)]="doses.allow_decisions" name="allow_decisions_{{doseIdx}}"
+                              [inputId]="'dec_' + doseIdx" [disabled]="pageMode=='VIEW'||doses.target_id==null" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="position: absolute !important; top: 15px; right:35px;">
+                    @if(pageMode != 'VIEW'){
+                    @if(isLastActiveVisible(doseIdx)){
+                    <a href="javascript:;" (click)="onAddDose(doses)" pTooltip="Add a dosage" tooltipPosition="left">
+                      <i class="iconify pi pi-plus-circle" style="cursor: pointer"></i>
+                    </a>
+                    }
+                    @if(doseIdx > 0){
+                    <a href="javascript:;" (click)="onDeletDose(doses,doseIdx)" pTooltip="Remove a dosage"
+                      tooltipPosition="left">
+                      <i class="iconify pi pi-trash" style="cursor: pointer"></i>
+                    </a>
+                    }
+                    }
+                  </div>
+                </div>
+                }
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

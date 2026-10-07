@@ -1,0 +1,153 @@
+<section class="wrapper-body">
+    <div class="container-fluid">
+        <!-- <section class="status-card">
+            <div class="heading-flex-2">
+                <h3 class="main-heading mb-0">Dashboard</h3>
+                <div class="main-heading-link flexblock">
+                    <h3 class="main-heading">Hello Admin!,</h3>
+                    <p>Good Morning</p>
+                </div>
+            </div>
+        </section> -->
+        <div class="card-tab mt-0">
+            <ul>
+                <li>
+                    <a href="javascript:;" (click)="onPageRoute('management-dashboard')">Management Dashboard</a>
+                </li>
+                <li class="active"><a href="javascript:;" (click)="onPageRoute('hr-dashboard')">HR Dashboard</a></li>
+            </ul>
+        </div>
+        <section class="chart-section mt-3 mb-3">
+            <div class="containers">
+                <div class="row">
+                    <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+                        <div class="card-style1 style4 hrcard1">
+                            <div class="card-header">
+                                <h5>Incident Happened With</h5>
+                                <a href="javascript:;" class="btn btn-primary"
+                                    (click)="onPageRoute('incident-dashboard')">View
+                                    All</a>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-wrapper">
+                                    <app-department-audit-overall #incidentRpt></app-department-audit-overall>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+                        <div class="card-style1 style4 hrcard2">
+                            <div class="card-header">
+                                <h5>Employee Satisfactory Report</h5>
+                                <a href="javascript:;" class="btn btn-primary"
+                                    (click)="onPageRoute('employee-dashboard')">View
+                                    All</a>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-wrapper">
+                                    <div class="dropdown dropdown-style1 chart-filter1">
+                                        <button class="btn btn-light dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            {{ essRptText }} <span class="iconify"
+                                                data-icon="akar-icons:chevron-down"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            @for (option of essRptList; track option) {
+                                            <li>
+                                                <a class="dropdown-item" href="javascript:;"
+                                                    (click)="esrChartInfo(option)">
+                                                    {{ option }}
+                                                </a>
+                                            </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                    <app-comparison-barchart #essRpt></app-comparison-barchart>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+                        <div class="card-style1 style4 hrcard3">
+                            <div class="card-header">
+                                <h5>Safety Culture Survey Report</h5>
+                                <a href="javascript:;" class="btn btn-primary"
+                                    (click)="onPageRoute('safety-dashboard')">View
+                                    All</a>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-wrapper">
+                                    <app-incident-happens #scsr></app-incident-happens>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-8 col-lg-8 col-md-6 col-12">
+                        <div class="card-style1 style4 hrcard4">
+                            <div class="card-header">
+                                <h5>Complaint Reports</h5>
+                                <a href="javascript:;" class="btn btn-primary"
+                                    (click)="onPageRoute('grievance-dashboard')">View
+                                    All</a>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-wrapper">
+                                    <div class="dropdown dropdown-style1 chart-filter1">
+                                        <button class="btn btn-light dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            {{ crRptText }} <span class="iconify"
+                                                data-icon="akar-icons:chevron-down"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            @for (option of crRptList; track option) {
+                                            <li>
+                                                <a class="dropdown-item" href="javascript:;"
+                                                    (click)="crChartInfo(option)">
+                                                    {{ option }}
+                                                </a>
+                                            </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                    <app-kpi-management-reports-overall #cRpt></app-kpi-management-reports-overall>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+                        <div class="card-style1 style4 hrcard5">
+                            <div class="card-header">
+                                <h5>Vaccination Status Report</h5>
+                                <a href="javascript:;" class="btn btn-primary"
+                                    (click)="onPageRoute('vaccine-master-dashboard')">View All</a>
+                            </div>
+                            <div class="card-body">
+                                <div class="dropdown dropdown-style1 chart-filter1">
+                                    <button class="btn btn-light dropdown-toggle" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        {{ vccnRptText }} <span class="iconify"
+                                            data-icon="akar-icons:chevron-down"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        @for (option of vccnRptList; track option) {
+                                        <li>
+                                            <a class="dropdown-item" href="javascript:;"
+                                                (click)="vaccChartInfo(option)">
+                                                {{ option }}
+                                            </a>
+                                        </li>
+                                        }
+                                    </ul>
+                                </div>
+                                <div class="chart-wrapper">
+                                    <app-incident-happens #vctdRPT></app-incident-happens>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</section>

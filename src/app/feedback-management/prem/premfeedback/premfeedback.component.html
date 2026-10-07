@@ -1,0 +1,409 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                                        <i class="iconify pi pi-arrow-left"></i>
+                                    </a>
+                                    <h3>{{_hqms.getPageModeContext(pageMode, 'PREM Entry') }}</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-12">
+                                <div class="form-right">
+                                    <button type="button" class="btn btn-dark" [disabled]="false"
+                                        (click)="onClearClick()">Clear</button>
+                                    <button type="submit" class="btn btn-primary" [disabled]="false"
+                                        (click)="onSubmitClick()">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mt-4 d-flex justify-content-center">
+                            <div class="col-md-12 col-12">
+                                <div class="formbox-left form-lg">
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="flex flex-col gap-1">
+                                                        <label for="prem_type_id">PREM TYPE</label>
+                                                        <div style="position: relative;display:inline-block;width:100%">
+                                                            <p-select id="prem_type_id" \
+                                                                (onBlur)="onGetErrorMsgs('prem_type_id')"
+                                                                [(ngModel)]="premFeedbck.prem_type_id"
+                                                                [appendTo]="'body'" (onChange)="onPremTypeChange()"
+                                                                name="prem_type_id" [options]="premMstrList"
+                                                                [filter]="true" placeholder="PREM TYPE"
+                                                                [showClear]="true" class=" form-control" />
+
+                                                            <div style=" position: absolute;
+                                                                top: 0;
+                                                                right: 0;
+                                                                width: 0;
+                                                                height: 0;
+                                                                border-top: 12px solid red;
+                                                                border-left: 12px solid transparent;">
+                                                            </div>
+                                                        </div>
+                                                        @if(errorMsg['prem_type_id']!=''){
+                                                        <small class="error">{{ errorMsg['prem_type_id'] }}</small>
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="flex flex-col gap-1">
+                                                        <label for="patient_id">UHID</label>
+                                                        <div style="position: relative;display:inline-block;width:100%">
+                                                            <p-select id="patient_id"
+                                                                [(ngModel)]="premFeedbck.patient_id"
+                                                                (onBlur)="onGetErrorMsgs('patient_id')"
+                                                                placeholder="UHID"
+                                                                (onChange)="onGetErrorMsgs('patient_id')"
+                                                                [disabled]="pageMode=='VIEW'" name="patient_id"
+                                                                [appendTo]="'body'" [options]="patientList"
+                                                                [filter]="true" [showClear]="true"
+                                                                class=" form-control" />
+                                                            <div style=" position: absolute;
+                                                                top: 0;
+                                                                right: 0;
+                                                                width: 0;
+                                                                height: 0;
+                                                                border-top: 12px solid red;
+                                                                border-left: 12px solid transparent;">
+                                                            </div>
+                                                        </div>
+                                                        @if(errorMsg['patient_id']!=''){
+                                                        <small class="error">{{ errorMsg['patient_id'] }}</small>
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="flex flex-col gap-1">
+                                                        <label for="department_id">Department</label>
+                                                        <div style="position: relative;display:inline-block;width:100%">
+                                                            <p-select id="department_id" placeholder="Department"
+                                                                [(ngModel)]="premFeedbck.department_id"
+                                                                [appendTo]="'body'"
+                                                                (onBlur)="onGetErrorMsgs('department_id')"
+                                                                (onChange)="onGetErrorMsgs('department_id')"
+                                                                name="department_id" [options]="departmentList"
+                                                                [filter]="true" [showClear]="true"
+                                                                class=" form-control" />
+                                                            <div style=" position: absolute;
+                                                                top: 0;
+                                                                right: 0;
+                                                                width: 0;
+                                                                height: 0;
+                                                                border-top: 12px solid red;
+                                                                border-left: 12px solid transparent;">
+                                                            </div>
+                                                        </div>
+                                                        @if(errorMsg['department_id']!=''){
+                                                        <small class="error">{{ errorMsg['department_id'] }}</small>
+                                                        }
+                                                    </div>
+                                                </div>
+                                                @if( selectedPremType !== 'IPFB'&&selectedPremType !== ''){
+                                                <div class="col-12">
+                                                    @for(scrs of surveyScorsLst;track $index ){
+                                                    <div style="margin: 6px;">
+                                                        <span [ngClass]="{
+                                                                    'very-poor': scrs.label === '1',
+                                                                    'poor': scrs.label === '2',
+                                                                    'fair': scrs.label === '3',
+                                                                    'good': scrs.label === '4',
+                                                                    'excellent': scrs.label === '5',
+                                                                }"
+                                                            style="padding: 5px;border-radius: 5px;">{{ scrs.label}}</span>
+                                                        {{ scrs.value_code | titlecase}}
+                                                    </div>
+                                                    }
+                                                </div>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-9">
+                                            @if( selectedPremType == 'IPFB'){
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="flex flex-col gap-1">
+                                                        <label for="issue_type_id">ISSUE</label>
+                                                        <div style="position: relative;display:inline-block;width:100%">
+                                                            <p-select id="issue_type_id" placeholder="ISSUE"
+                                                                [(ngModel)]="premFeedbck.issue_type_id"
+                                                                [appendTo]="'body'"
+                                                                (onBlur)="onGetErrorMsgs('issue_type_id')"
+                                                                (onChange)="onGetErrorMsgs('issue_type_id')"
+                                                                name="issue_type_id" [options]="issueTypeList"
+                                                                [filter]="true" [showClear]="true"
+                                                                class=" form-control" />
+                                                            <div style=" position: absolute;
+                                                            top: 0;
+                                                            right: 0;
+                                                            width: 0;
+                                                            height: 0;
+                                                            border-top: 12px solid red;
+                                                            border-left: 12px solid transparent;">
+                                                            </div>
+                                                        </div>
+                                                        @if(errorMsg['issue_type_id']!=''){
+                                                        <small class="error">{{ errorMsg['issue_type_id'] }}</small>
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="flex flex-col gap-1">
+                                                        <label for="description">Others</label>
+                                                        <div style="position: relative;display:inline-block;width:100%">
+                                                            <textarea pTextarea id="description" placeholder="Others"
+                                                                [(ngModel)]="premFeedbck.description"
+                                                                [appendTo]="'body'"
+                                                                (blur)="onGetErrorMsgs('description')"
+                                                                [disabled]="pageMode=='VIEW'" name="description"
+                                                                rows="10" class=" form-control"></textarea>
+                                                            <div style=" position: absolute;
+                                                            top: 0;
+                                                            right: 0;
+                                                            width: 0;
+                                                            height: 0;
+                                                            border-top: 12px solid red;
+                                                            border-left: 12px solid transparent;">
+                                                            </div>
+                                                        </div>
+                                                        @if(errorMsg['description']!=''){
+                                                        <small class="error">{{ errorMsg['description'] }}</small>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            }
+                                            @if( selectedPremType == 'OPFB'){
+                                            @if(premFeedbck['response'].length > 0){
+                                            @for(qstn of premFeedbck.response;track $index;let j = $index){
+                                            <table class="table table-bordered  mb-0">
+                                                <tr>
+                                                    <td width="100%">
+                                                        <div>
+                                                            Q({{j+1}}) {{qstn.question_text }}
+                                                            <div class="audit-check-group">
+                                                                <div class="audit-check">
+                                                                    <ul>
+                                                                        @for(scrs of
+                                                                        surveyScorsLst;track $index
+                                                                        ){
+                                                                        <li style="margin: 6px;"
+                                                                            (click)="selectAnswer(qstn, scrs)">
+
+                                                                            <span [ngClass]="{
+                                                                                                                'very-poor': scrs.label === '1',
+                                                                                                                'poor': scrs.label === '2',
+                                                                                                                'fair': scrs.label === '3',
+                                                                                                                'good': scrs.label === '4',
+                                                                                                                'excellent': scrs.label === '5',
+                                                                                                            }"
+                                                                                style="padding: 5px;border-radius: 5px;cursor: pointer">
+                                                                                <i
+                                                                                    class="iconify pi pi-check-circle"></i>
+                                                                                {{ scrs.label}}
+                                                                            </span>
+                                                                        </li>
+                                                                        }
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="audit-check-group">
+                                                                <span [ngClass]="{
+                                                                                            'very-poor': qstn.score_code === 'Very Poor',
+                                                                                            'poor': qstn.score_code === 'Poor',
+                                                                                            'fair': qstn.score_code === 'Fair',
+                                                                                            'good': qstn.score_code === 'Good',
+                                                                                            'excellent': qstn.score_code === 'Excellent',
+                                                                                        }">
+                                                                    {{ qstn.score_code| titlecase }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                            </table>
+                                            }
+                                            }@else{
+                                            Survey questionnaire not found
+                                            }
+                                            }
+
+                                            @if( selectedPremType == 'DSFB'){
+                                            <div class="accordion custom-accordion1 accordion2" id="accordionExample">
+                                                @for(dsfb of premFeedbck.response;track $index;let scI = $index){
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header">
+                                                        <button class="accordion-button" type="button"
+                                                            data-bs-toggle="collapse"
+                                                            [attr.data-bs-target]="'#collapseOne'+scI"
+                                                            aria-expanded="true"
+                                                            [attr.aria-controls]="'collapseOne'+scI">
+                                                            <h5>{{dsfb.section_name}}</h5>
+                                                        </button>
+                                                    </h2>
+                                                    @for(qstn of dsfb.questions;track $index;let j = $index){
+                                                    <div [id]="'collapseOne'+scI"
+                                                        class="accordion-collapse collapse show"
+                                                        data-bs-parent="#accordionExample">
+                                                        <div class="accordion-body">
+                                                            <div class="table-audit table-responsive">
+                                                                <table class="table table-bordered mb-0">
+                                                                    <tr>
+                                                                        <td width="100%">
+                                                                            <div>
+                                                                                {{qstn.question_text }}
+                                                                                <div class="audit-check-group">
+                                                                                    <div class="audit-check">
+                                                                                        <ul>
+                                                                                            @for(scrs of
+                                                                                            surveyScorsLst;track $index
+                                                                                            ){
+                                                                                            <li style="margin: 6px;"
+                                                                                                (click)="selectAnswer(qstn, scrs)">
+
+                                                                                                <span [ngClass]="{
+                                                                                                    'very-poor': scrs.label === '1',
+                                                                                                    'poor': scrs.label === '2',
+                                                                                                    'fair': scrs.label === '3',
+                                                                                                    'good': scrs.label === '4',
+                                                                                                    'excellent': scrs.label === '5',
+                                                                                                            }"
+                                                                                                    style="padding: 5px;border-radius: 5px;cursor: pointer;mar">
+                                                                                                    <i
+                                                                                                        class="iconify pi pi-check-circle"></i>
+                                                                                                    {{ scrs.label}}
+                                                                                                </span>
+                                                                                            </li>
+                                                                                            }
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="audit-check-group">
+                                                                                    <span [ngClass]="{
+                                                                                        'very-poor': qstn.score_code === 'Very Poor',
+                                                                                        'poor': qstn.score_code === 'Poor',
+                                                                                        'fair': qstn.score_code === 'Fair',
+                                                                                        'good': qstn.score_code === 'Good',
+                                                                                        'excellent': qstn.score_code === 'Excellent',
+                                                                                        }">
+                                                                                        {{ qstn.score_code| titlecase }}</span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+
+                                                                    </tr>
+                                                                </table>
+                                                                @if(qstn.is_required){
+                                                                <div class="error">
+                                                                    Response Required
+                                                                </div>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    }
+                                                </div>
+                                                }
+                                            </div>
+                                            }
+
+                                            @if( selectedPremType == 'DSFB' || selectedPremType == 'OPFB'){
+                                            <div class="row">
+                                                <div class="col-md-12 col-12">
+                                                    <label>Appreciation</label>
+                                                    <div class="form-group">
+                                                        <p-toggleswitch [(ngModel)]="premFeedbck.is_appreciation"
+                                                            name="status" [disabled]="false" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <label>Any Appreciation?</label>
+                                                    <textarea pTextarea [(ngModel)]="premFeedbck.appreciation_desc"
+                                                        rows="10" [disabled]="!premFeedbck.is_appreciation"
+                                                        name="appreciation_desc" class="form-control"></textarea>
+                                                </div>
+                                                <div class="col-md-12 col-12">
+                                                    <label>Suggestion</label>
+                                                    <div class="form-group">
+                                                        <p-toggleswitch [(ngModel)]="premFeedbck.is_suggestions"
+                                                            name="status" [disabled]="false" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <label>Any Suggestions?</label>
+                                                    <textarea pTextarea [(ngModel)]="premFeedbck.suggestions_desc"
+                                                        rows="10" [disabled]="!premFeedbck.is_suggestions"
+                                                        name="suggestions_desc" class="form-control"></textarea>
+                                                </div>
+                                                <div class="col-md-12 col-12">
+                                                    <label>Compliance</label>
+                                                    <div class="form-group">
+                                                        <p-toggleswitch [(ngModel)]="premFeedbck.is_compliance"
+                                                            name="status" [disabled]="false" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <label>Any Complaince?</label>
+                                                    <textarea pTextarea [(ngModel)]="premFeedbck.compliance_desc"
+                                                        rows="10" [disabled]="!premFeedbck.is_compliance"
+                                                        name="compliance_desc" class="form-control"></textarea>
+                                                </div>
+                                            </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<style>
+    .yellow-class {
+        background-color: yellow !important;
+    }
+
+    .error {
+        color: red;
+        font-weight: bold;
+    }
+
+    textarea {
+        height: 100% !important;
+    }
+
+    .very-poor {
+        background-color: red;
+    }
+
+    .poor {
+        background-color: orange;
+    }
+
+    .fair {
+        background-color: yellow;
+    }
+
+    .good {
+        background-color: lightgreen;
+    }
+
+    .excellent {
+        background-color: green;
+    }
+</style>

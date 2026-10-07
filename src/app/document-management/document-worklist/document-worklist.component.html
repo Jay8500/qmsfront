@@ -1,0 +1,119 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="card-style2">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col-md-7 col-12">
+            <h3 class="main-heading mb-0">Quality Worklist</h3>
+            <p class="text-muted mb-0 dm-subtitle">License renewals, MoU expiries, document approvals and reviews - most urgent first</p>
+          </div>
+          <div class="col-md-5 col-12 text-end">
+            <button class="btn btn-light me-2" (click)="load()"><i class="pi pi-refresh me-1"></i>Refresh</button>
+            @if(access().access_mod){
+            <button class="btn btn-primary" (click)="openSettings()"><i class="pi pi-bell me-1"></i>Alert Settings</button>
+            }
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="wl-kpis">
+          <div class="wl-kpi wl-overdue" [class.wl-on]="priorityFilter()=='Overdue'" (click)="togglePriority('Overdue')">
+            <span>{{ counts().overdue }}</span>Overdue</div>
+          <div class="wl-kpi wl-high" [class.wl-on]="priorityFilter()=='High'" (click)="togglePriority('High')">
+            <span>{{ counts().high }}</span>High (7 days / approvals)</div>
+          <div class="wl-kpi wl-medium" [class.wl-on]="priorityFilter()=='Medium'" (click)="togglePriority('Medium')">
+            <span>{{ counts().medium }}</span>Within 30 days</div>
+          <div class="wl-kpi wl-low" [class.wl-on]="priorityFilter()=='Low'" (click)="togglePriority('Low')">
+            <span>{{ counts().low }}</span>Later</div>
+        </div>
+
+        <div class="wl-tabs">
+          @for(t of typeTabs; track t.label){
+          <button class="btn btn-sm" [class.btn-primary]="typeFilter()==t.value" [class.btn-light]="typeFilter()!=t.value"
+            (click)="typeFilter.set(t.value)">
+            {{ t.label }} @if(t.value){ ({{ counts().byType(t.value) }}) }
+          </button>
+          }
+        </div>
+
+        <div class="table-style1 table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Priority</th>
+                <th>Type</th>
+                <th>Item</th>
+                <th>Status</th>
+                <th>Due</th>
+                <th>Assigned To</th>
+                <th>Action Needed</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              @for(i of filtered(); track i.item_type + i.ref_id){
+              <tr>
+                <td><span class="wl-pill" [attr.data-p]="i.priority">{{ i.priority }}</span></td>
+                <td>{{ typeLabel(i.item_type) }}</td>
+                <td><strong>{{ i.title }}</strong><small class="d-block text-muted">{{ i.ref_no }}</small></td>
+                <td>{{ i.status }}</td>
+                <td>
+                  @if(i.due_date){
+                  {{ i.due_date | appDate:'date' }}
+                  <small class="d-block" [class.text-danger]="i.days_left < 0">
+                    {{ i.days_left < 0 ? (-i.days_left) + ' days ago' : i.days_left + ' days left' }}</small>
+                  } @else { - }
+                </td>
+                <td>{{ i.assigned_to || '-' }}</td>
+                <td>{{ i.action }}</td>
+                <td><a href="javascript:;" class="link-blue" (click)="openItem(i)">Open</a></td>
+              </tr>
+              } @empty {
+              <tr><td colspan="8" class="text-center">{{ loaded() ? 'Nothing pending - all clear.' : 'Loading ...' }}</td></tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<p-dialog header="Alert Settings" [visible]="showSettings()" (visibleChange)="showSettings.set($event)" [modal]="true"
+  [style]="{ width: '760px' }" [breakpoints]="{ '900px': '95vw' }" [draggable]="false">
+  <p class="mb-3"><small class="text-muted">Bell notifications are sent once a day (08:15) to the assigned / owner /
+      responsible person and the roles below. Each step is sent once; after the date passes, a reminder repeats every
+      N days (0 = no repeat).</small></p>
+  <div class="table-responsive">
+    <table class="table table-bordered align-middle mb-0">
+      <thead class="table-light">
+        <tr>
+          <th style="width:22%">Sub-module</th>
+          <th style="width:8%">On</th>
+          <th style="width:22%">Days before</th>
+          <th style="width:14%">Repeat after (days)</th>
+          <th>Notify roles</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for(s of settings; track s.item_type){
+        <tr>
+          <td>{{ s.item_name }}
+            @if(s.updated_by){ <small class="d-block text-muted">{{ s.updated_by }} {{ s.updated_at }}</small> }</td>
+          <td><p-toggleswitch [(ngModel)]="s.is_active" [name]="'on_'+s.item_type" /></td>
+          <td><input pInputText class="form-control" [(ngModel)]="s.days_text" [name]="'days_'+s.item_type"
+              placeholder="e.g. 90, 60, 30, 7" autocomplete="off"></td>
+          <td><input pInputText type="number" min="0" max="90" class="form-control" [(ngModel)]="s.overdue_repeat_days"
+              [name]="'rep_'+s.item_type"></td>
+          <td><p-multiselect [options]="roleOptions" [(ngModel)]="s.notify_roles" [name]="'roles_'+s.item_type"
+              placeholder="Roles" display="chip" [filter]="true" styleClass="w-full" appendTo="body" /></td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  <ng-template #footer>
+    <button class="btn btn-light me-2" (click)="showSettings.set(false)">Close</button>
+    <button class="btn btn-primary" [disabled]="settingsSaving()" (click)="saveSettings()">Save</button>
+  </ng-template>
+</p-dialog>

@@ -1,0 +1,275 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="row">
+      <div class="col-md-12 col-12">
+        <div class="card-style2">
+          <div class="card-header backoption">
+            <div class="row">
+              <div class="col-md-7 col-12">
+                <div class="heading-left">
+                  <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                    <!-- <span class="iconify" data-icon="famicons:arrow-back-outline"></span> -->
+                    <i class="iconify pi pi-arrow-left"></i>
+                  </a>
+                  <h3>{{_hqms.getPageModeContext(pageMode, 'Document') }}</h3>
+                </div>
+              </div>
+              <div class="col-md-5 col-12">
+                <div class="form-right">
+                  <button type="button" class="btn btn-dark" [disabled]="pageMode=='VIEW'"
+                    (click)="onClearClick()">Clear</button>
+                  <button type="submit" class="btn btn-primary" [disabled]="pageMode=='VIEW'"
+                    (click)="onSubmitClick()">Submit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row mt-4">
+              <div class="col-lg-4 col-md-4 col-12">
+                <div class="formbox-left legends form-lg">
+                  <div class="form-title">Form Setup</div>
+                  <form>
+                    <div class="form-section mb-1">
+                      <div class="row">
+                        <div class="col-md-12 col-12">
+                          <div class="form-group">
+                            <div class="label-flex-link">
+                              <label>Upload</label>
+                              <a (click)="_hqms.onDownloadClick('sample_templates/security_documents.xlsx')"
+                                style="cursor: pointer;">
+                                <!-- <span class="iconify"
+                                          data-icon="material-symbols:download"></span>  -->
+                                <i class="iconify pi pi-download"></i>
+                                Template
+                              </a>
+                            </div>
+                            <div class="upload-image">
+                              <div class="row">
+                                <div class="col-5">
+                                  <p-fileUpload mode="basic"
+                                    (onSelect)="onBulkUploadClick(preAssess, $event,'CoverPage',createDoc(),null)"
+                                    [multiple]="false" #preAssess [fileLimit]="1" [maxFileSize]="2097152" [auto]="true"
+                                    [disabled]="pageMode=='VIEW'" accept=".xlsx"
+                                    invalidFileSizeMessageSummary="File too large" chooseIcon="pi pi-upload"
+                                    chooseLabel="Bulk Upload" invalidFileSizeMessageDetail="Maximum upload size is 5MB">
+                                  </p-fileUpload>
+                                </div>
+                                <div class="col-7">
+                                  <div *ngIf="createDoc().section_documents.length>0" class="flex gap-2 flex-wrap mt-2">
+                                    <div *ngFor="let mDoc of createDoc().section_documents; let imgIndex=index">
+                                      <div *ngIf="mDoc.is_active==true" class="reg-img-view"
+                                        style="border: 1px solid #cacaca;padding: 5px; border-radius: 7px;font-size: 11px;">
+                                        {{ mDoc['file_name'] }}
+
+                                        @if(pageMode == 'NEW' || pageMode == 'EDIT'){
+                                        <a class="time-icons time-remove ml-2" href="javascript:return false"><i
+                                            *ngIf="pageMode!='VIEW'||pageMode!='EDIT'" class="pi pi-times-circle"
+                                            (click)="onBulkUploadRemoveClick(mDoc, imgIndex)"></i>
+                                        </a>
+                                        }
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-section mb-1">
+                      <div class="row">
+                        <div class="col-md-12 col-12">
+                          <div class="form-group">
+                            <label>Add Document
+                              <span class="info-icon" placement="top" ngbTooltip="lorem ipsum dummy">
+                                <span class="iconify" data-icon="material-symbols:info-rounded"></span>
+                              </span>
+                            </label>
+                            <input pInputText id="document_name" [(ngModel)]="docAdd().document_name"
+                              (blur)="onGetErrorMsgs('document_name')" placeholder="Document Name"
+                              [disabled]="pageMode=='VIEW'" name="document_name"
+                              class=" form-control" autocomplete="off" appNospaces>
+                            @if(errorMsg['document_name']!=''){
+                            <small class="error">{{ errorMsg['document_name']}}</small>
+                            }
+                          </div>
+                        </div>
+
+                        <div class="col-md-6 col-12">
+                          <div class="form-group">
+                            <label>Primary Url
+                              <span class="info-icon" placement="top">
+                                <span class="iconify" data-icon="material-symbols:info-rounded"></span>
+                              </span>
+                            </label>
+                            <input pInputText id="primary_url" [(ngModel)]="docAdd().primary_url"
+                              (blur)="onGetErrorMsgs('primary_url')" placeholder="Primary Url"
+                              [disabled]="pageMode=='VIEW'" name="primary_url"
+                              class=" form-control" autocomplete="off" appNospaces>
+                            @if(errorMsg['primary_url']!=''){
+                            <small class="error">{{ errorMsg['primary_url']}}</small>
+                            }
+                          </div>
+                        </div>
+
+                        <div class="col-md-6 col-12">
+                          <div class="form-group">
+                            <label>Secondary Url
+                              <span class="info-icon" placement="top">
+                                <span class="iconify" data-icon="material-symbols:info-rounded"></span>
+                              </span>
+                            </label>
+                            <input pInputText id="secondary_url" [(ngModel)]="docAdd().secondary_url"
+                              placeholder="Secondary Url" [disabled]="pageMode=='VIEW'" name="secondary_url"
+                              class="form-control" autocomplete="off" appNospaces>
+                          </div>
+                        </div>
+
+                        <div class="col-md-12 col-12">
+                          <div class="form-group">
+                            <button class="btn btn-primary btn-big-icon btn-lg w-100" (click)="onMdleAddClick()"
+                              [disabled]="pageMode=='VIEW'|| [null,''].includes(docAdd().document_name)
+                                      ">
+                              <!-- <span class="iconify" data-icon="basil:add-outline">
+                                      </span> -->
+                              <i class="iconify pi pi-plus-circle">
+                              </i>
+                              Add
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div class="col-lg-8 col-md-8 col-12">
+                <div class="formbox-left legends form-lg">
+                  <div class="form-title">{{ docCnt}} Documents Preview</div>
+
+                  <div class="grid">
+                    <div class="col-6">
+                      @for(dcs of createDoc().document;track $index;let i = $index;){
+                      @if(dcs.is_active !== false){
+                      <div class="form-section mb-2">
+                        @if(dcs.is_edit_click){
+                        <div class="flex flex-col gap-1">
+                          <label>Editing Document Name</label>
+                          <textarea pTextarea rows="10" [(ngModel)]="dcs.document_name"
+                            (blur)="onGetErrorMsgs('document_name', dcs)" name="document_name"
+                            class=" form-control" appNospaces></textarea>
+                          @if(dcs['document_name_error']){
+                          <small class="error">{{ dcs['document_name_error'] }}</small>
+                          }
+                        </div>
+                        }@else{
+                        <div class="form-group">
+                          <label for="document_name">Document Name :-</label>
+                          <div>
+                            {{dcs.document_name }}
+                          </div>
+                        </div>
+                        }
+
+                        @if(dcs.is_edit_click){
+                        <div class="flex flex-col gap-1">
+                          <label>Editing Primary Url</label>
+                          <textarea pTextarea rows="10" [(ngModel)]="dcs.primary_url"
+                            (blur)="onGetErrorMsgs('primary_url', dcs)" name="primary_url"
+                            class=" form-control" appNospaces></textarea>
+                          @if(dcs['primary_url_error']){
+                          <small class="error">{{ dcs['primary_url_error'] }}</small>
+                          }
+                        </div>
+                        }@else{
+                        <div class="form-group">
+                          <label for="document_name">Primary Url :-</label>
+                          <div>
+                            {{dcs.primary_url }}
+                          </div>
+                        </div>
+                        }
+
+                        @if(pageMode == 'NEW' || pageMode == 'EDIT'){
+                        <div class="text-end">
+                          <div class="action-edit">
+                            <ul>
+                              <li>
+                                <a href="javascript:;" (click)="editMdle(dcs,i)">
+                                  <!-- < span class="iconify" data-icon="ri:edit-line"></span> -->
+                                  <i class="iconify pi pi-pencil" [class.editing]="dcs.is_edit_click"
+                                    [class.edited]="!dcs.is_edit_click"></i>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="javascript:;" (click)="trashMdle(dcs)">
+                                  <!-- <span class="iconify" data-icon="material-symbols:delete-outline"></span> -->
+                                  <i class="iconify pi pi-trash"></i>
+                                </a>
+                              </li>
+
+                            </ul>
+                          </div>
+                        </div>
+                        }
+                      </div>
+                      }
+                      }
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .editing {
+    color: yellow !important;
+  }
+
+  .edited {
+    color: green !important;
+  }
+
+  .head_flex {
+    display: flex;
+    gap: 5px;
+    justify-content: space-between;
+  }
+
+  .s-flex {
+    display: flex;
+    gap: 3px;
+    align-items: center;
+  }
+
+  .audit-table .audit-heading {
+    margin-left: 0px;
+  }
+
+  .action-edit ul li:hover {
+    padding: 0px 5px;
+    background: #fff;
+    border-radius: 6px;
+
+
+  }
+
+  .action-edit ul li {
+    padding: 0px 5px;
+    font-size: 16px;
+    margin-right: 0px;
+  }
+
+  .pi {
+    font-size: 11px;
+  }
+</style>

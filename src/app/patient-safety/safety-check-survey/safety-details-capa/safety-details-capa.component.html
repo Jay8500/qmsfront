@@ -1,0 +1,202 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="row">
+      <div class="col-md-12 col-12">
+        <div class="card-style2">
+          <div class="card-header backoption">
+            <div class="row">
+              <div class="col-md-7 col-12">
+                <div class="heading-left">
+                  <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                    <i class="iconify pi pi-arrow-left"></i>
+                  </a>
+                  <h3>Safety Culture Survey - CAPA</h3>
+                </div>
+              </div>
+              <div class="col-md-5 col-12">
+                @if(false){
+                <div class="form-right">
+                  <div class="dropdown dropdown-style1 ms-2">
+                    <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                      Download <span class="iconify" data-icon="akar-icons:chevron-down"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                      <li><a class="dropdown-item" href="javascript:;">Download Word</a></li>
+                      <li><a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                    </ul>
+                  </div>
+                </div>
+                }
+                <div class="form-right">
+                  <!-- <button type="button" class="btn btn-dark" [disabled]="false" (click)="onClearClick()">Clear</button> -->
+                  <button type="submit" class="btn btn-primary" [disabled]="false"
+                    (click)="onSubmitClick()">Submit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="audit-info-cover">
+              <div class="table-audit table-responsive">
+                <table class="table table-bordered table-line mb-0">
+                  <tr>
+                    <th width="30%">Culture Survey Name</th>
+                    <th>Participants</th>
+                    <th>From Date</th>
+                    <th>To Date</th>
+                    <th>Total Participants</th>
+                    <th>Total Satisfactory</th>
+                  </tr>
+                  <tr>
+                    <td>{{srvyDetails['survey_name'] }}</td>
+                    <td>{{srvyDetails['participants'] }}</td>
+                    <td>{{srvyDetails['from_date'] }}</td>
+                    <td>{{srvyDetails['to_date'] }}</td>
+                    <td>{{srvyDetails['total_partcipants'] }}</td>
+                    <td>{{srvyDetails['survey_name'] }}</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+
+            <div class="audit-info-cover">
+              <div class="audit-status">
+                <div class="row">
+                  <div class="col-md-6 col-12">
+                    <div class="left-content">
+                      <p>Survey Name</p>
+                      <h5 class="mb-0">{{srvyDetails['survey_name'] }}</h5>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="right-content text-end">
+                      <p class="mb-1">Overall Score</p>
+                      <span class="badge-green">{{srvyDetails['overall_score'] }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="table-audit table-responsive">
+                <table class="table table-bordered table-line table-lines-sm">
+                  <tr>
+                    <th width="25%">Questions</th>
+                    <th class="text-center">Strongly Agree</th>
+                    <th class="text-center">Agree</th>
+                    <th class="text-center">Neutral</th>
+                    <th class="text-center">Disagree</th>
+                    <th class="text-center">Strongly Disagree</th>
+                    <th class="text-center">Score</th>
+                    <!-- <th width="25%" class="text-center">Action Taken</th> -->
+                  </tr>
+                  @for(rsp of srvyDetails['section'];track $index ){
+                  <tr>
+                    <td [attr.colspan]="6">
+                      <strong>{{ rsp['section_name'] }} </strong></td>
+                  </tr>
+                  @for(qstn of rsp['question'];track $index ){
+                  <tr>
+                    <td>{{qstn['question_text'] }} </td>
+                    <td class="text-center">{{qstn['Strongly_Agree'] }}</td>
+                    <td class="text-center">{{ qstn['Agree']}}</td>
+                    <td class="text-center">{{qstn['Neutral']}}</td>
+                    <td class="text-center">{{ qstn['Disagree']}}</td>
+                    <td class="text-center">{{ qstn['Strongly_Agree']}}</td>
+                    <td class="text-center text-success">{{qstn['score'] }}</td>
+                    <!-- <td>{{stn['Strongly_Agree'] }}</td> -->
+                  </tr>
+                  }
+                  }
+                </table>
+              </div>
+            </div>
+
+            <div class="mt-3 mb-2">
+              <button class="btn btn-primary" (click)="toggleRemarks()">
+                {{ showRemarks ? 'Hide Remarks' : 'View All Remarks' }}
+              </button>
+            </div>
+
+            @if (showRemarks) {
+            <div class="card-style2">
+              <div class="card-header backoption table-search">
+                <div class="row">
+                  <div class="col-md-5 col-12">
+                    <div class="heading-left">
+                      <h3>Safety Culture Survey History - {{srvyDetails['survey_name'] }}</h3>
+                    </div>
+                  </div>
+                  <div class="col-md-7 col-12">
+                    <div class="form-right">
+                      <!-- <div class="dropdown dropdown-style1 ms-2">
+                        <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                          aria-expanded="false">
+                          Download Report <span class="iconify" data-icon="akar-icons:chevron-down"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                          <li><a class="dropdown-item" href="javascript:;">Download Word</a></li>
+                          <li><a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                        </ul>
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-style1">
+                <div class="card-body table-style1 table-responsive radius-4">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col" sortable="role" (sort)="onSort($event)" class="sorttd">Role <span
+                            class="iconify" data-icon="bxs:sort-alt"></span></th>
+                        <th width="40%" scope="col" sortable="remarks" (sort)="onSort($event)" class="sorttd">Remarks
+                          <span class="iconify" data-icon="bxs:sort-alt"></span></th>
+                        <th scope="col" sortable="feedback" (sort)="onSort($event)" class="sorttd text-end">Date & Time
+                          of Feedback <span class="iconify" data-icon="bxs:sort-alt"></span></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @for (rmks of srvyDetails['remarks']; track rmks.role) {
+                      <tr>
+                        <td scope="row">{{ rmks.role }}</td>
+                        <td>{{ rmks.remarks }}</td>
+                        <td class="text-end">{{ rmks.feedback }}</td>
+                      </tr>
+                      }
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            }
+
+            <div class="row">
+              <div class="col-12">
+                <label for="capa_write">Description</label>
+                <textarea pTextarea id="capa_write" [(ngModel)]="srvyDetails.capa_write"
+                  (blur)="onGetErrorMsgs('capa_write')" rows="10" name="capa_write"
+                  class=" form-control"></textarea>
+                @if(errorMsg['capa_write']!=''){
+                <small class="error">{{ errorMsg['capa_write'] }}</small>
+                }
+              </div>
+              <div class="col-12">
+                <label for="action_taken">Action Taken</label>
+                <textarea pTextarea id="action_taken" [(ngModel)]="srvyDetails.action_taken"
+                  (blur)="onGetErrorMsgs('action_taken')" rows="10" name="action_taken"
+                  class=" form-control"></textarea>
+                @if(errorMsg['action_taken']!=''){
+                <small class="error">{{ errorMsg['action_taken'] }}</small>
+                }
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

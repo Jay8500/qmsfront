@@ -1,0 +1,89 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <!-- <a href="javascript:;" class="icon-btn-square" (click)="goBack()"><span
+                                                    class="iconify" data-icon="famicons:arrow-back-outline"></span></a> -->
+                                    <!-- <h3>Training Certificate</h3> -->
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-12">
+                                <div class="form-right">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-lg-8 col-md-12 col-12">
+                                <div class="formbox-left legends form-lg">
+                                    <div class="form-title">Training Certificates</div>
+                                    <label for="selectedTraining">Training Name</label>
+                                    <p-select id="selectedTraining" [ngModel]="selectedTraining()"
+                                        (ngModelChange)="selectedTraining.set($event)"
+                                        (onChange)="onTrainingSelect($event.value)" name="selectedTraining"
+                                        [options]="trainingList" [filter]="true" class="form-control" />
+                                    <div class="form-section mb-1">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="mode_of_training_name">Mode of training</label>
+                                                    <div>
+                                                        {{selectedTrainingInfo.mode_of_training_name }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="faculty_name">Faculty</label>
+                                                    <div>
+                                                        {{selectedTrainingInfo.faculty_name }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="designation_name">Faculty Designation</label>
+                                                    <div>
+                                                        {{selectedTrainingInfo.designation_name }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="description">Training Description</label>
+                                                    <div>
+                                                        {{selectedTrainingInfo.description }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label for="roleName">Certificate Download</label>
+                                                    <div>
+                                                        @if(selectedTraining() != null){
+                                                        <i class="pi pi-download cursor"
+                                                            [PDF]="{ param :params,screenName:selectedTrainingInfo['training_name'] ,data : dataExists.length,methodName : 'fnTrainingCertificateApi' }"></i>
+                                                        }@else{
+                                                        No Training Selected/ Certifciates Available.
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

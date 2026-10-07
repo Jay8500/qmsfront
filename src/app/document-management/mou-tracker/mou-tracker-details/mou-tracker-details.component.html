@@ -1,0 +1,194 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                                        <i class="iconify pi pi-arrow-left"></i>
+                                    </a>
+                                    <h3>MoU Tracker Detail</h3>
+                                </div>
+                            </div>
+                            @if(canCancel()){
+                            <div class="col-md-5 col-12">
+                                <div class="form-right">
+                                    <button class="btn btn-danger" (click)="openCancel()">
+                                        <i class="pi pi-ban me-1"></i> Cancel MoU
+                                    </button>
+                                </div>
+                            </div>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="audit-info-cover">
+                            <div class="audit-status">
+                                <div class="row">
+                                    <div class="col-md-6 col-12">
+                                        <div class="left-content">
+                                            <h5>{{readOnlyMou().mou_no}} </h5>
+                                            @if(readOnlyMou().updated_at!=null){
+                                            <p>Last Updated On <strong>{{readOnlyMou().updated_at}}</strong></p>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="right-content text-end">
+                                            <p class="mb-1">Status</p>
+                                            <span [class]="statusClass(readOnlyMou().status)">{{readOnlyMou().status}}</span>
+                                            @if(readOnlyMou().status === 'Active' && readOnlyMou().days_to_expiry != null){
+                                            <p class="mb-0 mt-1"><small>{{readOnlyMou().days_to_expiry}} days to expiry</small></p>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-audit">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th width="30%">MoU / Legal No </th>
+                                        <td>{{readOnlyMou().mou_no}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Partner Organization</th>
+                                        <td>{{readOnlyMou().partner_org}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Date of Agreement </th>
+                                        <td>{{readOnlyMou().agreement_date}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Date of Expiry</th>
+                                        <td>{{readOnlyMou().expiry_date}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Authorized Person (Partner)</th>
+                                        <td>{{readOnlyMou().authorized_person || '-'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>MoU Owner (Hospital)</th>
+                                        <td>{{readOnlyMou().owner_name || '-'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Department</th>
+                                        <td>{{readOnlyMou().department_name || '-'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Services Covered</th>
+                                        <td style="white-space: pre-line">{{readOnlyMou().service_details || '-'}}</td>
+                                    </tr>
+                                    @if(readOnlyMou().status === 'Cancelled'){
+                                    <tr>
+                                        <th>Cancelled</th>
+                                        <td>{{readOnlyMou().cancelled_at}} by {{readOnlyMou().cancelled_by}}
+                                            <div class="text-danger">Reason: {{readOnlyMou().cancel_reason}}</div>
+                                        </td>
+                                    </tr>
+                                    }
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="audit-info-cover">
+                            <div class="audit-status">
+                                <div class="row">
+                                    <div class="col-md-12 col-12">
+                                        <div class="left-content">
+                                            <h5>Attach Document</h5>
+                                            <!-- <p>
+                                                {{readOnlyMou().mou_files.length}} Documents found
+                                            </p> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="table-audit-row">
+                                <div class="table-audit">
+                                    <table class="table table-bordered mb-0">
+                                        <tr>
+                                            @for(lf of readOnlyMou().mou_files;track $index){
+                                            @if(lf.fileOrImageUrl != null && lf.status != 'Inactive'){
+                                            <td colspan="2">
+                                                <p class="document-name">{{lf.file_name}} </p>
+                                                <iframe [src]="lf.fileOrImageUrl" type="application/pdf" width="100%"
+                                                    height="100%">
+                                                </iframe>
+                                            </td>
+                                            }
+                                            }@empty{
+                                            <td>
+                                                No Attach Document
+                                            </td>
+                                            }
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        @if(false){
+                        <div class="audit-info-cover">
+                            <div class="audit-status">
+                                <div class="row">
+                                    <div class="col-md-12 col-12">
+                                        <div class="left-content">
+                                            <h5>Log History</h5>
+                                            <!-- <p> {{readOnlyMou().mou_files.length}} log entries</p> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-audit tablehrz">
+                                <table class="table table-bordered table-line mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>MOU / Legal No</th>
+                                            <th>Partner Organization</th>
+                                            <th>Date Of Agreement</th>
+                                            <th>Date Of Expiry</th>
+                                            <!-- <th>Document</th> -->
+                                            <th>Modified On</th>
+                                            <!-- <th>Modified By</th> -->
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{{  readOnlyMou().mou_no}}</td>
+                                            <td>{{  readOnlyMou().partner_org}}</td>
+                                            <td>{{  readOnlyMou().agreement_date}}</td>
+                                            <td>{{  readOnlyMou().expiry_date}}</td>
+                                            <!-- <td><a href="#" class="text-primary text-decoration-none">View</a></td> -->
+                                            <td>{{  readOnlyMou().updated_at}}</td>
+                                            <!-- <td>{{  readOnlyMou().updated_by}}</td> -->
+                                            <td>{{  readOnlyMou().status}}</td>
+                                            <!-- <td><span class="text-danger fw-semibold">Expired</span></td> -->
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<p-dialog header="Cancel MoU" [visible]="showCancel()" (visibleChange)="showCancel.set($event)" [modal]="true"
+    [style]="{ width: '520px' }" [breakpoints]="{ '768px': '95vw' }" [draggable]="false">
+    <p class="mb-2"><small>{{ readOnlyMou().mou_no }} - {{ readOnlyMou().partner_org }}. The MoU is kept on record with
+            status Cancelled and can no longer be edited.</small></p>
+    <label>Reason</label>
+    <textarea pTextarea [(ngModel)]="cancelReason" rows="3" maxlength="500" class="form-control w-full"
+        placeholder="Why is the MoU cancelled?"></textarea>
+    <ng-template #footer>
+        <button class="btn btn-light me-2" (click)="showCancel.set(false)">Close</button>
+        <button class="btn btn-danger" (click)="onCancelSave()">Cancel MoU</button>
+    </ng-template>
+</p-dialog>

@@ -1,0 +1,19 @@
+import {
+  PRIME_NG_CONFIG,
+  PrimeNG,
+  ThemeProvider,
+  providePrimeNG
+} from "./chunk-LKPDQWVH.js";
+import "./chunk-CKIUYQGF.js";
+import "./chunk-Y5ZV6UA3.js";
+import "./chunk-CTIYIVGR.js";
+import "./chunk-QVAR6IHG.js";
+import "./chunk-BZQAI6PH.js";
+import "./chunk-RSS3ODKE.js";
+import "./chunk-IMDIBY5Y.js";
+export {
+  PRIME_NG_CONFIG,
+  PrimeNG,
+  ThemeProvider,
+  providePrimeNG
+};

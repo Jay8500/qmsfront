@@ -1,0 +1,426 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                                        <i class="iconify pi pi-arrow-left"></i>
+                                    </a>
+                                    <h3>{{_hqms.getPageModeContext(pageMode, 'User') }}</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-12">
+                                <div class="form-right">
+                                    <button class="btn btn-dark" [disabled]="pageMode=='VIEW'"
+                                        (click)="onClearClick()">Clear</button>
+                                    <button class="btn btn-primary" [disabled]="pageMode=='VIEW'"
+                                        (click)="onSubmitClick()">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="formbox-left form-lg">
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="row">
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="employment_type_id">Employee Type</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <p-select id="employment_type_id" [(ngModel)]="newUser().employment_type_id"
+                                                        (onBlur)="onGetErrorMsgs('employment_type_id')"
+                                                        (onChange)="onGetErrorMsgs('employment_type_id')"
+                                                        [options]="empTypeList" [filter]="true" placeholder="Employee type"
+                                                        [disabled]="pageMode=='VIEW'" name="employment_type_id"
+                                                        class=" form-control" [appendTo]="'body'"/>
+                                                        <div style=" position: absolute;
+                                                                top: 0;
+                                                                right: 0;
+                                                                width: 0;
+                                                                height: 0;
+                                                                border-top: 12px solid red;
+                                                                border-left: 12px solid transparent;">
+                                                        </div>
+                                                </div>
+                                                @if(errorMsg['employment_type_id']!=''){
+                                                <small class="error">{{ errorMsg['employment_type_id']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="title_cd">Title</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="title_cd" [(ngModel)]="newUser().title_cd"
+                                                        (blur)="onGetErrorMsgs('title_cd')" placeholder="Title"
+                                                        [disabled]="pageMode=='VIEW'" name="title_cd"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                        <div style=" position: absolute;
+                                                                top: 0;
+                                                                right: 0;
+                                                                width: 0;
+                                                                height: 0;
+                                                                border-top: 12px solid red;
+                                                                border-left: 12px solid transparent;">
+                                                        </div>
+                                                </div>
+                                                @if(errorMsg['title_cd']!=''){
+                                                <small class="error">{{ errorMsg['title_cd']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="first_name">First Name</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="first_name" [(ngModel)]="newUser().first_name"
+                                                        (blur)="onGetErrorMsgs('first_name')" placeholder="First Name"
+                                                        [disabled]="pageMode=='VIEW'" name="first_name"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                        <div style=" position: absolute;
+                                                                top: 0;
+                                                                right: 0;
+                                                                width: 0;
+                                                                height: 0;
+                                                                border-top: 12px solid red;
+                                                                border-left: 12px solid transparent;">
+                                                        </div>
+                                                </div>
+                                                @if(errorMsg['first_name']!=''){
+                                                <small class="error">{{ errorMsg['first_name']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                                <div class="flex flex-col gap-1">
+                                                    <label for="middle_name">Middle Name</label>
+                                                    <div style="position: relative;display:inline-block;width:100%">
+                                                        <input pInputText id="middle_name" [(ngModel)]="newUser().middle_name"
+                                                            (blur)="onGetErrorMsgs('middle_name')" placeholder="Middle Name"
+                                                            [disabled]="pageMode=='VIEW'" name="middle_name"
+                                                            class=" form-control" autocomplete="off" appNospaces>
+                                                            <div style=" position: absolute;
+                                                                    top: 0;
+                                                                    right: 0;
+                                                                    width: 0;
+                                                                    height: 0;
+                                                                    border-top: 12px solid red;
+                                                                    border-left: 12px solid transparent;">
+                                                            </div>
+                                                    </div>
+                                                    @if(errorMsg['middle_name']!=''){
+                                                    <small class="error">{{ errorMsg['middle_name']}}</small>
+                                                    }
+                                                </div>
+                                            </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="last_name">Last Name</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="last_name" [(ngModel)]="newUser().last_name"
+                                                        (blur)="onGetErrorMsgs('last_name')" placeholder="Last Name"
+                                                        [disabled]="pageMode=='VIEW'" name="last_name"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                        <div style=" position: absolute;
+                                                                top: 0;
+                                                                right: 0;
+                                                                width: 0;
+                                                                height: 0;
+                                                                border-top: 12px solid red;
+                                                                border-left: 12px solid transparent;">
+                                                        </div>
+                                                </div>
+                                                @if(errorMsg['last_name']!=''){
+                                                <small class="error">{{ errorMsg['last_name']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="user_name">User Name</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="user_name" [(ngModel)]="newUser().user_name"
+                                                        (blur)="onGetErrorMsgs('user_name')" placeholder="User Name"
+                                                        [disabled]="pageMode=='VIEW'" name="user_name"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                        <div style=" position: absolute;
+                                                                top: 0;
+                                                                right: 0;
+                                                                width: 0;
+                                                                height: 0;
+                                                                border-top: 12px solid red;
+                                                                border-left: 12px solid transparent;">
+                                                        </div>
+                                                </div>
+                                                @if(errorMsg['user_name']!=''){
+                                                <small class="error">{{ errorMsg['user_name']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="form-group">
+                                                <label>Profile Photo</label>
+                                                <p-fileUpload mode="basic"
+                                                    (onSelect)="onCoverPageFileSelect(upCoverPage, $event,'CoverPage',newUser(),null)"
+                                                    chooseLabel="Upload" [multiple]="false" #upCoverPage
+                                                    accept="image/png, image/jpeg" [fileLimit]="1"
+                                                    [maxFileSize]="2097152" [auto]="true" [disabled]="pageMode=='VIEW'"
+                                                    invalidFileSizeMessageSummary="File too large"
+                                                    invalidFileSizeMessageDetail="Maximum upload size is 2MB">
+                                                </p-fileUpload>
+                                                <div *ngIf="newUser().photo.length>0" class="flex gap-2 flex-wrap mt-2">
+                                                    <div *ngFor="let mDoc of newUser().photo; let imgIndex=index">
+                                                        <div *ngIf="mDoc.is_active==true" class="reg-img-view"
+                                                            style="border: 1px solid #cacaca;padding: 5px; border-radius: 7px;font-size: 11px;">
+                                                            {{ mDoc['file_name'] }}
+                                                            <a class="time-icons time-remove ml-2"
+                                                                href="javascript:return false"><i
+                                                                    *ngIf="pageMode!='VIEW'" class="pi pi-times-circle"
+                                                                    (click)="removeCoverPageImage(mDoc, imgIndex)"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="dept_id">Department</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <p-select id="dept_id" [(ngModel)]="newUser().dept_id"
+                                                        (onBlur)="onGetErrorMsgs('dept_id')" placeholder="Department"
+                                                        (onChange)="onGetErrorMsgs('dept_id')"
+                                                        [options]="depList" [filter]="true"[appendTo]="'body'"
+                                                        [disabled]="pageMode=='VIEW'" name="dept_id"
+                                                        class=" form-control" />
+                                                        <div style=" position: absolute;
+                                                                top: 0;
+                                                                right: 0;
+                                                                width: 0;
+                                                                height: 0;
+                                                                border-top: 12px solid red;
+                                                                border-left: 12px solid transparent;">
+                                                        </div>
+                                                </div>
+                                                @if(errorMsg['dept_id']!=''){
+                                                <small class="error">{{ errorMsg['dept_id']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="designation_id">Designation</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <p-select id="designation_id" [(ngModel)]="newUser().designation_id"
+                                                        (onBlur)="onGetErrorMsgs('designation_id')" placeholder="Designation"
+                                                        (onChange)="onGetErrorMsgs('designation_id')"
+                                                        [options]="desigList" [filter]="true"[appendTo]="'body'"
+                                                        [disabled]="pageMode=='VIEW'" name="designation_id"
+                                                        class=" form-control" />
+                                                        <div style=" position: absolute;
+                                                                top: 0;
+                                                                right: 0;
+                                                                width: 0;
+                                                                height: 0;
+                                                                border-top: 12px solid red;
+                                                                border-left: 12px solid transparent;">
+                                                        </div>
+                                                </div>
+                                                @if(errorMsg['designation_id']!=''){
+                                                <small class="error">{{ errorMsg['designation_id']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="email_id">Email</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="email_id" [(ngModel)]="newUser().email_id"
+                                                        (blur)="onGetErrorMsgs('email_id')" placeholder="Email"
+                                                        [disabled]="pageMode=='VIEW'" name="email_id"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                        <div style=" position: absolute;
+                                                                top: 0;
+                                                                right: 0;
+                                                                width: 0;
+                                                                height: 0;
+                                                                border-top: 12px solid red;
+                                                                border-left: 12px solid transparent;">
+                                                        </div>
+                                                </div>
+                                                @if(errorMsg['email_id']!=''){
+                                                <small class="error">{{ errorMsg['email_id']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="mobile_phone">Mobile No.</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="mobile_phone" type="mobile" [(ngModel)]="newUser().mobile_phone"
+                                                        (blur)="onGetErrorMsgs('mobile_phone')" placeholder="Mobile No."
+                                                        [disabled]="pageMode=='VIEW'" name="mobile_phone"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                        <div style=" position: absolute;
+                                                                top: 0;
+                                                                right: 0;
+                                                                width: 0;
+                                                                height: 0;
+                                                                border-top: 12px solid red;
+                                                                border-left: 12px solid transparent;">
+                                                        </div>
+                                                </div>
+                                                @if(errorMsg['mobile_phone']!=''){
+                                                <small class="error">{{ errorMsg['mobile_phone']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-12">
+                                            <div class="form-group p-fluid">
+                                                <div>
+                                                    <label>Area</label>
+                                                </div>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                <p-autoComplete [(ngModel)]="newUser()['area_name']"
+                                                    [suggestions]="filterModules" [disabled]="pageMode=='VIEW'" (onChange)="onGetErrorMsgs('area_name')"
+                                                    (completeMethod)="filterGroupedAreas($event)" (onBlur)="onGetErrorMsgs('area_name')"
+                                                    placeholder="Search for Area" (onSelect)="onAreaSelect($event)"
+                                                    [showClear]="true" styleClass="p-autocomplete-input d-block">
+                                                    <ng-template let-group #group>
+                                                        <div> {{ group.label}} </div>
+                                                    </ng-template>
+                                                </p-autoComplete>
+                                                <div style=" position: absolute;
+                                                                top: 0;
+                                                                right: 0;
+                                                                width: 0;
+                                                                height: 0;
+                                                                border-top: 12px solid red;
+                                                                border-left: 12px solid transparent;">
+                                                        </div>
+                                                </div>
+                                                @if(errorMsg['area_name']!=''){
+                                                    <small class="error">{{ errorMsg['area_name']}}</small>
+                                                    }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="city_name">City</label>
+                                                <input pInputText id="city_name" [(ngModel)]="newUser().city_name"
+                                                    placeholder="City" [disabled]="true" name="city_name"
+                                                    class="form-control" autocomplete="off">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="state_name">State</label>
+                                                <input pInputText id="state_name" [(ngModel)]="newUser().state_name"
+                                                    placeholder="State" [disabled]="true" name="state_name"
+                                                    class="form-control" autocomplete="off">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="country_name">Country</label>
+                                                <input pInputText id="country_name" [(ngModel)]="newUser().country_name"
+                                                    placeholder="Country" [disabled]="true" name="country_name"
+                                                    class="form-control" autocomplete="off">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-8 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="address1">Address</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <textarea pTextarea id="address1" [(ngModel)]="newUser().address1"
+                                                        (blur)="onGetErrorMsgs('address1')"
+                                                        [disabled]="pageMode=='VIEW'" name="address1"
+                                                        class=" form-control" appNospaces></textarea>
+                                                        <div style=" position: absolute;
+                                                                top: 0;
+                                                                right: 0;
+                                                                width: 0;
+                                                                height: 0;
+                                                                border-top: 12px solid red;
+                                                                border-left: 12px solid transparent;">
+                                                        </div>
+                                                </div>
+                                                @if(errorMsg['address1']!=''){
+                                                <small class="error">{{ errorMsg['address1']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <label>Status</label>
+                                            <div class="form-group">
+                                                <p-toggleswitch [(ngModel)]="newUser().is_active" name="status"
+                                                    [disabled]="pageMode=='VIEW' || pageMode=='NEW'" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <table class="table table-striped mt-2">
+                                        <thead>
+                                            <tr>
+                                                <th>Select</th>
+                                                <th>Location</th>
+                                                <th>Role</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (slctdLocRle of newUser().user_role; track $index) {
+                                            @if(slctdLocRle.is_select){
+                                            <tr>
+                                                <td>
+                                                    <!-- class="form-check-input" -->
+                                                    <input type="checkbox" id="select"
+                                                        [(ngModel)]="slctdLocRle.is_select" name="select"
+                                                        [disabled]="pageMode=='VIEW'"
+                                                        (change)="onSelectClick($event,slctdLocRle)" />
+                                                </td>
+                                                <td>
+                                                    {{ slctdLocRle.label }}
+                                                </td>
+                                                <td>
+                                                    <p-multiselect [(ngModel)]="slctdLocRle.role_id" name="role_id"
+                                                        [options]="roleList" [showClear]="true" placeholder="Role"
+                                                        [disabled]="pageMode=='VIEW'||!slctdLocRle.is_select"
+                                                        (onBlur)="onGetErrorMsgs('role_id', slctdLocRle)"
+                                                        (onChange)="onGetErrorMsgs('role_id', slctdLocRle); onRoleChange(slctdLocRle)"
+                                                        class="form-control" />
+                                                    @if(slctdLocRle['role_id_error']){
+                                                    <small class="error">{{ slctdLocRle['role_id_error'] }}</small>
+                                                    }
+                                                </td>
+                                            </tr>
+                                            }
+                                            }@empty{
+                                            <tr style="text-align: center">
+                                                <td colspan="11">No Data Found</td>
+                                            </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    :host ::ng-deep .p-autocomplete-input .p-inputtext {
+        width: 100% !important;
+    }
+</style>

@@ -1,0 +1,161 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row d-flex align-items-center">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                                        <i class="iconify pi pi-arrow-left"></i></a>
+                                    <h3>Compliant ID / Code</h3>
+                                </div>
+                            </div>
+                            @if(false){
+                            <div class="col-md-5 col-12">
+                                <div class="form-right">
+                                    <div class="dropdown dropdown-style1 ms-2">
+                                        <button class="btn btn-light dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            Download
+                                            <i class="iconify pi pi-angle-down"></i>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                                            <li><a class="dropdown-item" href="javascript:;">Download Word</a></li>
+                                            <li><a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="audit-info-cover">
+                            <div class="audit-status">
+                                <div class="row d-flex align-items-center">
+                                    <div class="col-md-6 col-12">
+                                        <div class="left-content">
+                                            <h5>Complaint Raised By {{readOnlyGrievance().updated_at}}</h5>
+                                            @if(readOnlyGrievance().updated_at!=null){
+                                            <p>Last Updated On <strong>{{readOnlyGrievance().updated_at}}</strong></p>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="right-content text-end">
+                                            <p class="mb-1">Status</p>
+                                            @if(readOnlyGrievance().status === 'Investigation'){
+                                            <span class="badge-green">{{readOnlyGrievance().status}}</span>
+                                            }
+                                            @else{
+                                            <span class="badge-red">{{readOnlyGrievance().status}}</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-audit">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th width="30%">Employee ID</th>
+                                        <td>{{readOnlyGrievance().mou_no}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Role</th>
+                                        <td>{{readOnlyGrievance().mou_no}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Type of Compliant</th>
+                                        <td>{{readOnlyGrievance().mou_no}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Compliant Description</th>
+                                        <td>{{readOnlyGrievance().mou_no}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Happened On</th>
+                                        <td>{{readOnlyGrievance().mou_no}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="audit-info-cover2">
+                                <div class="audit-table">
+                                    <div class="audit-heading mb-2 ms-0">
+                                        <h5>CAPA Review </h5>
+                                        <p class="light-text">Written By {{readOnlyGrievance().mou_no}}</p>
+                                    </div>
+                                    <div class="table-audit table-responsive">
+                                        <table class="table table-bordered mb-0">
+                                            <tr>
+                                                <td class="fw500">CAPA</td>
+                                                <td>{{readOnlyGrievance().mou_no}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw500">Action Taken</td>
+                                                <td>{{readOnlyGrievance().mou_no}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw500">Attached Documents</td>
+                                                <td><a href="javascript:;" class="icon-text"><span class="iconify"
+                                                            data-icon="fluent:eye-32-filled"></span> View</a></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                    <div class="table-audit table-responsive mt-2">
+                                        <table class="table table-bordered mb-0">
+                                            <tr>
+                                                <td class="fw500">Comments</td>
+                                                <td>{{readOnlyGrievance().mou_no}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw500">Reviewed By</td>
+                                                <td>{{readOnlyGrievance().mou_no}}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="audit-status mt-3">
+                                    <div class="row">
+                                        <div class="col-md-12 col-12">
+                                            <div class="left-content">
+                                                <h5>Evidence Attached</h5>
+                                                <p>{{readOnlyGrievance().mou_files.length}} evidences found</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="gallery-grid">
+                                    <div class="grid-photo">
+                                        <!-- <a href="/assets/images/photo1.jpg" data-fancybox="gallery">
+                                            <img src="/assets/images/incident2.jpg" alt="Incident 2" />
+                                        </a> -->
+                                        @for(lf of readOnlyGrievance().mou_files;track $index){
+                                        @if(lf.fileOrImageUrl != null ){
+                                        <td colspan="2">
+                                            <p class="document-name">{{lf.file_name}} </p>
+                                            <iframe [src]="lf.fileOrImageUrl" type="application/pdf" width="100%"
+                                                height="100%">
+                                            </iframe>
+                                        </td>
+                                        }
+                                        }@empty{
+                                        <td>
+                                            No Attach Document
+                                        </td>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

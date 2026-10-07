@@ -1,0 +1,122 @@
+@use '../../../variables';
+
+.settings-cover {
+    .settings-content {
+        max-width: 100%;
+        
+        .settings-section {
+            margin-bottom: 25px;
+            
+            &:last-child {
+                margin-bottom: 0;
+            }
+            
+            .section-title {
+                font-size: 16px;
+                font-weight: 600;
+                color: variables.$textBlackPrimary;
+                margin: 0 0 5px;
+            }
+            
+            .settings-list {
+                background: variables.$textWhite;
+                padding: 0;                
+                .settings-item {                    
+                    &:last-child {
+                        border-bottom: none;
+                    }
+                    
+                    .settings-link {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 10px 10px 10px 0;
+                        text-decoration: none;
+                        transition: background-color 0.2s ease;                        
+                        &:hover {
+                            background-color: none !important;                            
+                        }
+                        
+                        .settings-text {
+                            font-size: 14px;
+                            color: variables.$textBlackPrimary;
+                            font-weight: 400;
+                        }
+                        
+                        .settings-arrow {
+                            color: variables.$textDark;
+                            font-size: 16px;
+                        }
+                        
+                        .form-check {
+                            margin-bottom: 0;
+                            
+                            .form-check-input {
+                                width: 40px;
+                                height: 22px;
+                                border-radius: 50px;
+                                background-color: #ddd;
+                                border: none;
+                                box-shadow: none;
+                                position: relative;
+                                cursor: pointer;
+                                
+                                &::before {
+                                    content: "";
+                                    position: absolute;
+                                    top: 2px;
+                                    left: 2px;
+                                    width: 18px;
+                                    height: 18px;
+                                    border-radius: 50%;
+                                    background-color: variables.$textWhite;
+                                    transition: left 0.2s ease;
+                                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                                }
+                                
+                                &:checked {
+                                    background-color: variables.$greenColor;
+                                    
+                                    &::before {
+                                        left: 20px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Logo Preview Styles
+.logo-preview {
+    margin-top: 20px;
+    
+    label {
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+        color: variables.$textBlackPrimary;
+        margin-bottom: 10px;
+    }
+    
+    .preview-container {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        background: #f9f9f9;
+        display: inline-block;
+        max-width: 100%;
+        
+        img {
+            max-width: 200px;
+            max-height: 150px;
+            width: auto;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+    }
+}

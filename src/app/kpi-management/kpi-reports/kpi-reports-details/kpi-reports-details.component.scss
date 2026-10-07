@@ -1,0 +1,20 @@
+// Import variables
+@use '../../../../variables.scss';
+
+.report-card {
+    .audit-status {
+        
+    }
+    .card-whitebox {
+        background: variables.$textWhite;
+        padding: 20px;
+        border-radius: 6px;
+        height: 340px;
+    }
+}
+
+.audit-status.selectflex {
+    .row {
+        align-items: center;
+    }
+}

@@ -1,0 +1,157 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                                        <i class="iconify pi pi-arrow-left"></i>
+                                    </a>
+                                    <h3>{{_hqms.getPageModeContext(pageMode, 'Category Master') }}</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-12">
+                                <div class="form-right">
+                                    <button class="btn btn-dark" [disabled]="pageMode=='VIEW'"
+                                        (click)="onClearClick()">Clear</button>
+                                    <button class="btn btn-primary" [disabled]="pageMode=='VIEW'"
+                                        (click)="onSubmitClick()">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="formbox-left form-lg">
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-3 col-12">
+                                        <div class="flex flex-col gap-1">
+                                            <label for="category_name">Category Name</label>
+                                            <div style="position: relative;display:inline-block;width:100%">
+                                                <input pInputText id="category_name" [(ngModel)]="categoryMaster().category_name"
+                                                    (blur)="onGetErrorMsgs('category_name')" [disabled]="pageMode=='VIEW'"
+                                                    name="category_name" class=" form-control" placeholder="Category Name"
+                                                    autocomplete="off" appNospaces>
+                                                    <div style=" position: absolute;
+                                                    top: 0;
+                                                    right: 0;
+                                                    width: 0;
+                                                    height: 0;
+                                                    border-top: 12px solid red;
+                                                    border-left: 12px solid transparent;">
+                                                </div>
+                                            </div>
+                                            @if(errorMsg['category_name']!=''){
+                                            <small class="error">{{ errorMsg['category_name']}}</small>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-12">
+                                        <div class="flex flex-col gap-1">
+                                            <label for="catgegory_short_code">Category Code</label>
+                                            <div style="position: relative;display:inline-block;width:100%">
+                                                <input pInputText id="catgegory_short_code" [(ngModel)]="categoryMaster().catgegory_short_code"
+                                                    (blur)="onGetErrorMsgs('catgegory_short_code')" [disabled]="pageMode=='VIEW'"
+                                                    name="catgegory_short_code" class=" form-control" placeholder="Category Code"
+                                                    autocomplete="off" appNospaces>
+                                                    <div style=" position: absolute;
+                                                    top: 0;
+                                                    right: 0;
+                                                    width: 0;
+                                                    height: 0;
+                                                    border-top: 12px solid red;
+                                                    border-left: 12px solid transparent;">
+                                                </div>
+                                            </div>
+                                            @if(errorMsg['catgegory_short_code']!=''){
+                                            <small class="error">{{ errorMsg['catgegory_short_code']}}</small>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-12">
+                                        <div class="flex flex-col gap-1">
+                                            <label for="description">Description</label>
+                                            <div style="position: relative;display:inline-block;width:100%">
+                                            <textarea pTextarea id="description" [(ngModel)]="categoryMaster()['description']"
+                                                (blur)="onGetErrorMsgs('description')" rows="10" placeholder="Description"
+                                                [disabled]="pageMode=='VIEW'" name="description" 
+                                                class=" form-control" appNospaces></textarea>
+                                                <div style=" position: absolute;
+                                                top: 0;
+                                                right: 0;
+                                                width: 0;
+                                                height: 0;
+                                                border-top: 12px solid red;
+                                                border-left: 12px solid transparent;">
+                                            </div>
+                                            </div>
+                                            @if(errorMsg['description']!=''){
+                                            <small class="error">{{ errorMsg['description']}}</small>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-12">
+                                        <label>Status</label>
+                                        <div class="form-group">
+                                            <p-toggleswitch [(ngModel)]="categoryMaster().is_active" name="status"
+                                                [disabled]="pageMode=='VIEW' || pageMode=='NEW'" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .editing {
+        color: yellow !important;
+    }
+
+    .edited {
+        color: green !important;
+    }
+
+    .head_flex {
+        display: flex;
+        gap: 5px;
+        justify-content: space-between;
+    }
+
+    .s-flex {
+        display: flex;
+        gap: 3px;
+        align-items: center;
+    }
+
+    .audit-table .audit-heading {
+        margin-left: 0px;
+    }
+
+    .action-edit ul li:hover {
+        padding: 0px 5px;
+        background: #fff;
+        border-radius: 6px;
+
+
+    }
+
+    .action-edit ul li {
+        padding: 0px 5px;
+        font-size: 16px;
+        margin-right: 0px;
+    }
+
+    .pi {
+        font-size: 11px;
+    }
+</style>

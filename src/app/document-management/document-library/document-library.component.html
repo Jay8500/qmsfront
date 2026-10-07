@@ -1,0 +1,82 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="card-style2">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col-md-6 col-12">
+            <h3 class="main-heading mb-0">Document Library</h3>
+            <p class="text-muted mb-0 dm-subtitle">Approved SOPs, policies and manuals - latest approved version, read only</p>
+          </div>
+          <div class="col-md-6 col-12 text-end">
+            <span class="dl-count">{{ filtered().length }} of {{ documents().length }} documents</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row g-2 mb-3">
+          <div class="col-md-5 col-12">
+            <input pInputText class="form-control" placeholder="Search name, ID, purpose ..."
+              [ngModel]="filters().search" (ngModelChange)="setFilter('search', $event)" autocomplete="off">
+          </div>
+          <div class="col-md-3 col-6">
+            <p-select [options]="departmentList" [ngModel]="filters().department_id"
+              (ngModelChange)="setFilter('department_id', $event)" placeholder="All departments" [filter]="true"
+              [showClear]="true" styleClass="w-full" />
+          </div>
+          <div class="col-md-3 col-6">
+            <p-select [options]="documentTypeList" [ngModel]="filters().document_type_id"
+              (ngModelChange)="setFilter('document_type_id', $event)" placeholder="All types" [showClear]="true"
+              styleClass="w-full" />
+          </div>
+          <div class="col-md-1 col-12">
+            <button class="btn btn-light w-100" (click)="clearFilters()">Clear</button>
+          </div>
+        </div>
+
+        <div class="row g-3">
+          @for(d of filtered(); track d.document_id){
+          <div class="col-xl-4 col-md-6 col-12">
+            <div class="dl-card">
+              <div class="dl-card-head">
+                <span class="dl-type">{{ d.document_type || 'Document' }}</span>
+                <span class="dl-ver">v{{ d.version_no }}</span>
+              </div>
+              <h5 class="dl-title">{{ d.document_name }}</h5>
+              <div class="dl-meta">{{ d.document_no }} · {{ d.department_name || 'All departments' }}</div>
+              @if(d.purpose){ <p class="dl-purpose">{{ d.purpose }}</p> }
+              <div class="dl-meta">Approved {{ d.approved_at | appDate }}
+                @if(d.review_date){ · Review {{ d.review_date | appDate:'date' }} }
+                · <i class="pi pi-eye"></i> {{ d.view_count || 0 }}</div>
+              <ul class="dl-files">
+                @for(f of d.files; track f.file_id){
+                <li>
+                  <i class="pi pi-file"></i>
+                  <span class="dl-file-name" [title]="f.file_name">{{ f.file_name }}</span>
+                  <a href="javascript:;" class="link-blue ms-auto" (click)="onView(d, f)">View</a>
+                  @if(d.can_download){
+                  <a href="javascript:;" class="link-blue ms-2" (click)="onDownload(d, f)"><i class="pi pi-download"></i></a>
+                  }
+                </li>
+                }
+              </ul>
+              @if(!d.can_download){
+              <small class="text-muted"><i class="pi pi-lock"></i> View only</small>
+              }
+            </div>
+          </div>
+          } @empty {
+          <div class="col-12">
+            <div class="dl-empty">
+              @if(loaded()){
+              No approved documents to show. Documents appear here after their final approval in Version Control.
+              } @else {
+              Loading ...
+              }
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

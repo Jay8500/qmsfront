@@ -1,0 +1,247 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                                        <i class="iconify pi pi-arrow-left"></i>
+                                    </a>
+                                    <h3> {{_hqms.getPageModeContext(pageMode, 'License Master') }}</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-12">
+                                <div class="form-right">
+                                    <button class="btn btn-dark" [disabled]="pageMode=='VIEW'"
+                                        (click)="onClearClick()">Clear</button>
+                                    <button class="btn btn-primary" [disabled]="pageMode=='VIEW'"
+                                        (click)="onSubmitClick()">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mt-4">
+                            <div class="col-lg-6 col-md-12 col-12">
+                                <div class="formbox-left legends form-lg">
+                                    <div class="form-title">
+                                        License Details
+                                    </div>
+                                    <form>
+                                        <div class="row">
+                                            <div class="col-md-6 col-12">
+                                                <div class="flex flex-col gap-1">
+                                                    <label for="license_name">License Name</label>
+                                                    <div style="position: relative;display:inline-block;width:100%">
+                                                        <input pInputText id="license_name" placeholder="License Name"
+                                                            [(ngModel)]="createLicenseMaster().license_name"
+                                                            (blur)="onGetErrorMsgs('license_name')"
+                                                            [disabled]="pageMode=='VIEW'" name="license_name"
+                                                            class=" form-control" autocomplete="off"
+                                                            appNospaces>
+                                                            <div style=" position: absolute;
+                                                                top: 0;
+                                                                right: 0;
+                                                                width: 0;
+                                                                height: 0;
+                                                                border-top: 12px solid red;
+                                                                border-left: 12px solid transparent;">
+                                                        </div>
+                                                    </div>
+                                                    @if(errorMsg['license_name']!=''){
+                                                    <small class="error">{{ errorMsg['license_name'] }}</small>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="flex flex-col gap-1">
+                                                    <label for="category_type_id">Category Type</label>
+                                                    <div style="position: relative;display:inline-block;width:100%">
+                                                        <p-select id="category_type_id" placeholder="Category Type"
+                                                            [(ngModel)]="createLicenseMaster().category_type_id"
+                                                            (onBlur)="onGetErrorMsgs('category_type_id')"
+                                                            (onChange)="onGetErrorMsgs('category_type_id')"
+                                                            [disabled]="pageMode=='VIEW'" name="category_type_id"
+                                                            [options]="categoryTypeList" [filter]="true"
+                                                            [showClear]="true" class=" form-control" />
+                                                            <div style=" position: absolute;
+                                                                top: 0;
+                                                                right: 0;
+                                                                width: 0;
+                                                                height: 0;
+                                                                border-top: 12px solid red;
+                                                                border-left: 12px solid transparent;">
+                                                        </div>
+                                                    </div>
+                                                    @if(errorMsg['category_type_id']!=''){
+                                                    <small class="error">{{ errorMsg['category_type_id'] }}</small>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="flex flex-col gap-1">
+                                                    <label for="renewal_frequency_months">Renewal Frequency
+                                                        Months</label>
+                                                    <div style="position: relative;display:inline-block;width:100%">
+                                                        <input type="number" id="renewal_frequency_months" placeholder="Renewal Frequency Months"
+                                                            [(ngModel)]="createLicenseMaster().renewal_frequency_months"
+                                                            (blur)="onGetErrorMsgs('renewal_frequency_months')"
+                                                            [disabled]="pageMode=='VIEW'"
+                                                            name="renewal_frequency_months" class="form-control">
+                                                            <div style=" position: absolute;
+                                                                top: 0;
+                                                                right: 0;
+                                                                width: 0;
+                                                                height: 0;
+                                                                border-top: 12px solid red;
+                                                                border-left: 12px solid transparent;">
+                                                        </div>
+                                                    </div>
+                                                    @if(errorMsg['renewal_frequency_months']!=''){
+                                                    <small class="error">{{ errorMsg['renewal_frequency_months']
+                                                        }}</small>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-12">
+                                                <div class="flex flex-col gap-1">
+                                                    <label for="description">Description</label>
+                                                    <div style="position: relative;display:inline-block;width:100%">
+                                                        <textarea pTextarea id="description" placeholder="Description"
+                                                            [(ngModel)]="createLicenseMaster().description"
+                                                            (blur)="onGetErrorMsgs('description')" rows="10"
+                                                            [disabled]="pageMode=='VIEW'" name="description"
+                                                            class=" form-control"
+                                                            appNospaces></textarea>
+                                                            <div style=" position: absolute;
+                                                                top: 0;
+                                                                right: 0;
+                                                                width: 0;
+                                                                height: 0;
+                                                                border-top: 12px solid red;
+                                                                border-left: 12px solid transparent;">
+                                                        </div>
+                                                    </div>
+                                                    @if(errorMsg['description']!=''){
+                                                    <small class="error">{{ errorMsg['description'] }}</small>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label>Status</label>
+                                                <div class="form-group">
+                                                    <p-toggleswitch [(ngModel)]="createLicenseMaster().is_active"
+                                                        name="status"
+                                                        [disabled]="pageMode=='VIEW' || pageMode=='NEW'" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-12 col-12">
+                                <div class="formbox-left legends form-lg">
+                                    <div class="form-title">
+                                        Criteria Setup
+                                    </div>
+                                    <form>
+                                        <div class="form-lg emplist-cover mt-3">
+                                            <div class="audit-heading text-md mb-2">
+                                                <h5>License Criteria Checklist</h5>
+                                                <p>{{ activeCnt}} Criteria</p>
+                                            </div>
+                                            <div class="row empfilter gx-2">
+                                                <div class="col-md-9 col-12">
+                                                    <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText [(ngModel)]="createLicenseMaster().criteriaName" (blur)="onGetErrorMsgs('criteriaName')"
+                                                        [disabled]="pageMode=='VIEW'" name="criteriaName" placeholder="Criteria Name"
+                                                        class="form-control" autocomplete="off" appNospaces>
+                                                        <div style=" position: absolute;
+                                                                top: 0;
+                                                                right: 0;
+                                                                width: 0;
+                                                                height: 0;
+                                                                border-top: 12px solid red;
+                                                                border-left: 12px solid transparent;">
+                                                        </div>
+                                                        </div>
+                                                        @if(errorMsg['criteriaName']==""){
+                                                            <small class="error">{{errorMsg['criteriaName']}}</small>
+                                                        }
+                                                </div>
+                                                <div class="col-md-3 col-12">
+                                                    <button class="btn btn-primary" (click)="onCriteriaAdd()"
+                                                        [disabled]="[null,''].includes(createLicenseMaster().criteriaName)||pageMode=='VIEW'">
+                                                        Add</button>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="employee-table table-style1 table-responsive tablemd1 criteria-table table-white">
+                                                <table class="table table-bordered table-white mb-0">
+                                                    <tbody>
+                                                        @for (licence of createLicenseMaster().license_criteria;
+                                                        track licence;let addIndex=$index) {
+                                                        <tr>
+                                                            @if(licence.is_active){
+                                                            <td style="width:85%">
+                                                                @if(!licence.is_edit_click){
+                                                                {{ licence['criteria_name'] }}
+                                                                }
+                                                                @else{
+                                                                <input pInputText
+                                                                    [(ngModel)]="licence['criteria_name']"
+                                                                    [disabled]="pageMode=='VIEW'"
+                                                                    name="criteria_name_{{addIndex}}"
+                                                                    class="form-control" autocomplete="off"
+                                                                    appNospaces>
+                                                                }
+                                                            </td>
+                                                            <td style="width:15%">
+                                                                @if(pageMode=='NEW'||pageMode=='EDIT'){
+                                                                <a href="javascript:;"
+                                                                    (click)="editItem(licence,addIndex)">
+                                                                    <!-- < span class="iconify" data-icon="ri:edit-line"></span> -->
+                                                                    <i class="iconify pi pi-pencil"
+                                                                        [class.editing]="licence.is_edit_click"
+                                                                        [class.edited]="!licence.is_edit_click"></i>
+                                                                </a>
+
+                                                                <a href="javascript:;"
+                                                                    (click)="removeAddedItem(licence,addIndex)">
+                                                                    <!-- <span class="iconify" data-icon="material-symbols:delete-outline"></span> -->
+                                                                    <i class="iconify pi pi-trash"
+                                                                        style="color:red"></i>
+                                                                </a>
+                                                                }
+                                                            </td>
+                                                            }
+                                                        </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .editing {
+        color: yellow !important;
+    }
+
+    .edited {
+        color: green !important;
+    }
+</style>

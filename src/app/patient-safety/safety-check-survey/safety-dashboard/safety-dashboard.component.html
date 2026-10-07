@@ -1,0 +1,356 @@
+<section class="wrapper-body">
+  <div class="container-fluid">
+    <section class="status-card">
+      <div class="main-heading-link">
+        <h3 class="main-heading">Safety Culture Survey</h3>
+        <div class="btn-group-row">
+          <div class="dropdown dropdown-style1 filterDropdown">
+            <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="iconify icon-calc pi pi-calendar"></i>
+              {{ selectedRange }}
+              <i class="iconify pi pi-angle-down"></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 7 days')">Last 7 days</a></li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 30 days')">Last 30 days</a></li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last Month')">Last Month</a></li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 6 Months')">Last 6 Months</a>
+              </li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last Year')">Last Year</a></li>
+            </ul>
+          </div>
+          <a href="javascript:;" class="btn btn-success" (click)="onPageRoute('NEW',null)">
+            <span class="iconfiy"> <i class=" pi pi-plus-circle" style="margin-right: 2px;"></i></span>
+            New Safety Culture Master </a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg1">
+            <div class="card-grid-header">
+              <h5>Culture <br /> Survey</h5>
+              <h3>{{ stats().culture_surveys_count }}</h3>
+              <div class="icon">
+                <!-- <span class="iconify" data-icon="covid:vaccine-protection-syringe"></span> -->
+                <i class="iconify pi pi-copy primeicons-size"></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{ stats().culture_surveys_last_updated || 'N/A' }}</h5>
+                </div>
+                <div class="col-md-5 text-end col-5">
+                  <button class="btn btn-light">View Report</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg3">
+            <div class="card-grid-header">
+              <h5>Overall <br /> Feedbacks</h5>
+              <h3>{{ stats().overall_feedbacks_count }}</h3>
+              <div class="icon">
+                <!-- <span class="iconify" data-icon="fluent:person-12-regular"></span> -->
+                <i class="iconify pi pi-search-plus primeicons-size"></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{ stats().overall_feedbacks_last_updated || 'N/A' }}</h5>
+                </div>
+                <div class="col-md-5 col-5 text-end">
+                  <button class="btn btn-light">View Report</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg2">
+            <div class="card-grid-header">
+              <h5>Positive <br /> Feedbacks(%)</h5>
+              <h3>{{ stats().positive_feedbacks_percentage }}</h3>
+              <div class="icon">
+                <!-- <span class="iconify" data-icon="fluent:person-12-regular"></span> -->
+                <i class="iconify pi pi-calendar-clock primeicons-size"></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{ stats().positive_feedbacks_last_updated || 'N/A' }}</h5>
+                </div>
+                <div class="col-md-5 col-5 text-end">
+                  <button class="btn btn-light">View All</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg4">
+            <div class="card-grid-header">
+              <h5>Negative <br /> Feedbacks (%)</h5>
+              <h3>{{ stats().negative_feedbacks_percentage }}</h3>
+              <div class="icon">
+                <!-- <span class="iconify" data-icon="fluent:person-feedback-20-regular"></span> -->
+                <i class="iconify pi pi-verified "></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{ stats().negative_feedbacks_last_updated || 'N/A' }}</h5>
+                </div>
+                <div class="col-md-5 col-5 text-end">
+                  <button class="btn btn-light">View All</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="chart-section mt-3 mb-3">
+      <div class="row">
+        <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+          <div class="card-style1 piechart">
+            <div class="card-header">
+              Role Wise Feedbacks
+            </div>
+            <div class="card-body">
+              <div class="chart-wrapper">
+                <!-- <app-type-riskchart #riskChart></app-type-riskchart> -->
+                <app-score-wise-reports #riskChart></app-score-wise-reports>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+          <div class="card-style1 barchart">
+            <div class="card-header">
+              Culture Survey Report
+            </div>
+            <div class="card-body">
+              <app-score-wise-reports #depWiseRiskChart></app-score-wise-reports>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+          <div class="card-style1 barchart">
+            <div class="card-header">
+              Participants Report
+            </div>
+            <div class="card-body">
+              <app-kpi-indicators #indcWseRpt></app-kpi-indicators>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="report-table mt-3 mb-3">
+      <div class="row">
+        <div class="col-md-12 col-12">
+          <div class="card-style2">
+            <div class="card-header backoption">
+              <div class="row">
+                <div class="col-md-5 col-12">
+                  <div class="heading-left">
+                    <h3>Safety Culture Survey List</h3>
+                  </div>
+                </div>
+                <div class="col-md-7 col-12">
+                  <div class="form-right">
+                    <a href="javascript:;" ngbTooltip="Filter" placement="top" class="icon-btn-square"
+                      (click)="filterToggle()">
+                      <i class="iconify pi pi-sliders-h"></i>
+                    </a>
+                    <!-- <a href="javascript:;" class="btn btn-success uploadBtn ms-2" data-bs-toggle="modal"
+                      data-bs-target="#vaccineDataModal"><span class="iconify"
+                        data-icon="material-symbols:upload-rounded"></span> Upload Data </a> -->
+                    <div class="dropdown dropdown-style1 ms-2">
+                      <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Download Report
+                        <i class="iconify pi pi-angle-down"></i>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li
+                          [DCSV]="{ param :params,screenName:'Safety Culture Survey',data : safetyGrid.length,methodName : 'fnSafetyCultureSurveyApi' }">
+                          <a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                        <li
+                          [PDF]="{ param :params,screenName:'Safety Culture Survey',data : safetyGrid.length,methodName : 'fnSafetyCultureSurveyApi' }">
+                          <a class="dropdown-item" href="javascript:;">Download Pdf</a></li>
+                        <li
+                          [EXCEL]="{ param :params,screenName:'Safety Culture Survey',data : safetyGrid.length,methodName : 'fnSafetyCultureSurveyApi'  }">
+                          <a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            @if (showFilter) {
+            <div class="filter-box form-sm">
+              <div class="row">
+                <div class="col-md-11 col-12">
+                  <div class="row gx-2">
+                    <div class="col-md-2 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="survey_name">By Survey Name</label>
+                        <p-select id="survey_name" [(ngModel)]="surveyFilters().survey_name" name="survey_name"
+                          [options]="surveyList" [filter]="true" [showClear]="true"
+                          (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="vaccinStatus">By Status</label>
+                        <p-select id="vaccinStatus" [(ngModel)]="surveyFilters().status" name="vaccinStatus"
+                          [options]="statusList" [filter]="true" [showClear]="true"
+                          (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1 col-12 ps-0">
+                  <button class="btn btn-primary w-100" (click)="onFilterClick()">Filter</button>
+                  <button class="btn btn-dark" (click)="onFilterClear(null)">Clear</button>
+                </div>
+              </div>
+            </div>
+            }
+            <div class="card-body table-style1 table-responsive radius-4">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">S.No</th>
+                    <th width="15%" scope="col" sortable="survey_name" (sort)="onSort($event)">
+                      Culture Survey Name
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th width="20%" scope="col">
+                      Participants
+                    </th>
+                    <th width="15%" scope="col">
+                      From Date
+                    </th>
+                    <th width="15%" scope="col">
+                      To Date
+                    </th>
+                    <th width="15%" scope="col">
+                      Total Participants
+                    </th>
+                    <th width="15%" scope="col">
+                      Total Satisfactory
+                    </th>
+                    <th scope="col" sortable="created_by" (sort)="onSort($event)">
+                      Created By
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="created_at" (sort)="onSort($event)">
+                      Created on
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="updated_by" (sort)="onSort($event)">
+                      Modified By
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="updated_at" (sort)="onSort($event)">
+                      Last Modified
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th width="15%" scope="col">
+                      Status  
+                    </th>
+                    <th scope="col" class="text-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (prp of safetyGrid; track prp.id) {
+                  <tr>
+                    <td scope="row">{{ prp.id }}</td>
+                    <td>{{ prp.survey_name }}</td>
+                    <td>{{ prp.participants }}</td>
+                    <td>{{ prp.from_date| date:'dd MMM yyyy' }}</td>
+                    <td>{{ prp.to_date| date:'dd MMM yyyy' }}</td>
+                    <td>{{ prp.total_participants }}</td>
+                    <td>{{ prp.total_satisfactory_pct }}</td>
+                    <td>{{ prp.created_by }}</td>
+                    <td>{{ prp.created_at }}</td>
+                    <td>{{ prp.updated_by }}</td>
+                    <td>{{ prp.updated_at }}</td>
+                    <td [ngClass]="{'text-success': prp.status === 'Created'}">
+                      {{ prp.status }}
+                    </td>
+                    <td>
+                      <div class="actiondot-dropdown float-end">
+                        <div class="btn-group ms-2">
+                          <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="iconify pi pi-ellipsis-h"></i>
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" (click)="onPageRoute('VIEW',prp)">
+                                View
+                              </a>
+                            </li>
+                            @if( prp.status == 'Created'){
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" (click)="onPageRoute('CAPA',prp)">
+                                Write Capa
+                              </a>
+                            </li>
+                            }
+                            @if( prp.status == 'Pending'){
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" (click)="onPageRoute('REVIEWCAPA',prp)">
+                                Review Capa
+                              </a>
+                            </li>
+                            }
+                          </ul>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  }
+                </tbody>
+              </table>
+              <nav aria-label="Page navigation pagination text-end">
+                <ul class="pagination d-flex justify-content-end">
+                  <li class="page-adtInfo next" [class.disabled]="pageNators().pageNo === 1">
+                    <a class="page-link cursor" aria-label="Previous" (click)="changePage(pageNators().pageNo-1)">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                  @for(p of pageNumbers();track p){
+                  <li class="page-adtInfo" [class.active]="pageNators().pageNo === p">
+                    <a class="page-link cursor" (click)="changePage(p)">{{p}}</a>
+                  </li>
+                  }
+                  <li class="page-adtInfo prev" [class.disabled]="pageNators().pageNo === pageNumbers().length">
+                    <a class="page-link cursor" aria-label="Next" (click)="changePage(pageNators().pageNo+1)">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>

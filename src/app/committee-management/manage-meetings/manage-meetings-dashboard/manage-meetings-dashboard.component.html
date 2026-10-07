@@ -1,0 +1,454 @@
+<section class="wrapper-body manage-meetings-dashboard">
+  <div class="container-fluid">
+    <section class="status-card">
+      <div class="main-heading-link">
+        <h3 class="main-heading">Manage Meeting MoM's</h3>
+        <div class="btn-group-row">
+          <div class="dropdown dropdown-style1 filterDropdown">
+            <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="iconify icon-calc pi pi-calendar"></i>
+              {{ selectedRange }}
+              <i class="iconify pi pi-angle-down"></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 7 days')">Last 7 days</a></li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 30 days')">Last 30 days</a></li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last Month')">Last Month</a></li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 6 Months')">Last 6 Months</a>
+              </li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last Year')">Last Year</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg1">
+            <div class="card-grid-header">
+              <h5>Total <br /> Committee</h5>
+              <h3>{{  stats().total_committee }}</h3>
+              <div class="icon">
+                <i class="iconify pi pi-copy primeicons-size"></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{  stats().total_committee_last_updated || 'N/A' }}</h5>
+                </div>
+                <div class="col-md-5 text-end col-5">
+                  <button class="btn btn-light">View Report</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg2">
+            <div class="card-grid-header">
+              <h5>MOM <br /> Created</h5>
+              <h3>{{  stats().mom_created }}</h3>
+              <div class="icon">
+                <i class="iconify pi pi-search-plus primeicons-size"></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{  stats().mom_created_last_updated || 'N/A' }}</h5>
+                </div>
+                <div class="col-md-5 text-end col-5">
+                  <button class="btn btn-light">View Report</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg3">
+            <div class="card-grid-header">
+              <h5>Scheduled <br /> Meetings</h5>
+              <h3>{{  stats().scheduled_meetings }}</h3>
+              <div class="icon">
+                <i class="iconify pi pi-calendar-clock primeicons-size"></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{  stats().scheduled_meetings_last_updated || 'N/A' }}</h5>
+                </div>
+                <div class="col-md-5 text-end col-5">
+                  <button class="btn btn-light">View All</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg4">
+            <div class="card-grid-header">
+              <h5>Completed <br /> Meetings</h5>
+              <h3>{{  stats().completed_meetings }}</h3>
+              <div class="icon">
+                <i class="iconify pi pi-verified "></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{  stats().completed_meetings_last_updated|| 'N/A'  }}</h5>
+                </div>
+                <div class="col-md-5 text-end col-5">
+                  <button class="btn btn-light">View All</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="report-table mt-3 mb-3">
+      <div class="row">
+        <div class="col-md-12 col-12">
+          <div class="card-style2">
+            <div class="card-header backoption">
+              <div class="row">
+                <div class="col-md-6 col-12">
+                  <div class="heading-left">
+                    <h3>Meeting List</h3>
+                  </div>
+                </div>
+                <div class="col-md-6 col-12">
+                  <div class="form-right">
+                    <a href="javascript:;" ngbTooltip="Filter" placement="top" class="icon-btn-square"
+                      (click)="filterToggle()">
+                      <i class="iconify pi pi-sliders-h"></i>
+                    </a>
+                    <div class="dropdown dropdown-style1">
+                      <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Download Report
+                        <i class="iconify pi pi-angle-down"></i>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li
+                          [DCSV]="{ param :params,screenName:'Manage Mom',data : ManageMeetGrid.length,methodName : 'fnMomApi' }">
+                          <a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                        <li
+                          [PDF]="{ param :params,screenName:'Manage Mom',data : ManageMeetGrid.length,methodName : 'fnMomApi' }">
+                          <a class="dropdown-item" href="javascript:;">Download Pdf</a>
+                        </li>
+                        <li
+                          [EXCEL]="{ param :params,screenName:'Manage Mom',data : ManageMeetGrid.length,methodName : 'fnMomApi'  }">
+                          <a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            @if (showFilter) {
+            <div class="filter-box form-sm">
+              <div class="row">
+                <div class="col-md-10 col-12">
+                  <div class="row gx-2">
+                    <div class="col-md-2 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="meeting_code">By Meeting ID</label>
+                        <p-select id="meeting_code" [(ngModel)]="ManageMeetFilters().meeting_code" name="meeting_code"
+                          [options]="meetingIdList" [filter]="true" [showClear]="true"
+                          (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="meetingName">By Meeting Name</label>
+                        <p-select id="meetingName" [(ngModel)]="ManageMeetFilters().meetingName" name="meetingName"
+                          [options]="meetingNameList" [filter]="true" [showClear]="true"
+                          (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="status">By Meeting Status</label>
+                        <p-select id="status" [(ngModel)]="ManageMeetFilters().status" name="status"
+                          [options]="momStatusList" [filter]="true" [showClear]="true"
+                          (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2 col-12">
+                  <button class="btn btn-primary w-100" (click)="onFilterClick()">Filter</button>
+                  <button class="btn btn-dark" (click)="onFilterClear(null)">Clear</button>
+                </div>
+              </div>
+            </div>
+            }
+
+            <div class="card-body table-style1 table-responsive radius-4">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">S.No</th>
+                    <th scope="col" sortable="meeting_code" (sort)="onSort($event)">
+                      Meeting ID
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="meetingName" (sort)="onSort($event)">
+                      Meeting Name
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="meetingDate" (sort)="onSort($event)">
+                      Meeting Date
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="meetingPeriod" (sort)="onSort($event)">
+                      Meeting Period
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="committee_name" (sort)="onSort($event)">
+                      Committee
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <!-- <th scope="col" sortable="assignedTo" (sort)="onSort($event)">
+                      Assigned To
+                      <i class="iconify pi pi-sort"></i>
+                    </th> -->
+                    <th scope="col" sortable="created_by" (sort)="onSort($event)">
+                      Created By
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="created_at" (sort)="onSort($event)">
+                      Created on
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="updated_by" (sort)="onSort($event)">
+                      Modified By
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="updated_at" (sort)="onSort($event)">
+                      Last Modified
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="status" (sort)="onSort($event)">
+                      Meeting Status
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" class="text-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (mngMom of ManageMeetGrid; track mngMom.id) {
+                  <tr>
+                    <td scope="row">{{ mngMom.id }}</td>
+                    <td>{{ mngMom.meeting_code }}</td>
+                    <td>{{ mngMom.meetingName }}</td>
+                    <td>{{ mngMom.meetingDate }}</td>
+                    <td>{{ mngMom.meetingPeriod }}</td>
+                    <td>{{ mngMom.committee_name }}</td>
+                    <!-- <td>{{ mngMom.assignedTo }}</td> -->
+                    <td>{{ mngMom.created_by }}</td>
+                    <td>{{ mngMom.created_at }}</td>
+                    <td>{{ mngMom.updated_by }}</td>
+                    <td>{{ mngMom.updated_at }}</td>
+                    <td [ngClass]="{
+                      'scheduled': mngMom.status === 'Scheduled',
+                      'rescheduled': mngMom.status === 'Rescheduled',
+                      'ongoing': mngMom.status === 'Ongoing',
+                      'pending-approval': mngMom.status === 'Pending Approval',
+                      'completed': mngMom.status === 'Completed',
+                      'momaapproval': mngMom.status === 'Mom Approval',
+                      'cancelled': mngMom.status === 'Mom Rejected',
+                    }">
+                      {{ mngMom.status }}
+                    </td>
+                    <td>
+                      <div class="actiondot-dropdown float-end">
+                        <div class="btn-group ms-2">
+                          @if(mngMom.status == 'Scheduled' || mngMom.status == 'Rescheduled' ){
+                          <button type="button" class="btn audit-play cursor"
+                            (click)="onPageRoute('MEETINGATTENDANCE',mngMom)" pTooltip="Mark Attendance"
+                            tooltipPosition="left">
+                            <i class="iconify pi pi-users"></i>
+                          </button>
+                          }
+                          @if(mngMom.status == 'Ongoing'){
+                          <button type="button" class="btn audit-play cursor" (click)="onPageRoute('CREATEMOM',mngMom)"
+                            pTooltip="Create MOM" tooltipPosition="left">
+                            <i class="iconify pi pi-pen-to-square"></i>
+                          </button>
+                          }
+                          @if(mngMom.status == 'Completed'){
+                          <button type="button" class="btn audit-play cursor" (click)="onPageRoute('VIEW',mngMom)"
+                            pTooltip="Completed" tooltipPosition="left">
+                            <i class="iconify pi pi-verified"></i>
+                          </button>
+                          }
+                          @if(mngMom.status == 'Mom Approval'){
+                          <button type="button" class="btn " aria-expanded="false">
+                            <i class="iconify pi pi-check-circle" (click)="onMomApprovalClick(mngMom)"></i>
+                          </button>
+                          }
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  }
+                </tbody>
+              </table>
+              <nav aria-label="Page navigation pagination text-end">
+                <ul class="pagination d-flex justify-content-end">
+                  <li class="page-item next" [class.disabled]="pageNators().pageNo === 1">
+                    <a class="page-link" aria-label="Previous" (click)="changePage(pageNators().pageNo-1)">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                  @for(p of pageNumbers();track p){
+                  <li class="page-item" [class.active]="pageNators().pageNo === p">
+                    <a class="page-link" (click)="changePage(p)">{{p}}</a>
+                  </li>
+                  }
+                  <li class="page-item prev" [class.disabled]="pageNators().pageNo === pageNators().totalPages">
+                    <a class="page-link" aria-label="Next" (click)="changePage(pageNators().pageNo+1)">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>
+
+
+<p-dialog [modal]="true" [(visible)]="is_show_mom" position="right" [style]="{height:'100vh',width:'100vh'}"
+  (onHide)="onCloseDialog()">
+  <ng-template #header>
+    <div class="inline-flex items-center justify-center gap-2">
+      <span>{{selectedMeeting['meeting_name']}}</span>
+    </div>
+  </ng-template>
+  <div class="form-section mb-1">
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>
+            Decision
+          </th>
+          <th>
+            Action Points
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (decs of selectedMeeting['mom_decision']; track $index;let decIn = $index) {
+        <tr>
+          <td [attr.row_span]="decs['mom_action'].length">{{decIn+1}}</td>
+          <td [attr.row_span]="decs['mom_action'].length">
+            {{decs['decision_text'] }}
+          </td>
+          <td>
+            <table>
+              <thead>
+                <tr>
+                  <th>S.No</th>
+                  <th>Task</th>
+                  <th>Assignment</th>
+                  <th>Due date</th>
+                  <th>Attachments</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              @for(acp of decs['mom_action'];track $index;let acpIn = $index )
+              {
+              <tr>
+                <td>{{ acpIn+1 }}</td>
+                <td>
+                  {{ acp['action_text'] }}
+                </td>
+                <td>
+                  {{acp.assigned_to}}
+
+                </td>
+                <td>
+                  {{acp.planned_closure_date}}
+                </td>
+                <td>
+                  <div class="upload-image">
+                    <div class="row">
+                      <div [class]=" 'col-12' ">
+                        <div *ngIf="acp.mom_act_documents.length>0" class="flex gap-2 flex-wrap mt-2">
+                          <div *ngFor="let ad of acp.mom_act_documents; let imgIndex=index">
+                            <div *ngIf="ad.is_active==true" class="reg-img-view"
+                              style="border: 1px solid #cacaca;padding: 5px; border-radius: 7px;font-size: 11px;">
+                              {{ ad['file_name'] }}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  {{ acp.action_status}}
+                </td>
+              </tr>
+              }
+            </table>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+
+
+  </div>
+  <ng-template #footer>
+    @for(agnda of agendaAppStatus;track $index){
+    <p-button [label]="agnda['label']" [severity]="agnda['severity']" (click)="momStatusClick(agnda['value']);" />
+    }
+  </ng-template>
+</p-dialog>
+
+<style>
+  .scheduled {
+    color: #3B82F6
+  }
+
+  .rescheduled {
+    color: #FF9800
+  }
+
+  .ongoing {
+    color: #F59E0B
+  }
+
+  .pending-approval {
+    color: #A855F7
+  }
+
+  .completed {
+    color: #10B981
+  }
+
+  .momaapproval {
+    color: rgb(182, 185, 16)
+  }
+
+  .cancelled {
+    color: red
+  }
+</style>

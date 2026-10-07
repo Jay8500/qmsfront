@@ -1,0 +1,186 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="row">
+      <div class="col-md-12 col-12">
+        <div class="card-style2">
+          <div class="card-header backoption table-search">
+            <div class="row">
+              <div class="col-md-5 col-12">
+                <div class="heading-left">
+                  <a href="javascript:;" class="icon-btn-square" (click)="goBack()"><span class="iconify" data-icon="famicons:arrow-back-outline"></span></a>
+                  <h3>Care Continuity History</h3>
+                </div>
+              </div>
+              <div class="col-md-7 col-12">
+                <div class="form-right">
+                  <a href="javascript:;" ngbTooltip="Filter" placement="top" class="icon-btn-square" (click)="filterToggle()"><span class="iconify" data-icon="mage:filter"></span></a>
+                  <div class="dropdown dropdown-style1 ms-2">
+                    <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Download Report <span class="iconify" data-icon="akar-icons:chevron-down"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                      <li><a class="dropdown-item" href="javascript:;">Download Word</a></li>
+                      <li><a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          @if (showFilter) {
+            <div class="filter-box form-sm">
+              <div class="row">
+                <div class="col-md-11 col-12">
+                  <div class="row gx-2">
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                        <input class="form-control" placeholder="By UHID" />
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                        <select class="form-select">
+                          <option>By Unit</option>
+                          <option>Orthopedic</option>
+                          <option>Oncology</option>
+                          <option>Rehabilitation</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                        <select class="form-select">
+                          <option>By Diagnosis </option>
+                          <option>Leg Fracture</option>
+                          <option>Pacemaker </option>
+                          <option>Knee Displacement</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="form-group floatingLabel">
+                        <input type="date" class="form-control" placeholder="By DOD" />
+                        <label>By DOD</label>
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="form-group floatingLabel">
+                        <input type="text" class="form-control" placeholder="By Checkup Date">
+                        <label>By Checkup Date</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1 col-12 ps-0">
+                  <button class="btn btn-primary w-100">Filter</button>
+                </div>
+              </div>
+            </div>
+          }
+
+          <div class="card-body table-style1 table-responsive radius-4">
+            <div class="fixed-header-table">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">S.No</th>
+                    <th width="15%" scope="col" sortable="auditID" (sort)="onSort($event)">UHID <span class="iconify" data-icon="bxs:sort-alt"></span></th>
+                    <th scope="col" sortable="unit" (sort)="onSort($event)">Admitted Unit  </th>
+                    <th scope="col" sortable="diagnosis" (sort)="onSort($event)">Diagnosis  </th>
+                    <th scope="col" sortable="surgery" (sort)="onSort($event)">Date of Surgery </th>
+                    <th scope="col" sortable="discharge" (sort)="onSort($event)">Date of Discharge </th>
+                    <th scope="col" sortable="progress" (sort)="onSort($event)">Progress</th>
+                    <th scope="col" sortable="checkup" (sort)="onSort($event)">Next Checkup Date </th>
+                    <th scope="col" class="text-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (auditTable of countries; track auditTable.auditID) {
+                    <tr>
+                      <td scope="row">{{ auditTable.id }}</td>
+                      <td>
+                        <p>#7463736</p>
+                        <p class="fwbold">Thangamani</p>
+                        <p>+91 9876543210</p>
+                      </td>
+                      <td>{{ auditTable.unit }}</td>
+                      <td>{{ auditTable.diagnosis }}</td>
+                      <td>{{ auditTable.surgery }}</td>
+                      <td>{{ auditTable.discharge }}</td>
+                      <!-- <td>
+                      <div class="progress-single">
+                        <p>100%</p>
+                        <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                          <div class="progress-bar bg-success" style="width: 70%"></div>
+                        </div>
+                      </div>
+                    </td> -->
+                    <td>
+                      <div class="progress-single">
+                        <p>{{ parseProgress(auditTable.progress) }}%</p>
+                        <div
+                          class="progress"
+                          role="progressbar"
+                          [attr.aria-valuenow]="parseProgress(auditTable.progress)"
+                          aria-valuemin="0"
+                          aria-valuemax="100"
+                          >
+                          <div
+                            class="progress-bar"
+                            [ngClass]="getProgressColor(parseProgress(auditTable.progress))"
+                            [style.width.%]="parseProgress(auditTable.progress)"
+                          ></div>
+                        </div>
+                      </div>
+                    </td>
+
+                    <td>{{ auditTable.checkup }}</td>
+                    <td>
+                      <div class="actiondot-dropdown">
+                        <div class="btn-group ms-2">
+                          <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="iconify" data-icon="tabler:dots"></span>
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" routerLink="/care-continuity-add">View</a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="javascript:;">Download</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+          <nav aria-label="Page navigation pagination text-end">
+            <ul class="pagination d-flex justify-content-end">
+              <li class="page-item next">
+                <a class="page-link" href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item"><a class="page-link" href="#">...</a></li>
+              <li class="page-item"><a class="page-link" href="#">10</a></li>
+              <li class="page-item prev">
+                <a class="page-link" href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>

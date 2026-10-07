@@ -1,0 +1,279 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <h3>Survey Questionnaire</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-12">
+                                <div class="form-right">
+                                    <button type="button" class="btn btn-dark" [disabled]="pageMode=='VIEW'"
+                                        (click)="onClearClick()">Clear</button>
+                                    <button type="submit" class="btn btn-primary" [disabled]="pageMode=='VIEW'"
+                                        (click)="onSubmitClick()">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mt-4">
+                            <div class="col-lg-3 col-md-3 col-12">
+                                <form>
+                                    <div class="form-section mb-1">
+                                        <div class="row">
+                                            <div class="col-md-12 col-12">
+                                                <div class="form-group">
+                                                    <div class="label-flex-link">
+                                                        <label>Questions</label>
+                                                        <a (click)="_hqms.onDownloadClick('sample_templates/ipsq_qstns_bulk_upload.xlsx')"
+                                                            style="cursor: pointer;">
+                                                            <i class="iconify pi pi-download"></i>
+                                                            Template
+                                                        </a>
+                                                    </div>
+                                                    <div class="upload-image">
+                                                        <div class="row">
+                                                            <div class="col-5">
+                                                                <p-fileUpload mode="basic"
+                                                                    (onSelect)="onBulkUploadClick(preAssess, $event,'CoverPage',null)"
+                                                                    [multiple]="false" #preAssess [fileLimit]="1"
+                                                                    [maxFileSize]="2097152" [auto]="true"
+                                                                    [disabled]="scMstrGrid.length==0" accept=".xlsx"
+                                                                    invalidFileSizeMessageSummary="File too large"
+                                                                    chooseIcon="pi pi-upload" chooseLabel="Upload"
+                                                                    invalidFileSizeMessageDetail="Maximum upload size is 5MB">
+                                                                </p-fileUpload>
+                                                            </div>
+                                                            <div class="col-7">
+                                                                <div *ngIf="section_documents.length>0"
+                                                                    class="flex gap-2 flex-wrap mt-2">
+                                                                    <div
+                                                                        *ngFor="let mDoc of section_documents; let imgIndex=index">
+                                                                        <div *ngIf="mDoc.is_active==true"
+                                                                            class="reg-img-view"
+                                                                            style="border: 1px solid #cacaca;padding: 5px; border-radius: 7px;font-size: 11px;">
+                                                                            {{ mDoc['file_name'] }}
+
+                                                                            @if(pageMode == 'NEW' || pageMode ==
+                                                                            'EDIT'){
+                                                                            <a class="time-icons time-remove ml-2"
+                                                                                href="javascript:return false"><i
+                                                                                    *ngIf="pageMode!='VIEW'||pageMode!='EDIT'"
+                                                                                    class="pi pi-times-circle"
+                                                                                    (click)="onBulkUploadRemoveClick(mDoc, imgIndex)"></i>
+                                                                            </a>
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-section">
+                                        <div class="row">
+                                            <div class="col-md-12 col-12">
+                                                <div class="form-group">
+                                                    <label>Add Question </label>
+                                                    <textarea pTextarea [(ngModel)]="qstnsAdd().question_text"
+                                                        [disabled]="scMstrGrid.length==0" name="question_text"
+                                                        rows="9" class="form-control"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12 col-12">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="form-group mb-1">
+                                                            <div class="form-check mb-0">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="checkDefault"
+                                                                    [(ngModel)]="qstnsAdd().is_mandatory"
+                                                                    name="required" [disabled]=true
+                                                                    [disabled]="scMstrGrid.length==0" />
+                                                                <label class="form-check-label" for="checkDefault">
+                                                                    Mark as Required
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="form-group mb-1">
+                                                            <div class="form-check mb-0">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="checkDefault"
+                                                                    [(ngModel)]="qstnsAdd().is_not_applicable"
+                                                                    name="required" [disabled]=true
+                                                                    [disabled]="scMstrGrid.length==0" />
+                                                                <label class="form-check-label" for="checkDefault">
+                                                                    NA Allowed
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <button class="btn btn-primary btn-big-icon btn-lg w-100"
+                                                        (click)="onQstnsAddClick()" [disabled]="scMstrGrid.length==0|| [null,''].includes(qstnsAdd().question_text)
+                                    ">
+                                                        <i class="iconify pi pi-plus-circle">
+                                                        </i>
+                                                        Add
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-lg-9 col-md-9 col-12">
+                                <div class="form-section">
+                                    <div class="audit-heading">
+                                        <h5>Audit Question</h5>
+                                        <p>{{ sctnsCnt}} Sections | {{ qstnCnt}} Questions
+                                        </p>
+                                    </div>
+                                    <div>
+                                        @for(sctns of scMstrGrid;track $index;let i = $index;){
+                                        @if(sctns.is_active !== false){
+                                        <div cdkDrag class="audit-table">
+                                            <div class="audit-heading mb-2">
+                                                <div class="head_flex">
+                                                    <div class="s-flex">
+                                                        <input class="form-check-input" type="checkbox"
+                                                            [id]="checkDefaul+i" [(ngModel)]="sctns.is_selected"
+                                                            name="required" [disabled]=true [disabled]="false"
+                                                            (change)="onSectionSelected($event, sctns)" />
+                                                        <h5>{{sctns.section_name}}</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="table-audit table-responsive">
+                                                @if(sctns.questions.length > 0){
+                                                <table class="table table-bordered mb-0" cdkDropList
+                                                    [cdkDropListData]="sctns.questions"
+                                                    (cdkDropListDropped)="dropQuestion($event,sctns)">
+                                                    @for(qstns of sctns.questions;track $index;let
+                                                    qstnIn=$index){
+                                                    @if(qstns.is_active!==false){
+                                                    <tr cdkDrag [cdkDragData]="qstns">
+                                                        <td>
+                                                            @if(qstns.is_edit_click){
+                                                            <textarea pTextarea [(ngModel)]="qstns.question_text"
+                                                                rows="10" [disabled]="!qstns.is_edit_click"
+                                                                name="question_text_{{i}}_{{qstnIn}}"
+                                                                class="form-control"></textarea>
+                                                            }@else{
+                                                            {{qstns.question_text}}
+                                                            }
+                                                        </td>
+                                                        <td class="text-end">
+                                                            @if(scMstrGrid.length>0){
+                                                            <div class="action-edit">
+                                                                <ul class="s-flex">
+                                                                    <li>
+                                                                        <a href="javascript:;"
+                                                                            (click)="editQstn(sctns,qstns,qstnIn)">
+                                                                            <!-- < span class="iconify" data-icon="ri:edit-line"></span> -->
+                                                                            <i class="iconify pi pi-pencil"
+                                                                                [class.editing]="qstns.is_edit_click"
+                                                                                [class.edited]="!qstns.is_edit_click"></i>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="javascript:;"
+                                                                            (click)="trashQstn(sctns,qstns)">
+                                                                            <!-- <span class="iconify" data-icon="material-symbols:delete-outline"></span> -->
+                                                                            <i class="iconify pi pi-trash"></i>
+                                                                        </a>
+                                                                    </li>
+
+                                                                    <li>
+                                                                        <div class="s-flex" cdkDragHandle>
+                                                                            <a href="javascript:;">
+                                                                                <!-- < span class="iconify" data-icon="ri:edit-line"></span> -->
+                                                                                <i class="iconify pi pi-bars"
+                                                                                    pTooltip="Question Drag & Drop"
+                                                                                    tooltipPosition="left"></i>
+                                                                            </a>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                    }
+                                                    }
+                                                </table>
+                                                }@else{
+                                                <div class="table table-bordered mb-0">
+                                                    Add a question
+                                                </div>
+                                                }
+                                            </div>
+                                        </div>
+                                        }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .editing {
+        color: yellow !important;
+    }
+
+    .edited {
+        color: green !important;
+    }
+
+    .head_flex {
+        display: flex;
+        gap: 5px;
+        justify-content: space-between;
+    }
+
+    .s-flex {
+        display: flex;
+        gap: 3px;
+        align-items: center;
+    }
+
+    .audit-table .audit-heading {
+        margin-left: 0px;
+    }
+
+    .action-edit ul li:hover {
+        padding: 0px 5px;
+        background: #fff;
+        border-radius: 6px;
+
+
+    }
+
+    .action-edit ul li {
+        padding: 0px 5px;
+        font-size: 16px;
+        margin-right: 0px;
+    }
+
+    .pi {
+        font-size: 11px;
+    }
+</style>

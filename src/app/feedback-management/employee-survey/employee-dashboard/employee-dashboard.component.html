@@ -1,0 +1,375 @@
+<section class="wrapper-body">
+  <div class="container-fluid">
+    <section class="status-card">
+      <div class="main-heading-link">
+        <h3 class="main-heading">Employee Satisfaction Survey</h3>
+        <div class="btn-group-row">
+          <div class="dropdown dropdown-style1 filterDropdown">
+            <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="iconify icon-calc pi pi-calendar"></i>
+              {{ selectedRange }}
+              <i class="iconify pi pi-angle-down"></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 7 days')">Last 7 days</a></li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 30 days')">Last 30 days</a></li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last Month')">Last Month</a></li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 6 Months')">Last 6 Months</a>
+              </li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last Year')">Last Year</a></li>
+            </ul>
+          </div>
+          <a href="javascript:;" class="btn btn-success" (click)="onPageRoute('NEW',null)">
+            <span class="iconfiy"> <i class=" pi pi-plus-circle" style="margin-right: 2px;"></i></span>
+            New Survey
+          </a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg1">
+            <div class="card-grid-header">
+              <h5>Overall <br /> Surveys</h5>
+              <h3>{{stats().overall_surveys_cnt}}</h3>
+              <div class="icon">
+                <i class="iconify pi pi-copy primeicons-size"></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{stats().overall_surveys_last_updated || 'N/A'}}</h5>
+                </div>
+                <div class="col-md-5 text-end col-5">
+                  <!-- <button class="btn btn-light">View Report</button> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg2">
+            <div class="card-grid-header">
+              <h5>Employees <br />Survey</h5>
+              <h3>{{stats().emp_surveys_cnt}}</h3>
+              <div class="icon">
+                <i class="iconify pi pi-search-plus primeicons-size"></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{stats().emp_surveys_last_updated || 'N/A'}}</h5>
+                </div>
+                <div class="col-md-5 col-5 text-end">
+                  <!-- <button class="btn btn-light">View Report</button> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg3">
+            <div class="card-grid-header">
+              <h5>Satisfactory <br /> Rate (%) </h5>
+              <h3>{{stats().satisfactory_rate}}</h3>
+              <div class="icon">
+                <i class="iconify pi pi-calendar-clock primeicons-size"></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{stats().satisfactory_rate_last_updated || 'N/A'}}</h5>
+                </div>
+                <div class="col-md-5 col-5 text-end">
+                  <!-- <button class="btn btn-light">View Report</button> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg4">
+            <div class="card-grid-header">
+              <h5>Completed <br /> Surveys</h5>
+              <h3>{{stats().completed_surveys_cnt}}</h3>
+              <div class="icon">
+                <i class="iconify pi pi-verified "></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{stats().completed_surveys_last_updated || 'N/A'}}</h5>
+                </div>
+                <div class="col-md-5 col-5 text-end">
+                  <!-- <button class="btn btn-light">View Report</button> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="chart-section mt-3 mb-3">
+      <div class="row">
+        <div class="col-xl-4 col-lg-6 col-md-6 col-12">
+          <div class="card-style1 piechart">
+            <div class="card-header">
+              Role Wise Feedbacks
+            </div>
+            <div class="card-body">
+              <div class="chart-wrapper">
+                <app-score-wise-reports #scoreWiseRpt></app-score-wise-reports>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-6 col-md-6 col-12">
+          <div class="card-style1 barchart">
+            <div class="card-header">
+              Satisfaction Report
+            </div>
+            <div class="card-body trainingReport">
+              <app-satisfaction-report #satisfactionRpt></app-satisfaction-report>
+              <div class="dropdown dropdown-style1 chart-filter1">
+                <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  {{ slctdSatfctn }}
+                  <i class="iconify pi pi-angle-down"></i>
+                </button>
+                <ul class="dropdown-menu">
+                  @for (option of satisfctnOptns; track option) {
+                  <li>
+                    <a class="dropdown-item" href="javascript:;" (click)="stsonParticipantsRptSlct(option)">
+                      {{ option }}
+                    </a>
+                  </li>
+                  }
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-6 col-md-12 col-12">
+          <div class="card-style1 barchart">
+            <div class="card-header">
+              Participants Report
+            </div>
+            <div class="card-body trainingReport">
+              <app-training-wise-reports #prtcpntChrt></app-training-wise-reports>
+              <div class="dropdown dropdown-style1 chart-filter1">
+                <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  {{ slctdPrtcpnt }}
+                  <i class="iconify pi pi-angle-down"></i>
+                </button>
+                <ul class="dropdown-menu">
+                  @for (option of partcpntOptns; track option) {
+                  <li>
+                    <a class="dropdown-item" href="javascript:;" (click)="onParticipantsRptSlct(option)">
+                      {{ option }}
+                    </a>
+                  </li>
+                  }
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="report-table mt-3 mb-3">
+      <div class="row">
+        <div class="col-md-12 col-12">
+          <div class="card-style2">
+            <div class="card-header backoption table-search">
+              <div class="row">
+                <div class="col-md-5 col-12">
+                  <div class="heading-left">
+                    <h3>Employee Satisfaction Survey List</h3>
+                  </div>
+                </div>
+                <div class="col-md-7 col-12">
+                  <div class="form-right">
+                    <a href="javascript:;" ngbTooltip="Filter" placement="top" class="icon-btn-square"
+                      (click)="filterToggle()">
+                      <i class="iconify pi pi-sliders-h"></i>
+                    </a>
+                    <div class="dropdown dropdown-style1 ms-2">
+                      <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Download Report
+                        <i class="iconify pi pi-angle-down"></i>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li
+                          [DCSV]="{ param :params,screenName:'Employee Satisfaction Survey',data : essGrid.length,methodName : 'fnEssSurveyApi' }">
+                          <a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                        <li
+                          [PDF]="{ param :params,screenName:'Employee Satisfaction Survey',data : essGrid.length,methodName : 'fnEssSurveyApi' }">
+                          <a class="dropdown-item" href="javascript:;">Download Pdf</a></li>
+                        <li
+                          [EXCEL]="{ param :params,screenName:'Employee Satisfaction Survey',data : essGrid.length,methodName : 'fnEssSurveyApi'  }">
+                          <a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            @if (showFilter) {
+            <div class="filter-box form-sm">
+              <div class="row">
+                <div class="col-md-11 col-12">
+                  <div class="row gx-2">
+                    <div class="col-md-3 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="survey_name">By Survey Name</label>
+                        <p-select id="survey_name" [(ngModel)]="essFilters().survey_name" name="survey_name"
+                          [options]="surveyNameList" [filter]="true" [showClear]="true"
+                          (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="participants_type_name">By Participants</label>
+                        <p-select id="participants_type_name" [(ngModel)]="essFilters().participants_type_name"
+                          name="participants_type_name" [options]="participantsList" [filter]="true"
+                          [showClear]="true" (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="status">By Status</label>
+                        <p-select id="status" [(ngModel)]="essFilters().status" name="status" [options]="statusList"
+                          [filter]="true" [showClear]="true" (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1 col-12 ps-0">
+                  <button class="btn btn-primary w-100" (click)="onFilterClick()">Filter</button>
+                  <button class="btn btn-dark" (click)="onFilterClear(null)">Clear</button>
+                </div>
+              </div>
+            </div>
+            }
+
+            <div class="card-body table-style1 table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">S.No</th>
+                    <th scope="col" sortable="survey_name" (sort)="onSort($event)">
+                      Survey Name
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="participants_type_name" (sort)="onSort($event)">
+                      Participants
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="from_date" (sort)="onSort($event)">
+                      From Date
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="to_date" (sort)="onSort($event)">
+                      To Date
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="created_at" (sort)="onSort($event)">
+                      Created On
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="total_participants_cnt" (sort)="onSort($event)">
+                      Total Participants
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="total_satisfactory_cnt" (sort)="onSort($event)">
+                      Total Satisfactory
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="created_by" (sort)="onSort($event)">
+                      Created By
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="created_at" (sort)="onSort($event)">
+                      Created on
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="updated_by" (sort)="onSort($event)">
+                      Modified By
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="updated_at" (sort)="onSort($event)">
+                      Last Modified
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="status" (sort)="onSort($event)">
+                      Status  
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" class="text-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (essTable of essGrid; track essTable.survey_name) {
+                  <tr>
+                    <td scope="row">{{ essTable.id }}</td>
+                    <td>{{ essTable.survey_name }}</td>
+                    <td>{{ essTable.participants_type_name }}</td>
+                    <td>{{ essTable.from_date }}</td>
+                    <td>{{ essTable.to_date }}</td>
+                    <td>{{ essTable.created_at }}</td>
+                    <td>{{ essTable.total_participants_cnt }}</td>
+                    <td>{{ essTable.total_satisfactory_cnt }}</td>
+                    <td>{{ essTable.created_by }}</td>
+                    <td>{{ essTable.created_at }}</td>
+                    <td>{{ essTable.updated_by }}</td>
+                    <td>{{ essTable.updated_at }}</td>
+                    <td [ngClass]="{
+                                                'text-success': essTable.status === 'Created',
+                                                'text-warning': essTable.status === 'Inprogress',
+                                                'text-primary': essTable.status === 'Completed',
+                                                }">
+                      {{ essTable.status }}
+                    </td>
+                    <td>
+                      <div class="actiondot-dropdown float-end">
+                        <div class="btn-group ms-2">
+                          <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="iconify pi pi-ellipsis-h"></i> </button>
+                          <ul class="dropdown-menu">
+                            <li>
+                              <a class="dropdown-item" href="javascript:;"
+                                (click)="onPageRoute('VIEW',essTable)">View</a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="javascript:;"
+                                (click)="onPageRoute('WRITECAPA',essTable)">Write
+                                CAPA</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>

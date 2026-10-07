@@ -1,0 +1,313 @@
+<header>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4 col-2 col-left">
+                <div class="header-left">
+                    <a href="javascript:;" class="menu-icon" (click)="toggleMenu()">
+                        <i class="pi pi-bars iconify"></i>
+                    </a>
+                    @if(!_hqms.isMobileView()){
+                    <p-autoComplete [(ngModel)]="selectedSearch" [group]="true" [suggestions]="filterModules"
+                        (completeMethod)="filterGroupedModules($event)" placeholder="Search for modules"
+                        (onSelect)="onModuleSelect($event)" [showClear]="true" autocomplete="off"
+                        styleClass="p-autocomplete-input d-block">
+                        <ng-template let-group #group>
+                            <div> {{ group.label  }} </div>
+                        </ng-template>
+                    </p-autoComplete>
+                    }
+                </div>
+            </div>
+            <div class="col-md-8 col-10 col-right">
+                <div class="header-right">
+                    <!-- <small>{{ currentDateTime | date: 'fullDate' }}
+                        {{ currentDateTime | date: 'hh:mm:ss a' }}
+                    </small> -->
+                    <div class="list-style-round">
+                        <ul>
+                            <li>
+                                <a href="javascript:;" routerLink="/settings" class="single">
+                                    <!-- <span class="iconify"
+                                        data-icon="solar:settings-linear"></span> -->
+                                    <i class="pi pi-cog iconify"></i>
+                                </a>
+                            </li>
+                            <li class="dropdown-info">
+                                <div class="dropdown notification-dropdown">
+                                    <a class="dropdown-toggle" href="#!" role="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        <i class="pi pi-bell iconify"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-end">
+                                        <h5>Notifications</h5>
+                                        <ul class="dropdown-scroll">
+                                            @for(ntfn of ntfctnsInfo;track $index){
+                                            <li (click)="onNtfcnClick(ntfn)" [class.read]="ntfn.isMsgRead">
+                                                <a href="javascript:;">
+                                                    <div class="notificationbox">
+                                                        <div class="icon">
+                                                            <i class="pi pi-bell iconify"></i>
+                                                        </div>
+                                                        <div class="content">
+                                                            <h5>{{ntfn['text']}}
+                                                            </h5>
+                                                            <p>{{ntfn['scheduleddt']}}</p>
+                                                        </div>
+                                                        <div class="times" (click)="onDeleteNtfcn(ntfn)">
+                                                            <i class="pi pi-times iconify "></i>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            }@empty{
+                                            <li>No Notifications for today</li>
+                                            }
+                                        </ul>
+                                        <div class="loadmore">
+                                            <a href="javascript:;" routerLink="/notifications">Load More</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="profile-dropdown">
+                                <div class="dropdown logout-dropdown">
+                                    <a class="dropdown-toggle" href="#!" role="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        @if(fileOrImageUrl==null){
+                                        <p-avatar [label]="(userName || '').trim().substring(0,1).toUpperCase()"
+                                            [size]="size" [shape]="shape" class="avatar">
+                                        </p-avatar>
+                                        }@else{
+                                        <p-avatar [image]="fileOrImageUrl" [size]="size" [shape]='shape' class="avatar">
+                                        </p-avatar>
+                                        }
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-start">
+                                        <ul>
+                                            <li class="avatar-type">
+                                                <a class="dropdown-item p-0" href="javasrcipt:;">
+                                                    <div class="account-type">
+                                                        <div class="icon">
+                                                            @if(fileOrImageUrl==null){
+                                                            <p-avatar
+                                                                [label]="(userName || '').trim().substring(0,1).toUpperCase()"
+                                                                [size]="size" [shape]="shape" class="avatar">
+                                                            </p-avatar>
+                                                            }@else{
+                                                            <p-avatar [image]="fileOrImageUrl" [size]="size"
+                                                                [shape]='shape' class="avatar">
+                                                            </p-avatar>
+                                                            }
+                                                        </div>
+                                                        <div class="user-content">
+                                                            <h5>{{userName}}</h5>
+                                                            <p-tag [value]="slctdLctn" severity="secondary" />
+                                                            <p-tag [value]="roleName" severity="info" />
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li class="single-item">
+                                                <a class="dropdown-item" href="javascript:;" (click)="onOpenCPclick()">
+                                                    <i class="iconify pi pi-lock"></i>
+                                                    Change
+                                                    password
+                                                </a>
+                                            </li>
+                                            <li class="single-item"><a class="dropdown-item" href="javascript:;"
+                                                    (click)="onLogOutClick()">
+                                                    <i class="iconify pi pi-power-off"></i>
+                                                    <!-- <span class="iconify"
+                                                        data-icon="famicons:power"></span> -->
+                                                    Logout</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<p-dialog [header]="!isPwdUpdatd ? 'Change Password' : 'Password Updated'" [(visible)]="isChngPwdVisible" [modal]="true"
+    [dismissableMask]="true" [style]="{width: '30vw'}" [closeOnEscape]='false' [closable]='isClosabled'
+    [resizable]="false" [baseZIndex]="1000" (onHide)="onCloseCP()">
+    @if(!isPwdUpdatd){
+    <div class="row">
+        <div class="col-12">
+            <div class="flex flex-col gap-2">
+                <label for="npassword">Old Password</label>
+                <div style="position: relative;display:inline-block;width:100%">
+                    <p-password [(ngModel)]="changePwd['current_pwd']" [feedback]="false" autocomplete="off"
+                        (onBlur)="onPwdVldtnClick('current_pwd')" [toggleMask]="true">
+                    </p-password>
+                    <div style=" position: absolute;
+                                    top: 0;
+                                    right: 0;
+                                    width: 0;
+                                    height: 0;
+                                    border-top: 12px solid red;
+                                    border-left: 12px solid transparent;">
+                    </div>
+                </div>
+                @if(oldPwdError!=''){
+                <small class="error">{{ oldPwdError}}</small>
+                }
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="flex flex-col gap-2">
+                <label for="npassword">New Password</label>
+                <div style="position: relative;display:inline-block;width:100%">
+                    <p-password [(ngModel)]="changePwd['new_pwd']" [feedback]="true" autocomplete="off"
+                        [toggleMask]="true" (copy)="preventCopyPaste($event)" (paste)="preventCopyPaste($event)"
+                        (input)="checkStrength($event)" (onBlur)="onPwdVldtnClick('new_pwd')"
+                        [disabled]="!changePwd['current_pwd']">
+                        <ng-template pTemplate="content">
+                            <div class="strength-bar" *ngIf="rules.length > 0" style="height:10px !important;">
+                                <div class="strength-bar_fill"
+                                    [ngStyle]="{'width.%':strengthPercentage,'background-color':strengthColor}"
+                                    style="height:10px !important;">
+
+                                </div>
+                            </div>
+                            <div class="password-strength" [ngClass]="strengthClasss" *ngIf="rules.length > 0">
+                                {{strengthMessage}}
+                            </div>
+                            <div class="mt-2" *ngIf="passwordPolicies.length>0">
+                                <ul class="pl-4 ml-2 mt-0" style="line-height: 1.5">
+                                    <li *ngFor="let policy of passwordPolicies">{{policy}}</li>
+                                </ul>
+                            </div>
+                        </ng-template>
+                    </p-password>
+                    <div style=" position: absolute;
+                                            top: 0;
+                                            right: 0;
+                                            width: 0;
+                                            height: 0;
+                                            border-top: 12px solid red;
+                                            border-left: 12px solid transparent;">
+                    </div>
+                </div>
+                @if(errorText != ''){
+                <small class="error"> {{ errorText }} </small>
+                }
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="flex flex-col gap-2">
+                <label for="npassword">Confirm New Password</label>
+                <div style="position: relative;display:inline-block;width:100%">
+                    <p-password [(ngModel)]="changePwd['cnfrm_pwd']" [feedback]="false" autocomplete="off"
+                        [toggleMask]="true" (copy)="preventCopyPaste($event)" (paste)="preventCopyPaste($event)"
+                        (onBlur)="onPwdVldtnClick('cnfrm_pwd')"
+                        [disabled]="changePwd['new_pwd']==''|| changePwd['new_pwd']==null ">
+                    </p-password>
+                    <div style=" position: absolute;
+                                            top: 0;
+                                            right: 0;
+                                            width: 0;
+                                            height: 0;
+                                            border-top: 12px solid red;
+                                            border-left: 12px solid transparent;">
+                    </div>
+                </div>
+                @if(cnfrmErrorText != ''){
+                <small class="error"> {{ cnfrmErrorText }} </small>
+                }
+            </div>
+        </div>
+    </div>
+    }@else{
+    <div>
+        Login again with new password to continue
+    </div>
+    }
+    <ng-template #footer>
+        @if(!isPwdUpdatd){
+        <button class="btn btn-dark" (click)="onPwdClear()">Clear</button>
+        <button class="btn btn-primary" (click)="updatePwd()">Update</button>
+        }@else{
+        <button class="btn btn-primary" (click)="onLogOutClick()">Logout</button>
+        }
+    </ng-template>
+</p-dialog>
+
+
+<style>
+    .error {
+        color: red;
+        font-weight: bold;
+    }
+
+    :host ::ng-deep .p-autocomplete-input .p-inputtext {
+        width: 350px !important;
+    }
+
+    .cstm-ldr-ovlay {
+        z-index: 9999 !important;
+    }
+
+    :host ::ng-deep p-password>div {
+        width: 100% !important;
+    }
+
+    .password-strength {
+        margin-top: 5px;
+        font-weight: bold
+    }
+
+    .strong {
+        color: green;
+    }
+
+    .medium {
+        color: orange;
+    }
+
+    .weak {
+        color: red;
+    }
+
+    .strength-bar {
+        width: 100%;
+        background-color: #e0e0e0;
+        margin-top: 5px;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .strength-bar_fill {
+        border-radius: 5px;
+        transition: width 0.3s ease-in-out
+    }
+
+    :host ::ng-deep .p-dialog-content {
+        /* overflow-y: auto; */
+        padding: 18px 32px;
+        /* padding: var(--p-dialog-content-padding); */
+    }
+
+    .avatar {
+        width: 2.7rem;
+        height: 2.7rem;
+    }
+
+    :host ::ng-deep.p-password {
+        width: 100%;
+        display: block;
+    }
+
+    :host ::ng-deep.p-password.p-inputtext {
+        width: 100% !important;
+    }
+
+    :host ::ng-deep.p-password:has(.p-password-toggle-mask-icon) .p-password-input {
+        padding-inline-end: calc((var(--p-form-field-padding-x)* 2) + var(--p-icon-size));
+        width: 100%;
+    }
+</style>

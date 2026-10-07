@@ -1,0 +1,23 @@
+.canvas-container {
+  padding: 2px;
+  width: 100%;
+  height: 100%;
+}
+
+.canvas-controls {
+  background-color: var(--primary-100);
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid var(--primary-200);
+}
+
+.imageTitle {
+  color: var(--primary-color);
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+:host ::ng-deep .p-button {
+  width: 28px !important;
+  padding: 6px !important;
+}

@@ -1,0 +1,10 @@
+<div id="chart" class="report-piechart">
+  <div class="center-content">
+    <!-- <p>Total</p> -->
+    <h5>{{ info }} </h5>
+  </div>
+  <apx-chart #chart [series]="chartOptions.series" [chart]="chartOptions.chart" [labels]="chartOptions.labels"
+    [responsive]="chartOptions.responsive" [colors]="chartOptions.colors" [legend]="chartOptions.legend"
+    [fill]="chartOptions.fill" [noData]="chartOptions.noData!">
+  </apx-chart>
+</div>

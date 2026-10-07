@@ -1,0 +1,215 @@
+<section class="wrapper-body">
+  <div class="container-fluid">
+    <section class="status-card">
+      <div class="main-heading-link">
+        <h3 class="main-heading">License Master List</h3>
+        <div class="btn-group-row">
+          <a href="javascript:;" class="btn btn-success" appAccess="access_add" (click)="onPageRoute('NEW',null)">
+            <span class="iconfiy"> <i class=" pi pi-plus-circle" style="margin-right: 2px;"></i></span>
+            New License Master
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="report-table mt-3 mb-3">
+      <div class="row">
+        <div class="col-md-12 col-12">
+          <div class="card-style2">
+            <div class="card-header backoption">
+              <div class="row">
+                <div class="col-md-12 col-12">
+                  <div class="form-right">
+                    <a href="javascript:;" ngbTooltip="Filter" placement="top" class="icon-btn-square"
+                      (click)="filterToggle()">
+                      <i class="iconify pi pi-sliders-h"></i>
+                    </a>
+                    <div class="dropdown dropdown-style1" appAccess="access_exp">
+                      <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Download Report
+                        <i class="iconify pi pi-angle-down"></i>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li
+                          [DCSV]="{ param :params,screenName:'License Master',data : licenseMasterGrid.length,methodName : 'fnLicenseMasterApi' }">
+                          <a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                        <li
+                          appAccess="access_print" [PDF]="{ param :params,screenName:'License Master',data : licenseMasterGrid.length,methodName : 'fnLicenseMasterApi' }">
+                          <a class="dropdown-item" href="javascript:;">Download Pdf</a> </li>
+                        <li
+                          [EXCEL]="{ param :params,screenName:'License Master',data : licenseMasterGrid.length,methodName : 'fnLicenseMasterApi'  }">
+                          <a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            @if (showFilter) {
+            <div class="filter-box form-sm">
+              <div class="row">
+                <div class="col-md-11 col-12">
+                  <div class="row gx-2">
+                    <div class="col-md-3 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="license_name">By License Name</label>
+                        <p-select id="license_name" [(ngModel)]="licenseMasterFilters().license_name"
+                          name="license_name" [options]="licenseNameList" [filter]="true" [showClear]="true"
+                          (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="category_name">By Category Type</label>
+                        <p-select id="category_name" [(ngModel)]="licenseMasterFilters().category_name"
+                          name="category_name" [options]="categoryTypeList" [filter]="true" [showClear]="true"
+                          (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="renewal_frequency_months">By Renewal Frequency Months</label>
+                        <p-select id="renewal_frequency_months"
+                          [(ngModel)]="licenseMasterFilters().renewal_frequency_months"
+                          name="renewal_frequency_months" [options]="renewalFrqList" [filter]="true"
+                          [showClear]="true" (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="status">By Status</label>
+                        <p-select id="status" [(ngModel)]="licenseMasterFilters().status" name="status"
+                          [options]="statusList" [filter]="true" [showClear]="true" (onClear)="onFilterClear(true)"
+                          class="form-control" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1 col-12 ps-0">
+                  <button class="btn btn-primary w-100" (click)="onFilterClick()">Filter</button>
+                  <button class="btn btn-dark" (click)="onFilterClear(null)">Clear</button>
+                </div>
+              </div>
+            </div>
+            }
+
+            <div class="card-body table-style1 table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">S.No</th>
+                    <th width="15%" scope="col" sortable="license_name" (sort)="onSort($event)">
+                      License Name
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th width="15%" scope="col" sortable="category_name" (sort)="onSort($event)">
+                      Category Type
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th width="25%" scope="col" sortable="renewal_frequency_months" (sort)="onSort($event)">
+                      Renewal Frequency Months
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th width="15%" scope="col" sortable="description" (sort)="onSort($event)">
+                      Description
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="created_by" (sort)="onSort($event)">
+                      Created By
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="created_at" (sort)="onSort($event)">
+                      Created on
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="updated_by" (sort)="onSort($event)">
+                      Modified By
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="updated_at" (sort)="onSort($event)">
+                      Last Modified
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="status" (sort)="onSort($event)">
+                      Status
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" class="text-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (licenseMaster of licenseMasterGrid; track licenseMaster.id) {
+                  <tr>
+                    <td scope="row">{{ licenseMaster.id }}</td>
+                    <td>{{ licenseMaster.license_name }}</td>
+                    <td>{{ licenseMaster.category_name }}</td>
+                    <td>{{ licenseMaster.renewal_frequency_months }}</td>
+                    <td>{{ licenseMaster.description }}</td>
+                    <td>{{ licenseMaster.created_by }}</td>
+                    <td>{{ licenseMaster.created_at | appDate }}</td>
+                    <td>{{ licenseMaster.updated_by }}</td>
+                    <td>{{ licenseMaster.updated_at | appDate }}</td>
+                    <td [ngClass]="{
+                                                  'text-danger': licenseMaster.status === 'Inactive',
+                                                  'text-warning': licenseMaster.status === 'Expiring Soon',
+                                                  'text-success': licenseMaster.status === 'Active',
+                                                }">
+                      {{ licenseMaster.status }}
+                    </td>
+                    <td>
+                      <div class="actiondot-dropdown">
+                        <div class="btn-group ms-2">
+                          <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="iconify pi pi-ellipsis-h"></i>
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li>
+                              <a class="dropdown-item" href="javascript:;"
+                                appAccess="access_view" (click)="onPageRoute('VIEW',licenseMaster)">View</a>
+                            </li>
+                            @if(licenseMaster.status !== 'Inactive'){
+                            <li>
+                              <a class="dropdown-item" href="javascript:;"
+                                appAccess="access_mod" (click)="onPageRoute('EDIT',licenseMaster)">Edit</a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" appAccess="access_del" (click)="onDelete(licenseMaster)">Delete</a>
+                            </li>
+                            }
+                          </ul>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  }
+                </tbody>
+              </table>
+              <nav aria-label="Page navigation pagination text-end">
+                <ul class="pagination d-flex justify-content-end">
+                  <li class="page-adtInfo next" [class.disabled]="pageNators().pageNo === 1">
+                    <a class="page-link cursor" aria-label="Previous" (click)="changePage(pageNators().pageNo-1)">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                  @for(p of pageNumbers();track p){
+                  <li class="page-adtInfo" [class.active]="pageNators().pageNo === p">
+                    <a class="page-link cursor" (click)="changePage(p)">{{p}}</a>
+                  </li>
+                  }
+                  <li class="page-adtInfo prev" [class.disabled]="pageNators().pageNo === pageNators().totalPages">
+                    <a class="page-link cursor" aria-label="Next" (click)="changePage(pageNators().pageNo+1)">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>

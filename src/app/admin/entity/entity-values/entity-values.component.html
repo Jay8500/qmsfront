@@ -1,0 +1,197 @@
+<section class="wrapper-body audit-master-dashboard">
+    @if (entity(); as e) {
+    <!-- Page header -->
+    <div class="page-hd">
+        <div>
+            <h1>
+                <!-- <p-button icon="pi pi-arrow-left" [rounded]="true" [text]="true" severity="secondary" pTooltip="Back"
+                    (onClick)="back()" /> -->
+
+                <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                    <i class="iconify pi pi-arrow-left"></i>
+                </a>
+                {{ e.entity_name }}
+            </h1>
+
+            <!-- <div class="crumb">
+                <span style="opacity:.6">›</span>
+                <b>{{ e.entity_name }}</b>
+            </div> -->
+        </div>
+        <div class="hd-actions">
+            <p-button label="Edit Entity" icon="pi pi-pencil" severity="secondary" [outlined]="true"
+                (onClick)="editEntity()" [disabled]="!e.is_editable" />
+            <p-button label="Add Value" icon="pi pi-plus" [disabled]="!e.is_editable" (onClick)="openAddValue()" />
+        </div>
+    </div>
+
+    <!-- Entity header card -->
+    <div class="ent-head">
+        <div class="eh-top">
+            <div>
+                <div class="eh-title">
+                    {{ e.entity_name }}
+                    @if (e.is_system) {
+                    <p-tag value="System" severity="info" />
+                    }
+                    @if (!e.is_editable) {
+                    <p-tag value="Locked" severity="danger" />
+                    }
+                    <p-tag [value]="e.is_active ? 'Active' : 'Inactive'"
+                        [severity]="e.is_active ? 'success' : 'danger'" />
+                    @if (e.values) {
+                    <p-tag value="Custom OK" severity="success" />
+                    }
+                </div>
+                <div class="eh-sub">
+                    <code>{{ e.entity_code }}</code><span>{{ e.category_type }}</span>
+                    @if (e.description) {
+                    <span>·</span><span>{{ e.description }}</span>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="metrow">
+            <div class="metric">
+                <div class="k">Total Values</div>
+                <div class="v">{{ values().length }}</div>
+            </div>
+            <div class="metric">
+                <div class="k">Active</div>
+                <div class="v g">{{ activeCount() }}</div>
+            </div>
+            <div class="metric">
+                <div class="k">Default</div>
+                <div class="v">{{ defaultValue() ?? "—" }}</div>
+            </div>
+            <div class="metric">
+                <div class="k">Custom Values</div>
+                <div class="v">
+                    {{ e.values ? "Allowed" : "Restricted" }}
+                </div>
+            </div>
+            <div class="metric">
+                <div class="k">Display Order</div>
+                <div class="v">{{ e.display_order }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section header -->
+    <div class="sect-hd">
+        <h2>Values</h2>
+        <span class="sub">({{ filtered().length }})</span>
+        <div class="right">
+            <p-iconfield>
+                <p-inputicon styleClass="pi pi-search" />
+                <input pInputText [ngModel]="search()" (ngModelChange)="search.set($event)" placeholder="Search values…"
+                    style="width:220px" />
+            </p-iconfield>
+        </div>
+    </div>
+
+    <!-- Values grid -->
+    <div class="grid-card">
+        <p-table [value]="filtered()" dataKey="entityValueId" [rows]="10" [paginator]="filtered().length > 10"
+            [rowsPerPageOptions]="[10, 20, 50]" [rowHover]="true"
+            currentPageReportTemplate="{first}–{last} of {totalRecords}" [showCurrentPageReport]="true">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="display_order" style="width:70px;text-align:right">
+                        S.No
+                        <p-sortIcon field="display_order" />
+                    </th>
+                    <th pSortableColumn="displayValue">
+                        Display Value
+                        <p-sortIcon field="displayValue" />
+                    </th>
+                    <th pSortableColumn="valueCode">
+                        Value Code
+                        <p-sortIcon field="valueCode" />
+                    </th>
+                    <th style="width:90px">Short</th>
+                    <th style="width:110px">Type</th>
+                    <th style="width:180px">Effective</th>
+                    <th style="width:170px;text-align:center">Flags</th>
+                    <th pSortableColumn="is_active" style="width:110px;text-align:center">
+                        Status
+                        <p-sortIcon field="is_active" />
+                    </th>
+                    <th style="width:130px;text-align:center">Action</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-v>
+                <tr>
+                    <td style="text-align:right" class="muted">
+                        {{ v.display_order }}
+                    </td>
+                    <td>
+                        @if (v.valueType === "COLOR" && v.colorHex) {
+                        <span class="swatch" [style.background]="v.colorHex"></span>
+                        }
+                        <span style="font-weight:600" [style.textDecoration]="
+                    v.is_active ? 'none' : 'line-through'
+                  ">{{ v.displayValue }}</span>
+                    </td>
+                    <td class="mono">{{ v.valueCode }}</td>
+                    <td class="mono">{{ v.shortName || "—" }}</td>
+                    <td>
+                        <p-tag [value]="v.valueType" severity="secondary" />
+                    </td>
+                    <td class="muted" style="font-size:12px">
+                        {{
+                  v.effectiveFrom || v.effectiveTo
+                    ? (v.effectiveFrom || "—") +
+                      " → " +
+                      (v.effectiveTo || "∞")
+                    : "Always"
+                }}
+                    </td>
+                    <td style="text-align:center">
+                        <div class="row-flags" style="justify-content:center">
+                            @if (v.isDefault) {
+                            <p-tag value="Default" severity="warn" />
+                            }
+                            @if (!v.isVisible) {
+                            <p-tag value="Hidden" severity="secondary" />
+                            }
+                            @if (!v.isDefault && v.isVisible) {
+                            <span class="muted">—</span>
+                            }
+                        </div>
+                    </td>
+                    <td style="text-align:center">
+                        <p-tag [value]="v.is_active ? 'Active' : 'Inactive'"
+                            [severity]="v.is_active ? 'success' : 'danger'" />
+                    </td>
+                    <td style="text-align:center">
+                        <p-button icon="pi pi-pencil" [text]="true" [rounded]="true" severity="secondary"
+                            pTooltip="Edit" (onClick)="openEditValue(v)" />
+                        <!-- <p-button icon="pi pi-copy" [text]="true" [rounded]="true" severity="secondary"
+                            pTooltip="Duplicate" (onClick)="duplicate(v)" /> -->
+                        <!-- <p-button [icon]="v.is_active ? 'pi pi-ban' : 'pi pi-check'" [text]="true" [rounded]="true"
+                            [severity]="v.is_active ? 'danger' : 'success'"
+                            [pTooltip]="v.is_active ? 'Deactivate' : 'Activate'" (onClick)="toggleActive(v)" /> -->
+                        <p-button icon="pi pi-trash" [text]="true" [rounded]="true" severity="danger" pTooltip="Delete"
+                            (onClick)="confirmDelete(v)" />
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="9" style="text-align:center;padding:40px" class="muted">
+                        No values {{ search() ? "match your search" : "yet" }}.
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    } @else {
+    <div class="muted" style="padding:60px;text-align:center">Loading…</div>
+    }
+</section>
+
+<!-- Value dialog -->
+<app-value-form [visible]="valueDialogVisible()" (visibleChange)="valueDialogVisible.set($event)"
+    [value]="editingValue()" [entity_name]="entity()?.entity_name ?? ''" [entity_code]="entity()?.entity_code ?? ''"
+    [nextOrder]="values().length + 1" [siblings]="values()" (save)="onSaveValue($event)" />

@@ -1,0 +1,436 @@
+<section class="wrapper-body audit-master-dashboard">
+    <div class="container-fluid">
+        <!-- Page header -->
+        <section class="status-card">
+            <div class="main-heading-link">
+                <h3 class="main-heading">Response Scales</h3>
+                <div class="hd-actions">
+                    <!-- <p-select [options]="categoryOptions()" [ngModel]="categoryFilter()"
+                        (ngModelChange)="categoryFilter.set($event)" optionLabel="label" optionValue="value"
+                        [style]="{ minWidth: '190px' }" />
+                    <p-select [options]="statusOptions" [ngModel]="statusFilter()"
+                        (ngModelChange)="statusFilter.set($event)" optionLabel="label" optionValue="value"
+                        [style]="{ minWidth: '150px' }" /> -->
+                    <p-button [label]="'New Response Scale'" icon="pi pi-plus"
+                        (onClick)="pageMode = 'NEW';visible=true;" />
+                </div>
+            </div>
+        </section>
+        <!-- KPI cards -->
+        <div class="stats">
+            <div class="stat amber">
+                <div class="s-icon"><i class="pi pi-database"></i></div>
+                <div class="s-label">Total Scales</div>
+                <div class="s-num">{{ stats().totalScales }}</div>
+            </div>
+            <div class="stat pink">
+                <div class="s-icon"><i class="pi pi-list"></i></div>
+                <div class="s-label">Total Options</div>
+                <div class="s-num">{{ stats().totalOptions }}</div>
+            </div>
+            <div class="stat blue">
+                <div class="s-icon"><i class="pi pi-lock"></i></div>
+                <div class="s-label">System-Locked</div>
+                <div class="s-num">{{ stats().systemLocked }}</div>
+            </div>
+            <div class="stat teal">
+                <div class="s-icon"><i class="pi pi-check-circle"></i></div>
+                <div class="s-label">Scoring Model</div>
+                <div class="s-num">{{ stats().scoringModel }}</div>
+            </div>
+        </div>
+
+        <!-- Section header -->
+        <div class="sect-hd">
+            <h2>Response Scales</h2>
+            <span class="sub">( {{responseScaleGrid.length }})</span>
+        </div>
+        <div class="grid-card">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th style="width:60px">S.No</th>
+                        <th>
+                            Scale Name
+                        </th>
+                        <th>
+                            Code
+                        </th>
+                        <th>
+                            Type
+                        </th>
+                        <th style="width:110px;text-align:center">Options</th>
+                        <th style="width:230px">Direction</th>
+                        <th style="width:230px">Max</th>
+                        <!-- <th>Flags</th> -->
+                        <th style="width:120px;text-align:center">Status</th>
+                        <th style="width:140px;text-align:center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (entyParnt of responseScaleGrid; track entyParnt.id) {
+                    <tr>
+                        <td scope="row">{{ entyParnt.id }}</td>
+                        <td>{{ entyParnt.scale_name }}</td>
+                        <td>{{ entyParnt.scale_code }}</td>
+                        <td>{{ entyParnt.scale_type }}</td>
+                        <td style="text-align:center">
+                            <p-tag [value]="entyParnt.options.length + ''" severity="success" [rounded]="true" />
+                        </td>
+                        <td>
+                            <div class="row-flags">
+                                @if (entyParnt.is_higher_better) {
+                                Higher better
+                                }
+                                @else{
+                                Lower better
+                                }
+                            </div>
+                        </td>
+                        <td>
+                            {{ entyParnt.scale_max }}
+                        </td>
+                        <!-- <td>
+                            <div class="row-flags">
+                                @if (entyParnt.is_system) {
+                                <p-tag value="System" severity="info" />
+                                }
+                                @if (!entyParnt.is_editable) {
+                                <p-tag value="Locked" severity="danger" />
+                                }
+                                @if (entyParnt.options.length) {
+                                <p-tag value="Custom OK" severity="success" />
+                                }
+                                @if (entyParnt.is_editable && !entyParnt.is_system) {
+                                <p-tag value="Editable" severity="secondary" />
+                                }
+                            </div>
+                        </td> -->
+                        <td style="text-align:center">
+                            <p-tag [value]="entyParnt.is_active ? 'Active' : 'Inactive'"
+                                [severity]="entyParnt.is_active ? 'success' : 'danger'" />
+                        </td>
+                        <td>
+                            @if (entyParnt.is_system==false) {
+                            <a href="javascript:;" (click)="onEditClicScaleClick(entyParnt)">
+                                <i class="iconify pi pi-pencil"></i>
+                            </a>
+                            }
+                        </td>
+                    </tr>
+                    }@empty{
+                    <tr>
+                        <td style="text-align: center;" [attr.colspan]="10">No Response Scales Found</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+            <nav aria-label="Page navigation pagination text-end">
+                <ul class="pagination d-flex justify-content-end">
+                    <li class="page-adtInfo next" [class.disabled]="pageNators().pageNo === 1">
+                        <a class="page-link cursor" aria-label="Previous" (click)="changePage(pageNators().pageNo-1)">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    @for(p of pageNumbers();track p){
+                    <li class="page-adtInfo" [class.active]="pageNators().pageNo === p">
+                        <a class="page-link cursor" (click)="changePage(p)">{{p}}</a>
+                    </li>
+                    }
+                    <li class="page-adtInfo prev" [class.disabled]="pageNators().pageNo === pageNumbers().length">
+                        <a class="page-link cursor" aria-label="Next" (click)="changePage(pageNators().pageNo+1)">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <p-dialog [header]="pageMode == 'NEW' ? 'New Response Scale' :  _text" [modal]="true" [(visible)]="visible"
+            [style]="{width:'100vw',height:'100vh'}" [breakpoints]="{'1199px' : '75vw' ,'575px' : '90vw' }"
+            [maximizable]="false" (onShow)="resetForm()" (onHide)="resetForm()" [focusOnShow]="false">
+            <div class="row">
+                <div class="col-4">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="flex flex-col gap-1">
+
+                                <label for="scale_code">Scale Code</label>
+                                <div style="position: relative;display:inline-block;width:100%">
+                                    <input pInputText id="scale_code" [(ngModel)]="scale['scale_code']"
+                                        (blur)="onGetErrorMsgs('scale_code',null)" placeholder="Scale Code"
+                                        class=" form-control" autocomplete="off" appNospaces>
+                                    <div style=" position: absolute;
+                                    top: 0;
+                                    right: 0;
+                                    width: 0;
+                                    height: 0;
+                                    border-top: 12px solid red;
+                                    border-left: 12px solid transparent;"></div>
+                                </div>
+                                @if(errorMsg['scale_code']!=''){
+                                <small class="error">{{ errorMsg['scale_code']}}</small>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="flex flex-col gap-1">
+
+                                <label for="scale_name">Scale Name</label>
+                                <div style="position: relative;display:inline-block;width:100%">
+                                    <input pInputText id="scale_name" [(ngModel)]="scale['scale_name']"
+                                        (blur)="onGetErrorMsgs('scale_name',null)" placeholder="Scale Name"
+                                        class=" form-control" autocomplete="off" appNospaces>
+                                    <div style=" position: absolute;
+                                    top: 0;
+                                    right: 0;
+                                    width: 0;
+                                    height: 0;
+                                    border-top: 12px solid red;
+                                    border-left: 12px solid transparent;"></div>
+                                </div>
+                                @if(errorMsg['scale_name']!=''){
+                                <small class="error">{{ errorMsg['scale_name']}}</small>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="flex flex-col gap-1">
+                                <label for="scale_type">Type</label>
+                                <div style="position: relative;display:inline-block;width:100%">
+                                    <p-select id="scale_type" [(ngModel)]="scale['scale_type']"
+                                        (onBlur)="onGetErrorMsgs('scale_type',null)" [appendTo]="'body'"
+                                        (onChange)="onGetErrorMsgs('scale_type',null)" placeholder="Type"
+                                        [options]="typeList" class="w-full md:w-56" class=" form-control"
+                                        [filter]="true" />
+                                    <div style=" position: absolute;
+                                    top: 0;
+                                    right: 0;
+                                    width: 0;
+                                    height: 0;
+                                    border-top: 12px solid red;
+                                    border-left: 12px solid transparent;"></div>
+                                </div>
+                                @if(errorMsg['scale_type']!=''){
+                                <small class="error">{{ errorMsg['scale_type']}}</small>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="flex flex-col gap-1">
+
+                                <label for="scm">Scale Max</label>
+                                <div style="position: relative;display:inline-block;width:100%">
+                                    <input pInputText type="number" placeholder="Type" name="scm"
+                                        [(ngModel)]="scale['scale_max']" (blur)="onGetErrorMsgs('scale_max',null)"
+                                        class=" form-control" min=0 autocomplete="off" appNospaces />
+                                    <div style=" position: absolute;
+                                    top: 0;
+                                    right: 0;
+                                    width: 0;
+                                    height: 0;
+                                    border-top: 12px solid red;
+                                    border-left: 12px solid transparent;"></div>
+                                </div>
+                                @if(errorMsg['scale_max']!=''){
+                                <small class="error">{{ errorMsg['scale_max']}}</small>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="flex flex-col gap-1">
+
+                                <label for="description">Description</label>
+                                <div style="position: relative;display:inline-block;width:100%">
+                                    <textarea pTextarea placeholder="Description" name="Description"
+                                        class="form-control" [(ngModel)]="scale['description']"
+                                        (blur)="onGetErrorMsgs('description',null)" class=" form-control"
+                                        appNospaces></textarea>
+                                    <div style=" position: absolute;
+                                    top: 0;
+                                    right: 0;
+                                    width: 0;
+                                    height: 0;
+                                    border-top: 12px solid red;
+                                    border-left: 12px solid transparent;"></div>
+                                </div>
+                                @if(errorMsg['description']!=''){
+                                <small class="error">{{ errorMsg['description']}}</small>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="switch-row">
+                                <div class="lbl" style="cursor:pointer">
+                                    Higher is better<small>Direction for scoring & colour</small>
+                                </div>
+                                <p-toggleswitch class="sp" [(ngModel)]="scale.is_higher_better" name="is_higher_better"
+                                    [disabled]="false" />
+                            </div>
+                        </div>
+                        <!-- <div class="col-12">
+                            <div class="switch-row">
+                                <div class="lbl" style="cursor:pointer">
+                                    System scale<small>Direction for scoring & colour</small>
+                                </div>
+                                <p-toggleswitch class="sp" [(ngModel)]="scale.system_scale" name="system_scale"
+                                    [disabled]="false" />
+                            </div>
+                        </div> -->
+                        <div class="col-12">
+                            <div class="switch-row">
+                                <div class="lbl" style="cursor:pointer">
+                                    Active<small>Available for selection</small>
+                                </div>
+                                <p-toggleswitch class="sp" [(ngModel)]="scale.is_active" name="is_active"
+                                    [disabled]="pageMode == 'NEW'" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">ORDER</th>
+                                <th scope="col">
+                                    OPTION LABEL
+                                </th>
+                                <th scope="col">
+                                    CODE
+                                </th>
+                                <th scope="col">
+                                    SCORE
+                                </th>
+                                <th scope="col">
+                                    NA
+                                </th>
+                                <th>
+                                    EXCLUDE
+                                </th>
+                                <th>
+                                    STATUS
+                                </th>
+                                <th>ACTION</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for(sclPtns of scale.options;track $index;let sclOptnsIndex=$index){
+                            @if(sclPtns.is_active){
+                            <tr>
+                                <td>
+                                    {{sclOptnsIndex+1}}
+                                </td>
+                                <td>
+
+                                    <div class="flex flex-col gap-1">
+                                        <div style="position: relative;display:inline-block;width:100%">
+                                            <input pInputText id="scale_name" [(ngModel)]="sclPtns['option_label']"
+                                                (blur)="onGetErrorMsgs('option_label',sclOptnsIndex)"
+                                                placeholder="Option Label" autocomplete="off" appNospaces>
+                                            <div style=" position: absolute;
+                                            top: 0;
+                                            right: 3px;
+                                            width: 0;
+                                            height: 0;
+                                            border-top: 12px solid red;
+                                            border-left: 12px solid transparent;"></div>
+                                        </div>
+
+                                    </div> @if(errorMsg['options'][sclOptnsIndex]['option_label']!=''){
+                                    <small class="error">{{ errorMsg['options'][sclOptnsIndex]['option_label']}}</small>
+                                    }
+                                </td>
+                                <td>
+                                    <div class="flex flex-col gap-1">
+                                        <div style="position: relative;display:inline-block;width:100%">
+                                            <input pInputText id="scale_name" [(ngModel)]="sclPtns['option_code']"
+                                                (blur)="onGetErrorMsgs('option_code',sclOptnsIndex)"
+                                                placeholder="Option Name" autocomplete="off" appNospaces>
+                                            <div style=" position: absolute;
+                                            top: 0;
+                                            right: 3px;
+                                            width: 0;
+                                            height: 0;
+                                            border-top: 12px solid red;
+                                            border-left: 12px solid transparent;"></div>
+                                        </div>
+
+                                    </div> @if(errorMsg['options'][sclOptnsIndex]['option_code']!=''){
+                                    <small class="error">{{ errorMsg['options'][sclOptnsIndex]['option_code']}}</small>
+                                    }
+                                </td>
+                                <td>
+                                    <div class="flex flex-col gap-1">
+                                        <div style="position: relative;display:inline-block;width:100%">
+                                            <input pInputText id="score_points" [(ngModel)]="sclPtns['score_points']"
+                                                (blur)="onGetErrorMsgs('score_points',sclOptnsIndex)"
+                                                placeholder="Score Points" autocomplete="off" appNospaces>
+                                            <div style=" position: absolute;
+                                            top: 0;
+                                            right: 3px;
+                                            width: 0;
+                                            height: 0;
+                                            border-top: 12px solid red;
+                                            border-left: 12px solid transparent;"></div>
+                                        </div>
+
+                                    </div>
+                                    @if(errorMsg['options'][sclOptnsIndex]['score_points']!=''){
+                                    <small class="error">{{ errorMsg['options'][sclOptnsIndex]['score_points']}}</small>
+                                    }
+                                </td>
+                                <td>
+                                    <p-toggleswitch class="sp" [(ngModel)]="sclPtns.not_applicable"
+                                        name="not_applicable" [disabled]="false" />
+                                </td>
+                                <td>
+                                    <p-toggleswitch class="sp" [(ngModel)]="sclPtns.exclude_from_score"
+                                        name="exclude_from_score" [disabled]="false" />
+
+                                </td>
+                                <td>
+                                    <p-toggleswitch class="sp" [(ngModel)]="sclPtns.is_active" name="is_active"
+                                        [disabled]="pageMode == 'NEW'" />
+
+
+                                </td>
+                                <td>
+                                    @if(sclOptnsIndex == (scale.options.length - 1)){
+                                    <i class="iconify pi pi-plus-circle" style="color:green"
+                                        (click)="onOptnAdd(sclPtns,scale)"></i>
+                                    }
+                                    @if( (sclOptnsIndex !== 0 || sclOptnsIndex == 0&&scale.options.length >1
+                                    )){
+                                    <i class="iconify pi pi-trash" style="color:red"
+                                        (click)="onOptnRemove(sclPtns,sclOptnsIndex)"></i>
+                                    }
+                                </td>
+                            </tr>
+                            }
+                            }@empty{
+                            <tr>
+                                <td [attr.colspan]="8" style="text-align: center;">
+                                    <button class="btn btn-primary" (click)="onAddOption(scale)" [disabled]="false">
+                                        Add option
+                                    </button>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <ng-template #footer>
+                <p-button label="Clear" (onClick)="resetForm()" />
+                <p-button label="Submit" (onClick)="onSubmit()" />
+            </ng-template>
+        </p-dialog>
+
+        <style>
+            .error {
+                color: red;
+                font-weight: bold;
+                font-size: 12px;
+            }
+        </style>

@@ -1,0 +1,298 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                                        <i class="iconify pi pi-arrow-left"></i>
+                                    </a>
+                                    <h3>{{_hqms.getPageModeContext(pageMode,  pageMode == 'Reschedule' ? 'Meeting' : 'Schedule Meeting') }}
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-12">
+                                <div class="form-right">
+                                    @if(pageMode!=='Reschedule' ){
+                                    <button type="button" class="btn btn-dark" [disabled]="pageMode=='VIEW'"
+                                        (click)="onClearClick()">Clear</button>
+                                    }
+                                    <button type="submit" class="btn btn-primary" [disabled]="pageMode=='VIEW'"
+                                        (click)="onSubmitClick()">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mt-5">
+                            <div class="col-lg-5 col-md-5 col-12">
+                                <div class="formbox-left legends form-lg">
+                                    <div class="form-title">Committee Details</div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <p>Committee Type</p>
+                                                <div class="radio-group">
+                                                    @for (asLst of committeeTypeList; track asLst['label']) {
+                                                    <p-radioButton [name]="asLst.value_code" [value]="asLst.value"
+                                                        [(ngModel)]='createSchMeeting().committee_type_id'
+                                                        [inputId]="'ing1'+asLst.value" [disabled]="pageMode=='VIEW'"
+                                                        (onClick)="onCommitteeTypeClick(createSchMeeting().committee_type_id)" />
+                                                    <label [for]="'ing1'+asLst.value">{{ asLst['label'] }}</label>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="committee_id">Committee</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <p-select id="committee_id"
+                                                        [(ngModel)]="createSchMeeting().committee_id"
+                                                        (onBlur)="onGetErrorMsgs('committee_id')"
+                                                        (onChange)="onCommitteeChange()"
+                                                        [options]="chooseCommitteeList" [filter]="true"
+                                                        [showClear]="true"
+                                                        [disabled]="pageMode=='VIEW'||pageMode=='Reschedule'||createSchMeeting().committee_type_id==null"
+                                                        name="committee_id" class=" form-control" />
+                                                </div>
+                                                @if(errorMsg['committee_id']!=''){
+                                                <small class="error">{{ errorMsg['committee_id'] }}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-section mb-1">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="roleName">Chair Person :-</label>
+                                                    <div>
+                                                        {{createSchMeeting().chairperson }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="roleName">Co-Chair Person :-</label>
+                                                    <div>
+                                                        {{createSchMeeting().co_chair_person_name }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="roleName">Co-Ordinator :-</label>
+                                                    <div>
+                                                        {{createSchMeeting().co_ordinator }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label for="roleName">Committee Members :-</label>
+                                                    <div>
+                                                        @for(cM of createSchMeeting().committee_members;track $index;){
+                                                        <p-chip [label]="cM['committee_user_name']" [removable]=true />
+                                                        }
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="flex flex-col gap-1">
+                                                    <label for="external_members">External Members (Apart from
+                                                        Committee Members)</label>
+                                                    <div style="position: relative;display:inline-block;width:100%">
+                                                        <p-multiselect id="external_members"
+                                                            [(ngModel)]="createSchMeeting().external_members"
+                                                            (onBlur)="onGetErrorMsgs('external_members')"
+                                                            (onChange)="onGetErrorMsgs('external_members')"
+                                                            [options]="externalMemberList" [filter]="true"
+                                                            [showClear]="true"
+                                                            [disabled]="pageMode=='VIEW'||pageMode=='Reschedule'"
+                                                            name="external_members"
+                                                            class=" form-control" />
+                                                    </div>
+                                                    @if(errorMsg['external_members']!=''){
+                                                    <small class="error">{{ errorMsg['external_members'] }}</small>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-7 col-md-7 col-12">
+                                <div class="formbox-left legends form-lg">
+                                    <div class="form-title">
+                                        Schedule Meeting
+                                    </div>
+                                    <div class="form-section mb-1">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <div class="row">
+                                                    <div class="col-md-12 col-12">
+                                                        <div class="flex flex-col gap-1">
+                                                            <label for="meeting_name">Meeting Name</label>
+                                                            <div
+                                                                style="position: relative;display:inline-block;width:100%">
+                                                                <input pInputText id="meeting_name"
+                                                                    [(ngModel)]="createSchMeeting().meeting_name"
+                                                                    (blur)="onGetErrorMsgs('meeting_name')"
+                                                                    [disabled]="pageMode=='VIEW'||pageMode=='Reschedule'||createSchMeeting().committee_id==null"
+                                                                    name="meeting_name"
+                                                                    class=" form-control"
+                                                                    autocomplete="off" appNospaces>
+                                                            </div>
+                                                            @if(errorMsg['meeting_name']!=''){
+                                                            <small class="error">{{ errorMsg['meeting_name'] }}</small>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 col-12">
+                                                        <div class="flex flex-col gap-1">
+                                                            <label for="meeting_date">Set Meeting Date</label>
+                                                            <div
+                                                                style="position: relative;display:inline-block;width:100%">
+                                                                <input type="date" id="meeting_date"
+                                                                    [(ngModel)]="createSchMeeting().meeting_date"
+                                                                    (change)="onGetErrorMsgs('meeting_date')"
+                                                                    [disabled]="pageMode=='VIEW'||createSchMeeting().committee_id==null"
+                                                                    name="meeting_date" [min]="minDateSetter()"
+                                                                    class="form-control">
+                                                            </div>
+                                                            @if(errorMsg['meeting_date']!=''){
+                                                            <small class="error">{{ errorMsg['meeting_date'] }}</small>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 col-12">
+                                                        <div class="flex flex-col gap-1">
+                                                            <label for="start_time">From Time</label>
+                                                            <div
+                                                                style="position: relative;display:inline-block;width:100%">
+                                                                <input type="time" id="start_time"
+                                                                    [(ngModel)]="createSchMeeting().start_time"
+                                                                    (change)="onGetErrorMsgs('start_time')"
+                                                                    [disabled]="pageMode=='VIEW'||createSchMeeting().committee_id==null"
+                                                                    name="start_time" class="form-control">
+                                                            </div>
+                                                            @if(errorMsg['start_time']!=''){
+                                                            <small class="error">{{ errorMsg['start_time'] }}</small>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 col-12">
+                                                        <div class="flex flex-col gap-1">
+                                                            <label for="end_time">To Time</label>
+                                                            <div
+                                                                style="position: relative;display:inline-block;width:100%">
+                                                                <input type="time" id="end_time"
+                                                                    [(ngModel)]="createSchMeeting().end_time"
+                                                                    (change)="onGetErrorMsgs('end_time')"
+                                                                    [disabled]="pageMode=='VIEW'||createSchMeeting().committee_id==null"
+                                                                    name="end_time" class="form-control">
+                                                            </div>
+                                                            @if(errorMsg['end_time']!=''){
+                                                            <small class="error">{{ errorMsg['end_time'] }}</small>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 col-12">
+                                                        <div class="flex flex-col gap-1">
+                                                            <label for="venue_id">Venue</label>
+                                                            <div
+                                                                style="position: relative;display:inline-block;width:100%">
+                                                                <p-select id="venue_id"
+                                                                    [(ngModel)]="createSchMeeting().venue_id"
+                                                                    (onBlur)="onGetErrorMsgs('venue_id')"
+                                                                    (onChange)="onGetErrorMsgs('venue_id')"
+                                                                    [options]="venueList" [filter]="true"
+                                                                    [showClear]="true"
+                                                                    [disabled]="pageMode=='VIEW'||pageMode=='Reschedule'||createSchMeeting().committee_id==null"
+                                                                    name="venue_id"
+                                                                    class=" form-control" />
+                                                            </div>
+                                                            @if(errorMsg['venue_id']!=''){
+                                                            <small class="error">{{ errorMsg['venue_id'] }}</small>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 col-12">
+                                                        <div class="form-group">
+                                                            <label>Supporting Documents</label>
+                                                            <div class="upload-image">
+                                                                @if(createSchMeeting().supporting_documents.length==0){
+                                                                <p-fileUpload mode="basic"
+                                                                    (onSelect)="onFileSelect(sprtngDocs, $event,'CoverPage',createSchMeeting(),null)"
+                                                                    chooseLabel="Supporting Documents" [multiple]="true"
+                                                                    [auto]="true" #sprtngDocs [maxFileSize]="5242880"
+                                                                    [disabled]="pageMode=='VIEW'||pageMode=='Reschedule'||createSchMeeting().committee_id==null"
+                                                                    invalidFileSizeMessageSummary="File too large"
+                                                                    invalidFileSizeMessageDetail="Maximum upload size is 5MB">
+                                                                </p-fileUpload>
+                                                                }
+                                                                <div *ngIf="createSchMeeting().supporting_documents.length>0"
+                                                                    class="flex gap-2 flex-wrap mt-2">
+                                                                    <div
+                                                                        *ngFor="let mDoc of createSchMeeting().supporting_documents; let imgIndex=index">
+                                                                        <div *ngIf="mDoc.is_active==true"
+                                                                            class="reg-img-view"
+                                                                            style="border: 1px solid #cacaca;padding: 5px; border-radius: 7px;font-size: 11px;">
+                                                                            {{ mDoc['file_name'] }}
+                                                                            <a class="time-icons time-remove ml-2"
+                                                                                href="javascript:return false"><i
+                                                                                    *ngIf="pageMode!='VIEW'||pageMode=='Reschedule'"
+                                                                                    class="pi pi-times-circle"
+                                                                                    (click)="removeImage(mDoc, imgIndex)"></i></a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <label>Status</label>
+                                                        <div class="form-group">
+                                                            <p-toggleswitch [(ngModel)]="createSchMeeting().is_active"
+                                                                name="status"
+                                                                [disabled]="pageMode=='VIEW' || pageMode=='NEW'|| pageMode=='Reschedule'||createSchMeeting().committee_id==null" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-8">
+                                                <div class="col-md-12 col-12">
+                                                    <div class="flex flex-col gap-1">
+                                                        <label for="meeting_agenda">Meeting Agenda</label>
+                                                        <div
+                                                            style="position: relative;display:inline-block;width:100%">
+                                                            <textarea pTextarea id="meeting_agenda"
+                                                                [(ngModel)]="createSchMeeting().meeting_agenda"
+                                                                (blur)="onGetErrorMsgs('meeting_agenda')"
+                                                                [disabled]="pageMode=='VIEW'||pageMode=='Reschedule'||createSchMeeting().committee_id==null"
+                                                                name="meeting_agenda" rows="10"
+                                                                class=" form-control"
+                                                                appNospaces></textarea>
+                                                        </div>
+                                                        @if(errorMsg['meeting_agenda']!=''){
+                                                        <small class="error">{{ errorMsg['meeting_agenda'] }}</small>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

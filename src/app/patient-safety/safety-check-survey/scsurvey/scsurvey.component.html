@@ -1,0 +1,197 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <h3>Survey Culture Response</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-12">
+                                @if(scRspnse['sections'].length>0){
+
+                                <div class="form-right">
+                                    <button type="button" class="btn btn-dark" [disabled]="false"
+                                        (click)="onClearClick()">Clear</button>
+                                    <button type="submit" class="btn btn-primary" [disabled]="false"
+                                        (click)="onSubmitClick()">Submit</button>
+                                </div>
+
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="formbox-left ">
+                                    <div class="row">
+                                        <div class=" col-12">
+                                            <label for="survey_id">Survey</label>
+                                            <div style="position: relative;display:inline-block;width:100%">
+                                            <p-select id="survey_id" [(ngModel)]="scRspnse.survey_id" placeholder="Survey"
+                                                (onBlur)="onSurveyChange()" (onChange)="onSurveyChange()"
+                                                name="survey_id" [options]="surveyList" [filter]="true"
+                                                [showClear]="true" class=" form-control" />
+                                                <div style=" position: absolute;
+                                                top: 0;
+                                                right: 0;
+                                                width: 0;
+                                                height: 0;
+                                                border-top: 12px solid red;
+                                                border-left: 12px solid transparent;">
+                                            </div>
+                                            </div>
+                                            @if(errorMsg['survey_id']!=''){
+                                            <small class="error">{{ errorMsg['survey_id'] }}</small>
+                                            }
+                                        </div>
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-primary" [disabled]="false"
+                                                (click)="onConductSurvey()">Survey</button>
+                                        </div>
+                                        <div class="col-12 mt-2">
+                                            @for(scrs of surveyScorsLst;track $index ){
+                                            <div style="margin: 6px;">
+                                                <span [ngClass]="{
+                                                    'strongly-disagree': scrs.label === '1',
+                                                    'disagree': scrs.label === '2',
+                                                    'fair': scrs.label === '3',
+                                                    'agree': scrs.label === '4',
+                                                    'strongly-agree': scrs.label === '5',
+                                                }" style="padding: 5px;border-radius: 5px;">{{ scrs.label}}</span>
+                                                {{ scrs.value_code | titlecase}}
+                                            </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-9">
+                                @if(scRspnse.sections.length > 0){
+                                <div class="accordion custom-accordion1 accordion2" id="accordionExample">
+                                    @for(pathwayAdt of scRspnse.sections;track $index;let scI = $index){
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                                [attr.data-bs-target]="'#collapseOne'+scI" aria-expanded="true"
+                                                [attr.aria-controls]="'collapseOne'+scI">
+                                                <h5>{{pathwayAdt.section_name}}</h5>
+                                            </button>
+                                        </h2>
+                                        @for(qstn of pathwayAdt.questions;track $index;let j = $index){
+                                        <div [id]="'collapseOne'+scI" class="accordion-collapse collapse show"
+                                            data-bs-parent="#accordionExample">
+                                            <div class="accordion-body">
+                                                <div class="table-audit table-responsive">
+                                                    <table class="table table-bordered mb-0">
+                                                        <tr>
+                                                            <td width="100%">
+                                                                <div>
+                                                                    {{qstn.question_text }}
+                                                                    <div class="audit-check-group">
+                                                                        <div class="audit-check">
+                                                                            <ul>
+                                                                                @for(scrs of surveyScorsLst;track $index
+                                                                                ){
+                                                                                <li style="margin: 6px;"
+                                                                                    (click)="selectAnswer(qstn, scrs)">
+
+                                                                                    <span [ngClass]="{
+                                                                                            'strongly-disagree': scrs.label === '1',
+                                                                                            'disagree': scrs.label === '2',
+                                                                                            'fair': scrs.label === '3',
+                                                                                            'agree': scrs.label === '4',
+                                                                                            'strongly-agree': scrs.label === '5',
+                                                                                        }"
+                                                                                        style="padding: 5px;border-radius: 5px;cursor: pointer;mar">
+                                                                                        <i
+                                                                                            class="iconify pi pi-check-circle"></i>
+                                                                                        {{ scrs.label}}
+                                                                                    </span>
+                                                                                </li>
+                                                                                }
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="audit-check-group">
+                                                                        <span [ngClass]="{
+                                                                        'strongly-disagree': qstn.score_code === 'STRONGLYDISAGREE',
+                                                                        'disagree': qstn.score_code === 'DISAGREE',
+                                                                        'fair': qstn.score_code === 'NEUTRAL',
+                                                                        'agree': qstn.score_code === 'AGREE',
+                                                                        'strongly-agree': qstn.score_code === 'STRONGLYAGREE',
+                                                                    }">
+                                                                            {{ qstn.score_code| titlecase }}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+
+                                                        </tr>
+                                                    </table>
+                                                    @if(qstn.is_required){
+                                                    <div class="error">
+                                                        Response Required
+                                                    </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        }
+                                    </div>
+                                    }
+                                </div>
+                                <label>Remarks</label>
+                                <textarea pTextarea [(ngModel)]="scRspnse.remarks" rows="10" name="remarks"
+                                    class="form-control"></textarea>
+                                }@else{
+                                Survey questionnaire not found
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<style>
+    .yellow-class {
+        background-color: yellow !important;
+    }
+
+    .error {
+        color: red;
+        font-weight: bold;
+    }
+
+    textarea {
+        height: 100% !important;
+    }
+
+    .strongly-disagree {
+        background-color: red;
+    }
+
+    .disagree {
+        background-color: orange;
+    }
+
+    .fair {
+        background-color: yellow;
+    }
+
+    .agree {
+        background-color: lightgreen;
+    }
+
+    .strongly-agree {
+        background-color: green;
+    }
+</style>

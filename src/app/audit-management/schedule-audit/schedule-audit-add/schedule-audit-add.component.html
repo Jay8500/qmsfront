@@ -1,0 +1,295 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="row">
+      <div class="col-md-12 col-12">
+        <div class="card-style2">
+          <div class="card-header backoption">
+            <div class="row">
+              <div class="col-md-7 col-12">
+                <div class="heading-left">
+                  <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                    <!-- <span class="iconify" data-icon="famicons:arrow-back-outline"></span> -->
+                    <i class="iconify pi pi-arrow-left"></i>
+                  </a>
+                  <h3>{{_hqms.getPageModeContext(pageMode,  pageMode == 'Reschedule' ? 'Audit' : 'Schedule Audit') }}
+                  </h3>
+                </div>
+              </div>
+              <div class="col-md-5 col-12 ">
+                <div class="form-right">
+                  @if(pageMode!=='Reschedule' ){
+                  <button type="button" class="btn btn-dark" (click)="onClearClick()"
+                    [disabled]="pageMode=='VIEW'">Clear</button>
+                  }
+                  <button type="submit" class="btn btn-primary" [disabled]="pageMode=='VIEW'"
+                    (click)="onSubmitClick()">Submit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <form>
+              <div class="row mt-5">
+                <!-- Left Column: Audit Details -->
+                <div class="col-lg-6 col-md-12 col-12">
+                  <div class="formbox-left legends form-lg">
+                    <div class="form-title">
+                      Audit Details
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12 col-12">
+                        <label>Audit Type</label>
+                        <div class="radio-group mb-2">
+                          @for (asLst of auditTypeList; track asLst.label) {
+                          <p-radioButton [name]="asLst.value_code" [value]="asLst.value"
+                            [(ngModel)]='scheduleAudit().audit_type_id' [inputId]="'ing1'+asLst.value"
+                            [disabled]="pageMode=='VIEW'||pageMode=='Reschedule'" (click)="onAuditTypeChange(asLst)"
+                            style="margin:5px;" />
+                          <label [for]="'ing1'+asLst.value">{{ asLst.label }}</label>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-6">
+                        <div class="flex flex-col gap-1">
+                          <label for="audit_template_id">Choose Audit</label>
+                          <p-select id="audit_template_id" [(ngModel)]="scheduleAudit().audit_template_id"
+                            (onChange)="onGetErrorMsgs('audit_template_id')" name="audit_template_id"
+                            [disabled]="pageMode=='VIEW'||pageMode=='Reschedule'" [options]="auditsList" [filter]="true"
+                            [showClear]="true" class="form-control" />
+                          @if(errorMsg['audit_template_id']!=''){
+                          <small class="error">{{ errorMsg['audit_template_id']}}</small>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-6">
+                        <div class="flex flex-col gap-1">
+                          <label for="audit_title">Audit Title</label>
+                          <div style="position: relative;display:inline-block;width:100%">
+                            <input pInputText id="audit_title" [(ngModel)]="scheduleAudit().audit_title"
+                              (blur)="onGetErrorMsgs('audit_title')"
+                              [disabled]="pageMode=='VIEW'||pageMode=='Reschedule'" name="audit_title"
+                              class=" form-control" autocomplete="off" appNospaces>
+                          </div>
+                          @if(errorMsg['audit_title']!=''){
+                          <small class="error">{{ errorMsg['audit_title']}}</small>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-6">
+                        <div class="flex flex-col gap-1">
+                          <label for="department_id">Department</label>
+                          <p-select id="department_id" [(ngModel)]="scheduleAudit().department_id"
+                            (onChange)="onDepartmentChange()" name="department_id"
+                            [disabled]="pageMode=='VIEW'||pageMode=='Reschedule'" [options]="departmentList"
+                            [filter]="true" [showClear]="true" class="form-control" />
+                          @if(errorMsg['department_id']!=''){
+                          <small class="error">{{ errorMsg['department_id']}}</small>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-6">
+                        <div class="flex flex-col gap-1">
+                          <label for="location_id">Location</label>
+                          <p-select id="location_id" [(ngModel)]="scheduleAudit().location_id"
+                            (onChange)="onGetErrorMsgs('location_id')" name="location_id"
+                            [disabled]="pageMode=='VIEW'||pageMode=='Reschedule'" [options]="locationsList"
+                            [filter]="true" [showClear]="true" class="form-control" />
+                          @if(errorMsg['location_id']!=''){
+                          <small class="error">{{ errorMsg['location_id']}}</small>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-6">
+                        <div class="flex flex-col gap-1">
+                          <label for="auditor_id">Auditor</label>
+                          <p-select id="auditor_id" [(ngModel)]="scheduleAudit().auditor_id"
+                            (onChange)="onGetErrorMsgs('auditor_id')" name="auditor_id"
+                            [disabled]="pageMode=='VIEW'||pageMode=='Reschedule'" [options]="auditorList"
+                            [filter]="true" [showClear]="true" class="form-control" />
+                          @if(errorMsg['auditor_id']!=''){
+                          <small class="error">{{ errorMsg['auditor_id']}}</small>
+                          }
+                        </div>
+                      </div>
+                      @if (selectedAuditType !== 'PATIENT') {
+                      <div class="col-md-6 col-6">
+                        <div class="flex flex-col gap-1">
+                          <label for="auditee_id">Auditee</label>
+                          <p-select id="auditee_id" [(ngModel)]="scheduleAudit().auditee_id"
+                            (onChange)="onGetErrorMsgs('auditee_id')" name="auditee_id"
+                            [disabled]="pageMode=='VIEW'||pageMode=='Reschedule'" [options]="auditeeList"
+                            [filter]="true" [showClear]="true" class="form-control" />
+                          @if(errorMsg['auditee_id']!=''){
+                          <small class="error">{{ errorMsg['auditee_id']}}</small>
+                          }
+                        </div>
+                      </div>
+                      }
+                      @if(pageMode == 'Reschedule'){
+                      <div class="col-md-6 col-6">
+                        <div class="flex flex-col gap-1">
+                          <label for="prev_date">Scheduled Date</label>
+                          <input type="date" id="prev_date" [(ngModel)]="scheduleAudit().prev_date" [disabled]="true"
+                            name="prev_date" class="form-control">
+                        </div>
+                      </div>
+                      }
+                      <div class="col-md-6 col-6">
+                        <div class="flex flex-col gap-1">
+                          <label for="audit_date">Audit Date</label>
+                          <input type="date" id="audit_date" [(ngModel)]="scheduleAudit().audit_date"
+                            (change)="onGetErrorMsgs('audit_date')" [disabled]="pageMode=='VIEW'" name="audit_date"
+                            [min]="minDateSetter()" class=" form-control">
+                          @if(errorMsg['audit_date']!=''){
+                          <small class="error">{{ errorMsg['audit_date']}}</small>
+                          }
+                        </div>
+                      </div>
+                      @if (selectedAuditType === 'PATIENT') {
+                      <div class="col-md-12 col-12">
+                        <label>Consent Present</label>
+                        <div class="form-group">
+                          <p-toggleswitch [(ngModel)]="scheduleAudit().consent_present" name="status"
+                            [disabled]="pageMode=='VIEW' || pageMode=='NEW'||pageMode=='Reschedule'" />
+                        </div>
+                      </div>
+                      }
+                      @if (selectedAuditType === 'PATIENT') {
+                      <div class="col-md-12 col-12">
+                        <div class="form-group">
+                          <label>Supporting Documents</label>
+                          <div class="upload-image">
+                            <p-fileUpload mode="basic"
+                              (onSelect)="onCoverPageFileSelect(upCoverPage, $event,'CoverPage',scheduleAudit(),null)"
+                              chooseLabel="Supporting Documents" [multiple]="false" #upCoverPage
+                              accept="image/png, image/jpeg" [fileLimit]="1" [maxFileSize]="2097152" [auto]="true"
+                              [disabled]="pageMode=='VIEW'||pageMode=='Reschedule'"
+                              invalidFileSizeMessageSummary="File too large"
+                              invalidFileSizeMessageDetail="Maximum upload size is 2MB">
+                            </p-fileUpload>
+                            <div *ngIf="scheduleAudit().supporting_documents.length>0"
+                              class="flex gap-2 flex-wrap mt-2">
+                              <div *ngFor="let mDoc of scheduleAudit().supporting_documents; let imgIndex=index">
+                                <div *ngIf="mDoc.is_active==true" class="reg-img-view"
+                                  style="border: 1px solid #cacaca;padding: 5px; border-radius: 7px;font-size: 11px;">
+                                  {{ mDoc['file_name'] }}
+                                  <a class="time-icons time-remove ml-2" href="javascript:return false"><i
+                                      *ngIf="pageMode!='VIEW'||pageMode=='Reschedule'" class="pi pi-times-circle"
+                                      (click)="removeCoverPageImage(mDoc, imgIndex)"></i></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      }
+                    </div>
+                  </div>
+                </div>
+                @if (selectedAuditType === 'PATIENT') {
+                <div class="col-lg-6 col-md-12 col-12">
+                  <div class="formbox-left legends form-lg rightcolShow">
+                    <div class="form-title">
+                      Patient Details
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 col-6">
+                        <div class="flex flex-col gap-1">
+                          <label for="patient_id">UHID</label>
+                          <p-select id="patient_id" [(ngModel)]="scheduleAudit().patient_details.patient_id"
+                            (onChange)="onGetPatientErrorMsgs('patient_id')" name="patient_id"
+                            [disabled]="pageMode=='VIEW'||pageMode=='Reschedule'" [options]="patientsList"
+                            [filter]="true" [showClear]="true" class="form-control" />
+                          @if(errorMsg['patient_id']!=''){
+                          <small class="error">{{ errorMsg['patient_id']}}</small>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-6">
+                        <div class="flex flex-col gap-1">
+                          <label for="treating_consultant_id">Treating Consultant</label>
+                          <p-select id="treating_consultant_id"
+                            [(ngModel)]="scheduleAudit().patient_details.treating_consultant_id"
+                            (onChange)="onGetPatientErrorMsgs('treating_consultant_id')" name="treating_consultant_id"
+                            [disabled]="pageMode=='VIEW'||pageMode=='Reschedule'" [options]="treatingCnsltntList"
+                            [filter]="true" [showClear]="true" class="form-control" />
+                          @if(errorMsg['treating_consultant_id']!=''){
+                          <small class="error">{{ errorMsg['treating_consultant_id']}}</small>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-6">
+                        <div class="flex flex-col gap-1">
+                          <label for="specialty_id">Specialty</label>
+                          <p-select id="specialty_id" [(ngModel)]="scheduleAudit().patient_details.specialty_id"
+                            (onChange)="onGetPatientErrorMsgs('specialty_id')" name="specialty_id"
+                            [disabled]="pageMode=='VIEW'||pageMode=='Reschedule'" [options]="specalityList"
+                            [filter]="true" [showClear]="true" class="form-control" />
+                          @if(errorMsg['specialty_id']!=''){
+                          <small class="error">{{ errorMsg['specialty_id']}}</small>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-6">
+                        <div class="flex flex-col gap-1">
+                          <label for="encounter_type_id">Encounter Type</label>
+                          <p-select id="encounter_type_id"
+                            [(ngModel)]="scheduleAudit().patient_details.encounter_type_id"
+                            (onChange)="onGetPatientErrorMsgs('encounter_type_id')" name="encounter_type_id"
+                            [disabled]="pageMode=='VIEW'||pageMode=='Reschedule'" [options]="encounterTypeList"
+                            [filter]="true" [showClear]="true" class="form-control" />
+                          @if(errorMsg['encounter_type_id']!=''){
+                          <small class="error">{{ errorMsg['encounter_type_id']}}</small>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-6">
+                        <div class="flex flex-col gap-1">
+                          <label for="record_source_id">Record Source</label>
+                          <p-select id="record_source_id" [(ngModel)]="scheduleAudit().patient_details.record_source_id"
+                            (onChange)="onGetPatientErrorMsgs('record_source_id')" name="record_source_id"
+                            [disabled]="pageMode=='VIEW'||pageMode=='Reschedule'" [options]="recordSourceList"
+                            [filter]="true" [showClear]="true" class="form-control" />
+                          @if(errorMsg['record_source_id']!=''){
+                          <small class="error">{{ errorMsg['record_source_id']}}</small>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-md-12 col-12">
+                        <div class="flex flex-col gap-1">
+                          <label for="diagnosis">Diagnosis</label>
+                          <textarea pTextarea id="diagnosis" [(ngModel)]="scheduleAudit().patient_details.diagnosis"
+                            (blur)="onGetPatientErrorMsgs('diagnosis')" rows="10"
+                            [disabled]="pageMode=='VIEW'||pageMode=='Reschedule'" name="diagnosis"
+                            class=" form-control" appNospaces></textarea>
+                          @if(errorMsg['diagnosis']!=''){
+                          <small class="error">{{ errorMsg['diagnosis']}}</small>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-md-12 col-12">
+                        <div class="flex flex-col gap-1">
+                          <label for="additional_comments">Additional Comments</label>
+                          <textarea pTextarea id="additional_comments"
+                            [(ngModel)]="scheduleAudit().patient_details.additional_comments"
+                            (blur)="onGetPatientErrorMsgs('additional_comments')" rows="10"
+                            [disabled]="pageMode=='VIEW'||pageMode=='Reschedule'" name="additional_comments"
+                            class=" form-control" appNospaces></textarea>
+                          @if(errorMsg['additional_comments']!=''){
+                          <small class="error">{{ errorMsg['additional_comments']}}</small>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                }
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

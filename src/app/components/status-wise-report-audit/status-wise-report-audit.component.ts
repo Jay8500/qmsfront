@@ -1,0 +1,115 @@
+import { Component, ViewChild, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgApexchartsModule, ChartComponent } from 'ng-apexcharts';
+
+import {
+  ApexNonAxisChartSeries,
+  ApexResponsive,
+  ApexChart,
+  ApexLegend,
+  ApexFill,
+  ApexStroke,
+  ApexDataLabels
+} from "ng-apexcharts";
+
+export type ChartOptions = {
+  series: ApexNonAxisChartSeries;
+  chart: ApexChart;
+  labels: string[];
+  responsive: ApexResponsive[];
+  colors: string[];         
+  legend: ApexLegend;       
+  fill: ApexFill;          
+  stroke?: ApexStroke;
+  dataLabels?: ApexDataLabels;
+  plotOptions: ApexPlotOptions;
+};
+
+@Component({
+    selector: 'app-status-wise-report-audit',
+    imports: [NgApexchartsModule],
+    templateUrl: './status-wise-report-audit.component.html',
+    styleUrl: './status-wise-report-audit.component.scss'
+})
+export class StatusWiseReportAuditComponent {
+
+  @ViewChild("chart") chart!: ChartComponent;
+      public chartOptions: ChartOptions;
+    
+      constructor() {
+        this.chartOptions = {
+          series: [25, 25, 25, 50],
+          chart: {
+            type: "pie",
+            width: 380
+          },
+          labels: ["Completed", "Pending", "Scheduled", "In Progress", ],
+          colors: ["#1D8C3A", "#FFB11F", "#3070F4", "#562497"],
+          fill: {
+            type: "solid",
+            opacity: 1
+          },
+          stroke: {
+            show: false
+          },
+          dataLabels: {
+            enabled: true,
+            style: {
+              fontSize: '14px',
+              fontWeight: 'bold'
+            }
+          },
+          legend: {
+            position: "bottom",
+            fontSize: "14px",
+            fontWeight: 500,
+            labels: {
+              colors: "#333"
+            },
+            markers: {
+              shape: "circle"
+            },
+            itemMargin: {
+              horizontal: 10,
+              vertical: 5
+            }
+          },
+          plotOptions: {
+            pie: {
+              donut: {
+                size: '100%',
+                labels: {
+                  show: true,
+                  total: {
+                    show: true,
+                    label: 'Total',
+                    fontSize: '16px',
+                    fontWeight: 600
+                  },
+                  value: {
+                    show: false
+                  },
+                  name: {
+                    show: false
+                  }
+                }
+              }
+            }
+          },
+          responsive: [
+            {
+              breakpoint: 480,
+              options: {
+                chart: {
+                  width: 250
+                },
+                legend: {
+                  position: "bottom"
+                }
+              }
+            }
+          ]
+        };
+      }
+  
+
+}

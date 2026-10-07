@@ -1,0 +1,538 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                                        <i class="iconify pi pi-arrow-left"></i>
+                                    </a>
+                                    <h3>Organization</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-12">
+                                <div class="form-right">
+                                    <div class="row">
+                                        <div class="col-md-12 col-12">
+                                            <button type="button" class="btn btn-dark"
+                                                (click)="onClearClick()">Clear</button>
+                                            <button type="submit" class="btn btn-primary"
+                                                (click)="onSubmitClick()">Submit</button>
+                                        </div>
+                                    </div>
+                                    <!-- @if(false){
+                                        <div class="form-right">
+                                            <a href="javascript:;" class="icon-btn-square" (click)="filterToggle()"><span
+                                                    class="iconify" data-icon="mage:filter"></span></a>
+                                            <div class="dropdown dropdown-style1 ms-2">
+                                                <button class="btn btn-light dropdown-toggle" type="button"
+                                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Download Report <span class="iconify"
+                                                        data-icon="akar-icons:chevron-down"></span>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                                                    <li><a class="dropdown-item" href="javascript:;">Download Word</a></li>
+                                                    <li><a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        } -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mt-3">
+                            <div class="col-12 mb-4">
+                                <div class="formbox-left legends form-lg">
+                                    <div class="form-title">Organization Details</div>
+                                    <div class="row">
+                                        <div class="col-md-5 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="org_name">Practice Name</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="org_name" [(ngModel)]="orgInfo.org_name"
+                                                        (blur)="onGetErrorMsgs('org_name')" placeholder="Practice Name"
+                                                        [disabled]="pageMode=='VIEW'" name="org_name"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                </div>
+                                                @if(errorMsg['org_name']!=''){
+                                                <small class="error">{{ errorMsg['org_name']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="display_name">Display Name</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="display_name" [(ngModel)]="orgInfo.display_name"
+                                                        (blur)="onGetErrorMsgs('display_name')" placeholder="Display Name"
+                                                        [disabled]="pageMode=='VIEW'" name="display_name"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                </div>
+                                                @if(errorMsg['display_name']!=''){
+                                                <small class="error">{{ errorMsg['display_name']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="no_of_locations">No of Locations</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="no_of_locations" [(ngModel)]="orgInfo.no_of_locations"
+                                                        (blur)="onGetErrorMsgs('no_of_locations')" placeholder="No of Locations"
+                                                        [disabled]="false" name="no_of_locations"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                </div>
+                                                @if(errorMsg['no_of_locations']!=''){
+                                                <small class="error">{{ errorMsg['no_of_locations']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="org_desc">Description</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="org_desc" [(ngModel)]="orgInfo.org_desc"
+                                                        (blur)="onGetErrorMsgs('org_desc')" placeholder="Description"
+                                                        [disabled]="pageMode=='VIEW'" name="org_desc"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                </div>
+                                                @if(errorMsg['org_desc']!=''){
+                                                <small class="error">{{ errorMsg['org_desc']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="contact_person">Contact Person</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="contact_person" [(ngModel)]="orgInfo.contact_person"
+                                                        (blur)="onGetErrorMsgs('contact_person')" placeholder="Contact Person"
+                                                        [disabled]="pageMode=='VIEW'" name="contact_person"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                </div>
+                                                @if(errorMsg['contact_person']!=''){
+                                                <small class="error">{{ errorMsg['contact_person']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="form-group">
+                                                <label>Logo</label>
+                                                <div class="upload-image">
+                                                    @if(orgInfo.logo.length==0 ){
+                                                    <p-fileUpload mode="basic"
+                                                        (onSelect)="onCoverPageFileSelect(logo, $event)"
+                                                        chooseLabel="Upload" [multiple]="false" #logo
+                                                        accept="image/png, image/jpeg" [fileLimit]="1"
+                                                        [maxFileSize]="2097152" [auto]="true"
+                                                        [disabled]="pageMode=='VIEW'"
+                                                        invalidFileSizeMessageSummary="File too large"
+                                                        invalidFileSizeMessageDetail="Maximum upload size is 2MB">
+                                                    </p-fileUpload>
+                                                    }@else{
+                                                    <div class="flex gap-2 flex-wrap ">
+                                                        <div *ngFor="let mDoc of orgInfo.logo; let imgIndex=index">
+                                                            <a class="time-icons time-remove ml-2"
+                                                                href="javascript:return false"><i
+                                                                    *ngIf="pageMode!='VIEW'" class="pi pi-times-circle"
+                                                                    (click)="removeCoverPageImage(mDoc, imgIndex)"></i></a>
+                                                            <div *ngIf="mDoc.is_active==true"
+                                                                style="border: 1px solid #cacaca;padding: 5px; border-radius: 7px;font-size: 11px;">
+                                                                @if(pageMode == 'NEW'){
+                                                                <div>
+                                                                    {{ mDoc['file_name'] }}
+                                                                </div>
+                                                                }@else{
+                                                                <div class="grid-photo">
+                                                                    <a [href]="mDoc.fileOrImageUrl"
+                                                                        data-fancybox="gallery">
+                                                                        <img [src]="mDoc.fileOrImageUrl"
+                                                                            alt="Evidence" />
+                                                                    </a>
+                                                                </div>
+                                                                }
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="about_us">About Us</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="about_us" [(ngModel)]="orgInfo.about_us"
+                                                        (blur)="onGetErrorMsgs('about_us')" placeholder="About Us"
+                                                        [disabled]="pageMode=='VIEW'" name="about_us"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                </div>
+                                                @if(errorMsg['about_us']!=''){
+                                                <small class="error">{{ errorMsg['about_us']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="company_url">Company URL</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="company_url" [(ngModel)]="orgInfo.company_url"
+                                                        (blur)="onGetErrorMsgs('company_url')" placeholder="Company URL"
+                                                        [disabled]="pageMode=='VIEW'" name="company_url"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                </div>
+                                                @if(errorMsg['company_url']!=''){
+                                                <small class="error">{{ errorMsg['company_url']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="privacy_policy_url">Privacy Policy URL</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="privacy_policy_url" [(ngModel)]="orgInfo.privacy_policy_url"
+                                                        (blur)="onGetErrorMsgs('privacy_policy_url')" placeholder="Privacy Policy URL"
+                                                        [disabled]="pageMode=='VIEW'" name="privacy_policy_url"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                </div>
+                                                @if(errorMsg['privacy_policy_url']!=''){
+                                                <small class="error">{{ errorMsg['privacy_policy_url']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="terms_of_usage_url">Terms of Usage URL</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="terms_of_usage_url" [(ngModel)]="orgInfo.terms_of_usage_url"
+                                                        (blur)="onGetErrorMsgs('terms_of_usage_url')" placeholder="Terms of Usage URL"
+                                                        [disabled]="pageMode=='VIEW'" name="terms_of_usage_url"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                </div>
+                                                @if(errorMsg['terms_of_usage_url']!=''){
+                                                <small class="error">{{ errorMsg['terms_of_usage_url']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="copy_right">Copyright</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="copy_right" [(ngModel)]="orgInfo.copy_right"
+                                                        (blur)="onGetErrorMsgs('copy_right')" placeholder="Copyright"
+                                                        [disabled]="pageMode=='VIEW'" name="copy_right"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                </div>
+                                                @if(errorMsg['copy_right']!=''){
+                                                <small class="error">{{ errorMsg['copy_right']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="org_key">Practice Key</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="org_key" [(ngModel)]="orgInfo.org_key"
+                                                        (blur)="onGetErrorMsgs('org_key')" placeholder="Practice Key"
+                                                        [disabled]="pageMode=='VIEW'" name="org_key"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                </div>
+                                                @if(errorMsg['org_key']!=''){
+                                                <small class="error">{{ errorMsg['org_key']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="default_currency_id">Default Currency</label>
+                                                <p-select id="default_currency_id" [(ngModel)]="orgInfo.default_currency_id"
+                                                    (onChange)="onGetErrorMsgs('default_currency_id')"
+                                                    [disabled]="pageMode=='VIEW'" name="default_currency_id"
+                                                    [options]="crncyList" [filter]="true" [showClear]="true"
+                                                    class="form-control" />
+                                                @if(errorMsg['default_currency_id']!=''){
+                                                <small class="error">{{ errorMsg['default_currency_id']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <!-- <div class="col-md-4 col-12">
+                                            <hqms-text [formName]="FORM_NAME" [labelName]="'Org Patient Format'"
+                                                [fieldName]="'org_patient_format'" [isDisabled]="pageMode=='VIEW'"
+                                                [(ngModel)]="orgInfo.org_patient_format" name="org_patient_format"
+                                                (statusChange)="onFieldStatusChange($event)">
+                                            </hqms-text>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 mb-4">
+                                <div class="formbox-left legends form-lg">
+                                    <div class="form-title">Contact Details</div>
+                                    <div class="row">
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="email_id">Email ID</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="email_id" [(ngModel)]="orgInfo.email_id"
+                                                        (blur)="onGetErrorMsgs('email_id')" placeholder="Email ID"
+                                                        [disabled]="pageMode=='VIEW'" name="email_id"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                </div>
+                                                @if(errorMsg['email_id']!=''){
+                                                <small class="error">{{ errorMsg['email_id']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="office_phone">Office Phone</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="office_phone" [(ngModel)]="orgInfo.office_phone"
+                                                        (blur)="onGetErrorMsgs('office_phone')" placeholder="Office Phone"
+                                                        [disabled]="pageMode=='VIEW'" name="office_phone"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                </div>
+                                                @if(errorMsg['office_phone']!=''){
+                                                <small class="error">{{ errorMsg['office_phone']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="fax_number">Fax No.</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="fax_number" [(ngModel)]="orgInfo.fax_number"
+                                                        (blur)="onGetErrorMsgs('fax_number')" placeholder="Fax No."
+                                                        [disabled]="pageMode=='VIEW'" name="fax_number"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                </div>
+                                                @if(errorMsg['fax_number']!=''){
+                                                <small class="error">{{ errorMsg['fax_number']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="mobile_phone">Mobile No.</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="mobile_phone" [(ngModel)]="orgInfo.mobile_phone"
+                                                        (blur)="onGetErrorMsgs('mobile_phone')" placeholder="Mobile No."
+                                                        [disabled]="pageMode=='VIEW'" name="mobile_phone"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                </div>
+                                                @if(errorMsg['mobile_phone']!=''){
+                                                <small class="error">{{ errorMsg['mobile_phone']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="website_url">Website URL</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="website_url" [(ngModel)]="orgInfo.website_url"
+                                                        (blur)="onGetErrorMsgs('website_url')" placeholder="Website URL"
+                                                        [disabled]="pageMode=='VIEW'" name="website_url"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                </div>
+                                                @if(errorMsg['website_url']!=''){
+                                                <small class="error">{{ errorMsg['website_url']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="address1">Address 1</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="address1" [(ngModel)]="orgInfo.address1"
+                                                        (blur)="onGetErrorMsgs('address1')" placeholder="Address 1"
+                                                        [disabled]="pageMode=='VIEW'" name="address1"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                </div>
+                                                @if(errorMsg['address1']!=''){
+                                                <small class="error">{{ errorMsg['address1']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="address2">Address 2</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="address2" [(ngModel)]="orgInfo.address2"
+                                                        (blur)="onGetErrorMsgs('address2')" placeholder="Address 2"
+                                                        [disabled]="pageMode=='VIEW'" name="address2"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                </div>
+                                                @if(errorMsg['address2']!=''){
+                                                <small class="error">{{ errorMsg['address2']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="form-group p-fluid">
+                                                <div>
+                                                    <label>Area</label>
+                                                </div>
+                                                <p-autoComplete [(ngModel)]="orgInfo.area_name"
+                                                    [suggestions]="filterModules" [disabled]="pageMode=='VIEW'"
+                                                    (completeMethod)="filterGroupedModules($event)"
+                                                    placeholder="Search for Area" (onSelect)="onAreaSelect($event)"
+                                                    [showClear]="true" styleClass="p-autocomplete-input d-block">
+                                                    <ng-template let-group #group>
+                                                        <div> {{ group.label  }} </div>
+                                                    </ng-template>
+                                                </p-autoComplete>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="city_name">City</label>
+                                                <input pInputText id="city_name" [(ngModel)]="orgInfo.city_name"
+                                                    [disabled]="true" name="city_name"
+                                                    class="form-control" autocomplete="off">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="state_name">State</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="state_name" [(ngModel)]="orgInfo.state_name"
+                                                        (blur)="onGetErrorMsgs('state_name')" [disabled]="true" name="state_name"
+                                                        class=" form-control" autocomplete="off">
+                                                </div>
+                                                @if(errorMsg['state_name']!=''){
+                                                <small class="error">{{ errorMsg['state_name']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="country_name">Country</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="country_name" [(ngModel)]="orgInfo.country_name"
+                                                        (blur)="onGetErrorMsgs('country_name')" [disabled]="true" name="country_name"
+                                                        class=" form-control" autocomplete="off">
+                                                </div>
+                                                @if(errorMsg['country_name']!=''){
+                                                <small class="error">{{ errorMsg['country_name']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="formbox-left legends form-lg">
+                                    <div class="form-title">Accreditation</div>
+                                    <div class="row">
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="accreditation_no">Code</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="accreditation_no" [(ngModel)]="orgInfo.accreditation_no"
+                                                        (blur)="onGetErrorMsgs('accreditation_no')" placeholder="Code"
+                                                        [disabled]="pageMode=='VIEW'" name="accreditation_no"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                </div>
+                                                @if(errorMsg['accreditation_no']!=''){
+                                                <small class="error">{{ errorMsg['accreditation_no']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="accreditation_body">Accreditation Body</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="accreditation_body" [(ngModel)]="orgInfo.accreditation_body"
+                                                        (blur)="onGetErrorMsgs('accreditation_body')" placeholder="Accreditation Body"
+                                                        [disabled]="pageMode=='VIEW'" name="accreditation_body"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                </div>
+                                                @if(errorMsg['accreditation_body']!=''){
+                                                <small class="error">{{ errorMsg['accreditation_body']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="accreditation_for">Accreditation For</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input pInputText id="accreditation_for" [(ngModel)]="orgInfo.accreditation_for"
+                                                        (blur)="onGetErrorMsgs('accreditation_for')" placeholder="Accreditation For"
+                                                        [disabled]="pageMode=='VIEW'" name="accreditation_for"
+                                                        class=" form-control" autocomplete="off" appNospaces>
+                                                </div>
+                                                @if(errorMsg['accreditation_for']!=''){
+                                                <small class="error">{{ errorMsg['accreditation_for']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="valid_start_dt">Valid From</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input type="date" id="valid_start_dt" [(ngModel)]="orgInfo.valid_start_dt"
+                                                        (change)="onValidStartDtChange()" [disabled]="pageMode=='VIEW'"
+                                                        name="valid_start_dt" class=" form-control">
+                                                </div>
+                                                @if(errorMsg['valid_start_dt']!=''){
+                                                <small class="error">{{ errorMsg['valid_start_dt']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="valid_end_dt">Valid To</label>
+                                                <div style="position: relative;display:inline-block;width:100%">
+                                                    <input type="date" id="valid_end_dt" [(ngModel)]="orgInfo.valid_end_dt"
+                                                        (blur)="onGetErrorMsgs('valid_end_dt')"
+                                                        [disabled]="pageMode=='VIEW'||orgInfo.valid_start_dt==null"
+                                                        name="valid_end_dt" [min]="orgInfo.valid_start_dt"
+                                                        class=" form-control">
+                                                </div>
+                                                @if(errorMsg['valid_end_dt']!=''){
+                                                <small class="error">{{ errorMsg['valid_end_dt']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="flex flex-col gap-1">
+                                                <label for="accr_status_id">Status</label>
+                                                <p-select id="accr_status_id" [(ngModel)]="orgInfo.accr_status_id"
+                                                    (onChange)="onGetErrorMsgs('accr_status_id')"
+                                                    [disabled]="pageMode=='VIEW'" name="accr_status_id"
+                                                    [options]="accStatusList" [filter]="true" [showClear]="true"
+                                                    class="form-control" />
+                                                @if(errorMsg['accr_status_id']!=''){
+                                                <small class="error">{{ errorMsg['accr_status_id']}}</small>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    :host ::ng-deep .p-autocomplete-input .p-inputtext {
+        width: 100% !important;
+    }
+</style>

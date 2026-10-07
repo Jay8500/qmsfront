@@ -1,0 +1,207 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="row">
+      <div class="col-md-12 col-12">
+        <div class="card-style2">
+          <div class="card-header backoption">
+            <div class="row">
+              <div class="col-md-7 col-12">
+                <div class="heading-left">
+                  <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                    <i class="iconify pi pi-arrow-left"></i>
+                  </a>
+                  <h3>Employee Satisfaction Survey - CAPA</h3>
+                </div>
+              </div>
+              <div class="col-md-5 col-12">
+                @if(false){
+                <div class="form-right">
+                  <div class="dropdown dropdown-style1 ms-2">
+                    <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                      Download
+                      <i class="iconify pi pi-angle-down"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                      <li><a class="dropdown-item" href="javascript:;">Download Word</a></li>
+                      <li><a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                    </ul>
+                  </div>
+                </div>
+                }
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="audit-info-cover">
+              <div class="table-audit tablehrz">
+                <table class="table table-bordered table-line mb-0">
+                  <tr>
+                    <th width="20%">Survey Name</th>
+                    <th>Participants</th>
+                    <th>From Date</th>
+                    <th>To Date</th>
+                    <th>Total Participants</th>
+                    <th>Total Satisfactory</th>
+                  </tr>
+                  <tr>
+                    <!-- <td>{{empDetails.survey_name}}</td>
+                    <td>{{empDetails.participants_type_name}}</td>
+                    <td>{{empDetails.from_date}}</td>
+                    <td>{{empDetails.to_date}}</td>
+                    <td>{{empDetails.total_participants_cnt}}</td>
+                    <td>{{empDetails.total_satisfactory_cnt}}</td> -->
+                  </tr>
+                </table>
+              </div>
+            </div>
+
+            <div class="audit-info-cover">
+              <div class="audit-status">
+                <div class="row">
+                  <div class="col-md-6 col-12">
+                    <div class="left-content">
+                      <p>Survey Name</p>
+                      <!-- <h5>{{empDetails.survey_name}}</h5> -->
+                    </div>
+                  </div>
+                  <!-- <div class="col-md-6 col-12">
+                    <div class="right-content text-end">
+                      <p class="mb-1">Overall Score</p>
+                      <span class="badge-green">90%</span>
+                    </div>
+                  </div> -->
+                </div>
+              </div>
+
+              <div class="table-audit">
+                <table class="table table-bordered table-line table-lines-sm">
+                  <tr>
+                    <th width="25%">Questions</th>
+                    <th class="text-center">Very Satisfied</th>
+                    <th class="text-center">Satisfied</th>
+                    <th class="text-center">Neutral</th>
+                    <th class="text-center">Dissatisfied</th>
+                    <th class="text-center">Very Dissatisfied</th>
+                    <th class="text-center">Score</th>
+                    <th width="20%" class="text-center">Action Taken</th>
+                  </tr>
+                  <!-- @for( lgHst of empDetails.surveyInfo ;track $index){
+                  <tr>
+                    <td>{{lgHst.Questions}}</td>
+                    <td class="text-center">{{lgHst.very_satisfied}}</td>
+                    <td class="text-center">{{lgHst.satisfied}}</td>
+                    <td class="text-center">{{lgHst.neutral}}</td>
+                    <td class="text-center">{{lgHst.dissatisfied}}</td>
+                    <td class="text-center">{{lgHst.very_dissatisfied}}</td>
+                    <td class="text-center text-success">{{lgHst.score}}%</td>
+                    <td>
+                      <div class="form-group capa-textarea"><input type="text" class="form-control"
+                          placeholder="Write CAPA" /></div>
+                    </td>
+                  </tr>
+                  }@empty{
+                  <td>No data found</td>
+                  } -->
+                </table>
+              </div>
+
+              <div class="document-upload">
+                <div class="row">
+                  <div class="col-md-4 col-12">
+                    <div class="form-group">
+                      <label>Supporting Documents or Evidence.</label>
+                      <div class="upload-image">
+                        <button class="btn btn-primary"><span class="iconify"
+                            data-icon="material-symbols:upload-rounded"></span> Upload </button>
+                        <div class="upload-fileinfo bgwhite">
+                          <p>Evidence743677547.pdf </p>
+                          <a href="javascript:;">Remove</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-8 col-12 text-end">
+                    <button class="btn btn-primary btn-big2 mt-2" routerLink="/employee-details">Submit</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-3 mb-2">
+              <button class="btn btn-primary" (click)="toggleRemarks()">
+                {{ showRemarks ? 'Hide Remarks' : 'View All Remarks' }}
+              </button>
+            </div>
+
+            @if (showRemarks) {
+            <div class="card-style2">
+              <div class="card-header backoption table-search">
+                <div class="row">
+                  <div class="col-md-7 col-12">
+                    <div class="heading-left">
+                      <h3>Employee Satisfaction Survey History</h3>
+                    </div>
+                  </div>
+                  <div class="col-md-5 col-12">
+                    @if(false){
+                    <div class="form-right">
+                      <div class="dropdown dropdown-style1 ms-2">
+                        <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                          aria-expanded="false">
+                          Download Report
+                          <i class="iconify pi pi-angle-down"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                          <li><a class="dropdown-item" href="javascript:;">Download Word</a></li>
+                          <li><a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                    }
+                  </div>
+                </div>
+              </div>
+              <div class="card-style1">
+                <div class="card-body table-style1 table-responsive radius-4">
+                  <div class="fixed-header-table3">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th scope="col" sortable="role" (sort)="onSort($event)" class="sorttd">
+                            Role
+                          </th>
+                          <th width="40%" scope="col" sortable="remarks" (sort)="onSort($event)" class="sorttd">
+                            Remarks
+                          </th>
+                          <th scope="col" sortable="feedback" (sort)="onSort($event)" class="sorttd text-end">
+                            Date & Time of Feedback
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @for(upInfo of empDetails.remarksInfo;track $index){
+                        <tr>
+                          <td scope="row">{{ upInfo.role }}</td>
+                          <td>{{ upInfo.remarks }}</td>
+                          <td class="text-end">{{ upInfo.feedback }}</td>
+                        </tr>
+                        }@empty{
+                        <td>No data found</td>
+                        }
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

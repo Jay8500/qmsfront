@@ -1,0 +1,131 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                                        <i class="iconify pi pi-arrow-left"></i>
+                                    </a>
+                                    <h3>Audit Master Detail </h3>
+                                </div>
+                            </div>
+                            @if(false){
+                            <div class="col-md-5 col-12">
+                                <div class="form-right">
+                                    <div class="dropdown dropdown-style1 ms-2">
+                                        <button class="btn btn-light dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            Download
+                                            <i class="iconify pi pi-angle-down"></i>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                                            <li><a class="dropdown-item" href="javascript:;">Download Word</a></li>
+                                            <li><a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="audit-info-cover">
+                            <div class="audit-status">
+                                <div class="row">
+                                    <div class="col-md-6 col-12">
+                                        <div class="left-content">
+                                            <h5>{{readOnlyAdt().audit_name}} </h5>
+                                            @if(readOnlyAdt().updated_at!=null){
+                                            <p>Last Updated On <strong>{{readOnlyAdt().updated_at}}</strong></p>
+                                            }
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="right-content text-end">
+                                            <p class="mb-1">Status</p>
+                                            @if(readOnlyAdt().status=='Active'){
+                                            <span class="badge-green">{{readOnlyAdt().status}}</span>
+                                            }
+                                            @else{
+                                            <span class="badge-red">{{readOnlyAdt().status}}</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-audit tablehrz">
+                                <table class="table table-bordered table-line mb-0">
+                                    <tr>
+                                        <th>Audit Type</th>
+                                        <th>Audit ID</th>
+                                        <th>Category</th>
+                                        <th>CAPA Required</th>
+                                        <th>Sections</th>
+                                        <th>Questions</th>
+                                    </tr>
+                                    <tr>
+                                        <td>{{  readOnlyAdt().audit_type}}</td>
+                                        <td>{{  readOnlyAdt().audit_template_code}}</td>
+                                        <td>{{  readOnlyAdt().category_type}}</td>
+                                        <td>{{  readOnlyAdt().capa_required  == true ? 'Yes' : 'No' }}</td>
+                                        <td>{{  readOnlyAdt().sections.length}}</td>
+                                        <td>{{   readOnlyAdt().questions_temp}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="audit-info-cover mt-3">
+                            <div class="form-section p-0">
+                                <div class="audit-heading">
+                                    <h5>Audit Question</h5>
+                                    <p>{{readOnlyAdt().sections.length}} Sections |
+                                        {{ readOnlyAdt().questions_temp}}
+                                        Questions</p>
+                                </div>
+                                <div class="audit-table">
+                                    @for(sctns of readOnlyAdt().sections;track $index){
+                                    <div class="audit-heading mb-2">
+                                        <h5>{{ sctns.section_name }}</h5>
+                                        <p class="light-text">{{ sctns.section_description }}
+                                        </p>
+                                    </div>
+                                    <div class="table-audit table-responsive">
+                                        <table class="table table-bordered mb-0">
+                                            @for(qstns of sctns.questions;track $index){
+                                            <tr>
+                                                <td>{{qstns.question_text}}</td>
+                                                <!-- <td class="text-end">
+                                                    <div class="action-edit">
+                                                        <ul>
+                                                            <li><a href="javascript:;"><span class="iconify"
+                                                                        data-icon="ri:edit-line"></span></a></li>
+                                                            <li><a href="javascript:;"><span class="iconify"
+                                                                        data-icon="material-symbols:delete-outline"></span></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td> -->
+                                            </tr>
+                                            }
+                                        </table>
+                                    </div>
+                                    }@empty{
+                                    <div>No Sections with questions founded</div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

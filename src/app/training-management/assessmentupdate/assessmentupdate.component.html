@@ -1,0 +1,203 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <!-- <a href="javascript:;" class="icon-btn-square" (click)="goBack()"><span
+                                                    class="iconify" data-icon="famicons:arrow-back-outline"></span></a> -->
+                                    <h3>Assessment Update</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-12">
+                                <div class="form-right">
+                                    @if( selectedTrainingInfo.is_preassmnt_completed == false||
+                                    selectedTrainingInfo.is_postassmnt_completed ==false ){
+                                    @if(selectedTraining()!=null){
+                                    <div class="row">
+                                        <div class="col-md-12 col-12">
+                                            <button type="button" class="btn btn-dark"
+                                                (click)="onClearClick()">Clear</button>
+                                            <button type="submit" class="btn btn-primary"
+                                                (click)="onSubmitClick()">Submit</button>
+                                        </div>
+                                    </div>
+                                    }
+                                    }@else{
+                                    <div class="right-content text-end">
+                                        <span class="badge-green ">Completed</span>
+                                    </div>
+                                    }
+                                    <!-- @if(false){
+                                        <div class="form-right">
+                                            <a href="javascript:;" class="icon-btn-square" (click)="filterToggle()"><span
+                                                    class="iconify" data-icon="mage:filter"></span></a>
+                                            <div class="dropdown dropdown-style1 ms-2">
+                                                <button class="btn btn-light dropdown-toggle" type="button"
+                                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Download Report <span class="iconify"
+                                                        data-icon="akar-icons:chevron-down"></span>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                                                    <li><a class="dropdown-item" href="javascript:;">Download Word</a></li>
+                                                    <li><a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        } -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mt-5">
+                            <div class="col-lg-3 col-md-4 col-12">
+                                <div class="formbox-left legends form-lg">
+                                    <div class="form-title">Training Details</div>
+                                    <label for="selectedTraining">Training Name</label>
+                                    <p-select id="selectedTraining" [ngModel]="selectedTraining()"
+                                        (ngModelChange)="selectedTraining.set($event)"
+                                        (onChange)="onTrainingSelect($event.value)" name="selectedTraining"
+                                        [options]="trainingList" [filter]="true" class="form-control" />
+                                    <div class="form-section mb-1">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label for="mode_of_training_name">Mode of training :-</label>
+                                                    <div>
+                                                        {{selectedTrainingInfo.mode_of_training_name }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label for="faculty_name">Faculty :-</label>
+                                                    <div>
+                                                        {{selectedTrainingInfo.faculty_name }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label for="designation_name">Faculty Designation :-</label>
+                                                    <div>
+                                                        {{selectedTrainingInfo.designation_name }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label for="description">Description :-</label>
+                                                    <div>
+                                                        {{selectedTrainingInfo.description }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-9 col-md-8 col-12">
+                                <div class="formbox-left legends form-lg">
+                                    <div class="form-title">
+                                        <label>
+                                            <div class="radio-group mb-1">
+                                                @for (asLst of assessmentTypesList; track asLst.label) {
+                                                @if(asLst.display){
+                                                <p-radioButton [name]="asLst.value" [value]="asLst.value"
+                                                    [(ngModel)]='onAssessmentTypeSelect' [inputId]="'ing1'+asLst.value"
+                                                    [disabled]="false " tyle="margin-left: 5px;" />
+                                                <label [for]="'ing1'+asLst.value"
+                                                    style="margin-left: 5px;margin-top: 2px;">{{ asLst.label }}</label>
+                                                }
+                                                }
+                                            </div>
+                                        </label>
+                                    </div>
+                                    @if(onAssessmentTypeSelect =='PRE'){
+                                    @for(fdbk of selectedTrainingInfo.pre_questions;track $index; let
+                                    feedBckIn=$index){
+                                    <div class="form-section mb-1">
+                                        <div>
+                                            {{fdbk.question_text}}
+                                        </div>
+                                        @if(fdbk.question_type == 'FREE_TEXT'){
+                                        <div>
+                                            <textarea pTextarea [(ngModel)]="fdbk.is_response" rows="8"
+                                                [disabled]="selectedTrainingInfo.is_preassmnt_completed"
+                                                name="is_response_{{feedBckIn}}" class="form-control"></textarea>
+                                        </div>
+                                        }@else{
+                                        <div>
+                                            <div class="radio-group mb-2">
+                                                @for (asLst of fdbk.options_json; track $index;let opIndx = $index) {
+                                                <p-radioButton [name]="asLst" [value]="asLst"
+                                                    [(ngModel)]='fdbk.is_response' [inputId]="'ing1'+opIndx"
+                                                    [disabled]="selectedTrainingInfo.is_preassmnt_completed "
+                                                    style="margin:5px;" />
+                                                <label [for]="'ing1'+opIndx">{{ asLst }}</label>
+                                                }
+                                            </div>
+                                        </div>
+                                        }
+                                    </div>
+                                    }
+                                    }
+                                    @if(onAssessmentTypeSelect =='TRAINING'){
+                                    @for(attDoc of selectedTrainingInfo.supporting_documents;track $index){
+                                    <div>
+                                        <p class="document-name">
+                                            <a class="link-blue ms-2" style="cursor: pointer"
+                                                (click)="onViewClick(attDoc)">View Training Material</a>
+                                            <hqms-imgviewer #imgView>
+                                            </hqms-imgviewer>
+                                        </p>
+                                    </div>
+                                    }@empty{
+                                    <div>No data found</div>
+                                    }
+                                    <hqms-imgviewer #training>
+                                    </hqms-imgviewer>
+                                    }
+                                    @if(onAssessmentTypeSelect =='POST'){
+                                    @for(fdbk of selectedTrainingInfo.post_questions;track $index; let
+                                    feedBckIn=$index){
+                                    <div class="form-section mb-1">
+                                        <div>
+                                            {{fdbk.question_text}}
+                                        </div>
+                                        @if(fdbk.question_type == 'FREE_TEXT'){
+                                        <div>
+                                            <textarea pTextarea [(ngModel)]="fdbk.is_response" rows="8"
+                                                [disabled]="selectedTrainingInfo.is_postassmnt_completed"
+                                                name="is_response_{{feedBckIn}}" class="form-control"></textarea>
+                                        </div>
+                                        }@else{
+                                        <div>
+                                            <div class="radio-group mb-2">
+                                                @for (asLst of fdbk.options_json; track $index;let opIndx = $index) {
+                                                <p-radioButton [name]="asLst" [value]="asLst"
+                                                    [(ngModel)]='fdbk.is_response' [inputId]="'ing1'+opIndx"
+                                                    [disabled]="selectedTrainingInfo.is_postassmnt_completed"
+                                                    style="margin:5px;" />
+                                                <label [for]="'ing1'+opIndx">{{ asLst }}</label>
+                                                }
+                                            </div>
+                                        </div>
+                                        }
+                                    </div>
+                                    }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

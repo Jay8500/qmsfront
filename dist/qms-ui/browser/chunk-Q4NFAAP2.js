@@ -1,0 +1,1 @@
+import{Eb as e,Fb as i,dc as o,eb as t}from"./chunk-5LB2QZEN.js";import"./chunk-QBUHZOWM.js";var r=class a{static \u0275fac=function(n){return new(n||a)};static \u0275cmp=t({type:a,selectors:[["app-mytraining-dashboard"]],decls:2,vars:0,template:function(n,s){n&1&&(e(0,"p"),o(1,"mytraining-dashboard works!"),i())},encapsulation:2})};export{r as MytrainingDashboardComponent};

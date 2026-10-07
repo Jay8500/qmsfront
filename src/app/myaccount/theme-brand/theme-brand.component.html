@@ -1,0 +1,79 @@
+<section class="wrapper-body theme-brand-cover">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 card-style2">
+                <div class="card-header backoption">
+                    <div class="row">
+                        <div class="col-md-12 col-12">
+                            <div class="heading-left">
+                                <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                                    <i class="iconify pi pi-arrow-left"></i>
+                                </a>
+                                <h3>Themes</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Present Themes Section -->
+                <div class="present-themes-section">
+                    <h4 class="section-subtitle">Present Themes</h4>
+                    <p class="section-description">Choose a present theme from our library</p>
+
+                    <!-- Theme Selection Grid -->
+                    <div class="theme-selection-grid">
+                        <div class="theme-option" [class.selected]="selectedTheme === 'default'"
+                            (click)="selectTheme('default')">
+                            <div class="theme-circle blue-default">
+                                <div class="circle-half left"></div>
+                                <div class="circle-half right"></div>
+                            </div>
+                            <span class="theme-label">Default</span>
+                        </div>
+
+                        <div class="theme-option" [class.selected]="selectedTheme === 'blue'"
+                            (click)="selectTheme('blue')">
+                            <div class="theme-circle blue-theme">
+                                <div class="circle-half left"></div>
+                                <div class="circle-half right"></div>
+                            </div>
+                            <span class="theme-label">Blue</span>
+                        </div>
+
+                        <div class="theme-option" [class.selected]="selectedTheme === 'teal'"
+                            (click)="selectTheme('teal')">
+                            <div class="theme-circle teal-theme">
+                                <div class="circle-half left"></div>
+                                <div class="circle-half right"></div>
+                            </div>
+                            <span class="theme-label">Teal</span>
+                        </div>
+
+                        <div class="theme-option" [class.selected]="selectedTheme === 'green'"
+                            (click)="selectTheme('green')">
+                            <div class="theme-circle green-theme">
+                                <div class="circle-half left"></div>
+                                <div class="circle-half right"></div>
+                            </div>
+                            <span class="theme-label">Green</span>
+                        </div>
+
+                        <div class="theme-option" [class.selected]="selectedTheme === 'orange'"
+                            (click)="selectTheme('orange')">
+                            <div class="theme-circle orange-theme">
+                                <div class="circle-half left"></div>
+                                <div class="circle-half right"></div>
+                            </div>
+                            <span class="theme-label">Orange</span>
+                        </div>
+                    </div>
+
+                    <div class="button-group justify-content-start">
+                        <button type="button" class="btn btn-primary" (click)="saveTheme()"
+                            data-bs-target="#themeModal">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

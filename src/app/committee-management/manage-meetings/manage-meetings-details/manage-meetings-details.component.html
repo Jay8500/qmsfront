@@ -1,0 +1,254 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-12 col-12">
+                                <div class="heading-left">
+                                    <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                                        <i class="iconify pi pi-arrow-left"></i>
+                                    </a>
+                                    <h3>MoM Detail</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!-- Meeting Details Section -->
+                        <div class="audit-info-cover">
+                            <div class="table-audit tablehrz mt-0">
+                                <table class="table table-bordered table-line mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Meeting ID</th>
+                                            <th>Meeting Name</th>
+                                            <th>Meeting Date</th>
+                                            <th>Meeting Period</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>#{{createMom['meetingCode']}}</td>
+                                            <td>{{createMom['meetingName']}}</td>
+                                            <td>{{createMom['meetingDate']}}</td>
+                                            <td>{{createMom['meetingPeriod']}}</td>
+                                            <td class="text-success">{{createMom['meetingStatus']}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="audit-info-cover">
+                            <div class="audit-status">
+                                <div class="row">
+                                    <div class="col-md-12 col-12">
+                                        <div class="left-content">
+                                            <h5>Meeting Agenda's</h5>
+                                            <p>Approved/Edited By
+                                                @if(createMom.meetingAgenda!=null){
+                                                <strong>Harini (29852)</strong>
+                                                }
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-audit tablehrz">
+                                <table class="table table-bordered table-line mb-0">
+                                    @if(createMom.meetingAgenda!=null){
+                                    <thead>
+                                        <tr>
+                                            <th>{{createMom.meetingAgenda}}</th>
+                                        </tr>
+                                    </thead>
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                        <div class="audit-info-cover">
+                            <div class="row mt-3">
+                                <div class="col-md-12 col-12 mb-3">
+                                    @if(createMom['mom_old'].length >0){
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>S.No</th>
+                                                <th>
+                                                    Decision
+                                                </th>
+                                                <th>
+                                                    Action Points
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (decs of createMom['mom_old']; track $index;let decIn = $index) {
+                                            @if(decs.is_active){
+                                            <tr>
+                                                <td [attr.row_span]="decs.row_group">{{decs.index}}</td>
+                                                <td [attr.row_span]="decs.row_group">
+                                                    {{decs.decision_text}}
+                                                </td>
+                                                <td>
+                                                    <table>
+                                                        <thead>
+                                                            <tr>
+                                                                <th>S.No</th>
+                                                                <th>Task</th>
+                                                                <th>Assignment</th>
+                                                                <th>Due date</th>
+                                                                <th>Attachments</th>
+                                                                <th>Status</th>
+                                                            </tr>
+                                                        </thead>
+                                                        @for(acp of decs['mom_action'];track $index;let acpIn = $index )
+                                                        {
+                                                        @if(acp.is_active){
+                                                        <tr>
+                                                            <td>{{ acp.index }}</td>
+                                                            <td>
+                                                                {{acp.action_text  }}
+                                                            </td>
+                                                            <td>
+                                                                {{  acp.assigned_to}}
+                                                            </td>
+                                                            <td>
+                                                                {{acp.planned_closure_date}}
+                                                            </td>
+                                                            <td>
+                                                                <div class="row">
+                                                                    <div [class]="'col-12' ">
+                                                                        <div *ngIf="acp.mom_act_documents.length>0"
+                                                                            class="flex gap-2 ">
+                                                                            <div
+                                                                                *ngFor="let ad of acp.mom_act_documents; let imgIndex=index">
+                                                                                <div *ngIf="ad.is_active==true"
+                                                                                    class="reg-img-view"
+                                                                                    style="border: 1px solid #cacaca;padding: 5px; border-radius: 7px;font-size: 11px;">
+                                                                                    {{ ad['file_name'] }}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                {{ acp.action_status}}
+                                                            </td>
+                                                        </tr>
+                                                        }
+                                                        }
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            }
+                                            }
+                                        </tbody>
+                                    </table>
+                                    }@else{
+                                    <div>No Older Mom Decisions/ Actions</div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="audit-info-cover">
+                            <div class="row mt-3">
+                                <div class="col-md-12 col-12 mb-3">
+                                    @if(createMom['mom_decision'].length >0){
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>S.No</th>
+                                                <th>
+                                                    Decision
+                                                </th>
+                                                <th>
+                                                    Action Points
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (decs of createMom['mom_decision']; track $index;let decIn = $index) {
+                                            @if(decs.is_active){
+                                            <tr>
+                                                <td [attr.row_span]="decs.row_group">{{decs.index}}</td>
+                                                <td [attr.row_span]="decs.row_group">
+                                                    {{decs.decision_text}}
+                                                </td>
+                                                <td>
+                                                    <table>
+                                                        <thead>
+                                                            <tr>
+                                                                <th>S.No</th>
+                                                                <th>Task</th>
+                                                                <th>Assignment</th>
+                                                                <th>Due date</th>
+                                                                <th>Attachments</th>
+                                                                <th>Status</th>
+                                                            </tr>
+                                                        </thead>
+                                                        @for(acp of decs['mom_action'];track $index;let acpIn = $index )
+                                                        {
+                                                        @if(acp.is_active){
+                                                        <tr>
+                                                            <td>{{ acp.index }}</td>
+                                                            <td>
+                                                                {{acp.action_text  }}
+                                                            </td>
+                                                            <td>
+                                                                {{  acp.assigned_to}}
+                                                            </td>
+                                                            <td>
+                                                                {{acp.planned_closure_date}}
+                                                            </td>
+                                                            <td>
+                                                                <div class="upload-image">
+                                                                    <div class="row">
+                                                                        <div
+                                                                            [class]=" pageMode != 'NEW'?'col-12' : 'col-6'">
+                                                                            <div *ngIf="acp.mom_act_documents.length>0"
+                                                                                class="flex gap-2 flex-wrap mt-2">
+                                                                                <div
+                                                                                    *ngFor="let ad of acp.mom_act_documents; let imgIndex=index">
+                                                                                    <div *ngIf="ad.is_active==true"
+                                                                                        class="reg-img-view"
+                                                                                        style="border: 1px solid #cacaca;padding: 5px; border-radius: 7px;font-size: 11px;">
+                                                                                        {{ ad['file_name'] }}
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                {{ acp.action_status}}
+                                                            </td>
+                                                        </tr>
+                                                        }
+                                                        }
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            }
+                                            }
+                                        </tbody>
+                                    </table>
+                                    }@else{
+                                    <div>No Mom Decisions/ Actions</div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

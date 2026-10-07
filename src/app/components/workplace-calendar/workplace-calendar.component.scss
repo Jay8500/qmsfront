@@ -1,0 +1,113 @@
+@use '../../../variables';
+
+.calendar-container {
+  ::ng-deep {
+    .fc {
+      font-family: inherit;
+      button {
+        box-shadow: none !important;
+        outline: none !important;
+      }button {
+        box-shadow: none !important;
+        outline: none !important;
+      }
+      .fc-header-toolbar {
+        margin-bottom: 1.5em;
+        padding: 10px 0;
+
+        .fc-button {
+          background-color: variables.$barbgBlue;
+          border-color: variables.$barbgBlue;
+          color: variables.$textBlack;
+          padding: 6px 12px;
+          border-radius: 4px;
+          font-weight: 500;
+          transition: all 0.3s ease;
+          text-transform: capitalize;
+
+          &:hover {
+            background-color: variables.$primaryColor;
+            border-color: variables.$primaryColor;
+            color: variables.$textWhite;
+          }
+
+          &.fc-button-active {
+            background-color: variables.$primaryColor;
+            border-color: variables.$primaryColor;
+            color: variables.$textWhite;
+          }
+        }
+
+        .fc-today-button {
+          background-color: variables.$barbgBlue;
+          border-color: variables.$barbgBlue;
+          color: variables.$textBlack;
+          &:hover {
+            background-color: variables.$primaryColor;
+            border-color: variables.$primaryColor;
+            color: variables.$textWhite;
+          }
+        }
+
+        .fc-toolbar-title {
+          font-size: 1.5em;
+          font-weight: 600;
+          color: #333;
+        }
+      }
+
+      .fc-daygrid-day {
+        &.fc-day-today {
+          background-color: variables.$barbgBlue;
+        }
+      }
+
+      .fc-event {
+        border-radius: 4px;
+        padding: 2px 4px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+          opacity: 0.8;
+          transform: translateY(-1px);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+      }
+
+      .fc-daygrid-event {
+        margin: 2px 0;
+      }
+
+      .fc-daygrid-day-number {
+        padding: 8px;
+        color: #333;
+      }
+
+      .fc-col-header-cell {
+        background-color: #f8f9fa;
+        padding: 10px 0;
+        font-weight: 600;
+        color: #555;
+      }
+
+      .fc-scrollgrid {
+        border: 1px solid #e0e0e0;
+      }
+
+      .fc-daygrid-day-frame {
+        min-height: 100px;
+      }
+
+      .fc-event.fc-event-draggable.fc-event-resizable.fc-event-start.fc-event-end.fc-event-past.fc-daygrid-event.fc-daygrid-block-event.fc-h-event {
+        background-color: variables.$primaryColor;
+        border-color: variables.$primaryColor;
+        color: variables.$textWhite;
+      }
+      a {
+        color: variables.$primaryColor;
+      }
+    }
+  }
+}
+

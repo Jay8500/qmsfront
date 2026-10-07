@@ -1,0 +1,390 @@
+<section class="wrapper-body audit-master-dashboard">
+  <div class="container-fluid">
+    <section class="status-card">
+      <div class="main-heading-link">
+        <h3 class="main-heading">Vaccine Schedules</h3>
+        <div class="btn-group-row">
+          <div class="btn-groups">
+            <div class="dropdown dropdown-style1 filterDropdown">
+              <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <i class="iconify icon-calc pi pi-calendar"></i>
+                {{ selectedRange }}
+                <i class="iconify pi pi-angle-down"></i>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 7 days')">Last 7 days</a>
+                </li>
+                <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 30 days')">Last 30 days</a>
+                </li>
+                <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last Month')">Last Month</a></li>
+                <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 6 Months')">Last 6
+                    Months</a>
+                </li>
+                <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last Year')">Last Year</a></li>
+              </ul>
+            </div>
+          </div>
+          @if(access().access_add){
+          <a href="javascript:;" class="btn btn-success" (click)="onPageRoute('NEW',null)">
+            <span class="iconfiy"> <i class=" pi pi-plus-circle" style="margin-right: 2px;"></i></span>
+            Create Vaccination Schedule
+          </a>
+          }
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg1">
+            <div class="card-grid-header">
+              <h5>No. of <br /> Vaccine</h5>
+              <h3>{{ stats().total_vaccines }}</h3>
+              <div class="icon">
+                <!-- <span class="iconify" data-icon="hugeicons:audit-01"></span> -->
+                <i class="iconify pi pi-copy primeicons-size"></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{ stats().total_vaccines_last_updated || 'N/A' }}</h5>
+                </div>
+                <div class="col-md-5 text-end col-5">
+                  <button class="btn btn-light">View Report</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg3">
+            <div class="card-grid-header">
+              <h5>Vaccinated <br /> Employees</h5>
+              <h3>{{ stats().vaccinated_emp }}</h3>
+              <div class="icon">
+                <!-- <span class="iconify" data-icon="hugeicons:audit-02"></span> -->
+                <i class="iconify pi pi-users primeicons-size"></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{ stats().vaccinated_emp_last_updated || 'N/A' }}</h5>
+                </div>
+                <!-- <div class="col-md-5 col-5 text-end">
+                  <button class="btn btn-light">View All</button>
+                </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg4">
+            <div class="card-grid-header">
+              <h5>Scheduled <br /> Vaccines</h5>
+              <h3>{{ stats().scheduled_vaccines }}</h3>
+              <div class="icon">
+                <i class="iconify pi pi-calendar-clock primeicons-size"></i>
+                <!-- <span class="iconify" data-icon="hugeicons:legal-01"></span> -->
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{ stats().scheduled_vaccines_last_updated || 'N/A' }}</h5>
+                </div>
+                <!-- <div class="col-md-5 col-5 text-end">
+                  <button class="btn btn-light">View Report</button>
+                </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg2">
+            <div class="card-grid-header">
+              <h5>Vaccines <br /> Brands</h5>
+              <h3>{{ stats().vaccine_brands }}</h3>
+              <div class="icon">
+                <i class="iconify pi pi-verified "></i>
+                <!-- <span class="iconify" data-icon="hugeicons:ai-user"></span> -->
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{ stats().vaccine_brands_last_updated || 'N/A' }}</h5>
+                </div>
+                <!-- <div class="col-md-5 col-5 text-end">
+                  <button class="btn btn-light">View All</button>
+                </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="report-table mt-3 mb-3">
+      <div class="row">
+        <div class="col-md-12 col-12">
+          <div class="card-style2">
+            <div class="card-header backoption">
+              <div class="row">
+                <div class="col-md-6 col-12">
+                  <div class="heading-left">
+                    <h3>Scheduled Vaccine List</h3>
+                  </div>
+                </div>
+                <div class="col-md-6 col-12">
+                  <div class="form-right">
+                    <a href="javascript:;" ngbTooltip="Filter" placement="top" class="icon-btn-square"
+                      (click)="filterToggle()">
+                      <i class="iconify pi pi-sliders-h"></i>
+                    </a>
+                    @if(access().access_exp || access().access_print){
+                    <div class="dropdown dropdown-style1">
+                      <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Download Report
+                        <i class="iconify pi pi-angle-down"></i>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li
+                          [DCSV]="{ param :params,screenName:'Vaccine Schedules',data : filteredData.length,methodName : 'schVaccine' }">
+                          <a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                        <li
+                          [PDF]="{ param :params,screenName:'Vaccine Schedules',data : filteredData.length,methodName : 'schVaccine' }">
+                          <a class="dropdown-item" href="javascript:;">Download Pdf</a>
+                        </li>
+                        <li
+                          [EXCEL]="{ param :params,screenName:'Vaccine Schedules',data : filteredData.length,methodName : 'schVaccine'  }">
+                          <a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                      </ul>
+                    </div>
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            @if (showFilter) {
+            <div class="filter-box form-sm">
+              <div class="row">
+                <div class="col-lg-11 col-12">
+                  <div class="row gx-2">
+                    <div class="col-xl-2 col-lg-4 col-sm-6 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="campaign_name">By Campaign Name</label>
+                        <p-select id="campaign_name" [(ngModel)]="vaccntnFilters().campaign_name" name="campaign_name"
+                          [options]="campaignList" [filter]="true" [showClear]="true"
+                          (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-4 col-sm-6 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="vaccine_name">By Vaccine Name</label>
+                        <p-select id="vaccine_name" [(ngModel)]="vaccntnFilters().vaccine_name" name="vaccine_name"
+                          [options]="vaccineList" [filter]="true" [showClear]="true"
+                          (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-4 col-sm-6 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="venue">By Venue</label>
+                        <p-select id="venue" [(ngModel)]="vaccntnFilters().venue" name="venue" [options]="venueList"
+                          [filter]="true" [showClear]="true" (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-4 col-sm-6 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="scheduled_date">By Scheduled Date</label>
+                        <p-datepicker inputId="scheduled_date" [(ngModel)]="vaccntnFilters().scheduled_date"
+                          name="scheduled_date" dateFormat="dd-mm-yy" [showIcon]="true" [showClear]="true"
+                          appendTo="body" (onClear)="onFilterClear(true)" styleClass="w-100" />
+                      </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-4 col-sm-6 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="status">By Scheduled Status</label>
+                        <p-select id="status" [(ngModel)]="vaccntnFilters().status" name="status"
+                          [options]="schedulestatusList" [filter]="true" [showClear]="true"
+                          (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-4 col-sm-6 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="rec_status">By Status</label>
+                        <p-select id="rec_status" [(ngModel)]="vaccntnFilters().rec_status" name="rec_status"
+                          [options]="statusList" [filter]="true" [showClear]="true"
+                          (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-1 col-12 d-flex flex-lg-column gap-1 align-items-start">
+                  <button class="btn btn-primary w-100 " (click)="onFilterClick()">Filter</button>
+                  <button class="btn btn-dark w-100" (click)="onFilterClear(null)">Clear</button>
+                </div>
+              </div>
+            </div>
+            }
+
+            <div class="card-body table-style1 table-responsive radius-4">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">S.No</th>
+                    <th width="15%" scope="col" sortable="campaign_name" (sort)="onSort($event)">
+                      Campaign Name
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th width="15%" scope="col" sortable="vaccine_name" (sort)="onSort($event)">
+                      Vaccine Name
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th width="15%" scope="col" sortable="venue" (sort)="onSort($event)">
+                      Venue
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="scope" (sort)="onSort($event)">
+                      Scope
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="scheduled_from_date" (sort)="onSort($event)">
+                      Scheduled From
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="scheduled_to_date" (sort)="onSort($event)">
+                      Scheduled To
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="capacity" (sort)="onSort($event)">
+                      Capacity
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="created_by" (sort)="onSort($event)">
+                      Created By
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="created_at" (sort)="onSort($event)">
+                      Created on
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="updated_by" (sort)="onSort($event)">
+                      Modified By
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="updated_at" (sort)="onSort($event)">
+                      Last Modified
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="status" (sort)="onSort($event)">
+                      Schedule Status
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="rec_status" (sort)="onSort($event)">
+                      Status
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" class="text-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (vccnInfo of vccneSchdlesGrid; track vccnInfo.vaccination_campaign_id) {
+                  <tr>
+                    <td scope="row">{{ vccnInfo.id }}</td>
+                    <td>{{ vccnInfo.campaign_name }}</td>
+                    <td>{{ vccnInfo.vaccine_name }}</td>
+                    <td>{{ vccnInfo.venue }}</td>
+                    <td>{{ vccnInfo.scope }}</td>
+                    <td>{{ vccnInfo.scheduled_from_date | appDate }}</td>
+                    <td>{{ vccnInfo.scheduled_to_date  | appDate }}</td>
+                    <td class="right">{{ vccnInfo.capacity }}</td>
+                    <td>{{ vccnInfo.created_by }}</td>
+                    <td>{{ vccnInfo.created_at | appDate }}</td>
+                    <td>{{ vccnInfo.updated_by }}</td>
+                    <td>{{ vccnInfo.updated_at | appDate }}</td>
+                    <td [ngClass]="{
+                          'text-warning': vccnInfo.status === 'In Progress',
+                          'text-success': vccnInfo.status === 'Completed',
+                          'text-primary': vccnInfo.status === 'Scheduled',
+                        }">
+                      <!-- 'text-orange': vccnInfo.status === 'Rescheduled', -->
+                      {{ vccnInfo.status }}
+                    </td>
+                    <td [ngClass]="{
+                          'text-danger': vccnInfo.rec_status === 'Inactive',
+                          'text-success': vccnInfo.rec_status === 'Active',
+                        }">
+                      {{ vccnInfo.rec_status }}
+                    </td>
+                    <td class="text-end">
+                      <div class="actiondot-dropdown">
+                        <div class="btn-group ms-2">
+                          <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="iconify pi pi-ellipsis-h"></i>
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li>
+                              <a class="dropdown-item" href="javascript:;"
+                                (click)="onPageRoute('VIEW',vccnInfo)">View</a>
+                            </li>
+                            @if(vccnInfo.status == 'Scheduled' && vccnInfo.rec_status == 'Active' ){
+                            @if(access().access_mod){
+                            <li>
+                              <a class="dropdown-item" href="javascript:;"
+                                (click)="onPageRoute('EDIT',vccnInfo)">Edit</a>
+                            </li>
+                            }
+                            @if(access().access_del){
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" (click)="onDelete(vccnInfo)">Delete</a>
+                            </li>
+                            }
+                            }
+                          </ul>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  } @empty {
+                  <tr>
+                    <td colspan="15" class="text-center">No vaccination schedules found.</td>
+                  </tr>
+                  }
+                </tbody>
+              </table>
+              <nav aria-label="Page navigation pagination text-end">
+                <ul class="pagination d-flex justify-content-end">
+                  <li class="page-adtInfo next" [class.disabled]="pageNators().pageNo === 1">
+                    <a class="page-link cursor" aria-label="Previous" (click)="changePage(pageNators().pageNo-1)">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                  @for(p of pageNumbers();track p){
+                  <li class="page-adtInfo" [class.active]="pageNators().pageNo === p">
+                    <a class="page-link cursor" (click)="changePage(p)">{{p}}</a>
+                  </li>
+                  }
+                  <li class="page-adtInfo prev" [class.disabled]="pageNators().pageNo === pageNators().totalPages">
+                    <a class="page-link cursor" aria-label="Next" (click)="changePage(pageNators().pageNo+1)">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>
+
+<!-- <app-alert-modals></app-alert-modals> -->

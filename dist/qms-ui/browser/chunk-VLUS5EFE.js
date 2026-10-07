@@ -1,0 +1,1 @@
+import{Eb as n,Fb as o,dc as a,eb as m}from"./chunk-5LB2QZEN.js";import"./chunk-QBUHZOWM.js";var p=class t{static \u0275fac=function(e){return new(e||t)};static \u0275cmp=m({type:t,selectors:[["app-lmm"]],decls:2,vars:0,template:function(e,s){e&1&&(n(0,"p"),a(1,"lmm works!"),o())},encapsulation:2})};export{p as LmmComponent};

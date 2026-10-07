@@ -1,0 +1,10 @@
+<div id="chart" class="report-piechart">
+  @if(chartOptions.series && chartOptions.series[0]?.data?.length > 0){
+  <apx-chart #chart [series]="chartOptions.series" [chart]="chartOptions.chart" [xaxis]="chartOptions.xaxis"
+    [stroke]="chartOptions.stroke" [tooltip]="chartOptions.tooltip" [noData]="chartOptions.noData!"></apx-chart>
+  }@else{
+  <div class="no-data-msg" style="text-align: center;">
+    No data found
+  </div>
+  }
+</div>

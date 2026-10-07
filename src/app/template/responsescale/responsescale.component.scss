@@ -1,0 +1,204 @@
+/* =====================================================================
+   HQMS Reference Data — global styles (light mode only)
+   PrimeNG theming handles component look; these are layout + brand extras
+   that sit on top (KPI cards, page header, badges, density tweaks).
+   ===================================================================== */
+
+   :root {
+    --hqms-ink: #1d2939;
+    --hqms-ink-2: #344054;
+    --hqms-ink-3: #667085;
+    --hqms-ink-4: #98a2b3;
+    --hqms-line: #e4e9f0;
+    --hqms-line-2: #eef1f6;
+    --hqms-pri: #1b8a4c;
+    --hqms-pri-d: #157a41;
+    --hqms-pri-l: #e9f5ee;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: #ffffff;
+    color: var(--hqms-ink);
+    font-family: 'Inter', 'Segoe UI', Roboto, -apple-system, Arial, sans-serif;
+    font-size: 13px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Content-pane wrapper (this whole feature is meant to live inside the
+     app's right-hand content area — keep the padding, drop it if your shell
+     already provides it). */
+  .pane {
+    padding: 22px 26px 34px;
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+
+  /* ---------- Page header ---------- */
+  .page-hd {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+  .page-hd h1 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .page-hd .crumb { font-size: 12.5px; color: var(--hqms-ink-4); margin-top: 4px; }
+  .page-hd .crumb b { color: var(--hqms-ink-3); font-weight: 600; }
+  .page-hd .crumb a { color: var(--hqms-pri); text-decoration: none; cursor: pointer; font-weight: 600; }
+  .page-hd .crumb a:hover { text-decoration: underline; }
+  .page-hd .hd-actions { margin-left: auto; display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+
+  /* ---------- KPI stat cards ---------- */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 22px;
+  }
+  .stat {
+    border-radius: 16px;
+    padding: 18px 20px 14px;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(16, 24, 40, 0.1);
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+  }
+  .stat.amber { background: linear-gradient(135deg, #f7b34c, #f2971f); }
+  .stat.pink  { background: linear-gradient(135deg, #f98cae, #f16a9b); }
+  .stat.blue  { background: linear-gradient(135deg, #5069e0, #3a52cf); }
+  .stat.teal  { background: linear-gradient(135deg, #1bc0a1, #12a184); }
+  .stat .s-label { font-size: 14px; font-weight: 600; opacity: 0.97; max-width: 62%; line-height: 1.25; }
+  .stat .s-num { font-size: 38px; font-weight: 800; letter-spacing: -0.5px; margin-top: 6px; }
+  .stat .s-foot {
+    margin-top: auto;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.35);
+    font-size: 11.5px;
+    line-height: 1.3;
+  }
+  .stat .s-foot b { display: block; font-size: 12.5px; font-weight: 700; }
+  .stat .s-icon {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #fff;
+    display: grid;
+    place-items: center;
+    font-size: 22px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  }
+  .stat.amber .s-icon { color: #f2971f; }
+  .stat.pink  .s-icon { color: #f16a9b; }
+  .stat.blue  .s-icon { color: #3a52cf; }
+  .stat.teal  .s-icon { color: #12a184; }
+
+  /* ---------- Section header above a grid ---------- */
+  .sect-hd {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .sect-hd h2 { margin: 0; font-size: 17px; font-weight: 700; }
+  .sect-hd .sub { color: var(--hqms-ink-4); font-size: 12.5px; }
+  .sect-hd .right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+  /* ---------- Entity header card (values view) ---------- */
+  .ent-head {
+    background: #fff;
+    border: 1px solid var(--hqms-line);
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(16, 24, 40, 0.06);
+    padding: 18px 20px;
+    margin-bottom: 18px;
+  }
+  .ent-head .eh-top { display: flex; align-items: flex-start; gap: 12px; }
+  .ent-head .eh-title { font-size: 19px; font-weight: 700; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .ent-head .eh-sub { color: var(--hqms-ink-3); font-size: 12.5px; margin-top: 4px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .ent-head .eh-sub code { font-family: Consolas, monospace; background: #eef2f7; padding: 2px 8px; border-radius: 5px; color: var(--hqms-ink-2); }
+  .ent-head .eh-actions { margin-left: auto; display: flex; gap: 8px; }
+  .ent-head .metrow { display: flex; gap: 34px; margin-top: 15px; flex-wrap: wrap; }
+  .ent-head .metric .k { font-size: 10.5px; color: var(--hqms-ink-4); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+  .ent-head .metric .v { font-size: 17px; color: var(--hqms-ink); font-weight: 700; margin-top: 2px; }
+  .ent-head .metric .v.g { color: var(--hqms-pri); }
+
+  /* ---------- misc helpers ---------- */
+  .mono { font-family: Consolas, monospace; font-size: 12px; color: var(--hqms-ink-3); }
+  .cat-tag { display: inline-block; background: #eef2f7; color: var(--hqms-ink-2); border-radius: 7px; padding: 3px 9px; font-size: 11.5px; font-weight: 600; }
+  .swatch { width: 13px; height: 13px; border-radius: 3px; border: 1px solid rgba(0, 0, 0, 0.12); display: inline-block; vertical-align: -2px; margin-right: 6px; }
+  .muted { color: var(--hqms-ink-4); }
+  .row-flags { display: flex; gap: 4px; flex-wrap: wrap; align-items: center; }
+  .grid-card { background: #fff; border: 1px solid var(--hqms-line); border-radius: 14px; box-shadow: 0 4px 14px rgba(16, 24, 40, 0.06); overflow: hidden; }
+
+  /* Form dialog layout */
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 18px; }
+  .form-grid .fg { display: flex; flex-direction: column; gap: 6px; }
+  .form-grid .fg.full { grid-column: 1 / -1; }
+  .form-grid .fg label { font-size: 12px; font-weight: 600; color: var(--hqms-ink-2); }
+  .form-grid .fg label .req { color: #e03131; }
+  .form-grid .fg .hint { font-size: 11px; color: var(--hqms-ink-4); }
+  .form-grid .fg input,
+  .form-grid .fg textarea,
+  .form-grid .fg .p-select,
+  .form-grid .fg .p-inputnumber,
+  .form-grid .fg .p-datepicker { width: 100%; }
+  .section-lbl {
+    grid-column: 1 / -1;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--hqms-ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--hqms-line-2);
+    padding-bottom: 6px;
+    margin-top: 6px;
+  }
+  .switch-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 11px;
+    border: 1px solid var(--hqms-line);
+    border-radius: 9px;
+    background: #fdfefe;
+  }
+  .switch-row .lbl { font-size: 12.5px; font-weight: 600; color: var(--hqms-ink-2); }
+  .switch-row .lbl small { display: block; font-weight: 400; color: var(--hqms-ink-4); font-size: 10.5px; }
+  .switch-row .sp { margin-left: auto; }
+
+  @media (max-width: 1000px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .err {
+    color: #e11d48;
+    font-size: 11px;
+    margin-top: 2px;
+    display: block;
+  }
+
+  .hd-actions{
+    display: flex;
+    gap:12px;
+    align-items: center;
+  }

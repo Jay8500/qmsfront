@@ -1,0 +1,438 @@
+<section class="wrapper-body">
+  <div class="container-fluid">
+    <section class="status-card">
+      <div class="main-heading-link">
+        <h3 class="main-heading">Schedule Audit </h3>
+        <div class="btn-group-row">
+          <div class="dropdown dropdown-style1 filterDropdown">
+            <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="iconify icon-calc pi pi-calendar"></i>
+              {{ selectedRange }}
+              <i class="iconify pi pi-angle-down"></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 7 days')">Last 7 days</a></li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 30 days')">Last 30 days</a></li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last Month')">Last Month</a></li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last 6 Months')">Last 6 Months</a>
+              </li>
+              <li><a class="dropdown-item" href="javascript:;" (click)="setRange('Last Year')">Last Year</a></li>
+            </ul>
+          </div>
+          <a href="javascript:;" class="btn btn-success" (click)="onPageRoute('NEW',null)">
+            <span class="iconfiy"> <i class=" pi pi-plus-circle" style="margin-right: 2px;"></i></span>
+            Schedule Audit </a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg1">
+            <div class="card-grid-header">
+              <h5>Total <br /> Audit Masters</h5>
+              <h3>{{stats().total_audit_masters}}</h3>
+              <div class="icon">
+                <!-- <span class="iconify" data-icon="hugeicons:audit-01"></span> -->
+                <i class="iconify pi pi-copy primeicons-size"></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{stats().total_audit_masters_last_updated || 'N/A'}}</h5>
+                </div>
+                <div class="col-md-5 text-end col-5">
+                  <button class="btn btn-light">View Report</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg3">
+            <div class="card-grid-header">
+              <h5>Active <br /> Audits </h5>
+              <h3>{{stats().active_audits}}</h3>
+              <div class="icon">
+                <!-- <span class="iconify" data-icon="hugeicons:audit-02"></span> -->
+                <i class="iconify pi pi-search-plus primeicons-size"></i>
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{stats().active_audits_last_updated || 'N/A'}}</h5>
+                </div>
+                <div class="col-md-5 col-5 text-end">
+                  <button class="btn btn-light">View All</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg4">
+            <div class="card-grid-header">
+              <h5>Scheduled <br /> Audits</h5>
+              <h3>{{stats().scheduled_audits}}</h3>
+              <div class="icon">
+                <i class="iconify pi pi-calendar-clock primeicons-size"></i>
+                <!-- <span class="iconify" data-icon="hugeicons:legal-01"></span> -->
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{stats().scheduled_audits_last_updated || 'N/A'}}</h5>
+                </div>
+                <div class="col-md-5 col-5 text-end">
+                  <button class="btn btn-light">View Report</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card-grid-cover bg2">
+            <div class="card-grid-header">
+              <h5>Completed <br /> Audits</h5>
+              <h3>{{stats().completed_audits}}</h3>
+              <div class="icon">
+                <i class="iconify pi pi-verified "></i>
+                <!-- <span class="iconify" data-icon="hugeicons:ai-user"></span> -->
+              </div>
+            </div>
+            <div class="card-grid-body">
+              <div class="row align-items-center">
+                <div class="col-md-7 col-7">
+                  <p>Last Updated</p>
+                  <h5>{{stats().completed_audits_last_updated || 'N/A'}}</h5>
+                </div>
+                <div class="col-md-5 col-5 text-end">
+                  <button class="btn btn-light">View All</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="chart-section mt-3 mb-3">
+      <div class="row">
+        <div class="col-xl-4 col-lg-6 col-md-6 col-12">
+          <div class="card-style1 piechart">
+            <div class="card-header">
+              Department Wise Reports
+            </div>
+            <div class="card-body">
+              <div class="chart-wrapper">
+                <app-score-wise-reports #scoreWiseRpt></app-score-wise-reports>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-6 col-md-6 col-12">
+          <div class="card-style1 barchart">
+            <div class="card-header">
+              Status Wise Reports
+            </div>
+            <div class="card-body">
+              <app-score-wise-reports #statusWiseRpt></app-score-wise-reports>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-6 col-md-12 col-12">
+          <div class="card-style1 barchart kpireportCard">
+            <div class="card-header">
+              Upcoming Audits
+            </div>
+            <div class="card-body">
+              <div class="card-style1 report">
+                <div class="card-body">
+                  @for(upcmngSch of upmcmngSchdAdts; track $index;){
+                  <div class="grid-report">
+                    <div class="icon">
+                      <i class="iconify pi pi-check-square primeicons-size"></i>
+                    </div>
+                    <div class="content">
+                      <h5><a href="javascript:;">{{upcmngSch.label}}</a></h5>
+                      <p>Scheduled on <span class="text-blue">{{upcmngSch.value}}</span></p>
+                    </div>
+                  </div>
+                  }@empty{
+                  <div style="text-align: center">No Upcoming Audits.</div>
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="report-table mt-3 mb-3">
+      <div class="row">
+        <div class="col-md-12 col-12">
+          <div class="card-style2">
+            <div class="card-header backoption">
+              <div class="row">
+                <div class="col-md-5 col-12">
+                  <div class="heading-left">
+                    <h3>Scheduled Audit List</h3>
+                  </div>
+                </div>
+                <div class="col-md-7 col-12">
+                  <div class="form-right">
+                    <a href="javascript:;" ngbTooltip="Filter" placement="top" class="icon-btn-square"
+                      (click)="filterToggle()">
+                      <i class="iconify pi pi-sliders-h"></i>
+                    </a>
+                    <div class="dropdown dropdown-style1 ms-2">
+                      <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Download Report
+                        <i class="iconify pi pi-angle-down"></i>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li
+                          [DCSV]="{ param :params,screenName:'Scheduled Audits',data : schlAuditGrid.length,methodName : 'fnAuditScheduleApi' }">
+                          <a class="dropdown-item" href="javascript:;">Download CSV</a></li>
+                        <li
+                          [PDF]="{ param :params,screenName:'Scheduled Audits',data : schlAuditGrid.length,methodName : 'fnAuditScheduleApi' }">
+                          <a class="dropdown-item" href="javascript:;">Download Pdf</a></li>
+                        <li
+                          [EXCEL]="{ param :params,screenName:'Scheduled Audits',data : schlAuditGrid.length,methodName : 'fnAuditScheduleApi'  }">
+                          <a class="dropdown-item" href="javascript:;">Download Excel</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            @if (showFilter) {
+            <div class="filter-box form-sm">
+              <div class="row">
+                <div class="col-md-11 col-12">
+                  <div class="row gx-2">
+                    <div class="col-md-2 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="audit_name">By Audit Name</label>
+                        <p-select id="audit_name" [(ngModel)]="schFilters().audit_name" name="audit_name"
+                          [options]="auditList" [filter]="true" [showClear]="true"
+                          (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="audit_title">By Audit Title</label>
+                        <p-select id="audit_title" [(ngModel)]="schFilters().audit_title" name="audit_title"
+                          [options]="auditTitleList" [filter]="true" [showClear]="true"
+                          (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="department_name">By Department</label>
+                        <p-select id="department_name" [(ngModel)]="schFilters().department_name" name="department_name"
+                          [options]="departmentList" [filter]="true" [showClear]="true"
+                          (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="auditor_name">By Auditor</label>
+                        <p-select id="auditor_name" [(ngModel)]="schFilters().auditor_name" name="auditor_name"
+                          [options]="auditorList" [filter]="true" [showClear]="true"
+                          (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="auditee_name">By Auditee</label>
+                        <p-select id="auditee_name" [(ngModel)]="schFilters().auditee_name" name="auditee_name"
+                          [options]="auditeeList" [filter]="true" [showClear]="true"
+                          (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                      <div class="flex flex-col gap-1">
+                        <label for="status">By Status</label>
+                        <p-select id="status" [(ngModel)]="schFilters().status" name="status"
+                          [options]="statusList" [filter]="true" [showClear]="true"
+                          (onClear)="onFilterClear(true)" class="form-control" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1 col-12 ps-0">
+                  <button class="btn btn-primary w-100" (click)="onFilterClick()">Filter</button>
+                  <button class="btn btn-dark" (click)="onFilterClear(null)">Clear</button>
+                </div>
+              </div>
+            </div>
+            }
+
+            <div class="card-body table-style1 table-responsive radius-4">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">S.No</th>
+                    <th scope="col" sortable="audit_name" (sort)="onSort($event)">
+                      Audit Name
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="audit_title" (sort)="onSort($event)">
+                      Audit Title
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="audit_type_name" (sort)="onSort($event)">
+                      Audit Type
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="department_name" (sort)="onSort($event)">
+                      Department
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="auditor_name" (sort)="onSort($event)">
+                      Auditor
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="auditee_name" (sort)="onSort($event)">
+                      Auditee
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="audit_date" (sort)="onSort($event)">
+                      Audit Date
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="schedule_status" (sort)="onSort($event)">
+                      Audit Status
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="created_by" (sort)="onSort($event)">
+                      Created By
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="created_at" (sort)="onSort($event)">
+                      Created on
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="updated_by" (sort)="onSort($event)">
+                      Modified By
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="updated_at" (sort)="onSort($event)">
+                      Last Modified
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" sortable="status" (sort)="onSort($event)">
+                      Status
+                      <i class="iconify pi pi-sort"></i>
+                    </th>
+                    <th scope="col" class="text-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (item of schlAuditGrid; track item.id) {
+                  <tr>
+                    <td scope="row">{{ item.id }}</td>
+                    <td>{{ item.audit_name }}</td>
+                    <td>{{ item.audit_title }}</td>
+                    <td>{{ item.audit_type_name }}</td>
+                    <td>{{ item.department_name }}</td>
+                    <td>{{ item.auditor_name }}</td>
+                    <td>{{ item.auditee_name }}</td>
+                    <td>{{ item.audit_date | date : 'dd, MMMM yyyy'}}</td>
+                    <td [ngClass]="{
+                                                'text-success': item.schedule_status === 'Completed',
+                                                'text-primary': item.schedule_status === 'Scheduled',
+                                                'text-warning': item.schedule_status === 'Cancel',
+                                                'text-purple': item.schedule_status === 'Inprogress'||item.schedule_status === 'InReview',
+                                            }">
+                      {{ item.schedule_status }}
+                    </td>
+                    <td>{{ item.created_by }}</td>
+                    <td>{{ item.created_at }}</td>
+                    <td>{{ item.updated_by }}</td>
+                    <td>{{ item.updated_at }}</td>
+                    <td [ngClass]="getStatusClass(item.status)">
+                      {{ item.status }}
+                    </td>
+                    <td class="text-end">
+                      <div class="actiondot-dropdown">
+                        <div class="btn-group ms-2">
+                          <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="iconify pi pi-ellipsis-h"></i>
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" (click)="onPageRoute('VIEW',item)">View</a>
+                            </li>
+
+                            @if(item.status == 'Active'){
+                            @if(['Scheduled'].includes(item.schedule_status)){
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" (click)="onPageRoute('EDIT',item)">Edit</a>
+                            </li>
+                            }
+                            @if(item.is_past_aduit){
+                            @if(!['Completed','Inprogress','InReview'].includes(item.schedule_status)){
+                            <li>
+                              <a class="dropdown-item" href="javascript:;"
+                                (click)="onPageRoute('Reschedule',item)">Reschedule
+                              </a>
+                            </li>
+                            @if( !['Cancelled'].includes(item.schedule_status) ){
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" data-bs-toggle="modal"
+                                data-bs-target="#dateDeleteModal" (click)="onUpdateClick(item,'Cancel')">Cancel</a>
+                            </li>
+                            }
+                            }
+                            }
+                            <li>
+                              <a class="dropdown-item" href="javascript:;" data-bs-toggle="modal"
+                                data-bs-target="#dateDeleteModal" (click)="onUpdateClick(item,'Delete')">Delete</a>
+                            </li>
+                            }
+                          </ul>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  }
+                </tbody>
+              </table>
+              <nav aria-label="Page navigation pagination text-end">
+                <ul class="pagination d-flex justify-content-end">
+                  <li class="page-item next" [class.disabled]="pageNators().pageNo === 1">
+                    <a class="page-link cursor" aria-label="Previous" (click)="changePage(pageNators().pageNo-1)">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                  @for(p of pageNumbers();track p){
+                  <li class="page-item" [class.active]="pageNators().pageNo === p">
+                    <a class="page-link cursor" (click)="changePage(p)">{{p}}</a>
+                  </li>
+                  }
+                  <li class="page-item prev" [class.disabled]="pageNators().pageNo === pageNators().totalItems">
+                    <a class="page-link cursor" aria-label="Next" (click)="changePage(pageNators().pageNo+1)">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>
+
+<!-- <app-alert-modals></app-alert-modals> -->

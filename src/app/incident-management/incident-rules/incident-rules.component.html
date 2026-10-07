@@ -1,0 +1,59 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="qms-head">
+      <div>
+        <h3>Incident Rules</h3>
+        <p class="qms-sub">Repeated incidents create a Risk automatically (High, score 16) and link the incidents. The department head, risk owner and Quality Team are notified.</p>
+      </div>
+      @if (access().access_mod) {
+      <div class="qms-actions">
+        <button class="btn btn-light" (click)="addRule()"><i class="pi pi-plus-circle me-1"></i>Add Rule</button>
+        <button class="btn btn-primary" [disabled]="saving()" (click)="save()"><i class="pi pi-save me-1"></i>Save</button>
+      </div>
+      }
+    </div>
+
+    <div class="qms-card qms-form">
+      <div class="qms-section-title">Incident entry settings</div>
+      <div class="row g-3">
+        <div class="col-md-4 col-6">
+          <label>Past-date limit (days)</label>
+          <input pInputText type="number" min="1" max="365" class="form-control" [(ngModel)]="settings.past_date_days" [disabled]="!access().access_mod">
+          <small class="text-muted">An incident date cannot be older than this.</small>
+        </div>
+        <div class="col-md-4 col-6">
+          <label>Evidence files per incident</label>
+          <input pInputText type="number" min="1" max="5" class="form-control" [(ngModel)]="settings.max_files" [disabled]="!access().access_mod">
+          <small class="text-muted">SRS: up to 5 files, 5 MB each.</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="qms-card qms-form">
+      <div class="qms-section-title">Recurrence rules <small>counted per incident type and per department</small></div>
+      <div class="table-responsive">
+        <table class="qms-table">
+          <thead>
+            <tr><th style="min-width:200px">Incident type</th><th style="min-width:200px">Department</th><th>Threshold (incidents)</th><th>Window (days)</th><th>Active</th><th>Risks created</th></tr>
+          </thead>
+          <tbody>
+            @for (r of rules(); track $index) {
+            <tr>
+              <td><p-select [options]="typeList" [(ngModel)]="r.incident_type_id" [filter]="true" [disabled]="!access().access_mod" appendTo="body" /></td>
+              <td><p-select [options]="departmentList" [(ngModel)]="r.department_id" [filter]="true" [disabled]="!access().access_mod" appendTo="body" /></td>
+              <td><input pInputText type="number" min="2" max="50" class="form-control num" [(ngModel)]="r.threshold_count" [disabled]="!access().access_mod"></td>
+              <td><input pInputText type="number" min="1" max="365" class="form-control num" [(ngModel)]="r.window_days" [disabled]="!access().access_mod"></td>
+              <td><p-toggleswitch [(ngModel)]="r.is_active" [disabled]="!access().access_mod" /></td>
+              <td>{{ r.risks_created || 0 }}@if (r.updated_by) { <small class="d-block text-muted">{{ r.updated_by }} {{ r.updated_on }}</small> }</td>
+            </tr>
+            } @empty {
+            <tr><td colspan="6" class="text-center text-muted py-3">No rules - incidents will not create risks automatically.</td></tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      <small class="text-muted d-block mt-2">Example: type "Patient Safety", department "ICU", 2 incidents in 30 days → a Recurring Incident Risk is created for ICU.
+        Rules are switched off, not deleted.</small>
+    </div>
+  </div>
+</section>

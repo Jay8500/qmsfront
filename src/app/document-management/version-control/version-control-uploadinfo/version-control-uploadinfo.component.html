@@ -1,0 +1,308 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="row">
+      <div class="col-md-12 col-12">
+        <div class="card-style2">
+          <div class="card-header backoption">
+            <div class="row">
+              <div class="col-md-12 col-12">
+                <div class="heading-left">
+                  <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                    <!-- <span class="iconify" data-icon="famicons:arrow-back-outline"></span> -->
+                    <i class="iconify pi pi-arrow-left"></i>
+                  </a>
+                  <h3>Edit / Update Document</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 col-12">
+                <div class="formbox-left form-lg">
+                  <form>
+                    <div class="row">
+                      <div class="col-md-12 col-12">
+                        <div class="form-group">
+                          <label>Document Name</label>
+                          <input class="form-control" value="Surgical Policies" placeholder="Enter Document Name" />
+                        </div>
+                      </div>
+                      <div class="col-md-12 col-12">
+                        <div class="form-group">
+                          <label>Document Type</label>
+                          <select class="form-select">
+                            <option>SOP</option>
+                            <option selected="selected">Policy</option>
+                            <option>Case Sheet</option>
+                            <option>Manual</option>
+                            <option>Clinical Guideline</option>
+                            <option>Training Material</option>
+                            <option>Quality Checklist</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-12 col-12">
+                        <div class="form-group">
+                          <label>Description</label>
+                          <textarea class="form-control" rows="4" placeholder="Minimum 120 characters"></textarea>
+                        </div>
+                      </div>
+                      <!-- <div class="col-md-12 col-12">
+                      <div class="form-group">
+                        <label>Assigned To</label>
+                        <select class="form-select">
+                          <option>Select</option>
+                          <option selected="selected">Kamalesh A (4525)</option>
+                          <option>Prathyush P (4525)</option>
+                        </select>
+                      </div>
+                    </div> -->
+                      <div class="col-md-12 col-12">
+                        <div class="form-group input-icon2">
+                          <label>Current Version</label>
+                          <input class="form-control" type="text" value="1.6" placeholder="Select Current Version" />
+                          <span class="iconify icon" data-icon="lsicon:sort-filled"></span>
+                        </div>
+                      </div>
+                      <div class="col-md-12 col-12">
+                        <div class="form-group mb-0">
+                          <label>Attach Document</label>
+                          <div class="upload-image">
+                            <button class="btn btn-primary"><span class="iconify"
+                                data-icon="material-symbols:upload-rounded"></span> Upload </button>
+                            <div class="upload-fileinfo">
+                              <p>Fire_Safety743677547.pdf </p>
+                              <a href="javascript:;">Remove</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+                <div class="row mt-3">
+                  <div class="col-md-6 col-12">
+                    <div class="card-style-3 form-lg">
+                      <h5 class="mb-2">Level 1 Approver</h5>
+                      <div class="radio-group">
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" name="dataEntry2" id="department2"
+                            value="department" [(ngModel)]="selectedOptionEntry2"
+                            (change)="onDataEntryChange2('department')">
+                          <label class="form-check-label" for="department2">Department</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" name="dataEntry2" id="role2" value="role"
+                            [(ngModel)]="selectedOptionEntry2" (change)="onDataEntryChange2('role')">
+                          <label class="form-check-label" for="role2">Role</label>
+                        </div>
+                      </div>
+
+                      @if (selectedOptionEntry2 === 'department') {
+                      <div class="form-group">
+                        <label>Department</label>
+                        <select class="form-select">
+                          <option selected>Select Department</option>
+                          <option>ICU</option>
+                          <option>Lab</option>
+                        </select>
+                      </div>
+                      }
+
+                      @if (selectedOptionEntry2 === 'role') {
+                      <div class="form-group">
+                        <label>Role</label>
+                        <select class="form-select">
+                          <option selected>Select Role</option>
+                          <option>Doctor</option>
+                          <option>Nurse</option>
+                        </select>
+                      </div>
+                      }
+
+                      <div class="form-group">
+                        <label>Approver Name</label>
+                        <select class="form-select">
+                          <option selected>Select Approver Name</option>
+                          <option>John</option>
+                          <option>Sarah</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="card-style-3 form-lg">
+                      <h5 class="mb-2">Level 2 Approver</h5>
+                      <div class="radio-group">
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" name="dataEntry2" id="department2"
+                            value="department" [(ngModel)]="selectedOptionEntry2"
+                            (change)="onDataEntryChange2('department')">
+                          <label class="form-check-label" for="department2">Department</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" name="dataEntry2" id="role2" value="role"
+                            [(ngModel)]="selectedOptionEntry2" (change)="onDataEntryChange2('role')">
+                          <label class="form-check-label" for="role2">Role</label>
+                        </div>
+                      </div>
+
+                      @if (selectedOptionEntry2 === 'department') {
+                      <div class="form-group">
+                        <label>Department</label>
+                        <select class="form-select">
+                          <option selected>Select Department</option>
+                          <option>ICU</option>
+                          <option>Lab</option>
+                        </select>
+                      </div>
+                      }
+
+                      @if (selectedOptionEntry2 === 'role') {
+                      <div class="form-group">
+                        <label>Role</label>
+                        <select class="form-select">
+                          <option selected>Select Role</option>
+                          <option>Doctor</option>
+                          <option>Nurse</option>
+                        </select>
+                      </div>
+                      }
+
+                      <div class="form-group">
+                        <label>Approver Name</label>
+                        <select class="form-select">
+                          <option selected>Select Approver Name</option>
+                          <option>John</option>
+                          <option>Sarah</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-12">
+                <div class="formbox-left legends form-lg">
+                  <div class="form-title">
+                    Upload Info
+                  </div>
+                  <form>
+                    <div class="row">
+                      <div class="col-md-12 col-12">
+                        <div class="form-group">
+                          <label>What are the changes?</label>
+                          <textarea class="form-control" rows="4" placeholder="Minimum 120 characters"></textarea>
+                        </div>
+                      </div>
+                      <div class="col-md-12 col-12">
+                        <div class="form-group">
+                          <label>Why the changes?</label>
+                          <textarea class="form-control" rows="4" placeholder="Minimum 120 characters"></textarea>
+                        </div>
+                      </div>
+                      <div class="col-md-12 col-12">
+                        <div class="radio-group">
+                          <p>Update Version <span class="info-icon" placement="top"
+                              ngbTooltip="minor changes (+0.1) major changes (+1.0) ">
+                              <span class="iconify" data-icon="material-symbols:info-rounded"></span>
+                            </span></p>
+                          <div class="form-radio-inline mt-2">
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                                value="option1">
+                              <label class="form-check-label" for="inlineRadio1">Minor</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                                value="option2">
+                              <label class="form-check-label" for="inlineRadio2">Major</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+                <div class="formbox-left legends form-lg mt-5">
+                  <div class="form-title">
+                    Approval Process
+                  </div>
+                  <form>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="timeline-process">
+                          <div class="timeline-status"></div>
+                          <div class="timeline-one">
+                            <div class="circle">
+                              <span class="iconify" data-icon="qlementine-icons:check-tick-16"></span>
+                            </div>
+                            <p>L1 Approved</p>
+                          </div>
+                          <div class="timeline-two">
+                            <div class="circle">
+                              <span class="iconify" data-icon="qlementine-icons:check-tick-16"></span>
+                            </div>
+                            <p>L2 Rejected</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12 col-12">
+                        <div class="radio-group mb-2">
+                          <p>Approval Status</p>
+                          <div class="form-radio-inline mt-2">
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1c"
+                                value="option1">
+                              <label class="form-check-label" for="inlineRadio1c">Approve</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2c"
+                                value="option2">
+                              <label class="form-check-label" for="inlineRadio2c">Reject</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12 col-12">
+                        <div class="form-group">
+                          <label>Comments</label>
+                          <textarea class="form-control" rows="4" placeholder="Minimum 120 characters"></textarea>
+                        </div>
+                      </div>
+                      <div class="col-md-12 col-12">
+                        <div class="form-group mb-0">
+                          <div class="form-check mb-0">
+                            <input class="form-check-input" type="checkbox" value="" id="checkDefault">
+                            <label class="form-check-label" for="checkDefault">
+                              Send Notification
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+                <div class="button-group mt-4">
+                  <div class="row">
+                    <div class="col-md-12 col-12">
+                      <button class="btn btn-dark">Clear</button>
+                      <button class="btn btn-primary" routerLink="/version-control-dashboard">Submit</button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

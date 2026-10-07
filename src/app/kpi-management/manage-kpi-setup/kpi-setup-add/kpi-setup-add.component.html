@@ -1,0 +1,428 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="row">
+      <div class="col-md-12 col-12">
+        <div class="card-style2">
+          <div class="card-header backoption">
+            <div class="row">
+              <div class="col-md-7 col-12">
+                <div class="heading-left">
+                  <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                    <i class="iconify pi pi-arrow-left"></i>
+                  </a>
+                  <h3>Add New KPI</h3>
+                </div>
+              </div>
+              <!-- <div class="col-md-5 col-12">
+                <div class="form-right">
+                  <button type="button" class="btn btn-dark" [disabled]="pageMode=='VIEW'"
+                    (click)="onClearClick()">Clear</button>
+                  <button type="submit" class="btn btn-primary" [disabled]="pageMode=='VIEW'"
+                    (click)="onSubmitClick()">Submit</button>
+                </div>
+              </div> -->
+            </div>
+          </div>
+
+          <div class="card-body">
+            <form>
+              <!-- Basic Details Section -->
+              <div class="formbox-left legends legend2 form-lg margin0">
+                <div class="form-title">
+                  Basic Details
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Clinical / Non-Clinical</label>
+                      <div class="radio-group">
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" name="clinicalType" id="clinical"
+                            value="Clinical">
+                          <label class="form-check-label" for="clinical">Clinical</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" name="clinicalType" id="non-clinical"
+                            value="Non-Clinical" checked>
+                          <label class="form-check-label" for="non-clinical">Non-Clinical</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label>Location</label>
+                      <select class="form-select">
+                        <option value="">Select Location</option>
+                        <option value="Main Hospital">Main Hospital</option>
+                        <option value="Emergency Department">Emergency Department</option>
+                        <option value="ICU">ICU</option>
+                        <option value="Operating Room">Operating Room</option>
+                        <option value="Laboratory">Laboratory</option>
+                        <option value="Pharmacy">Pharmacy</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label>Hospital Unit</label>
+                      <input type="text" class="form-control" placeholder="Enter Hospital Unit">
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label>Department</label>
+                      <select class="form-select">
+                        <option value="">Select Department</option>
+                        <option value="Cardiology">Cardiology</option>
+                        <option value="Neurology">Neurology</option>
+                        <option value="Orthopedics">Orthopedics</option>
+                        <option value="Pediatrics">Pediatrics</option>
+                        <option value="Emergency Medicine">Emergency Medicine</option>
+                        <option value="Internal Medicine">Internal Medicine</option>
+                        <option value="Surgery">Surgery</option>
+                        <option value="Radiology">Radiology</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label>
+                        Has Multiple Sub-departments?
+                        <span class="info-icon" placement="top"
+                          ngbTooltip="Indicate whether the selected department is composed of multiple sub-departments">
+                          <span class="iconify" data-icon="material-symbols:info-rounded"></span>
+                        </span>
+                      </label>
+                      <div class="radio-group">
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" name="hasSubDepartments" id="sub-yes"
+                            value="Yes">
+                          <label class="form-check-label" for="sub-yes">Yes</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" name="hasSubDepartments" id="sub-no" value="No"
+                            checked>
+                          <label class="form-check-label" for="sub-no">No</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- KPI Details Section -->
+              <div class="formbox-left legends legend2 form-lg margin0">
+                <div class="form-title">KPI Details</div>
+
+                <div class="row">
+                  <div class="col-md-4 col-12">
+                    <div class="form-group">
+                      <label>Indicator Name</label>
+                      <input type="text" class="form-control" placeholder="Enter Indicator Name">
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-12">
+                    <div class="form-group">
+                      <label>KPI Category</label>
+                      <select class="form-select">
+                        <option value="">Select KPI Category</option>
+                        <option value="Clinical Quality">Clinical Quality</option>
+                        <option value="Patient Safety">Patient Safety</option>
+                        <option value="Operational Efficiency">Operational Efficiency</option>
+                        <option value="Financial Performance">Financial Performance</option>
+                        <option value="Patient Experience">Patient Experience</option>
+                        <option value="Staff Satisfaction">Staff Satisfaction</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-12">
+                    <div class="form-group">
+                      <label>KPI Type</label>
+                      <select class="form-select">
+                        <option value="">Select KPI Type</option>
+                        <option value="Type 1">Process </option>
+                        <option value="Type 2">Outcome</option>
+                        <option value="Type 3">Safety/Compliance</option>
+                        <option value="Type 4">Structure/Capacity</option>
+                        <option value="Type 5">Balancing</option>
+                        <option value="Type 5">Experience</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-12">
+                    <div class="form-group">
+                      <label>KPI Definition</label>
+                      <textarea rows="3" class="form-control" placeholder="Enter KPI Definition"></textarea>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-12">
+                    <div class="form-group">
+                      <label>KPI Purpose</label>
+                      <textarea rows="3" class="form-control" placeholder="Enter KPI Purpose"></textarea>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-12">
+                    <div class="form-group">
+                      <label>Formula Details</label>
+                      <textarea rows="3" class="form-control" placeholder="Enter Formula Details"></textarea>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-12">
+                    <div class="form-group">
+                      <label>Unit of Measure</label>
+                      <select class="form-select">
+                        <option value="">Select Unit of Measure</option>
+                        <option value="Percentage (%)">Percentage (%)</option>
+                        <option value="Number">Number</option>
+                        <option value="Ratio">Ratio</option>
+                        <option value="Rate per 1000">Rate per 1000</option>
+                        <option value="Days">Days</option>
+                        <option value="Hours">Hours</option>
+                        <option value="Minutes">Minutes</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-12">
+                    <div class="form-group">
+                      <label>Monitoring Frequency</label>
+                      <select class="form-select">
+                        <option value="">Select Monitoring Frequency</option>
+                        <option value="Daily">Daily</option>
+                        <option value="Weekly">Weekly</option>
+                        <option value="Monthly">Monthly</option>
+                        <option value="Quarterly">Quarterly</option>
+                        <option value="Yearly">Yearly</option>
+                        <option value="Continuous">Continuous</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-12">
+                    <div class="form-group">
+                      <label>Data Collection Methodology</label>
+                      <select class="form-select">
+                        <option value="">Select Data Collection Methodology</option>
+                        <option value="Retrospective Review">Retrospective Review</option>
+                        <option value="Prospective Monitoring">Prospective Monitoring</option>
+                        <option value="Real-time Tracking">Real-time Tracking</option>
+                        <option value="Survey">Survey</option>
+                        <option value="Audit">Audit</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-12">
+                    <div class="form-group">
+                      <label>Numerator</label>
+                      <input type="text" class="form-control" placeholder="Enter Numerator">
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-12">
+                    <div class="form-group">
+                      <label>Denominator</label>
+                      <input type="text" class="form-control" placeholder="Enter Denominator">
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-12">
+                    <div class="form-group">
+                      <label>Source of Data</label>
+                      <select class="form-select">
+                        <option value="">Select Source of Data</option>
+                        <option value="Electronic Health Records">Electronic Health Records</option>
+                        <option value="Patient Charts">Patient Charts</option>
+                        <option value="Administrative Databases">Administrative Databases</option>
+                        <option value="Quality Reports">Quality Reports</option>
+                        <option value="Incident Reports">Incident Reports</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4 col-12">
+                    <div class="form-group">
+                      <label>Data Collection Mode</label>
+                      <select class="form-select">
+                        <option value="">Select Data Collection Mode</option>
+                        <option value="Electronic Health Records">Electronic Health Records</option>
+                        <option value="Patient Charts">Patient Charts</option>
+                        <option value="Administrative Databases">Administrative Databases</option>
+                        <option value="Quality Reports">Quality Reports</option>
+                        <option value="Incident Reports">Incident Reports</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4 col-12">
+                    <div class="form-group">
+                      <label>Inclusion Criteria</label>
+                      <input type="text" class="form-control" placeholder="Enter Inclusion Criteria">
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-12">
+                    <div class="form-group">
+                      <label>Exclusion Criteria</label>
+                      <input type="text" class="form-control" placeholder="Enter Exclusion Criteria">
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-12">
+                    <div class="form-group">
+                      <label>Data Aggregation Plan</label>
+                      <textarea rows="3" class="form-control" placeholder="Enter Data Aggregation Plan"></textarea>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-12">
+                    <div class="form-group">
+                      <label>Data Dissemination Plan</label>
+                      <textarea rows="3" class="form-control" placeholder="Enter Data Dissemination Plan"></textarea>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-12">
+                    <div class="form-group">
+                      <label>Standard Reference</label>
+                      <textarea rows="3" class="form-control" placeholder="Enter Standard Reference"></textarea>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-12">
+                    <div class="form-group">
+                      <label>Data Collector</label>
+                      <select class="form-select">
+                        <option value="">Select Data Collector</option>
+                        <option value="Electronic Health Records">Electronic Health Records</option>
+                        <option value="Patient Charts">Patient Charts</option>
+                      </select>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <!-- Create Data Entry Section -->
+              <div class="formbox-left legends legend2 form-lg">
+                <div class="form-title">
+                  Create Data Entry
+                  <span class="info-icon" placement="top" ngbTooltip="Create a new data entry for the KPI.">
+                    <span class="iconify" data-icon="material-symbols:info-rounded"></span>
+                  </span>
+                </div>
+                <div class="row">
+                  <!-- 1st Assessment Frequency -->
+                  <div class="col-md-4 col-12">
+                    <div class="assessment-column">
+                      <div class="assessment-header">
+                        <h5>Column 1</h5>
+                        <div class="action-icons">
+                          <a href="javascript:;"><span class="iconify add-icon" data-icon="basil:add-outline"></span>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="assessment-fields">
+                        <div class="form-group">
+                          <input type="text" class="form-control" placeholder="Add Column Name">
+                        </div>
+                        <div class="form-group">
+                          <select class="form-select">
+                            <option value="">Select Column Type</option>
+                            <option value="Text">Text</option>
+                            <option value="Number">Number</option>
+                            <option value="Date">Date</option>
+                            <option value="Dropdown">Dropdown</option>
+                            <option value="Checkbox">Checkbox</option>
+                            <option value="Radio Button">Radio Button</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Benchmark Details Section -->
+              <div class="formbox-left legends legend2 form-lg margin0">
+                <div class="form-title">Benchmark Details</div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Benchmark</label>
+                      <div class="radio-group">
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" name="benchmark" id="internal" value="Internal"
+                            [(ngModel)]="selectedOptioneBenchmark">
+                          <label class="form-check-label" for="internal">Internal</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" name="benchmark" id="external" value="External"
+                            [(ngModel)]="selectedOptioneBenchmark">
+                          <label class="form-check-label" for="external">External</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Full Compliance</label>
+                        <input type="text" class="form-control" placeholder="Enter Full Compliance">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Partial Compliance</label>
+                        <input type="text" class="form-control" placeholder="Enter Partial Compliance">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Non Compliance</label>
+                        <input type="text" class="form-control" placeholder="Enter Non Compliance">
+                      </div>
+                    </div>
+                  </div>
+
+                  @if (selectedOptioneBenchmark === 'External') {
+                  <div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label>External Benchmark Reference</label>
+                          <input type="text" class="form-control" placeholder="Enter External Benchmark Reference">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  }
+
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Do you want to enable notifications?</label>
+                      <div class="radio-group">
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" name="enableNotifications" id="notify-yes"
+                            value="Yes">
+                          <label class="form-check-label" for="notify-yes">Yes</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" name="enableNotifications" id="notify-no"
+                            value="No" checked>
+                          <label class="form-check-label" for="notify-no">No</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Status</label>
+                      <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked" checked>
+                        <label class="form-check-label" for="switchCheckChecked">&nbsp;</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,175 @@
+<section class="wrapper-body">
+  <div class="container-fluid page-height">
+    <div class="row">
+      <div class="col-md-12 col-12">
+        <div class="card-style2">
+          <div class="card-header backoption">
+            <div class="row">
+              <div class="col-md-7 col-12">
+                <div class="heading-left">
+                  <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                    <i class="iconify pi pi-arrow-left"></i>
+                  </a>
+                  <h3>New Data Entry</h3>
+                </div>
+              </div>
+              <div class="col-md-5 col-12">
+                <div class="form-right">
+                  <button type="button" class="btn btn-dark">Clear</button>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="row d-flex justify-content-center">
+              <div class="col-lg-8 col-md-12 col-12">
+                <div class="formbox-left form-lg">
+                  <form>
+                    <div class="row">
+                      <div class="col-md-6 col-12">
+                        <div class="form-group">
+                          <label>Indicator Name</label>
+                          <select class="form-select">
+                            <option value="">Select Indicator Name</option>
+                            <option value="patient-fall-rate">Patient Fall Rate</option>
+                            <option value="hand-hygiene-compliance">Hand Hygiene Compliance</option>
+                            <option value="medication-error-rate">Medication Error Rate</option>
+                            <option value="surgical-site-infection">Surgical Site Infection Rate</option>
+                            <option value="tat-lab-reports">TAT for Lab Reports</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <div class="form-group">
+                          <label>Sub - Department</label>
+                          <select class="form-select">
+                            <option value="">Select Sub - Department</option>
+                            <option value="opd">OPD</option>
+                            <option value="mri">MRI</option>
+                            <option value="pharmacy">Pharmacy</option>
+                            <option value="ward-7">Ward 7</option>
+                            <option value="emergency">Emergency</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-12 col-12">
+                        <div class="form-group">
+                          <label>Data Entry</label>
+                          <div class="radio-group">
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="dataEntry" id="dataSingle"
+                                value="dataSingle" [(ngModel)]="selectedOptionEntry"
+                                (change)="onDataEntryChange('dataSingle')">
+                              <label class="form-check-label" for="dataSingle">Single</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="dataEntry" id="dataMultiple"
+                                value="dataMultiple" [(ngModel)]="selectedOptionEntry"
+                                (change)="onDataEntryChange('dataMultiple')">
+                              <label class="form-check-label" for="dataMultiple">Multiple</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      @if (selectedOptionEntry === 'dataMultiple') {
+                      <div class="col-md-12 col-12 multiple-entry">
+                        <div class="form-group">
+                          <div class="label-flex-link">
+                            <label>Upload Reviewer List </label>
+                            <a href="javascript:;"><span class="iconify" data-icon="material-symbols:download"></span>
+                              Download Template</a>
+                          </div>
+                          <div class="upload-image">
+                            <button class="btn btn-primary"><span class="iconify"
+                                data-icon="material-symbols:upload-rounded"></span> Bulk Upload</button>
+                            <div class="upload-fileinfo">
+                              <p>KPI_Data_Entry.xlxs</p>
+                              <a href="javascript:;">Remove</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      }
+
+                      @if (selectedOptionEntry === 'dataSingle') {
+                      <div class="row single-entry">
+                        <div class="col-md-6 col-12">
+                          <div class="form-group">
+                            <label>UHID</label>
+                            <select class="form-select">
+                              <option value="">Select UHID</option>
+                              <option value="uhid-001">UHID-001</option>
+                              <option value="uhid-002">UHID-002</option>
+                              <option value="uhid-003">UHID-003</option>
+                              <option value="uhid-004">UHID-004</option>
+                              <option value="uhid-005">UHID-005</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                          <div class="form-group">
+                            <label>Patient Name</label>
+                            <select class="form-select">
+                              <option value="">Select Patient Name</option>
+                              <option value="john-doe">John Doe</option>
+                              <option value="jane-smith">Jane Smith</option>
+                              <option value="mike-johnson">Mike Johnson</option>
+                              <option value="sarah-wilson">Sarah Wilson</option>
+                              <option value="david-brown">David Brown</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-12 col-12">
+                          <div class="form-group">
+                            <label>Error Description</label>
+                            <textarea class="form-control" rows="4" placeholder="Enter Error Description"></textarea>
+                          </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                          <div class="form-group">
+                            <label>Consulting Doctor</label>
+                            <select class="form-select">
+                              <option value="">Select Consulting Doctor</option>
+                              <option value="dr-kamaraj">Dr. Kamaraj (7463736)</option>
+                              <option value="dr-nagesh">Dr. Nagesh (7463768)</option>
+                              <option value="dr-adhitya">Dr. Adhitya (7463733)</option>
+                              <option value="dr-yugesh">Dr. Yugesh (7463775)</option>
+                              <option value="dr-priya">Dr. Priya (7463787)</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                          <div class="form-group">
+                            <label>Investigation Date & Time</label>
+                            <input type="datetime-local" class="form-control" placeholder="Pick Date & Time">
+                          </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                          <div class="form-group">
+                            <label>Event Date</label>
+                            <input type="date" class="form-control" placeholder="Pick Date">
+                          </div>
+                        </div>
+                        <div class="col-md-12 col-12">
+                          <div class="form-group">
+                            <label>Remarks / Reason</label>
+                            <textarea class="form-control" rows="4" placeholder="Enter remarks or reason"></textarea>
+                            <small class="form-text text-muted">Minimum 120 Characters</small>
+                          </div>
+                        </div>
+                      </div>
+                      }
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,186 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-9 col-12">
+                                <div class="heading-left">
+                                    <h3>Access User</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-12">
+                                <div class="form-right">
+                                    <button type="button" class="btn btn-dark" [disabled]="pageMode=='VIEW'"
+                                        (click)="onClearClick()">Clear</button>
+                                    <button type="submit" class="btn btn-primary" [disabled]="pageMode=='VIEW'"
+                                        (click)="onSubmitClick()">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body table-style1">
+                        <div class="row form-sm gx-2 mb-3">
+                            <div class="col-3">
+                                <div class="col-12">
+                                    <div class="flex flex-col gap-1">
+                                        <label for="loc_id">Location</label>
+                                        <div style="position: relative;display:inline-block;width:100%">
+                                            <p-select id="loc_id" [(ngModel)]="createAccessbyUser().loc_id"
+                                                (onBlur)="onGetErrorMsgs('loc_id')" (onChange)="onLocChange()"
+                                                [options]="locList" [filter]="true" [appendTo]="'body'" name="loc_id"
+                                                class="form-control" placeholder="Location" />
+                                            <div style=" position: absolute;
+                                            top: 0;
+                                            right: 0;
+                                            width: 0;
+                                            height: 0;
+                                            border-top: 12px solid red;
+                                            border-left: 12px solid transparent;"></div>
+                                        </div>
+                                        @if(errorMsg['loc_id']!=""){
+                                        <small class="error">{{errorMsg['loc_id']}}</small>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="flex flex-col gap-1">
+                                        <label for="user_id">User</label>
+                                        <div style="position: relative;display:inline-block;width:100%">
+                                            <p-select id="user_id" [(ngModel)]="createAccessbyUser().user_id"
+                                                (onBlur)="onGetErrorMsgs('user_id')" (onChange)="onUserChange()"
+                                                [options]="userList" [appendTo]="'body'" [filter]="true"
+                                                placeholder="User" name="user_id" class="form-control" />
+                                            <div style=" position: absolute;
+                                            top: 0;
+                                            right: 0;
+                                            width: 0;
+                                            height: 0;
+                                            border-top: 12px solid red;
+                                            border-left: 12px solid transparent;"></div>
+                                        </div>
+                                        @if(errorMsg['user_id']!=""){
+                                        <small class="error">{{errorMsg['user_id']}}</small>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="flex flex-col gap-1">
+                                        <label for="module_id">Module</label>
+                                        <div style="position: relative;display:inline-block;width:100%">
+                                            <p-select id="module_id" [(ngModel)]="createAccessbyUser().module_id"
+                                                (onBlur)="onGetErrorMsgs('module_id')" (onChange)="onModuleChange()"
+                                                [options]="moduleList" [appendTo]="'body'" [filter]="true"
+                                                placeholder="Module" name="module_id" class="form-control" />
+                                            <div style=" position: absolute;
+                                            top: 0;
+                                            right: 0;
+                                            width: 0;
+                                            height: 0;
+                                            border-top: 12px solid red;
+                                            border-left: 12px solid transparent;"></div>
+                                        </div>
+                                        @if(errorMsg['module_id']!=""){
+                                        <small class="error">{{errorMsg['module_id']}}</small>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-9">
+                                <div class="table-responsive">
+                                    <table class="table table-striped mt-2">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Select
+                                                    <p-toggleswitch [(ngModel)]="selecteAll" name="select"
+                                                        (change)="onSelectAll($event)"
+                                                        [disabled]="user_access.length==0" />
+                                                </th>
+                                                <th>Document</th>
+                                                <th>Add</th>
+                                                <th>View</th>
+                                                <th>Edit</th>
+                                                <th>Delete</th>
+                                                <!-- <th>Qry</th> -->
+                                                <!-- <th>App</th> -->
+                                                <th>Print</th>
+                                                <!-- <th>Exp</th> -->
+                                                <!-- <th>DMS Up</th>
+                                                <th>DMS View</th> -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (selectedDocInfo of user_access; track selectedDocInfo.id) {
+                                            <tr>
+                                                <td scope="row">
+                                                    <p-toggleswitch [(ngModel)]="selectedDocInfo.select" name="select"
+                                                        (change)="onSelectClick($event,selectedDocInfo)" />
+
+                                                </td>
+                                                <td>
+                                                    {{ selectedDocInfo.document_name }}
+                                                </td>
+                                                <td>
+                                                    <p-toggleswitch [(ngModel)]="selectedDocInfo.access_add"
+                                                        name="access_add" [disabled]="selectedDocInfo.select == null" />
+                                                </td>
+                                                <td>
+                                                    <p-toggleswitch [(ngModel)]="selectedDocInfo.access_view"
+                                                        name="access_view"
+                                                        [disabled]="selectedDocInfo.select == null" />
+                                                </td>
+                                                <td>
+                                                    <p-toggleswitch [(ngModel)]="selectedDocInfo.access_mod"
+                                                        name="access_mod" [disabled]="selectedDocInfo.select == null" />
+
+                                                </td>
+                                                <td>
+                                                    <p-toggleswitch [(ngModel)]="selectedDocInfo.access_del"
+                                                        name="access_del" [disabled]="selectedDocInfo.select == null" />
+                                                </td>
+                                                <!-- <td>
+                                                    <p-toggleswitch [(ngModel)]="selectedDocInfo.access_qry"
+                                                        name="access_qry" [disabled]="selectedDocInfo.select == null" />
+                                                </td>
+                                                <td>
+                                                    <p-toggleswitch [(ngModel)]="selectedDocInfo.access_app"
+                                                        name="access_app" [disabled]="selectedDocInfo.select == null" />
+                                                </td> -->
+                                                <td>
+                                                    <p-toggleswitch [(ngModel)]="selectedDocInfo.access_print"
+                                                        name="access_print"
+                                                        [disabled]="selectedDocInfo.select == null" />
+                                                </td>
+                                                <!-- <td>
+                                                    <p-toggleswitch [(ngModel)]="selectedDocInfo.access_exp"
+                                                        name="access_exp" [disabled]="selectedDocInfo.select == null" />
+                                                </td> -->
+                                                <!-- <td>
+                                                    <input type="checkbox" id="dms_upload"
+                                                        [(ngModel)]="selectedDocInfo.dms_upload" name="dms_upload"
+                                                        [disabled]="selectedDocInfo.select == null" />
+                                                </td>
+                                                <td>
+                                                    <input type="checkbox" id="dms_view"
+                                                        [(ngModel)]="selectedDocInfo.dms_view" name="dms_view"
+                                                        [disabled]="selectedDocInfo.select == null" />
+                                                </td> -->
+                                            </tr>
+                                            }@empty{
+                                            <tr style="text-align: center">
+                                                <td colspan="11">No Documents Found</td>
+                                            </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

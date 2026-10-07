@@ -1,0 +1,152 @@
+<section class="wrapper-body">
+    <div class="container-fluid page-height">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card-style2">
+                    <div class="card-header backoption">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <div class="heading-left">
+                                    <a href="javascript:;" class="icon-btn-square" (click)="goBack()">
+                                        <!-- <span class="iconify" data-icon="famicons:arrow-back-outline"></span> -->
+                                        <i class="iconify pi pi-arrow-left"></i>
+                                    </a>
+                                    <h3>{{_hqms.getPageModeContext(pageMode, 'Role') }}</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-12">
+                                <div class="form-right">
+                                    <button class="btn btn-dark" [disabled]="pageMode=='VIEW'"
+                                        (click)="onClearClick()">Clear</button>
+                                    <button class="btn btn-primary" [disabled]="pageMode=='VIEW'"
+                                        (click)="onSubmitClick()">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="formbox-left form-lg">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="flex flex-col gap-1">
+                                        <label for="role_name">Role Name</label>
+                                        <div style="position: relative;display:inline-block;width:100%">
+                                            <input pInputText id="role_name" [(ngModel)]="roleMstr.role_name"
+                                                (blur)="onGetErrorMsgs('role_name')" placeholder="Role Name"
+                                                [disabled]="pageMode=='VIEW'" name="role_name" class=" form-control"
+                                                autocomplete="off" appNospaces>
+                                            <div style=" position: absolute;
+                                            top: 0;
+                                            right: 0;
+                                            width: 0;
+                                            height: 0;
+                                            border-top: 12px solid red;
+                                            border-left: 12px solid transparent;"></div>
+                                        </div>
+                                        @if(errorMsg['role_name']!=''){
+                                        <small class="error">{{ errorMsg['role_name']}}</small>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="flex flex-col gap-1">
+                                        <label for="role_short_name">Role Code</label>
+                                        <div style="position: relative;display:inline-block;width:100%">
+                                            <input pInputText id="role_short_name"
+                                                [(ngModel)]="roleMstr.role_short_name"
+                                                (blur)="onGetErrorMsgs('role_short_name')" placeholder="Role Code"
+                                                [disabled]="pageMode=='VIEW'" name="role_short_name"
+                                                class=" form-control" autocomplete="off" appNospaces>
+                                            <div style=" position: absolute;
+                                            top: 0;
+                                            right: 0;
+                                            width: 0;
+                                            height: 0;
+                                            border-top: 12px solid red;
+                                            border-left: 12px solid transparent;"></div>
+                                        </div>
+                                        @if(errorMsg['role_short_name']!=''){
+                                        <small class="error">{{ errorMsg['role_short_name']}}</small>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="flex flex-col gap-1">
+                                        <label for="role_desc">Description</label>
+                                        <div style="position: relative;display:inline-block;width:100%">
+                                            <textarea pTextarea id="role_desc" [(ngModel)]="roleMstr['role_desc']"
+                                                (blur)="onGetErrorMsgs('role_desc')" rows="10"
+                                                [disabled]="pageMode=='VIEW'" name="role_desc" placeholder="Description"
+                                                class=" form-control" appNospaces></textarea>
+                                            <div style=" position: absolute;
+                                            top: 0;
+                                            right: 0;
+                                            width: 0;
+                                            height: 0;
+                                            border-top: 12px solid red;
+                                            border-left: 12px solid transparent;"></div>
+                                        </div>
+                                        @if(errorMsg['role_desc']!=''){
+                                        <small class="error">{{ errorMsg['role_desc']}}</small>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <label>Status</label>
+                                    <div class="form-group">
+                                        <p-toggleswitch [(ngModel)]="roleMstr.is_active" name="status"
+                                            [disabled]="pageMode=='VIEW' || pageMode=='NEW'" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .editing {
+        color: yellow !important;
+    }
+
+    .edited {
+        color: green !important;
+    }
+
+    .head_flex {
+        display: flex;
+        gap: 5px;
+        justify-content: space-between;
+    }
+
+    .s-flex {
+        display: flex;
+        gap: 3px;
+        align-items: center;
+    }
+
+    .audit-table .audit-heading {
+        margin-left: 0px;
+    }
+
+    .action-edit ul li:hover {
+        padding: 0px 5px;
+        background: #fff;
+        border-radius: 6px;
+
+
+    }
+
+    .action-edit ul li {
+        padding: 0px 5px;
+        font-size: 16px;
+        margin-right: 0px;
+    }
+
+    .pi {
+        font-size: 11px;
+    }
+</style>

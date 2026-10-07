@@ -1,0 +1,130 @@
+<p-dialog [header]="editing() ? 'Edit Entity' : 'New Entity'" [(visible)]="visible" [modal]="true" [draggable]="false"
+  [style]="{ width: '640px', maxWidth: '95vw' }" (onShow)="reset()">
+  <div class="form-grid">
+    <div class="fg">
+      <hqms-text [formName]="FORM_NAME" [labelName]="'Entity Code'" [fieldName]="'entity_code'"
+        [isDisabled]="pageMode=='VIEW'" [(ngModel)]="EntityForms().entity_code" name="entity_code"
+        (statusChange)="onFieldStatusChange($event)">
+      </hqms-text>
+
+      <!-- <label>Entity Code <span class="req">*</span></label>
+      <input pInputText [ngModel]="form().entity_code" (ngModelChange)="updateField('entity_code', $event)"
+        placeholder="e.g. letters, numbers, _ only, max 40 chars" style="text-transform:uppercase"
+        [disabled]="editing()" (blur)="onBlur('entity_code')" /> -->
+      <!-- <span class="hint">Stable machine key — uppercase, no spaces.</span> -->
+      <!-- @if (touched().entity_code && errors().entity_code) {
+      <span class="err">{{ errors().entity_code }}</span>
+      } -->
+    </div>
+    <div class="fg">
+      <hqms-text [formName]="FORM_NAME" [labelName]="'Entity Name'" [fieldName]="'entity_name'"
+        [isDisabled]="pageMode=='VIEW'" [(ngModel)]="EntityForms().entity_name" name="entity_name"
+        (statusChange)="onFieldStatusChange($event)">
+      </hqms-text>
+
+      <!-- <label>Entity Name <span class="req">*</span></label>
+      <input pInputText [ngModel]="form().entity_name" (ngModelChange)="updateField('entity_name', $event)"
+        placeholder="e.g. 2 to 80 characters" (blur)="onBlur('entity_name')" /> -->
+      <!-- @if (touched().entity_name && errors().entity_name) {
+      <span class="err">{{ errors().entity_name }}</span>
+      } -->
+    </div>
+    <div class="fg">
+      <hqms-select [formName]="FORM_NAME" [labelName]="'Category Type'" [fieldName]="'category_type'"
+        [(ngModel)]="EntityForms().category_type" name="category_type" [isDisabled]="pageMode=='VIEW'"
+        (statusChange)="onFieldStatusChange($event)" [selectOptions]="categoryTypeList">
+      </hqms-select>
+
+      <!-- <label>Category Type <span class="req">*</span></label>
+      <p-autocomplete [ngModel]="form().category_type" (ngModelChange)="updateField('category_type', $event)"
+        [suggestions]="suggestions()" (completeMethod)="filterCats($event.query)" [dropdown]="true"
+        placeholder="e.g. Demographics — pick or type a new category" appendTo="body" (onBlur)="onBlur('category_type')"
+         /> -->
+      <!-- @if (touched().category_type && errors().category_type) {
+      <span class="err">{{ errors().category_type }}</span>
+      } -->
+    </div>
+    <div class="fg">
+      <hqms-inc-dec [formName]="FORM_NAME" [labelName]="'Display Order'" [fieldName]="'display_order'"
+        [isDisabled]="pageMode=='VIEW'" [(ngModel)]="EntityForms().display_order" name="display_order"
+        (statusChange)="onFieldStatusChange($event)">
+      </hqms-inc-dec>
+
+      <!-- <label>Display Order <span class="req">*</span></label>
+      <p-inputnumber [ngModel]="form().display_order" (ngModelChange)="updateField('display_order', $event)" [min]="1"
+        [showButtons]="true" placeholder="1 or higher" (onBlur)="onBlur('display_order')" /> -->
+      <!-- @if (touched().display_order && errors().display_order) {
+      <span class="err">{{ errors().display_order }}</span>
+      } -->
+    </div>
+    <div class="fg full">
+      <hqms-textarea [formName]="FORM_NAME" [labelName]="'Description'" [fieldName]="'description'" [rows]="4"
+        [(ngModel)]="EntityForms().description" [isDisabled]="pageMode=='VIEW'" name="description"
+        (statusChange)="onFieldStatusChange($event)">
+      </hqms-textarea>
+
+      <!-- <label>Description</label>
+      <textarea pTextarea [ngModel]="form().description" (ngModelChange)="updateField('description', $event)" rows="2"
+        placeholder="Optional — purpose of this lookup and where it's used (max 300 characters)…"
+        (blur)="onBlur('description')"></textarea> -->
+      <!-- @if (touched().description && errors().description) {
+      <span class="err">{{ errors().description }}</span>
+      } -->
+    </div>
+
+    <div class="section-lbl">Governance</div>
+    <div class="fg">
+      <div class="switch-row">
+        <div class="lbl" style="cursor:pointer">
+          <!-- (click)="toggle('is_values')" -->
+          Allow custom values<small>Users may add ad-hoc entries</small>
+        </div>
+        <p-toggleswitch class="sp" [(ngModel)]="EntityForms().is_values" name="is_values"
+          [disabled]="pageMode=='VIEW'" />
+        <!-- <p-toggleswitch class="sp" [ngModel]="form().is_values" (ngModelChange)="updateField('is_values', $event)" /> -->
+      </div>
+    </div>
+    <div class="fg">
+      <div class="switch-row">
+        <div class="lbl" style="cursor:pointer">
+          <!-- (click)="toggle('is_editable')" -->
+          Editable<small>Values can be modified</small>
+        </div>
+        <p-toggleswitch class="sp" [(ngModel)]="EntityForms().is_editable" name="is_editable"
+          [disabled]="pageMode=='VIEW'" />
+        <!-- <p-toggleswitch class="sp" [ngModel]="form().is_editable" (ngModelChange)="updateField('is_editable', $event)" /> -->
+      </div>
+    </div>
+    <div class="fg">
+      <div class="switch-row">
+        <div class="lbl" style="cursor:pointer">
+          <!-- (click)="toggle('is_system')" -->
+          System entity<small>Protected — referenced by app logic</small>
+        </div>
+        <p-toggleswitch class="sp" [(ngModel)]="EntityForms().is_system" name="is_system"
+          [disabled]="pageMode=='VIEW'" />
+        <!-- <p-toggleswitch class="sp" [ngModel]="form().is_system" (ngModelChange)="updateField('is_system', $event)" /> -->
+      </div>
+    </div>
+    <div class="fg">
+      <div class="switch-row">
+        <div class="lbl" style="cursor:pointer">
+          <!-- (click)="toggle('is_active')" -->
+          Active<small>Available for selection</small>
+        </div>
+        <p-toggleswitch class="sp" [(ngModel)]="EntityForms().is_active" name="is_active"
+          [disabled]="pageMode=='VIEW'" />
+        <!-- <p-toggleswitch class="sp" [ngModel]="form().is_active" (ngModelChange)="updateField('is_active', $event)" /> -->
+      </div>
+    </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <!-- <span class="mono" style="margin-right:auto;font-size:11px">Maps to public.entity</span> -->
+    <button type="button" class="btn btn-dark" (click)="onClearClick()" [disabled]="pageMode=='VIEW'">Cancel</button>
+    <button type="submit" class="btn btn-primary" (click)="onSubmitClick()" icon="pi pi-check"
+      [disabled]="pageMode=='VIEW'">Save Entity</button>
+    <!-- <p-button label="Cancel" severity="secondary" [text]="true" (onClick)="visible.set(false)" />
+    <p-button label="Save Entity" icon="pi pi-check" (onClick)="submit()" /> -->
+  </ng-template>
+</p-dialog>

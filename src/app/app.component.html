@@ -1,0 +1,8 @@
+<router-outlet></router-outlet>
+<p-toast [baseZIndex]="999999999999" />
+<p-confirmdialog key="confirmsubmit" [baseZIndex]="99999" />
+<p-blockui [blocked]="(_hqms.isBlocking$|async)?? false" [baseZIndex]="99998">
+    <div class="loader-box">
+        <p style="color: #eef2ff; font-size: 30px;">Please wait....</p>
+    </div>
+</p-blockui>

@@ -1,0 +1,39 @@
+<div class="sidemenu-backdrop" (click)="closeMenuOnMobile()"></div>
+<div class="sidemenu-cover" [class.open]="isMenuOpen" #menuRef>
+  <!-- Menu Toggle Icon -->
+  <a href="javascript:;" class="menu-icon" (click)="toggleMenuClose()">
+    <span class="iconify" data-icon="hugeicons:menu-02"></span>
+  </a>
+  <div class="logo">
+    <img [src]="defaultLogo" [alt]="defaultLogo" title="logo" />
+  </div>
+  <div class="accordion">
+    @for (item of menuItems; track $index; let i = $index) {
+    <div class="accordion-item" [class.active]="
+    (!item.isSingle && activeIndex === i) ||
+    (item.isSingle && currentRoute === item.route)
+  " [routerLink]="item.isSingle ? item.route : null">
+      <div class="accordion-header" (click)="!item.isSingle && toggle(i)">
+        <!-- <span class="iconify" [attr.data-icon]="item.icon"></span> -->
+        <span style="margin-right: 5px;"> <i [class]="item.primeIcon"></i></span>
+        <span>{{ item.label }}</span>
+        @if (!item.isSingle) {
+        <!-- <span class="iconify arrow" data-icon="iconamoon:arrow-right-2" [class.rotate]="activeIndex === i"></span> -->
+        <span [class.rotate]="activeIndex === i">
+          <i class="pi pi-angle-right arrow"></i>
+        </span>
+        }
+      </div>
+      @if (item.submenus) {
+      <ul class="submenu" [class.submenu-open]="activeIndex === i">
+        @for (menu of item.submenus; track $index) {
+        <li>
+          <a [routerLink]="menu.route" [state]="{data : menu}" (click)="closeMenuOnMobile()">{{ menu.label }}</a>
+        </li>
+        }
+      </ul>
+      }
+    </div>
+    }
+  </div>
+</div>

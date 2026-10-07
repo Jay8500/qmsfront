@@ -1,0 +1,65 @@
+<p-dialog [modal]="true" [(visible)]="visible" [style]="{width:'760px'}" [breakpoints]="{'800px':'95vw'}"
+  (onHide)="onHide()" header="Upload Vaccination Data">
+  <div class="form-lg vacc-form">
+    <div class="label-flex-link d-flex justify-content-between align-items-center mb-2">
+      <label>Upload File (.xlsx / .xls / .csv)</label>
+      <a href="javascript:;" (click)="onDownloadTemplate()">
+        <i class="pi pi-download" style="margin-right: 4px;"></i>Download Template
+      </a>
+    </div>
+    <div class="d-flex align-items-center gap-2 mb-2">
+      <label class="btn btn-primary mb-0" for="vaccinationUploadFile">
+        <i class="pi pi-upload" style="margin-right: 4px;"></i>Choose File
+      </label>
+      <input type="file" id="vaccinationUploadFile" class="d-none" accept=".xlsx,.xls,.csv"
+        (change)="onFileChange($event)">
+      <span>{{ fileName || 'No file selected' }}</span>
+    </div>
+    <small>One row per dose per employee. Employees are matched by EmployeeCode; the upload is logged with your
+      user, time and file name.</small>
+
+    @if(isChecked){
+    <div class="row mt-3 text-center">
+      <div class="col-4">
+        <h5 class="mb-0">{{ totalRows }}</h5>
+        <p class="mb-0">Total rows</p>
+      </div>
+      <div class="col-4">
+        <h5 class="mb-0 text-success">{{ validRecords.length }}</h5>
+        <p class="mb-0">Valid rows</p>
+      </div>
+      <div class="col-4">
+        <h5 class="mb-0 text-danger">{{ errors.length }}</h5>
+        <p class="mb-0">Errors (skipped)</p>
+      </div>
+    </div>
+    @if(errors.length > 0){
+    <div class="table-responsive mt-2" style="max-height: 260px;">
+      <table class="table table-sm table-striped mb-0">
+        <thead>
+          <tr>
+            <th>Row</th>
+            <th>Employee</th>
+            <th>Error</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for(err of errors; track $index){
+          <tr>
+            <td>{{ err.row || '-' }}</td>
+            <td>{{ err.employee }}</td>
+            <td class="text-danger">{{ err.message }}</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    }
+    }
+  </div>
+  <ng-template #footer>
+    <button type="button" class="btn btn-dark" (click)="onClearClick()">Clear</button>
+    <button type="button" class="btn btn-primary" [disabled]="validRecords.length == 0"
+      (click)="onSubmitClick()">Submit</button>
+  </ng-template>
+</p-dialog>
