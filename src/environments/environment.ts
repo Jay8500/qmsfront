@@ -1,4 +1,5 @@
 export const environment = {
-  production: true, // or true for production file
-  apiUrl: "https://hqms-backend.onrender.com/", // Replace with your actual Render backend URL
+  production: true,
+  apiUrl: "https://hqms-backend-n61s.onrender.com/",
+  apiHostUrl: "https://hqms-backend-n61s.onrender.com/",
 };
