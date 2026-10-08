@@ -1,5 +1,5 @@
 export const environment = {
-    "production" : true,
-    "apiHostUrl": "http://emr.doc9.xyz/hqms/api/commonRoutings/",
-    // "isCryptoRequired": "N"
+  production: false,
+  apiHostUrl: "http://emr.doc9.xyz/hqms/api/commonRoutings/",
+  // "isCryptoRequired": "N"
 };
